@@ -113,20 +113,20 @@
 		98AD7F1C20A91A2B00540AB3 /* rideTrack */ = {
 			isa = PBXGroup;
 			children = (
-				98AD7F6B20A91A5B00540AB3 /* ViewController.swift */,
 				98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */,
-				98AD7F6420A91A5A00540AB3 /* AttractionsModel.swift */,
+				98AD7F6B20A91A5B00540AB3 /* ViewController.swift */,
 				98AD7F6A20A91A5B00540AB3 /* AttractionsViewController.swift */,
-				98AD7F6C20A91A5B00540AB3 /* DataModel.swift */,
-				98AD7F6E20A91A5C00540AB3 /* Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
-				98AD7F6520A91A5A00540AB3 /* ParksModel.swift */,
 				98AD7F6620A91A5A00540AB3 /* SuggestRideViewController.swift */,
-				98AD7F6720A91A5A00540AB3 /* UserAttraction.swift */,
-				98AD7F2720A91A2D00540AB3 /* Assets.xcassets */,
-				98AD7F7A20A91A9200540AB3 /* LaunchScreen.storyboard */,
 				98AD7F7820A91A9200540AB3 /* Main.storyboard */,
+				98AD7F7A20A91A9200540AB3 /* LaunchScreen.storyboard */,
+				98AD7F6C20A91A5B00540AB3 /* DataModel.swift */,
+				98AD7F6420A91A5A00540AB3 /* AttractionsModel.swift */,
+				98AD7F6520A91A5A00540AB3 /* ParksModel.swift */,
+				98AD7F6720A91A5A00540AB3 /* UserAttraction.swift */,
+				98AD7F6E20A91A5C00540AB3 /* Info.plist */,
 				98AD7F7E20A91B4400540AB3 /* RideTrack.xcdatamodel */,
+				98AD7F2720A91A2D00540AB3 /* Assets.xcassets */,
 			);
 			path = rideTrack;
 			sourceTree = "<group>";
