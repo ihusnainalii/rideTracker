@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5FF58B8E20A92062002A93E5 /* RideTrack.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 5FF58B8D20A92062002A93E5 /* RideTrack.xcdatamodel */; };
+		5FF58B9020AA0B66002A93E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF58B8F20AA0B5D002A93E5 /* Main.storyboard */; };
+		5FF58B9220AA0B83002A93E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF58B9120AA0B83002A93E5 /* LaunchScreen.storyboard */; };
 		98AD7F2820A91A2D00540AB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98AD7F2720A91A2D00540AB3 /* Assets.xcassets */; };
 		98AD7F3620A91A2D00540AB3 /* rideTrackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F3520A91A2D00540AB3 /* rideTrackTests.swift */; };
 		98AD7F4120A91A2D00540AB3 /* rideTrackUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F4020A91A2D00540AB3 /* rideTrackUITests.swift */; };
@@ -19,9 +22,6 @@
 		98AD7F7520A91A5C00540AB3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F6B20A91A5B00540AB3 /* ViewController.swift */; };
 		98AD7F7620A91A5C00540AB3 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F6C20A91A5B00540AB3 /* DataModel.swift */; };
 		98AD7F7720A91A5C00540AB3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */; };
-		98AD7F7F20A91B4400540AB3 /* RideTrack.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F7E20A91B4400540AB3 /* RideTrack.xcdatamodel */; };
-		98EEB18620AA09A800154527 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98EEB18220AA09A700154527 /* LaunchScreen.storyboard */; };
-		98EEB18720AA09A800154527 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98EEB18420AA09A700154527 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +42,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5FF58B8D20A92062002A93E5 /* RideTrack.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = RideTrack.xcdatamodel; path = "../../../Library/Mobile Documents/com~apple~CloudDocs/.Trash/Ride Track 2.18.42 PM/RideTrack.xcdatamodel"; sourceTree = "<group>"; };
+		5FF58B8F20AA0B5D002A93E5 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = "../../../Downloads/rideTracker-master/rideTrack/Main.storyboard"; sourceTree = "<group>"; };
+		5FF58B9120AA0B83002A93E5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "../../../Downloads/rideTracker-master/rideTrack/LaunchScreen.storyboard"; sourceTree = "<group>"; };
 		98AD7F1A20A91A2B00540AB3 /* rideTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rideTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98AD7F2720A91A2D00540AB3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98AD7F3120A91A2D00540AB3 /* rideTrackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rideTrackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,9 +63,6 @@
 		98AD7F6C20A91A5B00540AB3 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98AD7F6E20A91A5C00540AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		98AD7F7E20A91B4400540AB3 /* RideTrack.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = RideTrack.xcdatamodel; path = "../../Xcode/RideTrack/Ride Track/RideTrack.xcdatamodel"; sourceTree = "<group>"; };
-		98EEB18320AA09A700154527 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		98EEB18520AA09A700154527 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,20 +113,20 @@
 		98AD7F1C20A91A2B00540AB3 /* rideTrack */ = {
 			isa = PBXGroup;
 			children = (
-				98EEB18220AA09A700154527 /* LaunchScreen.storyboard */,
-				98EEB18420AA09A700154527 /* Main.storyboard */,
 				98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */,
-				98AD7F6B20A91A5B00540AB3 /* ViewController.swift */,
-				98AD7F6A20A91A5B00540AB3 /* AttractionsViewController.swift */,
-				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
-				98AD7F6620A91A5A00540AB3 /* SuggestRideViewController.swift */,
-				98AD7F6C20A91A5B00540AB3 /* DataModel.swift */,
 				98AD7F6420A91A5A00540AB3 /* AttractionsModel.swift */,
-				98AD7F6520A91A5A00540AB3 /* ParksModel.swift */,
-				98AD7F6720A91A5A00540AB3 /* UserAttraction.swift */,
+				98AD7F6A20A91A5B00540AB3 /* AttractionsViewController.swift */,
+				98AD7F6C20A91A5B00540AB3 /* DataModel.swift */,
 				98AD7F6E20A91A5C00540AB3 /* Info.plist */,
-				98AD7F7E20A91B4400540AB3 /* RideTrack.xcdatamodel */,
+				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
+				98AD7F6520A91A5A00540AB3 /* ParksModel.swift */,
+				98AD7F6620A91A5A00540AB3 /* SuggestRideViewController.swift */,
+				5FF58B9120AA0B83002A93E5 /* LaunchScreen.storyboard */,
+				5FF58B8F20AA0B5D002A93E5 /* Main.storyboard */,
+				98AD7F6720A91A5A00540AB3 /* UserAttraction.swift */,
+				98AD7F6B20A91A5B00540AB3 /* ViewController.swift */,
 				98AD7F2720A91A2D00540AB3 /* Assets.xcassets */,
+				5FF58B8D20A92062002A93E5 /* RideTrack.xcdatamodel */,
 			);
 			path = rideTrack;
 			sourceTree = "<group>";
@@ -253,9 +253,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98EEB18720AA09A800154527 /* Main.storyboard in Resources */,
+				5FF58B9220AA0B83002A93E5 /* LaunchScreen.storyboard in Resources */,
 				98AD7F2820A91A2D00540AB3 /* Assets.xcassets in Resources */,
-				98EEB18620AA09A800154527 /* LaunchScreen.storyboard in Resources */,
+				5FF58B9020AA0B66002A93E5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,8 +287,8 @@
 				98AD7F7420A91A5C00540AB3 /* AttractionsViewController.swift in Sources */,
 				98AD7F7520A91A5C00540AB3 /* ViewController.swift in Sources */,
 				98AD7F7020A91A5C00540AB3 /* ParksModel.swift in Sources */,
+				5FF58B8E20A92062002A93E5 /* RideTrack.xcdatamodel in Sources */,
 				98AD7F6F20A91A5C00540AB3 /* AttractionsModel.swift in Sources */,
-				98AD7F7F20A91B4400540AB3 /* RideTrack.xcdatamodel in Sources */,
 				98AD7F7620A91A5C00540AB3 /* DataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,25 +323,6 @@
 			targetProxy = 98AD7F3D20A91A2D00540AB3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		98EEB18220AA09A700154527 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				98EEB18320AA09A700154527 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		98EEB18420AA09A700154527 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				98EEB18520AA09A700154527 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		98AD7F4320A91A2D00540AB3 /* Debug */ = {
