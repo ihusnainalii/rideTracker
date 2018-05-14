@@ -20,7 +20,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     @IBOutlet weak var pickerType: UIPickerView!
     var pickerData: [String] = [String]()
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true;
     }
