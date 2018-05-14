@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5FF58B8E20A92062002A93E5 /* RideTrack.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 5FF58B8D20A92062002A93E5 /* RideTrack.xcdatamodel */; };
-		5FF58B9020AA0B66002A93E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF58B8F20AA0B5D002A93E5 /* Main.storyboard */; };
-		5FF58B9220AA0B83002A93E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF58B9120AA0B83002A93E5 /* LaunchScreen.storyboard */; };
+		9865FA6F20AA203B00BC64C5 /* Base.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 9865FA6D20AA203B00BC64C5 /* Base.lproj */; };
+		9865FA7020AA203B00BC64C5 /* RideTrack.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 9865FA6E20AA203B00BC64C5 /* RideTrack.xcdatamodel */; };
 		98AD7F2820A91A2D00540AB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98AD7F2720A91A2D00540AB3 /* Assets.xcassets */; };
 		98AD7F3620A91A2D00540AB3 /* rideTrackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F3520A91A2D00540AB3 /* rideTrackTests.swift */; };
 		98AD7F4120A91A2D00540AB3 /* rideTrackUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F4020A91A2D00540AB3 /* rideTrackUITests.swift */; };
@@ -42,9 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5FF58B8D20A92062002A93E5 /* RideTrack.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = RideTrack.xcdatamodel; path = "../../../Library/Mobile Documents/com~apple~CloudDocs/.Trash/Ride Track 2.18.42 PM/RideTrack.xcdatamodel"; sourceTree = "<group>"; };
-		5FF58B8F20AA0B5D002A93E5 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = "../../../Downloads/rideTracker-master/rideTrack/Main.storyboard"; sourceTree = "<group>"; };
-		5FF58B9120AA0B83002A93E5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "../../../Downloads/rideTracker-master/rideTrack/LaunchScreen.storyboard"; sourceTree = "<group>"; };
+		9865FA6D20AA203B00BC64C5 /* Base.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Base.lproj; path = "../../Xcode/RideTrack/Ride Track/Base.lproj"; sourceTree = "<group>"; };
+		9865FA6E20AA203B00BC64C5 /* RideTrack.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = RideTrack.xcdatamodel; path = "../../Xcode/RideTrack/Ride Track/RideTrack.xcdatamodel"; sourceTree = "<group>"; };
 		98AD7F1A20A91A2B00540AB3 /* rideTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rideTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98AD7F2720A91A2D00540AB3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98AD7F3120A91A2D00540AB3 /* rideTrackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rideTrackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,17 +114,16 @@
 				98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */,
 				98AD7F6420A91A5A00540AB3 /* AttractionsModel.swift */,
 				98AD7F6A20A91A5B00540AB3 /* AttractionsViewController.swift */,
+				9865FA6D20AA203B00BC64C5 /* Base.lproj */,
+				9865FA6E20AA203B00BC64C5 /* RideTrack.xcdatamodel */,
 				98AD7F6C20A91A5B00540AB3 /* DataModel.swift */,
 				98AD7F6E20A91A5C00540AB3 /* Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				98AD7F6520A91A5A00540AB3 /* ParksModel.swift */,
 				98AD7F6620A91A5A00540AB3 /* SuggestRideViewController.swift */,
-				5FF58B9120AA0B83002A93E5 /* LaunchScreen.storyboard */,
-				5FF58B8F20AA0B5D002A93E5 /* Main.storyboard */,
 				98AD7F6720A91A5A00540AB3 /* UserAttraction.swift */,
 				98AD7F6B20A91A5B00540AB3 /* ViewController.swift */,
 				98AD7F2720A91A2D00540AB3 /* Assets.xcassets */,
-				5FF58B8D20A92062002A93E5 /* RideTrack.xcdatamodel */,
 			);
 			path = rideTrack;
 			sourceTree = "<group>";
@@ -253,9 +250,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5FF58B9220AA0B83002A93E5 /* LaunchScreen.storyboard in Resources */,
 				98AD7F2820A91A2D00540AB3 /* Assets.xcassets in Resources */,
-				5FF58B9020AA0B66002A93E5 /* Main.storyboard in Resources */,
+				9865FA6F20AA203B00BC64C5 /* Base.lproj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,7 +283,7 @@
 				98AD7F7420A91A5C00540AB3 /* AttractionsViewController.swift in Sources */,
 				98AD7F7520A91A5C00540AB3 /* ViewController.swift in Sources */,
 				98AD7F7020A91A5C00540AB3 /* ParksModel.swift in Sources */,
-				5FF58B8E20A92062002A93E5 /* RideTrack.xcdatamodel in Sources */,
+				9865FA7020AA203B00BC64C5 /* RideTrack.xcdatamodel in Sources */,
 				98AD7F6F20A91A5C00540AB3 /* AttractionsModel.swift in Sources */,
 				98AD7F7620A91A5C00540AB3 /* DataModel.swift in Sources */,
 			);
