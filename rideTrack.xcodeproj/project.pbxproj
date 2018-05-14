@@ -19,9 +19,9 @@
 		98AD7F7520A91A5C00540AB3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F6B20A91A5B00540AB3 /* ViewController.swift */; };
 		98AD7F7620A91A5C00540AB3 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F6C20A91A5B00540AB3 /* DataModel.swift */; };
 		98AD7F7720A91A5C00540AB3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */; };
-		98AD7F7C20A91A9300540AB3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AD7F7820A91A9200540AB3 /* Main.storyboard */; };
-		98AD7F7D20A91A9300540AB3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AD7F7A20A91A9200540AB3 /* LaunchScreen.storyboard */; };
 		98AD7F7F20A91B4400540AB3 /* RideTrack.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F7E20A91B4400540AB3 /* RideTrack.xcdatamodel */; };
+		98EEB18620AA09A800154527 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98EEB18220AA09A700154527 /* LaunchScreen.storyboard */; };
+		98EEB18720AA09A800154527 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98EEB18420AA09A700154527 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,9 +60,9 @@
 		98AD7F6C20A91A5B00540AB3 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98AD7F6E20A91A5C00540AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		98AD7F7920A91A9200540AB3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "../../Xcode/RideTrack/Ride Track/Base.lproj/Main.storyboard"; sourceTree = "<group>"; };
-		98AD7F7B20A91A9200540AB3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "../../Xcode/RideTrack/Ride Track/Base.lproj/LaunchScreen.storyboard"; sourceTree = "<group>"; };
 		98AD7F7E20A91B4400540AB3 /* RideTrack.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = RideTrack.xcdatamodel; path = "../../Xcode/RideTrack/Ride Track/RideTrack.xcdatamodel"; sourceTree = "<group>"; };
+		98EEB18320AA09A700154527 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		98EEB18520AA09A700154527 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,13 +113,13 @@
 		98AD7F1C20A91A2B00540AB3 /* rideTrack */ = {
 			isa = PBXGroup;
 			children = (
+				98EEB18220AA09A700154527 /* LaunchScreen.storyboard */,
+				98EEB18420AA09A700154527 /* Main.storyboard */,
 				98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */,
 				98AD7F6B20A91A5B00540AB3 /* ViewController.swift */,
 				98AD7F6A20A91A5B00540AB3 /* AttractionsViewController.swift */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				98AD7F6620A91A5A00540AB3 /* SuggestRideViewController.swift */,
-				98AD7F7820A91A9200540AB3 /* Main.storyboard */,
-				98AD7F7A20A91A9200540AB3 /* LaunchScreen.storyboard */,
 				98AD7F6C20A91A5B00540AB3 /* DataModel.swift */,
 				98AD7F6420A91A5A00540AB3 /* AttractionsModel.swift */,
 				98AD7F6520A91A5A00540AB3 /* ParksModel.swift */,
@@ -253,9 +253,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98AD7F7D20A91A9300540AB3 /* LaunchScreen.storyboard in Resources */,
+				98EEB18720AA09A800154527 /* Main.storyboard in Resources */,
 				98AD7F2820A91A2D00540AB3 /* Assets.xcassets in Resources */,
-				98AD7F7C20A91A9300540AB3 /* Main.storyboard in Resources */,
+				98EEB18620AA09A800154527 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,20 +325,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		98AD7F7820A91A9200540AB3 /* Main.storyboard */ = {
+		98EEB18220AA09A700154527 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				98AD7F7920A91A9200540AB3 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		98AD7F7A20A91A9200540AB3 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				98AD7F7B20A91A9200540AB3 /* Base */,
+				98EEB18320AA09A700154527 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		98EEB18420AA09A700154527 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				98EEB18520AA09A700154527 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
