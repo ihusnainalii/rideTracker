@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-class SuggestRideViewController: UIViewController, DataModelProtocol, UIPickerViewDelegate, UIPickerViewDataSource {
+class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     var parkName = ""
     var parkID = 0
@@ -20,33 +20,9 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UIPickerVi
     @IBOutlet weak var pickerType: UIPickerView!
     var pickerData: [String] = [String]()
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        switch row {
-        case 0:
-            rideType = "Roller_Coaster"
-        case 1:
-            rideType = "Water_Ride"
-        case 2:
-            rideType = "Childrens_Ride"
-        case 3:
-            rideType = "Transporation_Ride"
-        case 4:
-            rideType = "Dark_Ride"
-        case 5:
-            rideType = "Explore"
-        case 6:
-            rideType = "Spectacular"
-        case 7:
-            rideType = "Show"
-        case 8:
-            rideType = "Film"
-        case 9:
-            rideType = "Parade"
-        case 10:
-            rideType = "Pay_Area"
-        default:
-            rideType = "UNKNOWN"
-        }
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true;
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -70,6 +46,10 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UIPickerVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        textFieldName.delegate = self
+        textFieldOpen.delegate = self
+        textFieldClose.delegate = self
+        
         self.pickerType.delegate = self
         self.pickerType.dataSource = self
         pickerData = ["Roller_Coaster", "Water_Ride", "Childrens_Ride", "Transporation_Ride", "Dark_Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Pay_Area"]
