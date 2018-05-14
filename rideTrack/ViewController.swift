@@ -15,7 +15,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var listTableView: UITableView!
     
     
-    //removed
+    //Mark push attempt
     var feedItems: NSArray = NSArray()
     var selectedPark: ParksModel = ParksModel()
     var parkID = 2
