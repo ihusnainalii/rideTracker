@@ -15,7 +15,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var listTableView: UITableView!
     
     
-    //Mark push attempt
+    //I got rid of it. Do you see it?
     var feedItems: NSArray = NSArray()
     var selectedPark: ParksModel = ParksModel()
     var parkID = 2
