@@ -8,9 +8,10 @@
 import UIKit
 import CoreData
 import Foundation
+import CoreLocation
 
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, NSFetchedResultsControllerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var listTableView: UITableView!
     
@@ -23,23 +24,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var usersParkList: NSMutableArray = NSMutableArray()
     var park = ParksModel()
     var downloadIncrementor = 0
-    //First entry in the array will always be just the parkID? Not ideal
-    //var userAttractionDatabase: [[UserAttractionProvider]]! = [[UserAttractionProvider(parkID: 31), UserAttractionProvider(rideID: 4, parkID: 31), UserAttractionProvider(rideID: 8, parkID: 31)],[UserAttractionProvider(parkID: 32) ,UserAttractionProvider(rideID: 70, parkID: 32)]]
-    
+   
     var userAttractionDatabase: [[UserAttractionProvider]] = [[]]
-    
-    var userAttractionProvider: UserAttractionProvider? = nil
+    //var userAttractionProvider: UserAttractionProvider? = nil
     var userAttractions: [NSManagedObject] = []
     
     var fetchRequest: NSFetchedResultsController<RideTrack>? = nil
     var managedContext: NSManagedObjectContext? = nil
     
+    var locationManager: CLLocationManager = CLLocationManager()
+    
+    var latitude: Double?
+    var longitude: Double?
     
     @IBAction func resetData(_ sender: Any) {
         deleteRecords()
         usersParkList = []
         listTableView.reloadData()
     }
+
     override func viewDidLoad() {
         
         //deleteRecords()
@@ -62,6 +65,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         self.listTableView.delegate = self
         self.listTableView.dataSource = self
+        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        locationManager.requestLocation()
+        print("GETTING GPS DATA")
         
         print(usersParkList.count)
         if usersParkList.count != 0{
@@ -96,10 +105,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
         fetchRequest.sortDescriptors = [sortDescriptor]
-        print("TRY TO FETCH 1")
         do {
             userAttractions = try managedContext.fetch(fetchRequest)
-            print("TRY TO FETCH 2")
             dataMigrationToList()
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
@@ -349,22 +356,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         printUserDatabase()
     }
     
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            longitude = location.coordinate.longitude
+            latitude = location.coordinate.latitude
+        }
+    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("ERROR")
+    }
     
-    
-    
-    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //
-    //
-    //        if (segue.identifier == "toAttractions"){
-    //            let attractionVC = segue.destination as! AttractionsViewController
-    //            let selectedIndex = listTableView.indexPathForSelectedRow?.row
-    //            selectedPark = feedItems[selectedIndex!] as! ParksModel
-    //            let name = selectedPark.name
-    //            let parkID = selectedPark.parkID
-    //            attractionVC.parkLabel.text = titleTest
-    //            //attractionVC.parkID = parkID!
-    //        }
-    //    }
+ 
 }
-
 
