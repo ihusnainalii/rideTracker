@@ -10,22 +10,16 @@ import UIKit
 import CoreData
 
 
-
 class AttractionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DataModelProtocol {
     
     @IBOutlet weak var attractionsTableView: UITableView!
     @IBOutlet weak var parkLabel: UILabel!
     
     var titleName = ""
-    var tempAttraction: AttractionsModel = AttractionsModel()
     var parkID = 0
-    //Do not like this
-    //var attractionListForTable: NSMutableArray = [AttractionsModel()]
     var attractionListForTable: NSMutableArray = []
 
     var userAttractionDatabase: [UserAttractionProvider]!
-    
-    var startOfList: Int = 0
     let green = UIColor(red: 120.0/255.0, green: 205.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor as CGColor
     var userAttractions: [NSManagedObject] = []
     
@@ -87,19 +81,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             print ("this park is empty")
         }
         else {
-            startOfList = (items.firstObject as! AttractionsModel).attractionID
             if (userAttractionDatabase != nil){
-//                for j in startOfList..<items.count+startOfList {
-//                    for i in 0..<userAttractionDatabase.count{
-//                        if (userAttractionDatabase[i].rideID == j){
-//                            print ("We have ridden ride # ", userAttractionDatabase[i].rideID!)
-//                            (attractionListForTable[j-startOfList+1] as! AttractionsModel).isCheck = true
-//                            break
-//                        }
-//                    }
-//                }
                 var userDataBaseIndex = 0
-                var maxUserAttractionCount = userAttractionDatabase.count
+                let maxUserAttractionCount = userAttractionDatabase.count
                 for i in 0..<attractionListForTable.count{
                     if userDataBaseIndex < maxUserAttractionCount{
                         if (attractionListForTable[i] as! AttractionsModel).attractionID == userAttractionDatabase[userDataBaseIndex].rideID{
