@@ -50,10 +50,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         // Create OK button
         let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
             // Code in this block will trigger when OK button tapped.
-            print ("Seclected Attraction is: ", (self.attractionListForTable[indexPath.row] as! AttractionsModel).attractionID);
+            print ("Seclected Attraction is: ", (self.attractionListForTable[indexPath.row] as! AttractionsModel).rideID);
             
             (self.attractionListForTable[indexPath.row] as! AttractionsModel).isCheck = true;
-            self.save(parkID: self.parkID, rideID: (self.attractionListForTable[indexPath.row] as! AttractionsModel).attractionID);
+            self.save(parkID: self.parkID, rideID: (self.attractionListForTable[indexPath.row] as! AttractionsModel).rideID);
             tableView.reloadData()
         }
         alertController.addAction(OKAction)
@@ -67,7 +67,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         
        
-     //   userAttractionDatabase.append(UserAttractionProvider(rideID: (attractionListForTable[indexPath.row] as! AttractionsModel).attractionID, parkID: parkID))
+     //   userAttractionDatabase.append(UserAttractionProvider(rideID: (attractionListForTable[indexPath.row] as! AttractionsModel).rideID, parkID: parkID))
 
         //print("SAVED ITEM: \(person.value(forKeyPath: "rideID")!)")
     }
@@ -86,7 +86,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 let maxUserAttractionCount = userAttractionDatabase.count
                 for i in 0..<attractionListForTable.count{
                     if userDataBaseIndex < maxUserAttractionCount{
-                        if (attractionListForTable[i] as! AttractionsModel).attractionID == userAttractionDatabase[userDataBaseIndex].rideID{
+                        if (attractionListForTable[i] as! AttractionsModel).rideID == userAttractionDatabase[userDataBaseIndex].rideID{
                             print ("We have ridden ride # ", userAttractionDatabase[userDataBaseIndex].rideID!)
                             (attractionListForTable[i] as! AttractionsModel).isCheck = true
                             userDataBaseIndex += 1
@@ -113,6 +113,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             }
             else{
                 myCell.textLabel?.textColor = UIColor.black
+            }
+            if (attractionListForTable[indexPath.row] as! AttractionsModel).active == 1 {
+                myCell.backgroundColor = UIColor.white
+            }
+            else{
+                myCell.backgroundColor = UIColor.lightGray
             }
         }
         myCell.textLabel!.text = item.name

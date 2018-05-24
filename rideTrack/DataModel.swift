@@ -59,21 +59,31 @@ class DataModel: NSObject, URLSessionDataDelegate {
             //There are currently two databases, parks and attractions
             if dataBase == "parks"{
                 let park = ParksModel()
+                
+                //Redo these as Bools, like in attractions DB
                 park.parkID = Int(jsonElement["id"] as! String)!
                 park.name = jsonElement["Name"] as! String
-                park.location = jsonElement["Location"] as! String
-                //park.longitude = Double(jsonElement["longitude"] as! String)!
-                //park.latitude = Double(jsonElement["latitude"] as! String)!
+                park.city = jsonElement["City"] as! String
+                park.country = jsonElement["Country"] as! String
+                park.active = Int(jsonElement["Active"] as! String)!
+                park.yearOpen = Int(jsonElement["YearOpen"] as! String)!
+                park.yearClosed = Int(jsonElement["YearClosed"] as! String)!
+                park.longitude = Double(jsonElement["Longitude"] as! String)!
+                park.latitude = Double(jsonElement["Latitude"] as! String)!
+                park.seasonal = Int(jsonElement["Active"] as! String)!
                 
                 dataBaseData.add(park)
                 
             }
             if dataBase == "attractions"{
                 let attraction = AttractionsModel()
-                attraction.attractionID = Int (jsonElement["rideID"] as! String)
                 attraction.name = jsonElement["Name"] as? String
+                attraction.rideID = Int (jsonElement["RideID"] as! String)
                 attraction.parkID = Int (jsonElement["ParkID"] as! String)
-                attraction.active = jsonElement["active"] as? Bool
+                attraction.rideType = Int (jsonElement["RideType"] as! String)
+                attraction.yearOpen = Int (jsonElement["YearOpen"] as! String)
+                attraction.yearClosed = Int (jsonElement["YearClosed"] as! String)
+                attraction.active = Int (jsonElement["Active"] as! String)
                 attraction.isCheck = false
                 dataBaseData.add(attraction)
             }

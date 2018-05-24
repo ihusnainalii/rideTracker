@@ -10,26 +10,32 @@ import UIKit
 
 class AttractionsModel: NSObject {
 
-    var attractionID: Int!
     var name: String!
+    var rideID: Int!
     var parkID: Int!
-    var active: Bool!
+    var rideType: Int!
+    var yearOpen: Int!
+    var yearClosed: Int!
+    var active: Int!
     var isCheck: Bool!
     
     override init() {
         
     }
     
-    init(attractionID: Int, name: String, parkID: Int, active: Bool, isCheck: Bool) {
-        self.attractionID = attractionID
+    init(name: String, rideID: Int, parkID: Int, rideType: Int, yearOpen: Int, yearClosed: Int, active: Int, isCheck: Bool) {
         self.name = name
+        self.rideID = rideID
         self.parkID = parkID
+        self.rideType = rideType
+        self.yearOpen = yearOpen
+        self.yearClosed = yearClosed
         self.active = active
         self.isCheck = isCheck
     
     }
-    init(attractionID: Int){
-        self.attractionID = attractionID
+    init(rideID: Int){
+        self.rideID = rideID
     }
     
     

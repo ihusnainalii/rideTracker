@@ -40,6 +40,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBAction func resetData(_ sender: Any) {
         deleteRecords()
         usersParkList = []
+        downloadIncrementor = 0
         listTableView.reloadData()
     }
 
@@ -282,6 +283,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
     }
     func printUserDatabase() {
+        print("Ignore the fact that each park always starts with -1")
+        
+        //FIX: THIS SOMETIMES CAUSES CRASH AFTER DATA RESET
         if (userAttractionDatabase[downloadIncrementor].count == 0){
             print ("Current user database is empty")
         }
@@ -307,7 +311,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func dataMigrationToList() {
-        
         print("DELTE")
         userAttractionDatabase = [[]]
         var firstTime = true
@@ -347,7 +350,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         //Sort each park array in asseding RideID
         for i in 0..<userAttractionDatabase.count {
-            print(i)
             if userAttractionDatabase[i].count != 1{
                 userAttractionDatabase[i].sort { $0.rideID < $1.rideID }
             }
