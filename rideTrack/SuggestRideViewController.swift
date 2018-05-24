@@ -19,6 +19,8 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     @IBOutlet weak var textFieldClose: UITextField!
     @IBOutlet weak var pickerType: UIPickerView!
     @IBOutlet weak var activeSwitch: UISwitch!
+    @IBOutlet weak var YearClosedText: UILabel!
+
     var pickerData: [String] = [String]()
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -53,7 +55,27 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         self.pickerType.delegate = self
         self.pickerType.dataSource = self
         pickerData = ["Roller_Coaster", "Water_Ride", "Childrens_Ride", "Transporation_Ride", "Dark_Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Pay_Area"]
+        activeSwitch.isOn=false
+        textFieldClose.isHidden = true
+        YearClosedText.isHidden = true
+         self.textFieldClose.keyboardType = UIKeyboardType.numberPad
+        //WORK ON IMPLEMENTATION OF NUMERIC KEYPAD
+        self.textFieldOpen.keyboardType = UIKeyboardType.numberPad
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
+
         // Do any additional setup after loading the view.
+    }
+    @IBAction func extinctSwitch(_ sender: Any) {
+        if (activeSwitch.isOn){
+            textFieldClose.isHidden = false
+            YearClosedText.isHidden = false
+            print ("CLOSED")
+        }
+        else {
+            textFieldClose.isHidden = true
+            YearClosedText.isHidden = true
+            print ("OPEN")
+        }
     }
     
     @IBAction func buttonSave(_ sender: Any) {
@@ -67,10 +89,9 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         let close = textFieldClose.text
         let type = rideType
         let orgPark = parkName
-        let orgActive = activeSwitch
         var Active = 1
         
-        if (orgActive?.isOn)!{
+        if (activeSwitch?.isOn)!{
             Active = 0
             print ("ACTIVE?: \(Active)")
         }
@@ -117,6 +138,32 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         }
         
     }
+    //    func addDoneButtonOnKeyboard() {
+    //        print ("MADE DONE TOOL")
+    //
+    //        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+    //        doneToolbar.barStyle       = UIBarStyle.default
+    //        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+    //        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(SuggestRideViewController.doneButtonAction))
+    //
+    //        var items = [UIBarButtonItem]()
+    //        items.append(flexSpace)
+    //        items.append(done)
+    //
+    //        doneToolbar.items = items
+    //        doneToolbar.sizeToFit()
+    //
+    //        self.textFieldOpen.inputAccessoryView = doneToolbar
+    //    }
+    //
+    //    @objc func doneButtonAction() {
+    //        print ("CALLED DONE")
+    //        //self.resignFirstResponder()
+    //        self.view.endEditing(true)
+    //
+    //    }
+    //
+
     
     func isStringAnInt(string: String) -> Bool {
         return Int(string) != nil
