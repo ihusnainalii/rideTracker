@@ -18,6 +18,9 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     @IBOutlet weak var textFieldOpen: UITextField!
     @IBOutlet weak var textFieldClose: UITextField!
     @IBOutlet weak var pickerType: UIPickerView!
+    @IBOutlet weak var activeSwitch: UISwitch!
+    @IBOutlet weak var YearClosedText: UILabel!
+
     var pickerData: [String] = [String]()
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -36,7 +39,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         return pickerData[row] as String
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-       rideType = pickerData[row]
+        rideType = pickerData[row]
         print(pickerData[row])
     }
     
@@ -49,11 +52,30 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         textFieldName.delegate = self
         textFieldOpen.delegate = self
         textFieldClose.delegate = self
-        
         self.pickerType.delegate = self
         self.pickerType.dataSource = self
         pickerData = ["Roller_Coaster", "Water_Ride", "Childrens_Ride", "Transporation_Ride", "Dark_Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Pay_Area"]
+        activeSwitch.isOn=false
+        textFieldClose.isHidden = true
+        YearClosedText.isHidden = true
+         self.textFieldClose.keyboardType = UIKeyboardType.numberPad
+        //WORK ON IMPLEMENTATION OF NUMERIC KEYPAD
+        self.textFieldOpen.keyboardType = UIKeyboardType.numberPad
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
+
         // Do any additional setup after loading the view.
+    }
+    @IBAction func extinctSwitch(_ sender: Any) {
+        if (activeSwitch.isOn){
+            textFieldClose.isHidden = false
+            YearClosedText.isHidden = false
+            print ("CLOSED")
+        }
+        else {
+            textFieldClose.isHidden = true
+            YearClosedText.isHidden = true
+            print ("OPEN")
+        }
     }
     
     @IBAction func buttonSave(_ sender: Any) {
@@ -62,63 +84,102 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         print ("This is the type: ", rideType)
         //getting values from text fields
         let parknum = parkID
-        let oldRide = textFieldName.text
+        let orgRide = textFieldName.text
         let open = textFieldOpen.text
         let close = textFieldClose.text
         let type = rideType
-        let oldPark = parkName
+        let orgPark = parkName
+        var Active = 1
         
-        let park = oldPark.replacingOccurrences(of: " ", with: "_")
-        let ride = oldRide?.replacingOccurrences(of: " ", with: "_")
-
-        //creating the post parameter by concatenating the keys and values from text field
-        
-//        let url = URL(string: "http://www.beingpositioned.com/theparksman/usersuggestservice.php?")!
-        //var request = URLRequest(url: url)
-       // request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-       // request.httpMethod = "POST"
-
-        let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(ride!)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)"
-        //let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=2&ride=TalesOfTiz&open=1972&close=2012&type=TESTER&park=TEST"
-        print (urlPath)
-        
-        //request.httpBody = postString.data(using: .utf8)
-        dataModel.downloadData(urlPath: urlPath, dataBase: "upload")
-        
+        if (activeSwitch?.isOn)!{
+            Active = 0
+            print ("ACTIVE?: \(Active)")
         }
-    func sendData(urlPath: String) {
-        print(urlPath)
-        let urlPath = URL(string: urlPath)!
-        let defaultSessions = Foundation.URLSession(configuration: URLSessionConfiguration.default)
-        let task = defaultSessions.dataTask(with: urlPath) { (data, response, error)
-            in
-            if error != nil{
-                print("Failed to send data")
-            }
-            else{
-                print("Data Sent")
-                //Able to download data from database, now need to parse it
-                //self.parseJSON(data!, dataBase: dataBase)
-            }
+        
+        if (isStringAnInt(string: open!) == false && open != ""){
+            let ivalidAlertController = UIAlertController(title: "Invalid Year", message: "Please enter a valid opening year, or leave blank if unknown", preferredStyle: .alert)
+            ivalidAlertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(ivalidAlertController, animated: true, completion:nil)
         }
-        task.resume()
+        else if (isStringAnInt(string: close!) == false && close != ""){
+            print ("ERROR, please enter a valid year, or leave blank if unknown")
+            let ivalidAlertController = UIAlertController(title: "Invalid Year", message: "Please enter a valid closing year, or leave blank if unknown", preferredStyle: .alert)
+            ivalidAlertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(ivalidAlertController, animated: true, completion:nil)
+            
+        }
+        else {
+            let alertController = UIAlertController(title: "Suggest Attraction", message: "Are you sure you want suggest \(String(describing: orgRide!)) from \(parkName)?", preferredStyle: .alert)
+            
+            // Create OK button
+            let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
+                let park = orgPark.replacingOccurrences(of: " ", with: "_")
+                let ride = orgRide?.replacingOccurrences(of: " ", with: "_")
+                
+                
+                //creating the post parameter by concatenating the keys and values from text field
+                
+                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(ride!)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)"
+                print (urlPath)
+                Active = 1
+                dataModel.downloadData(urlPath: urlPath, dataBase: "upload")
+                let ThankAlertController = UIAlertController(title: "Thank You", message: "Thank you for your submission. We will review it and add it to the database.", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default) { (action) -> Void in
+                    let ViewController = self.storyboard?.instantiateViewController(withIdentifier: "parksView")
+                    self.present(ViewController!, animated: true, completion: nil)
+                }
+                ThankAlertController.addAction(action)
+                self.present(ThankAlertController, animated: true, completion:nil)
+                
+            }
+            alertController.addAction(OKAction)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
+                print("Cancel button tapped");
+            }
+            alertController.addAction(cancelAction)
+            // Present Dialog message
+            self.present(alertController, animated: true, completion:nil)
+            
+        }
+        
     }
+    //    func addDoneButtonOnKeyboard() {
+    //        print ("MADE DONE TOOL")
+    //
+    //        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+    //        doneToolbar.barStyle       = UIBarStyle.default
+    //        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+    //        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(SuggestRideViewController.doneButtonAction))
+    //
+    //        var items = [UIBarButtonItem]()
+    //        items.append(flexSpace)
+    //        items.append(done)
+    //
+    //        doneToolbar.items = items
+    //        doneToolbar.sizeToFit()
+    //
+    //        self.textFieldOpen.inputAccessoryView = doneToolbar
+    //    }
+    //
+    //    @objc func doneButtonAction() {
+    //        print ("CALLED DONE")
+    //        //self.resignFirstResponder()
+    //        self.view.endEditing(true)
+    //
+    //    }
+    //
 
+    
+    func isStringAnInt(string: String) -> Bool {
+        return Int(string) != nil
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }
 

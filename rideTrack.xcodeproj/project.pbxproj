@@ -113,6 +113,8 @@
 		98AD7F1C20A91A2B00540AB3 /* rideTrack */ = {
 			isa = PBXGroup;
 			children = (
+				9828BFEE20B6514F00F6A867 /* LaunchScreen.storyboard */,
+				9828BFEF20B6514F00F6A867 /* Main.storyboard */,
 				98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */,
 				98AD7F6420A91A5A00540AB3 /* AttractionsModel.swift */,
 				98AD7F6A20A91A5B00540AB3 /* AttractionsViewController.swift */,
