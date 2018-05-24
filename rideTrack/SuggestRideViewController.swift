@@ -124,8 +124,13 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 Active = 1
                 dataModel.downloadData(urlPath: urlPath, dataBase: "upload")
                 let ThankAlertController = UIAlertController(title: "Thank You", message: "Thank you for your submission. We will review it and add it to the database.", preferredStyle: .alert)
-                ThankAlertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                let action = UIAlertAction(title: "OK", style: .default) { (action) -> Void in
+                    let ViewController = self.storyboard?.instantiateViewController(withIdentifier: "parksView")
+                    self.present(ViewController!, animated: true, completion: nil)
+                }
+                ThankAlertController.addAction(action)
                 self.present(ThankAlertController, animated: true, completion:nil)
+                
             }
             alertController.addAction(OKAction)
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
