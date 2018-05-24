@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../../Xcode/RideTrack/Ride Track/Base.lproj">
+   </FileRef>
+   <FileRef
+      location = "group:../../Xcode/RideTrack/Ride Track/RideTrack.xcdatamodel">
+   </FileRef>
+   <FileRef
       location = "self:">
    </FileRef>
 </Workspace>
