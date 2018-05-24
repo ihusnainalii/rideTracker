@@ -71,7 +71,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="parksView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -311,7 +311,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Mwc-6p-QPr">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vJq-oU-SqQ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="parksView" automaticallyAdjustsScrollViewInsets="NO" id="vJq-oU-SqQ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="rVF-oo-6b6">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -328,6 +328,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yvD-G4-wr8"/>
+        <segue reference="HlF-Xe-zkK"/>
     </inferredMetricsTieBreakers>
 </document>
