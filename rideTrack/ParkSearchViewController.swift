@@ -13,6 +13,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     var parkArray:NSArray = NSArray()
     var selectedPark: ParksModel?
     var park = ParksModel()
+    var firstEntry = true
     
     //A list of parks searched for, to display in results table
     var searchedParksList: NSMutableArray = NSMutableArray()
@@ -34,14 +35,27 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         print(parkArray.count)
         for i in 0..<parkArray.count {
             park = parkArray[i] as! ParksModel
+            firstEntry = true
             if (park.name.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil){
-                print("Match! \(park.name) ")
+                print("name match! \(park.name!) ")
                 searchedParksList.add(park)
+                firstEntry = false
             }
+//            if park.city.caseInsensitiveCompare(searchTextFeild.text!) == ComparisonResult.orderedSame{
+//                print("Match! \(park.name) ")
+//                searchedParksList.add(park)
+//            }
             
-            if park.city.caseInsensitiveCompare(searchTextFeild.text!) == ComparisonResult.orderedSame{
-                print("Match! \(park.name) ")
+            //Not allow you to add duplicates
+            if (park.city.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil) && firstEntry{
+                print("state/city match! \(park.name!) ")
                 searchedParksList.add(park)
+                firstEntry = false
+            }
+            if (park.country.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil) && firstEntry{
+                print("country match! \(park.name!) ")
+                searchedParksList.add(park)
+                firstEntry = false
             }
         }
         print(searchedParksList.count)
@@ -64,7 +78,6 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         let myCell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: myCellIdentifier)!
         let item: ParksModel = searchedParksList[indexPath.row] as! ParksModel
         myCell.textLabel!.text = item.name
-        print(item.name)
         return myCell
     }
     
