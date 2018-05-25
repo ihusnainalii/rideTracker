@@ -102,20 +102,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="av5-As-4vk">
-                                <rect key="frame" x="285" y="64" width="86" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Rest all Data"/>
-                                <connections>
-                                    <action selector="resetData:" destination="BYZ-38-t0r" eventType="touchUpInside" id="huP-e4-D6z"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0nb-Xl-qwe">
                                 <rect key="frame" x="281" y="94" width="94" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add new park"/>
                                 <connections>
                                     <segue destination="0zg-md-OYR" kind="presentation" identifier="toSearch" id="6B6-jh-Y6W"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BzP-aD-VQn">
+                                <rect key="frame" x="295" y="64" width="67" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Settings"/>
+                                <connections>
+                                    <segue destination="yIe-5s-JbS" kind="presentation" identifier="ToSettings" id="tww-mb-VEw"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -139,7 +139,66 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1017" y="104"/>
+            <point key="canvasLocation" x="1016.8" y="103.89805097451276"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="Ev0-Hl-FU5">
+            <objects>
+                <viewController id="yIe-5s-JbS" customClass="SettingsViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2XR-Pj-Woa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n5x-99-Ie6">
+                                <rect key="frame" x="16" y="40" width="99" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oxu-PM-AdC">
+                                <rect key="frame" x="318" y="30" width="37" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="goBackFromSettings:" destination="5gB-Pn-MPZ" eventType="touchUpInside" id="Vmd-Wv-9wt"/>
+                                    <segue destination="5gB-Pn-MPZ" kind="unwind" identifier="unwindToList" unwindAction="unwindToListWithSegue:" id="XNY-Sw-hWf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PdB-Rt-RNh">
+                                <rect key="frame" x="140" y="118" width="94" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Reset all Data"/>
+                                <connections>
+                                    <action selector="resetData:" destination="yIe-5s-JbS" eventType="touchUpInside" id="cUs-bc-zpg"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Show extinct Attractions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bbs-sr-Igr">
+                                <rect key="frame" x="31" y="227" width="212" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eNC-VI-n13">
+                                <rect key="frame" x="269" y="224" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="showExtinct:" destination="yIe-5s-JbS" eventType="valueChanged" id="yFY-RI-nGu"/>
+                                </connections>
+                            </switch>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="zul-pj-D7d"/>
+                    </view>
+                    <connections>
+                        <outlet property="showExtinctSwitch" destination="eNC-VI-n13" id="IrM-D2-Fh1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OdQ-q0-JAg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="5gB-Pn-MPZ" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1016.8" y="885.60719640179911"/>
         </scene>
         <!--Attractions View Controller-->
         <scene sceneID="OSf-k8-4Sg">
@@ -197,7 +256,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nYe-zN-g6a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1758" y="93"/>
+            <point key="canvasLocation" x="1870" y="128"/>
         </scene>
         <!--Suggest Ride View Controller-->
         <scene sceneID="SRl-hi-v5J">
@@ -306,7 +365,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WdM-Xn-OVG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2655" y="92"/>
+            <point key="canvasLocation" x="2807" y="128"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Mwc-6p-QPr">

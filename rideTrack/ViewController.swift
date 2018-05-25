@@ -24,7 +24,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var usersParkList: NSMutableArray = NSMutableArray()
     var park = ParksModel()
     var downloadIncrementor = 0
-   
+    var showExtinct: Int?
+    
     var userAttractionDatabase: [[UserAttractionProvider]] = [[]]
     //var userAttractionProvider: UserAttractionProvider? = nil
     var userAttractions: [NSManagedObject] = []
@@ -37,12 +38,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var latitude: Double?
     var longitude: Double?
     
-    @IBAction func resetData(_ sender: Any) {
-        deleteRecords()
-        usersParkList = []
-        downloadIncrementor = 0
-        listTableView.reloadData()
-    }
+
 
     override func viewDidLoad() {
         
@@ -188,34 +184,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     //        } catch {}
     //    }
     
-    func deleteRecords() -> Void {
-        let moc = getContext()
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "RideTrack")
-        
-        let result = try? moc.fetch(fetchRequest)
-        let resultData = result as! [RideTrack]
-        
-        for object in resultData {
-            moc.delete(object)
-        }
-        
-        do {
-            try moc.save()
-            print("saved!")
-        } catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
-        } catch {
-            
-        }
-        
-    }
-    
-    // MARK: Get Context
-    
-    func getContext () -> NSManagedObjectContext {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.persistentContainer.viewContext
-    }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //return feedItems.count
@@ -269,10 +238,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let searchVC = segue.destination as! ParkSearchViewController
             searchVC.parkArray = feedItems
         }
+        if segue.identifier == "toSettings"{
+            let settingVC = segue.destination as! SettingsViewController
+            settingVC.usersParkList = usersParkList
+            settingVC.downloadIncrementor = downloadIncrementor
+            settingVC.showExtinct = showExtinct
+        }
     }
     
     @IBAction func unwindToParkList(sender: UIStoryboardSegue) {
-        
         if let sourceViewController = sender.source as? ParkSearchViewController, let newPark = sourceViewController.selectedPark{
             usersParkList.add(newPark)
             print("ADDING")
@@ -282,6 +256,28 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             print("new park saved: ", newPark.parkID)
         }
     }
+    
+    @IBAction func unwindToList(segue:UIStoryboardSegue) {
+        if let sourceViewController = segue.source as? SettingsViewController, let pressReset = sourceViewController.resetPressed{
+        print ("BACK FROM SETTINGS")
+            if (pressReset == 1) {
+            print("RESET WAS PRESSED")
+            usersParkList = []
+            self.listTableView.reloadData()
+        }
+        }
+        if let souceVC = segue.source as? SettingsViewController, let showExtinct = souceVC.showExtinct{
+            if (showExtinct == 1){
+                print ("moved back...showing extinct")
+            }
+            else {
+                print("We are back...hiding extinct")
+            }
+        }
+    }
+    
+    
+    
     func printUserDatabase() {
         print("Ignore the fact that each park always starts with -1")
         
