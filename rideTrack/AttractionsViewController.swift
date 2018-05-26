@@ -19,7 +19,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var parkID = 0
     var attractionListForTable: NSMutableArray = []
     var showExtinct = 0
-    
     var userAttractionDatabase: [UserAttractionProvider]!
     let green = UIColor(red: 120.0/255.0, green: 205.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor as CGColor
     var userAttractions: [NSManagedObject] = []
@@ -98,9 +97,27 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
         }
+        //Hide EXTINCT ATTRACTIONS
+        if(showExtinct == 0){
+            var countOfRemove = 0
+            for i in 0..<attractionListForTable.count{ //sizeOfList
+                if ((attractionListForTable[i - countOfRemove] as! AttractionsModel).active == 0){
+                    attractionListForTable.removeObject(at: i - countOfRemove)
+                    countOfRemove = countOfRemove+1
+                }
+            }
+        }
         self.attractionsTableView.reloadData()
+
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        var tableSize = 0
+//        if (showExtinct == 1){
+//            tableSize = attractionListForTable.count
+//        }
+//        else {
+//            tableSize = attractionListForTable.count - numOfExtinct
+//        }
         return attractionListForTable.count
     }
     

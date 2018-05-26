@@ -156,6 +156,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         newPark.setValue(parkID, forKeyPath: "parkID")
         newPark.setValue(rideID, forKeyPath: "rideID")
+        
         print("Just saved new park: ", parkID)
         do {
             try managedContext.save()
