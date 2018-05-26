@@ -24,7 +24,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var usersParkList: NSMutableArray = NSMutableArray()
     var park = ParksModel()
     var downloadIncrementor = 0
-    var showExtinct: Int?
+    var showExtinct = 0
     
     var userAttractionDatabase: [[UserAttractionProvider]] = [[]]
     //var userAttractionProvider: UserAttractionProvider? = nil
@@ -41,7 +41,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
 
 
     override func viewDidLoad() {
-        
         //deleteRecords()
         //        //self.delete(parkID: 105, rideID: 1)
         //        //        self.delete(IndexPath(item: 1, section: 0))
@@ -89,7 +88,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
     }
     override func viewWillAppear(_ animated: Bool) {
-        
+        print ("AT TOP, ShowExtinct is ", showExtinct)
+
         print("VIEW WILL APPEAR RAN")
         super.viewWillAppear(animated)
         
@@ -218,7 +218,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             attractionVC.titleName = selectedPark.name
             attractionVC.parkID = selectedPark.parkID
             attractionVC.userAttractions = userAttractions
-            
+            attractionVC.showExtinct = showExtinct
             if userAttractionDatabase[downloadIncrementor].count != 0{
                 for i in 0..<userAttractionDatabase.count {
                     if userAttractionDatabase[i][0].parkID == selectedPark.parkID{
@@ -239,9 +239,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             searchVC.parkArray = feedItems
         }
         if segue.identifier == "toSettings"{
+            
             let settingVC = segue.destination as! SettingsViewController
-            settingVC.usersParkList = usersParkList
-            settingVC.downloadIncrementor = downloadIncrementor
             settingVC.showExtinct = showExtinct
         }
     }
@@ -265,14 +264,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             usersParkList = []
             self.listTableView.reloadData()
         }
-        }
-        if let souceVC = segue.source as? SettingsViewController, let showExtinct = souceVC.showExtinct{
-            if (showExtinct == 1){
-                print ("moved back...showing extinct")
-            }
-            else {
-                print("We are back...hiding extinct")
-            }
         }
     }
     

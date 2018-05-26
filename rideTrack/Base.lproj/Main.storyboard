@@ -115,7 +115,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Settings"/>
                                 <connections>
-                                    <segue destination="yIe-5s-JbS" kind="presentation" identifier="ToSettings" id="tww-mb-VEw"/>
+                                    <segue destination="yIe-5s-JbS" kind="presentation" identifier="toSettings" id="tww-mb-VEw"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -162,7 +162,7 @@
                                 <state key="normal" title="Done"/>
                                 <connections>
                                     <action selector="goBackFromSettings:" destination="5gB-Pn-MPZ" eventType="touchUpInside" id="Vmd-Wv-9wt"/>
-                                    <segue destination="5gB-Pn-MPZ" kind="unwind" identifier="unwindToList" unwindAction="unwindToListWithSegue:" id="XNY-Sw-hWf"/>
+                                    <segue destination="5gB-Pn-MPZ" kind="unwind" identifier="toParkList" unwindAction="unwindToListWithSegue:" id="XNY-Sw-hWf"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PdB-Rt-RNh">

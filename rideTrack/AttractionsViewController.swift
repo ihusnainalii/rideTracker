@@ -18,7 +18,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var titleName = ""
     var parkID = 0
     var attractionListForTable: NSMutableArray = []
-
+    var showExtinct = 0
+    
     var userAttractionDatabase: [UserAttractionProvider]!
     let green = UIColor(red: 120.0/255.0, green: 205.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor as CGColor
     var userAttractions: [NSManagedObject] = []

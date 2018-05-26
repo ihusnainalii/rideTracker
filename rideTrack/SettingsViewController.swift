@@ -13,7 +13,8 @@ import Foundation
 class SettingsViewController: UIViewController {
     var usersParkList: NSMutableArray = NSMutableArray()
     var downloadIncrementor = 0
-    var showExtinct : Int?
+   // var showExtinct : Int?
+    var showExtinct = 0
     var resetPressed : Int?
 
     @IBOutlet weak var showExtinctSwitch: UISwitch!
@@ -80,4 +81,10 @@ class SettingsViewController: UIViewController {
             print("Hiding extinct rides")
     }
 }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toParkList"{
+            let listVC = segue.destination as! ViewController
+            listVC.showExtinct = showExtinct
+        }
+    }
 }
