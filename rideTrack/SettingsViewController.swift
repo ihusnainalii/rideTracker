@@ -35,10 +35,23 @@ class SettingsViewController: UIViewController {
     
     
     @IBAction func resetData(_ sender: Any) {
-        deleteRecords()
-        usersParkList = []
-        downloadIncrementor = 0
-        resetPressed = 1
+        let alertController = UIAlertController(title: "Erase Data", message: "Are you sure you want to reset all your data?", preferredStyle: .alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
+            // Code in this block will trigger when OK button tapped.
+            self.deleteRecords()
+            self.usersParkList = []
+            self.downloadIncrementor = 0
+            self.resetPressed = 1
+        }
+        alertController.addAction(OKAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
+            print("Cancel button tapped");
+        }
+        alertController.addAction(cancelAction)
+        // Present Dialog message
+        self.present(alertController, animated: true, completion:nil)
+
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -58,7 +71,7 @@ class SettingsViewController: UIViewController {
         
         do {
             try moc.save()
-            print("saved!")
+            print("deleted!")
         } catch let error as NSError  {
             print("Could not save \(error), \(error.userInfo)")
         } catch {

@@ -24,6 +24,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     let green = UIColor(red: 120.0/255.0, green: 205.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor as CGColor
     var userAttractions: [NSManagedObject] = []
     var userNumExtinct = 0
+    var userRidesRidden = 0
     var RidesComplete = ""
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +56,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             (self.attractionListForTable[indexPath.row] as! AttractionsModel).isCheck = true;
             self.save(parkID: self.parkID, rideID: (self.attractionListForTable[indexPath.row] as! AttractionsModel).rideID);
             tableView.reloadData()
+            //UPDATE RIDES BEEN ON
+            self.userRidesRidden += 1
+            self.RidesComplete = String(self.userRidesRidden)
+            self.RidesComplete += "/"
+            self.RidesComplete += String(self.attractionListForTable.count)
+            self.NumCompleteLabel.text = self.RidesComplete
         }
         alertController.addAction(OKAction)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
@@ -110,13 +117,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
         }
-        //Displays number of rides you have been on out of the total number of rides 
+        //Displays number of rides you have been on out of the total number of rides
         if showExtinct == 1 {
-        RidesComplete = String(userAttractionDatabase.count)
+            userRidesRidden = userAttractionDatabase.count
         }
         else{
-        RidesComplete = String(userAttractionDatabase.count - userNumExtinct)
+            userRidesRidden = userAttractionDatabase.count - userNumExtinct
         }
+        RidesComplete = String(userRidesRidden)
         RidesComplete += "/"
         RidesComplete += String(attractionListForTable.count)
         NumCompleteLabel.text = RidesComplete
