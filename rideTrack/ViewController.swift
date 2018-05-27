@@ -24,7 +24,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var usersParkList: NSMutableArray = NSMutableArray()
     var park = ParksModel()
     var downloadIncrementor = 0
-    var showExtinct = 0
+   // var showExtinct = 0
+    var showExtinct = UserDefaults.standard.integer(forKey: "showExtinct")
+
     
     var userAttractionDatabase: [[UserAttractionProvider]] = [[]]
     //var userAttractionProvider: UserAttractionProvider? = nil
@@ -54,9 +56,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         //        self.save(parkID: 112, rideID: 7)
         //        self.save(parkID: 188, rideID: 73)
         //        self.save(parkID: 138, rideID: 35)
-        
-        
-        
+                
         listTableView.isUserInteractionEnabled = true
         super.viewDidLoad()
         self.listTableView.delegate = self

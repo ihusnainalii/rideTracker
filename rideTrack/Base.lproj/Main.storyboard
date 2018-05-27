@@ -215,7 +215,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cFg-8l-Dke">
-                                <rect key="frame" x="0.0" y="120" width="375" height="547"/>
+                                <rect key="frame" x="0.0" y="143" width="375" height="524"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="attractionCell" id="NuC-H2-735">
@@ -228,8 +228,18 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfq-1a-KsT">
+                                <rect key="frame" x="17" y="112" width="50" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="azE-fF-QLP"/>
+                                    <constraint firstAttribute="height" constant="21" id="p3D-TX-wCo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqB-3X-RMS">
-                                <rect key="frame" x="244" y="74" width="131" height="30"/>
+                                <rect key="frame" x="244" y="112" width="131" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Suggest attraction "/>
                                 <connections>
@@ -239,24 +249,27 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="lfq-1a-KsT" firstAttribute="leading" secondItem="49z-lz-1Ke" secondAttribute="leading" constant="17" id="HII-aY-PJG"/>
                             <constraint firstItem="cFg-8l-Dke" firstAttribute="leading" secondItem="1VQ-lA-yzH" secondAttribute="leading" id="K9L-31-u11"/>
                             <constraint firstItem="uVR-cf-Ne8" firstAttribute="leading" secondItem="1VQ-lA-yzH" secondAttribute="leading" constant="16" id="PV3-1m-oTT"/>
+                            <constraint firstItem="lfq-1a-KsT" firstAttribute="centerY" secondItem="uVR-cf-Ne8" secondAttribute="centerY" constant="26.5" id="QtD-Rn-PLB"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uVR-cf-Ne8" secondAttribute="trailing" constant="20" symbolic="YES" id="ROK-9W-5E9"/>
                             <constraint firstItem="cFg-8l-Dke" firstAttribute="bottom" secondItem="1VQ-lA-yzH" secondAttribute="bottom" id="bm3-Wu-Lit"/>
-                            <constraint firstItem="cFg-8l-Dke" firstAttribute="top" secondItem="uVR-cf-Ne8" secondAttribute="bottom" constant="8" id="nnR-KT-lee"/>
+                            <constraint firstItem="cFg-8l-Dke" firstAttribute="top" secondItem="lfq-1a-KsT" secondAttribute="bottom" constant="10" id="nnR-KT-lee"/>
                             <constraint firstItem="uVR-cf-Ne8" firstAttribute="top" secondItem="1VQ-lA-yzH" secondAttribute="top" constant="16" id="sdd-wL-Y8B"/>
                             <constraint firstItem="cFg-8l-Dke" firstAttribute="trailing" secondItem="1VQ-lA-yzH" secondAttribute="trailing" id="vdY-2P-29C"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1VQ-lA-yzH"/>
                     </view>
                     <connections>
+                        <outlet property="NumCompleteLabel" destination="lfq-1a-KsT" id="fjf-8G-MLI"/>
                         <outlet property="attractionsTableView" destination="cFg-8l-Dke" id="gQc-sL-xZd"/>
                         <outlet property="parkLabel" destination="uVR-cf-Ne8" id="AeQ-bv-7ml"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nYe-zN-g6a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1870" y="241"/>
+            <point key="canvasLocation" x="1869.5999999999999" y="240.62968515742131"/>
         </scene>
         <!--Suggest Ride View Controller-->
         <scene sceneID="SRl-hi-v5J">

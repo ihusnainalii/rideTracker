@@ -80,6 +80,8 @@ class SettingsViewController: UIViewController {
             showExtinct = 0
             print("Hiding extinct rides")
     }
+    UserDefaults.standard.set(showExtinct, forKey: "showExtinct")
+
 }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toParkList"{

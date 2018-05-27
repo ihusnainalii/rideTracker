@@ -14,6 +14,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet weak var attractionsTableView: UITableView!
     @IBOutlet weak var parkLabel: UILabel!
+    @IBOutlet weak var NumCompleteLabel: UILabel!
     
     var titleName = ""
     var parkID = 0
@@ -22,14 +23,13 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var userAttractionDatabase: [UserAttractionProvider]!
     let green = UIColor(red: 120.0/255.0, green: 205.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor as CGColor
     var userAttractions: [NSManagedObject] = []
-    
+    var userNumExtinct = 0
+    var RidesComplete = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         userAttractionDatabase.remove(at: 0)
         userAttractionDatabase.remove(at: 0)
-        for i in 0..<userAttractionDatabase.count {
-            print(userAttractionDatabase[i].rideID)
-        }
+        
         
         parkLabel.text = titleName
         self.attractionsTableView.delegate = self
@@ -89,6 +89,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                         if (attractionListForTable[i] as! AttractionsModel).rideID == userAttractionDatabase[userDataBaseIndex].rideID{
                             print ("We have ridden ride # ", userAttractionDatabase[userDataBaseIndex].rideID!)
                             (attractionListForTable[i] as! AttractionsModel).isCheck = true
+                            if ((attractionListForTable[i] as! AttractionsModel).active == 0) {
+                                userNumExtinct += 1
+                            }
                             userDataBaseIndex += 1
                         }
                         else{
@@ -107,6 +110,17 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
         }
+        //Displays number of rides you have been on out of the total number of rides 
+        if showExtinct == 1 {
+        RidesComplete = String(userAttractionDatabase.count)
+        }
+        else{
+        RidesComplete = String(userAttractionDatabase.count - userNumExtinct)
+        }
+        RidesComplete += "/"
+        RidesComplete += String(attractionListForTable.count)
+        NumCompleteLabel.text = RidesComplete
+        
         self.attractionsTableView.reloadData()
 
     }
