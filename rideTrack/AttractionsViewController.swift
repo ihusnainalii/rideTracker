@@ -91,12 +91,9 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         }
         
         //If user wants to show extinct, sort so that the active rides are on top of the list
-        else{
             if attractionListForTable.count != 1{
                 //Need both steps to sort name alphabetically and by active or not
                 attractionListForTable.sort { ($0.active, $1.name) > ($1.active, $0.name) }
-            
-            }
         }
         
         //Displays number of rides you have been on out of the total number of rides
