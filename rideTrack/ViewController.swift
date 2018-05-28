@@ -291,9 +291,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 }
             }
             print("This is size of UserAttractions: ", userAttractions.count)
-            for i in 0..<userAttractions.count {
-                let person = userAttractions[i]
-            }
             print(stringToPrint)
         }
     }
