@@ -24,7 +24,12 @@ class AttractionsDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         rideNameLabel.text = rideName
+        if yearOpen == 0{
+            yearOpenLabel.text = "Unknown"
+        }
+        else{
         yearOpenLabel.text = String(yearOpen)
+        }
         if active == 1 {
             yearCloseLabel.isHidden = true
             yearCloseText.isHidden = true
