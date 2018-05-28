@@ -27,13 +27,15 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
     var userNumExtinct = 0
     var userRidesRidden = 0
     var RidesComplete = ""
+    var rideID = 0
+    var rideName = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         userAttractionDatabase.remove(at: 0)
         userAttractionDatabase.remove(at: 0)
         
-        attractionsTableView.allowsSelection = false
+        //attractionsTableView.allowsSelection = false          //TURN THIS BACK ON
         
         parkLabel.text = titleName
         //self.attractionsTableView.delegate = self as! UITableViewDelegate
@@ -174,11 +176,7 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         alertController.addAction(cancelAction)
         // Present Dialog message
         self.present(alertController, animated: true, completion:nil)
-        
-        
-
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -217,7 +215,30 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
             suggestVC.parkName = titleName
             suggestVC.parkID = parkID
         }
+        if segue.identifier == "ToDetails"{
+            print ("Trying to get details...")
+            let detailsVC = segue.destination as! AttractionsDetailsViewController
+            let selectedIndex = attractionsTableView.indexPathForSelectedRow?.row
+            print ("selected Index is ", selectedIndex)
+            //let selectedRide = attractionsTableView[selectedIndex!]
+            let selectedRide = attractionListForTable[selectedIndex!]
+            rideID = selectedRide.rideID
+            rideName = selectedRide.name
+            let yearOpen = selectedRide.yearOpen
+            let yearClose = selectedRide.yearClosed
+            let active = selectedRide.active
+            print (rideName)
+            detailsVC.rideID = rideID
+            detailsVC.rideName = rideName
+            detailsVC.yearOpen = yearOpen!
+            detailsVC.yearClose = yearClose!
+            detailsVC.active = active!
+            
+        }
+       
     }
+    
+
     /*
      // MARK: - Navigation
      

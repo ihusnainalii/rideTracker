@@ -18,7 +18,6 @@ class AttractionsTableViewCell: UITableViewCell {
     
     @IBAction func addButtonTapped(_ sender: Any) {
         delegate?.attractionsTableViewCellDidTapAddRide(self)
-        
     }
     
     
