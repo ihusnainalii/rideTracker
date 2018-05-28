@@ -21,7 +21,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var selectedPark: ParksModel = ParksModel()
     var parkID = 2
     var titleTest = "test"
-    var usersParkList: NSMutableArray = NSMutableArray()
+    var usersParkList = [ParksModel]()
     var park = ParksModel()
     var downloadIncrementor = 0
    // var showExtinct = 0
@@ -133,7 +133,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                         downloadIncrementor += 1
                     }
                     
-                    usersParkList.add(feedItems[i])
+                    usersParkList.append(feedItems[i] as! ParksModel)
                 }
                 //usersParkList.add(feedItems[userAttractionDatabase[i][0].parkID])
             }
@@ -196,7 +196,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         let myCellIdentifier = "BasicCell"
         let myCell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: myCellIdentifier)!
         //let item: ParksModel = feedItems[indexPath.row] as! ParksModel
-        let item: ParksModel = usersParkList[indexPath.row] as! ParksModel
+        let item: ParksModel = usersParkList[indexPath.row]
         myCell.textLabel!.text = item.name
         
         return myCell
@@ -215,7 +215,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let attractionVC = segue.destination as! AttractionsViewController
             let selectedIndex = listTableView.indexPathForSelectedRow?.row
             //selectedPark = feedItems[selectedIndex!] as! ParksModel
-            selectedPark = usersParkList[selectedIndex!] as! ParksModel
+            selectedPark = usersParkList[selectedIndex!]
             attractionVC.titleName = selectedPark.name
             attractionVC.parkID = selectedPark.parkID
             attractionVC.userAttractions = userAttractions
@@ -248,12 +248,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     @IBAction func unwindToParkList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? ParkSearchViewController, let newPark = sourceViewController.selectedPark{
-            usersParkList.add(newPark)
-            print("ADDING")
-            userAttractionDatabase.append([UserAttractionProvider(parkID: newPark.parkID)])
-            self.listTableView.reloadData()
-            self.save(parkID: newPark.parkID, rideID: -1)
-            print("new park saved: ", newPark.parkID)
+            var isNewPark = true
+            for i in 0..<usersParkList.count{
+                if newPark.parkID == usersParkList[i].parkID{
+                    isNewPark = false
+                }
+            }
+            if isNewPark{
+                usersParkList.append(newPark)
+                print("ADDING")
+                userAttractionDatabase.append([UserAttractionProvider(parkID: newPark.parkID)])
+                self.listTableView.reloadData()
+                self.save(parkID: newPark.parkID, rideID: -1)
+                print("new park saved: ", newPark.parkID)
+            }
+            else{
+                print("Can not add a park twice")
+            }
         }
     }
     
