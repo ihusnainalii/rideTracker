@@ -37,13 +37,7 @@ class UserAttractionProvider: NSObject {
         
     }
     
-    init(parkID: Int, rideID: Int, favorite: Bool, numberOfRides: Int, numberOfCheckedRides: Int) {
-        self.parkID = parkID
-        self.rideID = rideID
-        self.favorite = favorite
-        self.numberOfRides = numberOfRides
-        self.numberOfCheckedRides = numberOfCheckedRides
-    }
+  
     
     init(parkID: Int) {
         self.parkID = parkID

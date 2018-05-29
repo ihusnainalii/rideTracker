@@ -26,6 +26,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var downloadIncrementor = 0
    // var showExtinct = 0
     var showExtinct = UserDefaults.standard.integer(forKey: "showExtinct")
+    //var parkListData: [ParkListData] = UserDefaults.standard.array(forKey: "parkListData") as! [ParkListData]
 
     
     var userAttractionDatabase: [[UserAttractionProvider]] = [[]]
@@ -261,6 +262,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 self.listTableView.reloadData()
                 self.save(parkID: newPark.parkID, rideID: -1)
                 print("new park saved: ", newPark.parkID)
+                //UserDefaults.standard.set(parkListData, forKey: "parkListData")
             }
             else{
                 print("Can not add a park twice")
