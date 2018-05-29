@@ -216,10 +216,8 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
             suggestVC.parkID = parkID
         }
         if segue.identifier == "ToDetails"{
-            print ("Trying to get details...")
             let detailsVC = segue.destination as! AttractionsDetailsViewController
             let selectedIndex = attractionsTableView.indexPathForSelectedRow?.row
-            print ("selected Index is ", selectedIndex)
             //let selectedRide = attractionsTableView[selectedIndex!]
             let selectedRide = attractionListForTable[selectedIndex!]
             rideID = selectedRide.rideID
@@ -227,12 +225,14 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
             let yearOpen = selectedRide.yearOpen
             let yearClose = selectedRide.yearClosed
             let active = selectedRide.active
+            let type = selectedRide.rideType
             print (rideName)
             detailsVC.rideID = rideID
             detailsVC.rideName = rideName
             detailsVC.yearOpen = yearOpen!
             detailsVC.yearClose = yearClose!
             detailsVC.active = active!
+            detailsVC.type = type!
             
         }
        
