@@ -20,6 +20,7 @@ class ParksModel: NSObject {
     var latitude: Double!
     var longitude: Double!
     var seasonal: Int!
+
     
     override init() {
     }
@@ -36,6 +37,8 @@ class ParksModel: NSObject {
         self.longitude = longitude
         self.seasonal = seasonal
     }
+    
+  
     
     override var description: String{
         return "Park name: \(name), Park ID: \(parkID)"

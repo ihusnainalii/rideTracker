@@ -74,11 +74,11 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let myCellIdentifier = "searchedParkCell"
-        let myCell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: myCellIdentifier)!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "searchedParkCell", for: indexPath) as! SearchTableViewCell
         let item: ParksModel = searchedParksList[indexPath.row] as! ParksModel
-        myCell.textLabel!.text = item.name
-        return myCell
+        cell.parkNameLabel.text = item.name
+        cell.parkLocationLabel.text = item.city
+        return cell
     }
     
     

@@ -146,7 +146,39 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
             }
         }
         cell.rideName!.text = item.name
+        cell.rideTypeLabel.text = convertRideTypeID(rideTypeID: item.rideType)
         return cell
+    }
+    
+    func convertRideTypeID(rideTypeID: Int) -> String {
+        switch rideTypeID {
+        case 1:
+            return "Roller Coaster"
+        case 2:
+            return "Water Ride"
+        case 3:
+            return "Flat Ride"
+        case 4:
+            return "Transportation Ride"
+        case 5:
+            return "Dark Ride"
+        case 6:
+            return "Explore"
+        case 7:
+            return "Spectacular"
+        case 8:
+            return "Show"
+        case 9:
+            return "Film"
+        case 10:
+            return "Parade"
+        case 11:
+            return "Play Area"
+        case 12:
+            return "Upcharge Attraction"
+        default:
+            return ""
+        }
     }
     
     func attractionsTableViewCellDidTapAddRide(_ sender: AttractionsTableViewCell) {
