@@ -5,7 +5,7 @@
 //  Created by Mark Lawrence on 4/14/18.
 //  Copyright © 2018 Mark Lawrence. All rights reserved.
 //  last pushed: May 8, 1:30
-//testing sync...
+//git hub
 import UIKit
 import CoreData
 import Foundation
