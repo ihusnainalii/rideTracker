@@ -12,6 +12,7 @@ class AttractionsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var rideName: UILabel!
     @IBOutlet weak var addRideButton: UIButton!
+    @IBOutlet weak var rideTypeLabel: UILabel!
     
     weak var delegate: AttractionsTableViewCellDelegate?
     

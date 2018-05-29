@@ -19,6 +19,10 @@ class UserAttractionProvider: NSObject {
     var rideID: Int!
     var parkID: Int!
     
+    var favorite: Bool!
+    var numberOfRides: Int!
+    var numberOfCheckedRides: Int!
+    
     func getContext() -> NSManagedObjectContext {
         let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         return managedContext
@@ -32,6 +36,8 @@ class UserAttractionProvider: NSObject {
         self.parkID = parkID
         
     }
+    
+  
     
     init(parkID: Int) {
         self.parkID = parkID
