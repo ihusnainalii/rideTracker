@@ -17,7 +17,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     
     //I got rid of it. Do you see it?
-    var feedItems: NSArray = NSArray()
+    var arrayOfAllParks = [ParksModel]()
     var selectedPark: ParksModel = ParksModel()
     var parkID = 2
     var titleTest = "test"
@@ -62,12 +62,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         super.viewDidLoad()
         self.listTableView.delegate = self
         self.listTableView.dataSource = self
-        
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-        locationManager.requestLocation()
-        print("GETTING GPS DATA")
         
         print(usersParkList.count)
         if usersParkList.count != 0{
@@ -115,7 +109,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     func itemsDownloaded(items: NSArray) {
         
         
-        feedItems = items
+        arrayOfAllParks = items as! [ParksModel]
         
         //Adds parks the user has already saved to the table list
         //        for i in 0..<userAttractionDatabase.count{
@@ -127,20 +121,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         if (userAttractionDatabase[downloadIncrementor].count == 0){
         }
         else{
-            for i in 0..<feedItems.count{
-                park = feedItems[i] as! ParksModel
+            for i in 0..<arrayOfAllParks.count{
+                park = arrayOfAllParks[i]
                 if park.parkID == userAttractionDatabase[downloadIncrementor][0].parkID{
                     if downloadIncrementor < userAttractionDatabase.count - 1{
                         downloadIncrementor += 1
                     }
                     
-                    usersParkList.append(feedItems[i] as! ParksModel)
+                    usersParkList.append(arrayOfAllParks[i] )
                 }
                 //usersParkList.add(feedItems[userAttractionDatabase[i][0].parkID])
             }
             //printUserDatabase()
             self.listTableView.reloadData()
         }
+        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        locationManager.requestLocation()
+        print("GETTING GPS DATA")
     }
     
     func save(parkID: Int, rideID: Int) {
@@ -238,7 +238,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         if segue.identifier == "toSearch"{
             let searchVC = segue.destination as! ParkSearchViewController
-            searchVC.parkArray = feedItems
+            searchVC.parkArray = arrayOfAllParks as NSArray
         }
         if segue.identifier == "toSettings"{
             
@@ -257,6 +257,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             }
             if isNewPark{
                 usersParkList.append(newPark)
+                
                 print("ADDING")
                 userAttractionDatabase.append([UserAttractionProvider(parkID: newPark.parkID)])
                 self.listTableView.reloadData()
@@ -360,10 +361,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         if let location = locations.first {
             longitude = location.coordinate.longitude
             latitude = location.coordinate.latitude
+            let currentLocation = CLLocation(latitude: latitude!, longitude: longitude!)
+            for i in 0..<usersParkList.count{
+                //distance is in meters, so if the distance is less than 3 miles, or 4828 meters, print that
+                if currentLocation.distance(from: usersParkList[i].getLocation()) < 4828 {
+
+                    print("User is within three miles of \(usersParkList[i].name!)")
+                }
+            }
+        
         }
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("ERROR")
+        print("Location error: \(error)")
     }
     
  

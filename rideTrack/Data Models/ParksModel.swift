@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class ParksModel: NSObject {
 
@@ -36,6 +37,10 @@ class ParksModel: NSObject {
         self.latitude = latitude
         self.longitude = longitude
         self.seasonal = seasonal
+    }
+    
+    func getLocation() -> CLLocation {
+        return CLLocation(latitude: latitude, longitude: longitude)
     }
     
   
