@@ -360,14 +360,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            longitude = location.coordinate.longitude
             latitude = location.coordinate.latitude
+            longitude = location.coordinate.longitude
+            
+            //Simulate you are in World Showcase at Epcot
+//            latitude = 28.4161
+//            longitude = -81.5812
             let currentLocation = CLLocation(latitude: latitude!, longitude: longitude!)
-            for i in 0..<usersParkList.count{
-                //distance is in meters, so if the distance is less than 3 miles, or 4828 meters, print that
-                if currentLocation.distance(from: usersParkList[i].getLocation()) < 4828 {
-
-                    print("User is within three miles of \(usersParkList[i].name!)")
+            for i in 0..<arrayOfAllParks.count{
+                //distance is in meters, so if the distance is less than 1 mile, or 1609 meters, print that
+                if currentLocation.distance(from: arrayOfAllParks[i].getLocation()) < 1609 {
+                    print("User is within one mile of \(arrayOfAllParks[i].name!)")
                 }
             }
         
