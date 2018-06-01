@@ -13,22 +13,29 @@ import Foundation
 class SettingsViewController: UIViewController {
     var usersParkList: NSMutableArray = NSMutableArray()
     var downloadIncrementor = 0
-   // var showExtinct : Int?
+    // var showExtinct : Int?
     var showExtinct = 0
+    var showPayed = 0
     var resetPressed : Int?
-
-    @IBOutlet weak var showExtinctSwitch: UISwitch!
     
-
+    @IBOutlet weak var showExtinctSwitch: UISwitch!
+    @IBOutlet weak var showPayedSwitch: UISwitch!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         resetPressed = 0
-        print("Show extinct is ", showExtinct)
         if showExtinct == 0{
             showExtinctSwitch.isOn = false
         }
         else{
             showExtinctSwitch.isOn = true
+        }
+        if showPayed == 0{
+            showPayedSwitch.isOn = false
+        }
+        else {
+            showPayedSwitch.isOn = true
         }
         // Do any additional setup after loading the view.
     }
@@ -51,7 +58,7 @@ class SettingsViewController: UIViewController {
         alertController.addAction(cancelAction)
         // Present Dialog message
         self.present(alertController, animated: true, completion:nil)
-
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -84,7 +91,7 @@ class SettingsViewController: UIViewController {
         return appDelegate.persistentContainer.viewContext
     }
     
-        @IBAction func showExtinct(_ sender: Any) {
+    @IBAction func showExtinct(_ sender: Any) {
         if (showExtinctSwitch.isOn){
             showExtinct = 1
             print("Showing extinct rides")
@@ -92,14 +99,27 @@ class SettingsViewController: UIViewController {
         else{
             showExtinct = 0
             print("Hiding extinct rides")
+        }
+        UserDefaults.standard.set(showExtinct, forKey: "showExtinct")
+        
     }
-    UserDefaults.standard.set(showExtinct, forKey: "showExtinct")
-
-}
+    @IBAction func showPayed(_ sender: Any) {
+        if (showPayedSwitch.isOn ){
+            showPayed = 1
+            print ("Showing payed attractions")
+        }
+        else {
+            showPayed = 0
+            print("Hiding payed attractions..")
+        }
+        UserDefaults.standard.set(showPayed, forKey: "showPayed")
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toParkList"{
             let listVC = segue.destination as! ViewController
             listVC.showExtinct = showExtinct
+            listVC.showPayed = showPayed
         }
     }
 }

@@ -27,6 +27,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var downloadIncrementor = 0
    // var showExtinct = 0
     var showExtinct = UserDefaults.standard.integer(forKey: "showExtinct")
+    var showPayed = UserDefaults.standard.integer(forKey: "shoPayed")
     //var parkListData: [ParkListData] = UserDefaults.standard.array(forKey: "parkListData") as! [ParkListData]
 
     
@@ -222,6 +223,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             attractionVC.parkID = selectedPark.parkID
             attractionVC.userAttractions = userAttractions
             attractionVC.showExtinct = showExtinct
+            attractionVC.showPayed = showPayed
             if userAttractionDatabase[downloadIncrementor].count != 0{
                 for i in 0..<userAttractionDatabase.count {
                     if userAttractionDatabase[i][0].parkID == selectedPark.parkID{
@@ -245,6 +247,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             
             let settingVC = segue.destination as! SettingsViewController
             settingVC.showExtinct = showExtinct
+            settingVC.showPayed = showPayed
         }
     }
     

@@ -21,6 +21,7 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
     var parkID = 0
     var attractionListForTable = [AttractionsModel]()
     var showExtinct = 0
+    var showPayed = 0
     var userAttractionDatabase: [UserAttractionProvider]!
     let green = UIColor(red: 120.0/255.0, green: 205.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor as CGColor
     var userAttractions: [NSManagedObject] = []
@@ -81,11 +82,16 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
             }
         }
         //Hide EXTINCT ATTRACTIONS
-        if(showExtinct == 0){
+        if(showExtinct == 0 || showPayed == 0){
             var countOfRemove = 0
             for i in 0..<attractionListForTable.count{ //sizeOfList
-                if ((attractionListForTable[i - countOfRemove]).active == 0){
+                if ((attractionListForTable[i - countOfRemove]).active == 0 && showExtinct == 0){
                     //attractionListForTable.removeObject(at: i - countOfRemove)
+                    attractionListForTable.remove(at: i-countOfRemove)
+                    countOfRemove = countOfRemove+1
+                    continue
+                }
+                if ((attractionListForTable[i-countOfRemove]).rideType == 12 && showPayed == 0){
                     attractionListForTable.remove(at: i-countOfRemove)
                     countOfRemove = countOfRemove+1
                 }
