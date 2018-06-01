@@ -308,6 +308,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             print("This is size of UserAttractions: ", userAttractions.count)
             print(stringToPrint)
         }
+        print("")
     }
     
     func dataMigrationToList() {
@@ -362,16 +363,34 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         if let location = locations.first {
             latitude = location.coordinate.latitude
             longitude = location.coordinate.longitude
+            var oneMileParks = [ParksModel]()
+            //Simulate you are at Epcot
+            latitude = 28.3667
+            longitude = -81.5495
             
-            //Simulate you are in World Showcase at Epcot
+            //Simulate you are in Magic Kingdom
 //            latitude = 28.4161
-//            longitude = -81.5812
+//            longitude = -81.5811
+            
             let currentLocation = CLLocation(latitude: latitude!, longitude: longitude!)
             for i in 0..<arrayOfAllParks.count{
                 //distance is in meters, so if the distance is less than 1 mile, or 1609 meters, print that
                 if currentLocation.distance(from: arrayOfAllParks[i].getLocation()) < 1609 {
                     print("User is within one mile of \(arrayOfAllParks[i].name!)")
+                    oneMileParks.append(arrayOfAllParks[i])
                 }
+            }
+            if oneMileParks.count != 0{
+                //There is more than 1 park within a mile of the user. Find the closests park to present to user
+                var closestParkTemp = currentLocation.distance(from: oneMileParks[0].getLocation())
+                var closestPark = oneMileParks[0]
+                for i in 0..<oneMileParks.count{
+                    if currentLocation.distance(from: oneMileParks[i].getLocation()) < closestParkTemp{
+                        closestParkTemp = currentLocation.distance(from: oneMileParks[i].getLocation())
+                        closestPark = oneMileParks[i]
+                    }
+                }
+                print("Closest park is \(closestPark.name!)")
             }
         
         }
