@@ -30,6 +30,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var showPayed = UserDefaults.standard.integer(forKey: "shoPayed")
     //var parkListData: [ParkListData] = UserDefaults.standard.array(forKey: "parkListData") as! [ParkListData]
 
+    var segueWithTableViewSelect = true
+    var selectedIndex = 0
+    
+    @IBOutlet weak var currentLocationView: UIView!
+    @IBOutlet weak var currentLocationParkNameLabel: UILabel!
+    var closestPark = ParksModel()
+
     
     var userAttractionDatabase: [[UserAttractionProvider]] = [[]]
     //var userAttractionProvider: UserAttractionProvider? = nil
@@ -37,7 +44,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     var fetchRequest: NSFetchedResultsController<RideTrack>? = nil
     var managedContext: NSManagedObjectContext? = nil
-    
+    let screenSize = UIScreen.main.bounds
+
     var locationManager: CLLocationManager = CLLocationManager()
     
     var latitude: Double?
@@ -59,7 +67,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         //        self.save(parkID: 112, rideID: 7)
         //        self.save(parkID: 188, rideID: 73)
         //        self.save(parkID: 138, rideID: 35)
-                
+        
+        currentLocationView.frame = CGRect(x: 0, y: Int(screenSize.height + 100), width: Int(screenSize.width), height: 100)
+        currentLocationView.layer.shadowOffset = CGSize.zero
+        currentLocationView.layer.shadowRadius = 12
+        currentLocationView.layer.shadowOpacity = 0.3
+        currentLocationView.layer.cornerRadius = 10
+        
         listTableView.isUserInteractionEnabled = true
         super.viewDidLoad()
         self.listTableView.delegate = self
@@ -86,6 +100,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     override func viewWillAppear(_ animated: Bool) {
         print ("AT TOP, ShowExtinct is ", showExtinct)
+        segueWithTableViewSelect = true
 
         print("VIEW WILL APPEAR RAN")
         super.viewWillAppear(animated)
@@ -205,6 +220,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         return myCell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+   
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -216,9 +236,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         if segue.identifier == "toAttractions"{
             let attractionVC = segue.destination as! AttractionsViewController
-            let selectedIndex = listTableView.indexPathForSelectedRow?.row
-            //selectedPark = feedItems[selectedIndex!] as! ParksModel
-            selectedPark = usersParkList[selectedIndex!]
+        
+            if segueWithTableViewSelect{
+                selectedIndex = (listTableView.indexPathForSelectedRow?.row)!
+                selectedPark = usersParkList[selectedIndex]
+            }
             attractionVC.titleName = selectedPark.name
             attractionVC.parkID = selectedPark.parkID
             attractionVC.userAttractions = userAttractions
@@ -253,25 +275,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     @IBAction func unwindToParkList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? ParkSearchViewController, let newPark = sourceViewController.selectedPark{
-            var isNewPark = true
-            for i in 0..<usersParkList.count{
-                if newPark.parkID == usersParkList[i].parkID{
-                    isNewPark = false
-                }
-            }
-            if isNewPark{
-                usersParkList.append(newPark)
-                
-                print("ADDING")
-                userAttractionDatabase.append([UserAttractionProvider(parkID: newPark.parkID)])
-                self.listTableView.reloadData()
-                self.save(parkID: newPark.parkID, rideID: -1)
-                print("new park saved: ", newPark.parkID)
-                //UserDefaults.standard.set(parkListData, forKey: "parkListData")
-            }
-            else{
-                print("Can not add a park twice")
-            }
+            addNewParkToList(newPark: newPark)
         }
     }
     
@@ -286,6 +290,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
     }
     
+    func addNewParkToList(newPark: ParksModel) {
+        if checkIfNewPark(newPark: newPark){
+            usersParkList.append(newPark)
+            print("ADDING")
+            userAttractionDatabase.append([UserAttractionProvider(parkID: newPark.parkID)])
+            self.listTableView.reloadData()
+            self.save(parkID: newPark.parkID, rideID: -1)
+            print("new park saved: ", newPark.parkID)
+            //UserDefaults.standard.set(parkListData, forKey: "parkListData")
+        }
+        else{
+            print("Can not add a park twice")
+        }
+    }
+    
+    func checkIfNewPark(newPark: ParksModel) -> Bool {
+        var isNewPark = true
+        for i in 0..<usersParkList.count{
+            if newPark.parkID == usersParkList[i].parkID{
+                isNewPark = false
+            }
+        }
+        return isNewPark
+    }
     
     
     func printUserDatabase() {
@@ -368,12 +396,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             longitude = location.coordinate.longitude
             var oneMileParks = [ParksModel]()
             //Simulate you are at Epcot
-            latitude = 28.3667
-            longitude = -81.5495
+//            latitude = 28.3667
+//            longitude = -81.5495
             
             //Simulate you are in Magic Kingdom
 //            latitude = 28.4161
 //            longitude = -81.5811
+            
+            
             
             let currentLocation = CLLocation(latitude: latitude!, longitude: longitude!)
             for i in 0..<arrayOfAllParks.count{
@@ -386,7 +416,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             if oneMileParks.count != 0{
                 //There is more than 1 park within a mile of the user. Find the closests park to present to user
                 var closestParkTemp = currentLocation.distance(from: oneMileParks[0].getLocation())
-                var closestPark = oneMileParks[0]
+                closestPark = oneMileParks[0]
                 for i in 0..<oneMileParks.count{
                     if currentLocation.distance(from: oneMileParks[i].getLocation()) < closestParkTemp{
                         closestParkTemp = currentLocation.distance(from: oneMileParks[i].getLocation())
@@ -394,10 +424,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                     }
                 }
                 print("Closest park is \(closestPark.name!)")
+                currentLocationParkNameLabel.text = closestPark.name!
+                UIView.animate(withDuration: 0.6, animations: {
+                    self.currentLocationView.frame = CGRect(x: 0, y: Int(self.screenSize.height - 100), width: Int(self.screenSize.width), height: 100)
+                })
+                
             }
         
         }
     }
+    
+    @IBAction func showCurrentlLocationPark(_ sender: Any) {
+        if checkIfNewPark(newPark: closestPark){
+            addNewParkToList(newPark: closestPark)
+            dataMigrationToList()
+        }
+        segueWithTableViewSelect = false
+        selectedPark = closestPark
+        performSegue(withIdentifier: "toAttractions", sender: nil)
+    }
+    
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location error: \(error)")
     }

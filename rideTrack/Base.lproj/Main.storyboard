@@ -136,6 +136,35 @@
                                     <segue destination="yIe-5s-JbS" kind="presentation" identifier="toSettings" id="tww-mb-VEw"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KOS-Dh-fGQ">
+                                <rect key="frame" x="0.0" y="566" width="375" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9eZ-s2-SZ1">
+                                        <rect key="frame" x="18" y="22" width="315" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9BC-9e-GOd">
+                                        <rect key="frame" x="18" y="60" width="128" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5V8-PK-tGU">
+                                        <rect key="frame" x="260" y="51" width="107" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Add Attractions"/>
+                                        <connections>
+                                            <action selector="showCurrentlLocationPark:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GRi-sF-uFS"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.85126906444458672" green="0.93336421520824531" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <accessibility key="accessibilityConfiguration" identifier="parksView"/>
@@ -152,6 +181,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="lBF-mF-fvE"/>
                     <connections>
+                        <outlet property="currentLocationParkNameLabel" destination="9eZ-s2-SZ1" id="pap-sW-bjc"/>
+                        <outlet property="currentLocationView" destination="KOS-Dh-fGQ" id="O4G-G4-Nbf"/>
                         <outlet property="listTableView" destination="7RB-uG-c7W" id="WAs-cU-qxz"/>
                     </connections>
                 </viewController>

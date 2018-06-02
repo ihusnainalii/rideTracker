@@ -33,6 +33,8 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Removes the two negative 1s that get created while saving to CoreData
         userAttractionDatabase.remove(at: 0)
         userAttractionDatabase.remove(at: 0)
         
@@ -155,6 +157,12 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         cell.rideTypeLabel.text = convertRideTypeID(rideTypeID: item.rideType)
         return cell
     }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        attractionsTableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     
     func convertRideTypeID(rideTypeID: Int) -> String {
         switch rideTypeID {
