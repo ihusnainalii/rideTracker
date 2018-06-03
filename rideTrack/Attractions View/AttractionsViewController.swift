@@ -233,6 +233,22 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         self.present(alertController, animated: true, completion:nil)
     }
     
+    func attractionTableViewCellDidUncheckRide(_ sender: AttractionsTableViewCell) {
+        guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
+        deleteRideCheck(rideID: attractionListForTable[indexPath.row].rideID)
+        attractionListForTable[indexPath.row].isCheck = false
+        attractionsTableView.reloadData()
+        
+        //UPDATE RIDES BEEN ON
+        self.userRidesRidden += -1
+        self.RidesComplete = String(self.userRidesRidden)
+        self.RidesComplete += "/"
+        self.RidesComplete += String(self.attractionListForTable.count)
+        self.NumCompleteLabel.text = self.RidesComplete
+        
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -240,15 +256,7 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
     
     
     
-    func attractionTableViewCellDidUncheckRide(_ sender: AttractionsTableViewCell) {
-        guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
-        print(attractionListForTable[indexPath.row].rideID)
-        deleteRideCheck(rideID: attractionListForTable[indexPath.row].rideID)
-        attractionListForTable[indexPath.row].isCheck = false
-        attractionsTableView.reloadData()
-        
-    }
-    
+  
     
     func save(parkID: Int, rideID: Int) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -284,16 +292,16 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         do
         {
             let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
-            
+
             for entity in fetchedResults! {
-                
+
                 managedContext.delete(entity)
                 print("Deleted ride \(rideID)")
             }
         }
         catch _ {
             print("Could not delete")
-            
+
         }
         
     }

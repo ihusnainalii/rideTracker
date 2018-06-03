@@ -10,6 +10,7 @@
 		5F16C51D20BB92FC00E525EF /* AttractionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16C51C20BB92FC00E525EF /* AttractionsTableViewCell.swift */; };
 		5F16C52520BCE89200E525EF /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */; };
 		5F16C52920BCF3F700E525EF /* ParkListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16C52820BCF3F700E525EF /* ParkListData.swift */; };
+		5F3564B920C381FE00648E30 /* ParksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3564B820C381FE00648E30 /* ParksTableViewCell.swift */; };
 		5FF1ECAA20B526EB00BE1609 /* RideTrack.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */; };
 		5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF1ECAB20B5271800BE1609 /* Main.storyboard */; };
 		5FF1ECB020B5271800BE1609 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */; };
@@ -50,6 +51,7 @@
 		5F16C51C20BB92FC00E525EF /* AttractionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionsTableViewCell.swift; sourceTree = "<group>"; };
 		5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		5F16C52820BCF3F700E525EF /* ParkListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkListData.swift; sourceTree = "<group>"; };
+		5F3564B820C381FE00648E30 /* ParksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksTableViewCell.swift; sourceTree = "<group>"; };
 		5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RideTrack.xcdatamodel; sourceTree = "<group>"; };
 		5FF1ECAC20B5271800BE1609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5FF1ECAE20B5271800BE1609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				5F16C52620BCF34500E525EF /* Data Models */,
 				5F16C52720BCF38200E525EF /* Attractions View */,
 				98AD7F6B20A91A5B00540AB3 /* ViewController.swift */,
+				5F3564B820C381FE00648E30 /* ParksTableViewCell.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
 				987028F320B7897E00DC3B73 /* SettingsViewController.swift */,
@@ -318,6 +321,7 @@
 				987028F420B7897E00DC3B73 /* SettingsViewController.swift in Sources */,
 				98AD7F7120A91A5C00540AB3 /* SuggestRideViewController.swift in Sources */,
 				5F16C51D20BB92FC00E525EF /* AttractionsTableViewCell.swift in Sources */,
+				5F3564B920C381FE00648E30 /* ParksTableViewCell.swift in Sources */,
 				98AD7F7220A91A5C00540AB3 /* UserAttraction.swift in Sources */,
 				98AD7F7420A91A5C00540AB3 /* AttractionsViewController.swift in Sources */,
 				98AD7F7520A91A5C00540AB3 /* ViewController.swift in Sources */,

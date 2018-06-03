@@ -12,7 +12,9 @@ import Foundation
 import CoreLocation
 
 
-class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, NSFetchedResultsControllerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, NSFetchedResultsControllerDelegate, ParkTableViewCellDelegate {
+    
+    
     
     @IBOutlet weak var listTableView: UITableView!
     
@@ -20,7 +22,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     //I got rid of it. Do you see it?
     var arrayOfAllParks = [ParksModel]()
     var selectedPark: ParksModel = ParksModel()
-    var parkID = 2
+    //var parkID = 2
     var titleTest = "test"
     var usersParkList = [ParksModel]()
     var park = ParksModel()
@@ -160,6 +162,39 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         print("GETTING GPS DATA")
     }
     
+    
+    
+    func parkTableViewCellDidRemovePark(_ sender: ParksTableViewCell) {
+        guard let indexPath = listTableView.indexPath(for: sender) else { return }
+
+        //Find and delete all the saved data for the selected parkID
+        var indexToRemove = 0
+        let removedParkID = usersParkList[indexPath.row].parkID
+        for i in 0..<userAttractionDatabase.count{
+            if userAttractionDatabase[i][0].parkID == removedParkID{
+                print("Delete all items in this array for park ID \(removedParkID!)")
+                indexToRemove = i
+                break
+            }
+        }
+        //Delete from coreData
+        for i in 0..<userAttractionDatabase[indexToRemove].count{
+            if userAttractionDatabase[indexToRemove][i].rideID != -1{
+                deleteRide(rideID: userAttractionDatabase[indexToRemove][i].rideID, parkID: removedParkID!)
+            }
+        }
+        
+        
+        userAttractionDatabase[indexToRemove].removeAll()
+        userAttractionDatabase.remove(at: indexToRemove)
+        usersParkList.remove(at: indexPath.row)
+
+        
+        printUserDatabase()
+        listTableView.reloadData()
+    
+    }
+    
     func save(parkID: Int, rideID: Int) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -185,23 +220,35 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     
-    //    func delete(_ indexPath : IndexPath) {
-    //
-    //        print("Deleting from... \(indexPath.row)")
-    //        // To delete a task we retrieve the corresponding
-    //        // object from the cell index.
-    //        let task = self.fetchRequest?.object(at: indexPath)
-    //
-    //        // Then we use the managed object context and delete that object.
-    //        self.managedContext?.delete(task!)
-    //
-    //        do {
-    //            // And try to persist the change. If successfull
-    //            // the fetched results controller will react and call the method
-    //            // to reload the table view.
-    //            try self.managedContext?.save()
-    //        } catch {}
-    //    }
+    func deleteRide(rideID: Int, parkID: Int) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
+        fetchRequest.predicate = NSPredicate(format: "rideID = %@", "\(rideID)")
+        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
+
+        do
+        {
+            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
+            
+            for entity in fetchedResults! {
+                
+                managedContext.delete(entity)
+                print("Deleted ride \(rideID)")
+                do {
+                    try managedContext.save() // <- remember to put this :)
+                } catch {
+                    // Do something... fatalerror
+                }
+            }
+        }
+        catch _ {
+            print("Could not delete")
+        }
+        
+    }
     
 
     
@@ -211,13 +258,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let myCellIdentifier = "BasicCell"
-        let myCell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: myCellIdentifier)!
-        //let item: ParksModel = feedItems[indexPath.row] as! ParksModel
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ParkCell", for: indexPath) as! ParksTableViewCell
+        cell.delegate = self
         let item: ParksModel = usersParkList[indexPath.row]
-        myCell.textLabel!.text = item.name
-        
-        return myCell
+        cell.parkNameLabel.text = item.name
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -246,7 +291,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             attractionVC.userAttractions = userAttractions
             attractionVC.showExtinct = showExtinct
             attractionVC.showPayed = showPayed
-            if userAttractionDatabase[downloadIncrementor].count != 0{
+            
+            //What is this next line doing with downloadIncrementor???????
+            //if userAttractionDatabase[downloadIncrementor].count != 0{
+            //if userAttractionDatabase.count != 0{
+            if userAttractionDatabase != [[]]{
                 for i in 0..<userAttractionDatabase.count {
                     if userAttractionDatabase[i][0].parkID == selectedPark.parkID{
                         // attractionVC.userAttractionDatabase = userAttractionDatabase[i]
@@ -281,12 +330,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     @IBAction func unwindToList(segue:UIStoryboardSegue) {
         if let sourceViewController = segue.source as? SettingsViewController, let pressReset = sourceViewController.resetPressed{
-        print ("BACK FROM SETTINGS")
+            print ("BACK FROM SETTINGS")
             if (pressReset == 1) {
-            print("RESET WAS PRESSED")
-            usersParkList = []
-            self.listTableView.reloadData()
-        }
+                print("RESET WAS PRESSED")
+                downloadIncrementor = 0
+                usersParkList = []
+                self.listTableView.reloadData()
+                userAttractionDatabase = [[]]
+            }
         }
     }
     
@@ -320,7 +371,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         print("Ignore the fact that each park always starts with -1")
         
         //FIX: THIS SOMETIMES CAUSES CRASH AFTER DATA RESET
-        if (userAttractionDatabase[downloadIncrementor].count == 0){
+        //Why use downloadIncrementor????????
+        //if (userAttractionDatabase[downloadIncrementor].count == 0){
+        if userAttractionDatabase == [[]]{
             print ("Current user database is empty")
         }
         else{
