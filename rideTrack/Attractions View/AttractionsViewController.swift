@@ -317,21 +317,14 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         if segue.identifier == "ToDetails"{
             let detailsVC = segue.destination as! AttractionsDetailsViewController
             let selectedIndex = attractionsTableView.indexPathForSelectedRow?.row
-            //let selectedRide = attractionsTableView[selectedIndex!]
+
             let selectedRide = attractionListForTable[selectedIndex!]
             rideID = selectedRide.rideID
             rideName = selectedRide.name
-            let yearOpen = selectedRide.yearOpen
-            let yearClose = selectedRide.yearClosed
-            let active = selectedRide.active
-            let type = selectedRide.rideType
             print (rideName)
-            detailsVC.rideID = rideID
-            detailsVC.rideName = rideName
-            detailsVC.yearOpen = yearOpen!
-            detailsVC.yearClose = yearClose!
-            detailsVC.active = active!
-            detailsVC.type = type!
+            detailsVC.selectedRide = selectedRide
+          //  detailsVC.isFavorite = isFavorite!
+            
             
         }
        

@@ -9,13 +9,12 @@
 import UIKit
 
 class AttractionsDetailsViewController: UIViewController {
-    var rideID = 0
-    var rideName = ""
-    var yearClose = 0
-    var yearOpen = 0
-    var active = 0
-    var type = 0
     var typeString = ""
+    var selectedRide = AttractionsModel()
+    var favorites = [Int]()
+    let favList = UserDefaults.standard
+    var isFavorite = false
+    //let favorites = favList.array(forKey: "SavedIntArray")  as? [Int] ?? [Int]()
     
     @IBOutlet weak var CurrentlyOpenLabel: UILabel!
     @IBOutlet weak var rideNameLabel: UILabel!
@@ -23,27 +22,31 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var yearOpenLabel: UITextField!
     @IBOutlet weak var yearCloseText: UILabel!
     @IBOutlet weak var attractiontype: UITextField!
+    @IBOutlet weak var favButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        rideNameLabel.text = rideName
-        if yearOpen == 0{
+        let savedFavorite = favList.array(forKey: "SavedIntArray")  as? [Int] ?? [Int]()
+        
+        
+        rideNameLabel.text = selectedRide.name
+        if selectedRide.yearOpen == 0{
             yearOpenLabel.text = "Unknown"
         }
         else{
-        yearOpenLabel.text = String(yearOpen)
+            yearOpenLabel.text = String(selectedRide.yearOpen)
         }
-        if active == 1 {
+        if selectedRide.active == 1 {
             yearCloseLabel.isHidden = true
             yearCloseText.isHidden = true
             
         }
         else {
-            yearCloseLabel.text = String (yearClose)
+            yearCloseLabel.text = String (selectedRide.yearClosed)
             CurrentlyOpenLabel.isHidden = true
         }
         
-        switch type {                       //FIX THIS....THIS ONLY WORKS NOW AS THE DATABASE IS WRONG!!!!
+        switch selectedRide.rideType {                       //FIX THIS....THIS ONLY WORKS NOW AS THE DATABASE IS WRONG!!!!
         case 1:
             typeString = "Roller Coaster"
         case 2:
@@ -77,23 +80,55 @@ class AttractionsDetailsViewController: UIViewController {
             attractiontype.isHidden = true
         }
         attractiontype.text = typeString
+        print ("Printing favorite rides")
+        for i in 0..<savedFavorite.count{
+            print (savedFavorite [i])
+            if savedFavorite[i] == selectedRide.rideID {
+                print("this is a favorite")
+                isFavorite = true
+                favButton.setTitleColor(UIColor.yellow, for: .normal)
+            }
+            favorites.append(savedFavorite[i])
+        }
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func favButtonToggled(_ sender: Any) {
+        if isFavorite == false{
+            favButton.setTitleColor(UIColor.yellow, for: .normal)
+            isFavorite = true
+            print ("Adding ride ID to fav list: ", selectedRide.rideID)
+            favorites.append(selectedRide.rideID)
+            
+        }
+        else {
+            for i in 0..<favorites.count{
+                if favorites[i] == selectedRide.rideID {
+                    print("Deleting from list: ", selectedRide.rideID)
+                    favorites.remove(at: i)
+                    break
+                }
+            }
+            //favorites.remove(at: rideID)
+            favButton.setTitleColor(UIColor.black, for: .normal)
+            isFavorite = false
+        }
+        favList.set(favorites, forKey: "SavedIntArray")
     }
-    */
-
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
