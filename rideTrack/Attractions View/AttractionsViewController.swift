@@ -11,12 +11,13 @@ import CoreData
 
 
 class AttractionsViewController: UIViewController, UITableViewDataSource, DataModelProtocol, AttractionsTableViewCellDelegate {
+  
    
     
     @IBOutlet weak var attractionsTableView: UITableView!
     @IBOutlet weak var parkLabel: UILabel!
     @IBOutlet weak var NumCompleteLabel: UILabel!
-    
+
     var titleName = ""
     var parkID = 0
     var attractionListForTable = [AttractionsModel]()
@@ -35,8 +36,10 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         super.viewDidLoad()
         
         //Removes the two negative 1s that get created while saving to CoreData
+        //Not good... always going to assume that there are 2 -1s at the beginning of the list
         userAttractionDatabase.remove(at: 0)
         userAttractionDatabase.remove(at: 0)
+
         
         //attractionsTableView.allowsSelection = false          //TURN THIS BACK ON
         
@@ -53,6 +56,8 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         // Do any additional setup after loading the view, typically from a nib.
     }
 
+
+    
     
     func itemsDownloaded(items: NSArray) {
         for i in 0..<items.count{
@@ -139,11 +144,13 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         if attractionListForTable.count != 1{
             if ((attractionListForTable[indexPath.row]).isCheck){
                 cell.rideName?.textColor = UIColor.green
+                cell.uncheckRideButton.isHidden = false
                 cell.addRideButton.isEnabled = false
             }
             else{
                 cell.rideName?.textColor = UIColor.black
                 cell.addRideButton.isEnabled = true
+                cell.uncheckRideButton.isHidden = true
 
             }
             if (attractionListForTable[indexPath.row]).active == 1 {
@@ -195,6 +202,8 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         }
     }
     
+    
+    
     func attractionsTableViewCellDidTapAddRide(_ sender: AttractionsTableViewCell) {
         guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
         
@@ -229,6 +238,18 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
+    func attractionTableViewCellDidUncheckRide(_ sender: AttractionsTableViewCell) {
+        guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
+        print(attractionListForTable[indexPath.row].rideID)
+        deleteRideCheck(rideID: attractionListForTable[indexPath.row].rideID)
+        attractionListForTable[indexPath.row].isCheck = false
+        attractionsTableView.reloadData()
+        
+    }
+    
+    
     func save(parkID: Int, rideID: Int) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -251,6 +272,30 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
+    }
+    
+    func deleteRideCheck(rideID: Int) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
+        fetchRequest.predicate = NSPredicate(format: "rideID = %@", "\(rideID)")
+        do
+        {
+            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
+            
+            for entity in fetchedResults! {
+                
+                managedContext.delete(entity)
+                print("Deleted ride \(rideID)")
+            }
+        }
+        catch _ {
+            print("Could not delete")
+            
+        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -283,6 +328,8 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         }
        
     }
+    
+    
     
 
     /*

@@ -297,7 +297,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GtQ-5d-cjS">
-                                                    <rect key="frame" x="319" y="14" width="22" height="22"/>
+                                                    <rect key="frame" x="323" y="16" width="22" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <connections>
                                                         <action selector="addButtonTapped:" destination="NuC-H2-735" eventType="touchUpInside" id="aV1-j1-Cgr"/>
@@ -310,12 +310,21 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2xK-kM-CV3">
+                                                    <rect key="frame" x="254" y="23" width="61" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Uncheck"/>
+                                                    <connections>
+                                                        <action selector="uncheckButtonTapped:" destination="NuC-H2-735" eventType="touchUpInside" id="8fQ-Fb-Iid"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="addRideButton" destination="GtQ-5d-cjS" id="00M-Ae-MCl"/>
                                             <outlet property="rideName" destination="5NX-fB-zEo" id="UYT-HF-VTz"/>
                                             <outlet property="rideTypeLabel" destination="S5W-Vh-fGx" id="qRD-nt-pLN"/>
+                                            <outlet property="uncheckRideButton" destination="2xK-kM-CV3" id="IQq-xY-zid"/>
                                             <segue destination="S7M-68-41E" kind="show" identifier="ToDetails" id="dSs-Jp-6lX"/>
                                         </connections>
                                     </tableViewCell>

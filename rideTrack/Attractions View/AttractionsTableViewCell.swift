@@ -13,6 +13,7 @@ class AttractionsTableViewCell: UITableViewCell {
     @IBOutlet weak var rideName: UILabel!
     @IBOutlet weak var addRideButton: UIButton!
     @IBOutlet weak var rideTypeLabel: UILabel!
+    @IBOutlet weak var uncheckRideButton: UIButton!
     
     weak var delegate: AttractionsTableViewCellDelegate?
     
@@ -21,6 +22,9 @@ class AttractionsTableViewCell: UITableViewCell {
         delegate?.attractionsTableViewCellDidTapAddRide(self)
     }
     
+    @IBAction func uncheckButtonTapped(_ sender: Any) {
+        delegate?.attractionTableViewCellDidUncheckRide(self)
+    }
     
 
     override func awakeFromNib() {
@@ -38,4 +42,5 @@ class AttractionsTableViewCell: UITableViewCell {
 
 protocol AttractionsTableViewCellDelegate : class {
     func attractionsTableViewCellDidTapAddRide(_ sender: AttractionsTableViewCell)
+    func attractionTableViewCellDidUncheckRide(_ sender: AttractionsTableViewCell)
 }
