@@ -19,10 +19,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var listTableView: UITableView!
     
     
-    //I got rid of it. Do you see it?
     var arrayOfAllParks = [ParksModel]()
     var selectedPark: ParksModel = ParksModel()
-    //var parkID = 2
     var titleTest = "test"
     var usersParkList = [ParksModel]()
     var park = ParksModel()
@@ -41,7 +39,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
 
     
     var userAttractionDatabase: [[UserAttractionProvider]] = [[]]
-    //var userAttractionProvider: UserAttractionProvider? = nil
     var userAttractions: [NSManagedObject] = []
     
     var fetchRequest: NSFetchedResultsController<RideTrack>? = nil
@@ -70,6 +67,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         //        self.save(parkID: 188, rideID: 73)
         //        self.save(parkID: 138, rideID: 35)
         
+        //Initialize current location UI
         currentLocationView.frame = CGRect(x: 0, y: Int(screenSize.height + 100), width: Int(screenSize.width), height: 100)
         currentLocationView.layer.shadowOffset = CGSize.zero
         currentLocationView.layer.shadowRadius = 12
@@ -81,25 +79,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         self.listTableView.delegate = self
         self.listTableView.dataSource = self
         
-        print(usersParkList.count)
-        if usersParkList.count != 0{
-            print(usersParkList[usersParkList.count - 1])
-            printUserDatabase()
-        }
-        else{
-            print("user parks list is empty")
-        }
-        
-        //Initialize Note contentProvider
-        
         let urlPath = "http://www.beingpositioned.com/theparksman/parksdbservice.php"
         
         let dataModel = DataModel()
         dataModel.delegate = self
-        
         dataModel.downloadData(urlPath: urlPath, dataBase: "parks")
-        
     }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         print ("AT TOP, ShowExtinct is ", showExtinct)
         segueWithTableViewSelect = true
@@ -178,21 +165,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             }
         }
         //Delete from coreData
+        deletePark(parkID: removedParkID!)
+        
         for i in 0..<userAttractionDatabase[indexToRemove].count{
             if userAttractionDatabase[indexToRemove][i].rideID != -1{
-                deleteRide(rideID: userAttractionDatabase[indexToRemove][i].rideID, parkID: removedParkID!)
+                //deletePark(parkID: removedParkID!)
             }
         }
-        
         
         userAttractionDatabase[indexToRemove].removeAll()
         userAttractionDatabase.remove(at: indexToRemove)
         usersParkList.remove(at: indexPath.row)
 
-        
         printUserDatabase()
         listTableView.reloadData()
-    
     }
     
     func save(parkID: Int, rideID: Int) {
@@ -220,13 +206,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     
-    func deleteRide(rideID: Int, parkID: Int) {
+    func deletePark(parkID: Int) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
-        fetchRequest.predicate = NSPredicate(format: "rideID = %@", "\(rideID)")
+        //fetchRequest.predicate = NSPredicate(format: "rideID = %@", "\(rideID)")
         fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
 
         do
@@ -236,9 +222,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             for entity in fetchedResults! {
                 
                 managedContext.delete(entity)
-                print("Deleted ride \(rideID)")
+                print("Deleted park \(parkID)")
                 do {
-                    try managedContext.save() // <- remember to put this :)
+                    try managedContext.save()
                 } catch {
                     // Do something... fatalerror
                 }
@@ -253,7 +239,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return feedItems.count
         return usersParkList.count
     }
     
@@ -389,9 +374,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                     stringToPrint += "Empty"
                 }
             }
-            print("This is size of UserAttractions: ", userAttractions.count)
+
+            
             print(stringToPrint)
         }
+        print("This is size of UserAttractions (CoreData): ", userAttractions.count)
         print("")
     }
     
@@ -401,6 +388,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         var firstTime = true
         print("\nPrint the migration:")
         var parkIndex = 0
+        
+        //Loop through entire userAttractions array, which was fetched from CoreData
         for i in 0..<userAttractions.count {
             let ride = userAttractions[i]
             var rideNext = userAttractions[i]
@@ -415,21 +404,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let compare2 = rideNext.value(forKeyPath: "parkID") as! Int
             
             if firstTime{
-                //print("first time")
-                //userAttractionDatabase[0] = [UserAttractionProvider(parkID: compare1)]
+                //Create inital entry in the 2D array with first parkID
                 userAttractionDatabase[0] = [UserAttractionProvider(rideID: -1, parkID: compare1)]
-                
+                print("RUNNING")
                 firstTime = false
             }
             userAttractionDatabase[parkIndex].append(UserAttractionProvider(rideID: ride.value(forKeyPath: "rideID") as! Int, parkID: compare1))
             
             if compare1 != compare2 && i != userAttractions.count - 1{
+                //Add a new park to the 2D array
                 parkIndex += 1
-                //userAttractionDatabase.append([UserAttractionProvider(parkID: compare2)])
                 userAttractionDatabase.append([UserAttractionProvider(rideID: -1, parkID: compare2)])
-                
-                //userAttractionDatabase.append([UserAttractionProvider(rideID: rideNext.value(forKeyPath: "parkID") as! Int, parkID: compare2)])
-                //i += 1
             }
         }
         
@@ -448,6 +433,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             latitude = location.coordinate.latitude
             longitude = location.coordinate.longitude
             var oneMileParks = [ParksModel]()
+            
             //Simulate you are at Epcot
 //            latitude = 28.3667
 //            longitude = -81.5495
@@ -460,6 +446,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             
             let currentLocation = CLLocation(latitude: latitude!, longitude: longitude!)
             for i in 0..<arrayOfAllParks.count{
+                
                 //distance is in meters, so if the distance is less than 1 mile, or 1609 meters, print that
                 if currentLocation.distance(from: arrayOfAllParks[i].getLocation()) < 1609 {
                     print("User is within one mile of \(arrayOfAllParks[i].name!)")
@@ -467,6 +454,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 }
             }
             if oneMileParks.count != 0{
+                
                 //There is more than 1 park within a mile of the user. Find the closests park to present to user
                 var closestParkTemp = currentLocation.distance(from: oneMileParks[0].getLocation())
                 closestPark = oneMileParks[0]
@@ -477,6 +465,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                     }
                 }
                 print("Closest park is \(closestPark.name!)")
+                
+                //Begin animating the UI with the new current location park
                 currentLocationParkNameLabel.text = closestPark.name!
                 UIView.animate(withDuration: 0.6, animations: {
                     self.currentLocationView.frame = CGRect(x: 0, y: Int(self.screenSize.height - 100), width: Int(self.screenSize.width), height: 100)
@@ -486,6 +476,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         }
     }
+    
     
     @IBAction func showCurrentlLocationPark(_ sender: Any) {
         if checkIfNewPark(newPark: closestPark){
