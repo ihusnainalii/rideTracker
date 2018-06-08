@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     var parkName = ""
     var parkID = 0
@@ -20,7 +20,9 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     @IBOutlet weak var pickerType: UIPickerView!
     @IBOutlet weak var activeSwitch: UISwitch!
     @IBOutlet weak var YearClosedText: UILabel!
-
+    @IBOutlet weak var manufacturerText: UITextField!
+    @IBOutlet weak var notesText: UITextView!
+    
     var pickerData: [String] = [String]()
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -59,10 +61,13 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         textFieldClose.isHidden = true
         YearClosedText.isHidden = true
          self.textFieldClose.keyboardType = UIKeyboardType.numberPad
-        //WORK ON IMPLEMENTATION OF NUMERIC KEYPAD
         self.textFieldOpen.keyboardType = UIKeyboardType.numberPad
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
-
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //hide keyboard when tapping the anywhere else
+        
+         var borderColor : UIColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.0)
+        notesText.layer.borderWidth = 0.5
+        notesText.layer.borderColor = borderColor.cgColor
+        notesText.layer.cornerRadius = 5.0
         // Do any additional setup after loading the view.
     }
     @IBAction func extinctSwitch(_ sender: Any) {
@@ -89,6 +94,8 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         let close = textFieldClose.text
         let type = rideType
         let orgPark = parkName
+        let orgmanufacturer = manufacturerText.text
+        let orgnotes = notesText.text
         var Active = 1
         
         if (activeSwitch?.isOn)!{
@@ -115,11 +122,12 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
             let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
                 let park = orgPark.replacingOccurrences(of: " ", with: "_")
                 let ride = orgRide?.replacingOccurrences(of: " ", with: "_")
-                
+                let manufacturer = orgmanufacturer?.replacingOccurrences(of: " ", with: "_")
+                let notes = orgnotes?.replacingOccurrences(of: " ", with: "_")
                 
                 //creating the post parameter by concatenating the keys and values from text field
                 
-                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(ride!)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)"
+                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(ride!)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(manufacturer!)&notes=\(notes!)"
                 print (urlPath)
                 Active = 1
                 dataModel.downloadData(urlPath: urlPath, dataBase: "upload")
@@ -178,8 +186,36 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    func moveTextField(textField: UITextView, moveDistance: Int, up: Bool) {
+        let moveDuration = 0.3
+        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
+        
+        UIView.beginAnimations("animateTextField", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(moveDuration)
+        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+        UIView.commitAnimations()
+    }
 
-    
+
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if (textView == notesText){
+            print ("Text field is: ", textView)
+            moveTextField(textField: textView, moveDistance: -250, up: true)
+            print ("BELOW OPENING")
+        }
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if (textView == notesText){
+            print ("Text field is: ", textView)
+            moveTextField(textField: textView, moveDistance: -250, up: false)
+            print ("BELOW OPENING")
+        }
+    }
+    func TextFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+   
 }
 
