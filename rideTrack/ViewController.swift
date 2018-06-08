@@ -53,19 +53,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
 
 
     override func viewDidLoad() {
-        //deleteRecords()
-        //        //self.delete(parkID: 105, rideID: 1)
-        //        //        self.delete(IndexPath(item: 1, section: 0))
-        //        //        self.delete(IndexPath(item: 4, section: 0))
-        //
-        //        //Add temp data
-        //        self.save(parkID: 105, rideID: 1)
-        //        //self.save(parkID: 105, rideID: 3)
-        //        self.save(parkID: 112, rideID: 11)
-        //        self.save(parkID: 188, rideID: 78)
-        //        self.save(parkID: 112, rideID: 7)
-        //        self.save(parkID: 188, rideID: 73)
-        //        self.save(parkID: 138, rideID: 35)
         
         //Initialize current location UI
         currentLocationView.frame = CGRect(x: 0, y: Int(screenSize.height + 100), width: Int(screenSize.width), height: 100)
@@ -401,6 +388,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             }
             
             let compare1 = ride.value(forKeyPath: "parkID") as! Int
+            //Crashes when
             let compare2 = rideNext.value(forKeyPath: "parkID") as! Int
             
             if firstTime{
