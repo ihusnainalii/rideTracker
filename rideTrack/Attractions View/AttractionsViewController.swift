@@ -11,9 +11,7 @@ import CoreData
 
 
 class AttractionsViewController: UIViewController, UITableViewDataSource, DataModelProtocol, AttractionsTableViewCellDelegate {
-  
    
-    
     @IBOutlet weak var attractionsTableView: UITableView!
     @IBOutlet weak var parkLabel: UILabel!
     @IBOutlet weak var NumCompleteLabel: UILabel!
@@ -23,7 +21,10 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
     var attractionListForTable = [AttractionsModel]()
     var showExtinct = 0
     var showPayed = 0
+    
+    //From the datamigration tool:
     var userAttractionDatabase: [UserAttractionProvider]!
+    
     let green = UIColor(red: 120.0/255.0, green: 205.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor as CGColor
     var userAttractions: [NSManagedObject] = []
     var userNumExtinct = 0
@@ -73,17 +74,35 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
                 var userDataBaseIndex = 0
                 let maxUserAttractionCount = userAttractionDatabase.count
                 for i in 0..<attractionListForTable.count{
+                    //Is this line needed???
                     if userDataBaseIndex < maxUserAttractionCount{
                         if (attractionListForTable[i]).rideID == userAttractionDatabase[userDataBaseIndex].rideID{
+                            
+                            //The user does have data for this ride
                             print ("We have ridden ride # ", userAttractionDatabase[userDataBaseIndex].rideID!)
-                            (attractionListForTable[i]).isCheck = true
+                            attractionListForTable[i].isCheck = true
+                            
+                            //Data migration tool to allow for easy updates to the newest verison with the "numberOfTimesRidden" part saved in coredata. Next chunch can be deleted once everyone has updated
+                            if userAttractionDatabase[userDataBaseIndex].numberOfTimesRidden == 0{
+                                attractionListForTable[i].numberOfTimesRidden = 1
+                            }
+                            
+                            //Uncomment when everyone has migrated
+//                              attractionListForTable[i].numberOfTimesRidden = userAttractionDatabase[userDataBaseIndex].numberOfTimesRidden
                             if attractionListForTable[i].active == 0 {
                                 userNumExtinct += 1
                             }
                             userDataBaseIndex += 1
                         }
                         else{
+                            //User doesn't have any data stored for this ride
+                            attractionListForTable[i].numberOfTimesRidden = 0
                         }
+                    }
+                    else{
+                        //The user does not have any data stored for any of the rest of the rides in this park. Can this be replaced with a break?
+                        attractionListForTable[i].numberOfTimesRidden = 0
+
                     }
                 }
             }
@@ -144,13 +163,19 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         if attractionListForTable.count != 1{
             if ((attractionListForTable[indexPath.row]).isCheck){
                 cell.rideName?.textColor = UIColor.green
-                cell.uncheckRideButton.isHidden = false
                 cell.addRideButton.isEnabled = false
+                cell.addRideButton.isHidden = true
+                cell.numberOfRidesLabel.isHidden = false
+                cell.plusButtonIncrement.isHidden = false
+                cell.minusIncrementButton.isHidden = false
             }
             else{
                 cell.rideName?.textColor = UIColor.black
                 cell.addRideButton.isEnabled = true
-                cell.uncheckRideButton.isHidden = true
+                cell.addRideButton.isHidden = false
+                cell.numberOfRidesLabel.isHidden = true
+                cell.plusButtonIncrement.isHidden = true
+                cell.minusIncrementButton.isHidden = true
 
             }
             if (attractionListForTable[indexPath.row]).active == 1 {
@@ -162,6 +187,7 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         }
         cell.rideName!.text = item.name
         cell.rideTypeLabel.text = convertRideTypeID(rideTypeID: item.rideType)
+        cell.numberOfRidesLabel.text = String(item.numberOfTimesRidden)
         return cell
     }
     
@@ -212,11 +238,13 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         // Create OK button
         let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
             // Code in this block will trigger when OK button tapped.
-            print ("Seclected Attraction is: ", (self.attractionListForTable[indexPath.row]).rideID);
+            print ("Seclected Attraction is: ", (self.attractionListForTable[indexPath.row]).rideID)
             
-            (self.attractionListForTable[indexPath.row]).isCheck = true;
-            self.save(parkID: self.parkID, rideID: (self.attractionListForTable[indexPath.row]).rideID);
+            (self.attractionListForTable[indexPath.row]).isCheck = true
+            self.attractionListForTable[indexPath.row].numberOfTimesRidden = 1
+            self.saveUserCheckOffNewRide(parkID: self.parkID, rideID: (self.attractionListForTable[indexPath.row]).rideID);
             self.attractionsTableView.reloadData()
+            
             //UPDATE RIDES BEEN ON
             self.userRidesRidden += 1
             self.RidesComplete = String(self.userRidesRidden)
@@ -233,20 +261,41 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         self.present(alertController, animated: true, completion:nil)
     }
     
-    func attractionTableViewCellDidUncheckRide(_ sender: AttractionsTableViewCell) {
+    func attractionCellNegativeIncrement(_ sender: AttractionsTableViewCell) {
         guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
-        deleteRideCheck(rideID: attractionListForTable[indexPath.row].rideID)
-        attractionListForTable[indexPath.row].isCheck = false
-        attractionsTableView.reloadData()
+        print("Minus")
         
-        //UPDATE RIDES BEEN ON
-        self.userRidesRidden += -1
-        self.RidesComplete = String(self.userRidesRidden)
-        self.RidesComplete += "/"
-        self.RidesComplete += String(self.attractionListForTable.count)
-        self.NumCompleteLabel.text = self.RidesComplete
-        
+        if attractionListForTable[indexPath.row].numberOfTimesRidden == 1{
+            //User is unchecking the ride from their list
+            deleteRideCheck(rideID: attractionListForTable[indexPath.row].rideID)
+            attractionListForTable[indexPath.row].numberOfTimesRidden = 0
+            attractionListForTable[indexPath.row].isCheck = false
+            attractionsTableView.reloadData()
+            
+            //UPDATE RIDES BEEN ON
+            self.userRidesRidden += -1
+            self.RidesComplete = String(self.userRidesRidden)
+            self.RidesComplete += "/"
+            self.RidesComplete += String(self.attractionListForTable.count)
+            self.NumCompleteLabel.text = self.RidesComplete
+        }
+        else{
+            let newIncrement = attractionListForTable[indexPath.row].numberOfTimesRidden - 1
+            saveIncrementRideCount(rideID:  attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement)
+            attractionListForTable[indexPath.row].numberOfTimesRidden = newIncrement
+            attractionsTableView.reloadData()
+        }
     }
+    
+    func attractionCellPositiveIncrement(_ sender: AttractionsTableViewCell) {
+        print("plus")
+        guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
+        let newIncrement = attractionListForTable[indexPath.row].numberOfTimesRidden + 1
+        saveIncrementRideCount(rideID:  attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement)
+        attractionListForTable[indexPath.row].numberOfTimesRidden = newIncrement
+        attractionsTableView.reloadData()
+    }
+    
     
     
     override func didReceiveMemoryWarning() {
@@ -258,7 +307,7 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
     
   
     
-    func save(parkID: Int, rideID: Int) {
+    func saveUserCheckOffNewRide(parkID: Int, rideID: Int) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
@@ -273,6 +322,7 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         
         newPark.setValue(parkID, forKeyPath: "parkID")
         newPark.setValue(rideID, forKeyPath: "rideID")
+        newPark.setValue(1, forKey: "numberOfTimesRidden")
         print("Just saved Attraction: ", rideID)
         do {
             try managedContext.save()
@@ -296,12 +346,39 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
             for entity in fetchedResults! {
 
                 managedContext.delete(entity)
+                try! managedContext.save()
                 print("Deleted ride \(rideID)")
             }
         }
         catch _ {
             print("Could not delete")
 
+        }
+        
+    }
+    
+    func saveIncrementRideCount(rideID: Int, incrementTo: Int){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
+        fetchRequest.predicate = NSPredicate(format: "rideID = %@", "\(rideID)")
+        do
+        {
+            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
+            
+            
+            for entity in fetchedResults! {
+                entity.setValue(incrementTo, forKey: "numberOfTimesRidden")
+                try! managedContext.save()
+                print("Increment ride \(rideID) to \(incrementTo)")
+                
+            }
+        }
+        catch _ {
+            print("Could not increment")
+            
         }
         
     }

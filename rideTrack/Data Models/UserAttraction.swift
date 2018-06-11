@@ -18,6 +18,7 @@ class UserAttractionProvider: NSObject {
     var userAttractions: [NSManagedObject] = []
     var rideID: Int!
     var parkID: Int!
+    var numberOfTimesRidden: Int!
     
     var favorite: Bool!
     var numberOfRides: Int!
@@ -31,9 +32,10 @@ class UserAttractionProvider: NSObject {
     override init() {
     }
     
-    init(rideID: Int, parkID: Int) {
+    init(rideID: Int, parkID: Int, numberOfTimesRidden: Int) {
         self.rideID = rideID
         self.parkID = parkID
+        self.numberOfTimesRidden = numberOfTimesRidden
         
     }
     

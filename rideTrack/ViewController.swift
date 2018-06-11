@@ -182,6 +182,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         newPark.setValue(parkID, forKeyPath: "parkID")
         newPark.setValue(rideID, forKeyPath: "rideID")
+        newPark.setValue(0, forKey: "numberOfTimesRidden")
         
         print("Just saved new park: ", parkID)
         do {
@@ -393,16 +394,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             
             if firstTime{
                 //Create inital entry in the 2D array with first parkID
-                userAttractionDatabase[0] = [UserAttractionProvider(rideID: -1, parkID: compare1)]
+                userAttractionDatabase[0] = [UserAttractionProvider(rideID: -1, parkID: compare1, numberOfTimesRidden: ride.value(forKey: "numberOfTimesRidden") as! Int)]
+            
                 print("RUNNING")
                 firstTime = false
             }
-            userAttractionDatabase[parkIndex].append(UserAttractionProvider(rideID: ride.value(forKeyPath: "rideID") as! Int, parkID: compare1))
+            userAttractionDatabase[parkIndex].append(UserAttractionProvider(rideID: ride.value(forKeyPath: "rideID") as! Int, parkID: compare1, numberOfTimesRidden: ride.value(forKey: "numberOfTimesRidden") as! Int))
             
             if compare1 != compare2 && i != userAttractions.count - 1{
                 //Add a new park to the 2D array
                 parkIndex += 1
-                userAttractionDatabase.append([UserAttractionProvider(rideID: -1, parkID: compare2)])
+                //userAttractionDatabase.append([UserAttractionProvider(rideID: -1, parkID: compare2)])
+                userAttractionDatabase.append([UserAttractionProvider(rideID: -1, parkID: compare2, numberOfTimesRidden: ride.value(forKey: "numberOfTimesRidden") as! Int)])
             }
         }
         
@@ -413,6 +416,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             }
             
         }
+        
+        print(userAttractionDatabase[0][2].numberOfTimesRidden)
         printUserDatabase()
     }
     
