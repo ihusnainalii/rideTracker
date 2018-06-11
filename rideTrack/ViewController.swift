@@ -417,7 +417,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             
         }
         
-        print(userAttractionDatabase[0][2].numberOfTimesRidden)
         printUserDatabase()
     }
     

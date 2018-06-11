@@ -82,13 +82,8 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
                             print ("We have ridden ride # ", userAttractionDatabase[userDataBaseIndex].rideID!)
                             attractionListForTable[i].isCheck = true
                             
-                            //Data migration tool to allow for easy updates to the newest verison with the "numberOfTimesRidden" part saved in coredata. Next chunch can be deleted once everyone has updated
-                            if userAttractionDatabase[userDataBaseIndex].numberOfTimesRidden == 0{
-                                attractionListForTable[i].numberOfTimesRidden = 1
-                            }
-                            
-                            //Uncomment when everyone has migrated
-//                              attractionListForTable[i].numberOfTimesRidden = userAttractionDatabase[userDataBaseIndex].numberOfTimesRidden
+                        
+                            attractionListForTable[i].numberOfTimesRidden = userAttractionDatabase[userDataBaseIndex].numberOfTimesRidden
                             if attractionListForTable[i].active == 0 {
                                 userNumExtinct += 1
                             }
@@ -102,7 +97,11 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
                     else{
                         //The user does not have any data stored for any of the rest of the rides in this park. Can this be replaced with a break?
                         attractionListForTable[i].numberOfTimesRidden = 0
-
+                        
+                    }
+                    if attractionListForTable[i].numberOfTimesRidden == nil{
+                        print("attraction list at rideID \(attractionListForTable[i].rideID!) found nil")
+                        attractionListForTable[i].numberOfTimesRidden = 0
                     }
                 }
             }
