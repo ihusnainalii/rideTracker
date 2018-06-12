@@ -20,6 +20,7 @@ class AttractionsModel: NSObject {
     var isCheck: Bool!
     var scoreCard: Int!
     var isFavorite: Bool!
+    var isIgnored: Bool!
     var numberOfTimesRidden: Int!
     var dateFirstRidden: Date!
     var dateLastRidden: Date!
@@ -37,6 +38,7 @@ class AttractionsModel: NSObject {
         self.active = active
         self.isCheck = isCheck
         self.isFavorite = isFavorite
+        self.isIgnored = isIgnored
         self.numberOfTimesRidden = numberOfTimesRidden
         self.dateFirstRidden = dateFirstRidden
         self.dateLastRidden = dateLastRidden
@@ -51,4 +53,6 @@ class AttractionsModel: NSObject {
     override var description: String{
         return "Attraction name: \(name)!, Park ID: \(parkID)!"
     }
+    
+    
 }

@@ -48,6 +48,7 @@ class UserAttractionProvider: NSObject {
     init(parkID: Int) {
         self.parkID = parkID
     }
+    
     /**
      * Insert a new record into the database using NSManagedObjectContext
      *

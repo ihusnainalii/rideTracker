@@ -15,13 +15,15 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
     @IBOutlet weak var attractionsTableView: UITableView!
     @IBOutlet weak var parkLabel: UILabel!
     @IBOutlet weak var NumCompleteLabel: UILabel!
-
+    @IBOutlet weak var extinctLabel: UILabel!
+    @IBOutlet weak var extinctText: UITextField!
+    
     var titleName = ""
     var parkID = 0
     var attractionListForTable = [AttractionsModel]()
     var showExtinct = 0
     var showPayed = 0
-    
+    var isIgnored = false
     //From the datamigration tool:
     var userAttractionDatabase: [UserAttractionProvider]!
     
@@ -30,8 +32,10 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
     var userNumExtinct = 0
     var userRidesRidden = 0
     var RidesComplete = ""
+    var extinctComplete = ""
     var rideID = 0
     var rideName = ""
+    var totalNumExtinct = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +69,7 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
             attractionListForTable.append(items[i] as! AttractionsModel)
             //attractionListForTable.add(items[i])
         }
-        
+       
         if (items.count == 0){
             print ("this park is empty")
         }
@@ -81,7 +85,7 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
                             //The user does have data for this ride
                             print ("We have ridden ride # ", userAttractionDatabase[userDataBaseIndex].rideID!)
                             attractionListForTable[i].isCheck = true
-                            
+                            userRidesRidden += 1
                         
                             attractionListForTable[i].numberOfTimesRidden = userAttractionDatabase[userDataBaseIndex].numberOfTimesRidden
                             attractionListForTable[i].dateLastRidden = userAttractionDatabase[userDataBaseIndex].dateLastRidden
@@ -91,16 +95,21 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
                             }
                             userDataBaseIndex += 1
                         }
+                        
                         else{
                             //User doesn't have any data stored for this ride
                             attractionListForTable[i].numberOfTimesRidden = 0
                             
                         }
+
                     }
                     else{
                         //The user does not have any data stored for any of the rest of the rides in this park. Can this be replaced with a break?
                         attractionListForTable[i].numberOfTimesRidden = 0
                         
+                    }
+                    if attractionListForTable[i].active == 0 { //&& showExtinct == 1
+                         totalNumExtinct += 1
                     }
                     if attractionListForTable[i].numberOfTimesRidden == nil{
                         print("attraction list at rideID \(attractionListForTable[i].rideID!) found nil")
@@ -133,15 +142,23 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         }
         
         //Displays number of rides you have been on out of the total number of rides
+        
         if showExtinct == 1 {
-            userRidesRidden = userAttractionDatabase.count
+            extinctText.isHidden = false
+            extinctLabel.isHidden = false
+            extinctComplete = String (userNumExtinct)
+            extinctComplete += "/"
+            extinctComplete += String (totalNumExtinct)
+            extinctText.text = extinctComplete
         }
         else{
-            userRidesRidden = userAttractionDatabase.count - userNumExtinct
+            extinctText.isHidden = true
+            extinctLabel.isHidden = true
         }
-        RidesComplete = String(userRidesRidden)
+        
+        RidesComplete = String(userAttractionDatabase.count-userNumExtinct)
         RidesComplete += "/"
-        RidesComplete += String(attractionListForTable.count)
+        RidesComplete += String(attractionListForTable.count-totalNumExtinct)
         NumCompleteLabel.text = RidesComplete
         
         self.attractionsTableView.reloadData()
@@ -191,7 +208,26 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         attractionsTableView.deselectRow(at: indexPath, animated: true)
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration {
+        let ignore = ignoreAction(at: indexPath)
+        
+        return UISwipeActionsConfiguration(actions: [ignore])
+    }
     
+    func ignoreAction(at indexPath: IndexPath) ->UIContextualAction{
+        let attraction = attractionListForTable[indexPath.row]
+        let action = UIContextualAction(style: .normal, title: "Ignore") { (action, view, completion) in
+            attraction.isIgnored = !attraction.isIgnored
+            completion(true)
+        }
+        if attraction.isIgnored{
+        action.backgroundColor = .gray
+        }
+        else{
+            action.backgroundColor = .red
+        }
+        return action
+    }
     func convertRideTypeID(rideTypeID: Int) -> String {
         switch rideTypeID {
         case 1:
@@ -242,12 +278,22 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
             self.saveUserCheckOffNewRide(parkID: self.parkID, rideID: (self.attractionListForTable[indexPath.row]).rideID);
             self.attractionsTableView.reloadData()
             
+            if (self.attractionListForTable[indexPath.row]).active == 0{
+                self.userNumExtinct += 1
+            }
+            
+                self.userRidesRidden += 1
+            print ("you have been on this many rides: ", self.userRidesRidden)
             //UPDATE RIDES BEEN ON
-            self.userRidesRidden += 1
-            self.RidesComplete = String(self.userRidesRidden)
+            self.RidesComplete = String(self.userRidesRidden-self.userNumExtinct)
             self.RidesComplete += "/"
-            self.RidesComplete += String(self.attractionListForTable.count)
+            self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct)
             self.NumCompleteLabel.text = self.RidesComplete
+            
+            self.extinctComplete = String (self.userNumExtinct)
+           self.extinctComplete += "/"
+           self.extinctComplete += String (self.totalNumExtinct)
+           self.extinctText.text = self.extinctComplete
         }
         alertController.addAction(OKAction)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
@@ -268,13 +314,20 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
             attractionListForTable[indexPath.row].numberOfTimesRidden = 0
             attractionListForTable[indexPath.row].isCheck = false
             attractionsTableView.reloadData()
-            
+            if (attractionListForTable[indexPath.row]).active == 0 {
+                userNumExtinct -= 1
+            }
+            userRidesRidden -= 1
             //UPDATE RIDES BEEN ON
-            self.userRidesRidden += -1
-            self.RidesComplete = String(self.userRidesRidden)
+            self.RidesComplete = String(self.userRidesRidden-self.userNumExtinct)
             self.RidesComplete += "/"
-            self.RidesComplete += String(self.attractionListForTable.count)
+            self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct)
             self.NumCompleteLabel.text = self.RidesComplete
+            
+            self.extinctComplete = String (self.userNumExtinct)
+            self.extinctComplete += "/"
+            self.extinctComplete += String (self.totalNumExtinct)
+            self.extinctText.text = self.extinctComplete
         }
         else{
             let newIncrement = attractionListForTable[indexPath.row].numberOfTimesRidden - 1
