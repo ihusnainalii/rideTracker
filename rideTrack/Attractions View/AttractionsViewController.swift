@@ -108,7 +108,7 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
                         attractionListForTable[i].numberOfTimesRidden = 0
                         
                     }
-                    if attractionListForTable[i].active == 0 { //&& showExtinct == 1
+                    if attractionListForTable[i].active == 0 && showExtinct == 1 { //&& showExtinct == 1
                          totalNumExtinct += 1
                     }
                     if attractionListForTable[i].numberOfTimesRidden == nil{
