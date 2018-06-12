@@ -330,8 +330,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uVR-cf-Ne8">
-                                <rect key="frame" x="8" y="80" width="65" height="32"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uVR-cf-Ne8">
+                                <rect key="frame" x="9" y="68" width="65" height="32"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -446,9 +446,25 @@
                                     <segue destination="d4P-N9-9bs" kind="presentation" identifier="toSuggest" id="QYy-Oc-N79"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Extinct" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFt-15-utf" userLabel="Extinct Complete ">
+                                <rect key="frame" x="59" y="112" width="53" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" text="0/0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BWZ-6M-pEa" userLabel="Extinct Complete Label">
+                                <rect key="frame" x="116" y="113" width="26" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="4aH-ma-lym"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="cFg-8l-Dke" firstAttribute="top" secondItem="BWZ-6M-pEa" secondAttribute="bottom" constant="10" id="055-LM-vlL"/>
                             <constraint firstItem="cFg-8l-Dke" firstAttribute="top" secondItem="fqB-3X-RMS" secondAttribute="bottom" constant="1" id="2dh-yS-ouY"/>
                             <constraint firstItem="lfq-1a-KsT" firstAttribute="leading" secondItem="49z-lz-1Ke" secondAttribute="leading" constant="17" id="HII-aY-PJG"/>
                             <constraint firstItem="cFg-8l-Dke" firstAttribute="leading" secondItem="1VQ-lA-yzH" secondAttribute="leading" id="K9L-31-u11"/>
@@ -456,9 +472,12 @@
                             <constraint firstItem="lfq-1a-KsT" firstAttribute="centerY" secondItem="uVR-cf-Ne8" secondAttribute="centerY" constant="26.5" id="QtD-Rn-PLB"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uVR-cf-Ne8" secondAttribute="trailing" constant="20" symbolic="YES" id="ROK-9W-5E9"/>
                             <constraint firstItem="fqB-3X-RMS" firstAttribute="leading" relation="lessThanOrEqual" secondItem="lfq-1a-KsT" secondAttribute="trailing" constant="201" id="Sf3-W3-flE"/>
+                            <constraint firstItem="cFg-8l-Dke" firstAttribute="top" secondItem="VFt-15-utf" secondAttribute="bottom" constant="10" id="b2L-gg-8Ff"/>
                             <constraint firstItem="cFg-8l-Dke" firstAttribute="bottom" secondItem="1VQ-lA-yzH" secondAttribute="bottom" id="bm3-Wu-Lit"/>
                             <constraint firstItem="fqB-3X-RMS" firstAttribute="top" secondItem="1VQ-lA-yzH" secondAttribute="top" constant="48" id="ck3-im-XB6"/>
                             <constraint firstItem="cFg-8l-Dke" firstAttribute="top" secondItem="lfq-1a-KsT" secondAttribute="bottom" constant="10" id="nnR-KT-lee"/>
+                            <constraint firstItem="BWZ-6M-pEa" firstAttribute="leading" secondItem="VFt-15-utf" secondAttribute="trailing" constant="4" id="ofz-m8-GyS"/>
+                            <constraint firstItem="VFt-15-utf" firstAttribute="leading" secondItem="lfq-1a-KsT" secondAttribute="trailing" constant="16" id="pSL-47-mTp"/>
                             <constraint firstItem="fqB-3X-RMS" firstAttribute="trailing" secondItem="1VQ-lA-yzH" secondAttribute="trailing" id="qM4-wA-IYg"/>
                             <constraint firstItem="uVR-cf-Ne8" firstAttribute="top" secondItem="1VQ-lA-yzH" secondAttribute="top" constant="16" id="sdd-wL-Y8B"/>
                             <constraint firstItem="cFg-8l-Dke" firstAttribute="trailing" secondItem="1VQ-lA-yzH" secondAttribute="trailing" id="vdY-2P-29C"/>
@@ -468,6 +487,8 @@
                     <connections>
                         <outlet property="NumCompleteLabel" destination="lfq-1a-KsT" id="fjf-8G-MLI"/>
                         <outlet property="attractionsTableView" destination="cFg-8l-Dke" id="gQc-sL-xZd"/>
+                        <outlet property="extinctLabel" destination="VFt-15-utf" id="9lH-4i-P4i"/>
+                        <outlet property="extinctText" destination="BWZ-6M-pEa" id="mdI-YO-5DS"/>
                         <outlet property="parkLabel" destination="uVR-cf-Ne8" id="AeQ-bv-7ml"/>
                     </connections>
                 </viewController>
