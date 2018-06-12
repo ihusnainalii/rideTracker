@@ -84,6 +84,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.yearOpen = Int (jsonElement["YearOpen"] as! String)
                 attraction.yearClosed = Int (jsonElement["YearClosed"] as! String)
                 attraction.active = Int (jsonElement["Active"] as! String)
+                attraction.scoreCard = Int (jsonElement["ScoreCard"] as! String)
                 attraction.isCheck = false
                 dataBaseData.add(attraction)
             }

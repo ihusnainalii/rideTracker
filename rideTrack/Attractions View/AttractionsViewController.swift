@@ -84,6 +84,8 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
                             
                         
                             attractionListForTable[i].numberOfTimesRidden = userAttractionDatabase[userDataBaseIndex].numberOfTimesRidden
+                            attractionListForTable[i].dateLastRidden = userAttractionDatabase[userDataBaseIndex].dateLastRidden
+                            attractionListForTable[i].dateFirstRidden = userAttractionDatabase[userDataBaseIndex].dateFirstRidden
                             if attractionListForTable[i].active == 0 {
                                 userNumExtinct += 1
                             }
@@ -92,6 +94,7 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
                         else{
                             //User doesn't have any data stored for this ride
                             attractionListForTable[i].numberOfTimesRidden = 0
+                            
                         }
                     }
                     else{
@@ -145,13 +148,6 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
 
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        var tableSize = 0
-//        if (showExtinct == 1){
-//            tableSize = attractionListForTable.count
-//        }
-//        else {
-//            tableSize = attractionListForTable.count - numOfExtinct
-//        }
         return attractionListForTable.count
     }
     
@@ -241,6 +237,8 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
             
             (self.attractionListForTable[indexPath.row]).isCheck = true
             self.attractionListForTable[indexPath.row].numberOfTimesRidden = 1
+            self.attractionListForTable[indexPath.row].dateFirstRidden = Date()
+            self.attractionListForTable[indexPath.row].dateLastRidden = Date()
             self.saveUserCheckOffNewRide(parkID: self.parkID, rideID: (self.attractionListForTable[indexPath.row]).rideID);
             self.attractionsTableView.reloadData()
             
@@ -280,7 +278,7 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         }
         else{
             let newIncrement = attractionListForTable[indexPath.row].numberOfTimesRidden - 1
-            saveIncrementRideCount(rideID:  attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement)
+            saveIncrementRideCount(rideID:  attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement, postive: false)
             attractionListForTable[indexPath.row].numberOfTimesRidden = newIncrement
             attractionsTableView.reloadData()
         }
@@ -290,8 +288,9 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         print("plus")
         guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
         let newIncrement = attractionListForTable[indexPath.row].numberOfTimesRidden + 1
-        saveIncrementRideCount(rideID:  attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement)
+        saveIncrementRideCount(rideID:  attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement, postive: true)
         attractionListForTable[indexPath.row].numberOfTimesRidden = newIncrement
+        attractionListForTable[indexPath.row].dateLastRidden = Date()
         attractionsTableView.reloadData()
     }
     
@@ -322,6 +321,8 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         newPark.setValue(parkID, forKeyPath: "parkID")
         newPark.setValue(rideID, forKeyPath: "rideID")
         newPark.setValue(1, forKey: "numberOfTimesRidden")
+        newPark.setValue(Date(), forKey: "firstRideDate")
+        newPark.setValue(Date(), forKey: "lastRideDate")
         print("Just saved Attraction: ", rideID)
         do {
             try managedContext.save()
@@ -356,7 +357,7 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         
     }
     
-    func saveIncrementRideCount(rideID: Int, incrementTo: Int){
+    func saveIncrementRideCount(rideID: Int, incrementTo: Int, postive: Bool){
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
@@ -370,14 +371,15 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
             
             for entity in fetchedResults! {
                 entity.setValue(incrementTo, forKey: "numberOfTimesRidden")
+                if postive{
+                    entity.setValue(Date(), forKey: "lastRideDate")
+                }
                 try! managedContext.save()
                 print("Increment ride \(rideID) to \(incrementTo)")
-                
             }
         }
         catch _ {
             print("Could not increment")
-            
         }
         
     }

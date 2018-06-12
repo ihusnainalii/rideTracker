@@ -19,6 +19,8 @@ class UserAttractionProvider: NSObject {
     var rideID: Int!
     var parkID: Int!
     var numberOfTimesRidden: Int!
+    var dateFirstRidden: Date!
+    var dateLastRidden: Date!
     
     var favorite: Bool!
     var numberOfRides: Int!
@@ -32,10 +34,12 @@ class UserAttractionProvider: NSObject {
     override init() {
     }
     
-    init(rideID: Int, parkID: Int, numberOfTimesRidden: Int) {
+    init(rideID: Int, parkID: Int, numberOfTimesRidden: Int, dateFirstRidden: Date, dateLastRidden: Date) {
         self.rideID = rideID
         self.parkID = parkID
         self.numberOfTimesRidden = numberOfTimesRidden
+        self.dateLastRidden = dateLastRidden
+        self.dateFirstRidden = dateFirstRidden
         
     }
     

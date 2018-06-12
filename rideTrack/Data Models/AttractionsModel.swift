@@ -18,13 +18,16 @@ class AttractionsModel: NSObject {
     var yearClosed: Int!
     var active: Int!
     var isCheck: Bool!
+    var scoreCard: Int!
     var isFavorite: Bool!
     var numberOfTimesRidden: Int!
+    var dateFirstRidden: Date!
+    var dateLastRidden: Date!
     override init() {
         
     }
     
-    init(name: String, rideID: Int, parkID: Int, rideType: Int, yearOpen: Int, yearClosed: Int, active: Int, isCheck: Bool, isFavorite: Bool, numberOfTimesRidden: Int) {
+    init(name: String, rideID: Int, parkID: Int, rideType: Int, yearOpen: Int, yearClosed: Int, active: Int, isCheck: Bool, isFavorite: Bool, numberOfTimesRidden: Int, dateFirstRidden: Date, dateLastRidden: Date, scoreCard: Int) {
         self.name = name
         self.rideID = rideID
         self.parkID = parkID
@@ -35,6 +38,9 @@ class AttractionsModel: NSObject {
         self.isCheck = isCheck
         self.isFavorite = isFavorite
         self.numberOfTimesRidden = numberOfTimesRidden
+        self.dateFirstRidden = dateFirstRidden
+        self.dateLastRidden = dateLastRidden
+        self.scoreCard = scoreCard
     }
     
     init(rideID: Int){
