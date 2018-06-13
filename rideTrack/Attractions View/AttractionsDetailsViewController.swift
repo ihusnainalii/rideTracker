@@ -58,11 +58,11 @@ class AttractionsDetailsViewController: UIViewController {
             CurrentlyOpenLabel.isHidden = true
         }
         if selectedRide.isCheck{
-            dateFirstRiddenLabel.text = selectedRide.dateFirstRidden.description
+            dateFirstRiddenLabel.text = dateFormatter(date: selectedRide.dateFirstRidden)
             
             //Do not show last ride if the user has only ridden the ride once
             if selectedRide.numberOfTimesRidden > 1{
-                dateLastRiddenLabel.text = selectedRide.dateLastRidden.description
+                dateLastRiddenLabel.text = dateFormatter(date: selectedRide.dateLastRidden)
             }
             else{
                 dateLastRiddenLabel.isHidden = true
@@ -74,7 +74,7 @@ class AttractionsDetailsViewController: UIViewController {
             dateModifyButton.isHidden = true
         }
         
-        if selectedRide.scoreCard == 1{
+        if selectedRide.hasScoreCard == 1{
             scoreCardButton.isHidden = false
         }
         
@@ -160,7 +160,7 @@ class AttractionsDetailsViewController: UIViewController {
     
     @IBAction func didSaveModifyDate(_ sender: Any) {
         modifyDateView.isHidden = true
-        dateFirstRiddenLabel.text = modifyDatePicker.date.description
+        dateFirstRiddenLabel.text = dateFormatter(date: modifyDatePicker.date)
         selectedRide.dateFirstRidden = modifyDatePicker.date
         saveModifyFirstRideDate(rideID: selectedRide.rideID, firstRideDate: modifyDatePicker.date)
     }
@@ -185,6 +185,15 @@ class AttractionsDetailsViewController: UIViewController {
             print("Could not increment")
         }
         
+    }
+    
+    func dateFormatter(date: Date) -> String {
+        //let date = Date(timeIntervalSince1970: Double (timeToFormat))
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "MMMM d, yyyy h:mm" //Specify your format that you want
+        let strDate = dateFormatter.string(from: date)
+        return strDate
     }
     
     

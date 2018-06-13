@@ -8,17 +8,19 @@
 
 import UIKit
 
-class ScoreCard: NSObject {
+class ScoreCardModel: NSObject {
     
     var score: Int!
     var date: Date!
+    var rideID: Int!
     
     override init() {
     }
     
-    init(score: Int, date: Date){
+    init(score: Int, date: Date, rideID: Int){
         self.date = date
         self.score = score
+        self.rideID = rideID
     }
     
 }
