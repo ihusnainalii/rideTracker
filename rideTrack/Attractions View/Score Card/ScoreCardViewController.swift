@@ -57,6 +57,7 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
+    
     @IBAction func didAddNewScore(_ sender: Any) {
         let alert = UIAlertController(title: "Add  new score", message: "Enter your new score for \(selectedRide.name!) to your score card.", preferredStyle: UIAlertControllerStyle.alert)
         let userInput = UIAlertAction(title: "Add your Score", style: .default) { (alertAction) in

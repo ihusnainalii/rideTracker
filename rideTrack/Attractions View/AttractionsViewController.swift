@@ -8,10 +8,11 @@
 
 import UIKit
 import CoreData
+import Foundation
 
 
-class AttractionsViewController: UIViewController, UITableViewDataSource, DataModelProtocol, AttractionsTableViewCellDelegate {
-   
+class AttractionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, AttractionsTableViewCellDelegate {
+
     @IBOutlet weak var attractionsTableView: UITableView!
     @IBOutlet weak var parkLabel: UILabel!
     @IBOutlet weak var NumCompleteLabel: UILabel!
@@ -46,10 +47,10 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         userAttractionDatabase.remove(at: 0)
 
         
-        //attractionsTableView.allowsSelection = false          //TURN THIS BACK ON
-        
+       // attractionsTableView.allowsSelection = false
         parkLabel.text = titleName
-        //self.attractionsTableView.delegate = self as! UITableViewDelegate
+
+        self.attractionsTableView.delegate = self
         self.attractionsTableView.dataSource = self
         print(parkID)
         let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(parkID)"
@@ -60,9 +61,6 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         dataModel.downloadData(urlPath: urlPath, dataBase: "attractions")
         // Do any additional setup after loading the view, typically from a nib.
     }
-
-
-    
     
     func itemsDownloaded(items: NSArray) {
         for i in 0..<items.count{
@@ -108,9 +106,11 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
                         attractionListForTable[i].numberOfTimesRidden = 0
                         
                     }
+
                     if attractionListForTable[i].active == 0 && showExtinct == 1 { //&& showExtinct == 1
                          totalNumExtinct += 1
                     }
+                   
                     if attractionListForTable[i].numberOfTimesRidden == nil{
                         print("attraction list at rideID \(attractionListForTable[i].rideID!) found nil")
                         attractionListForTable[i].numberOfTimesRidden = 0
@@ -164,10 +164,11 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         self.attractionsTableView.reloadData()
 
     }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return attractionListForTable.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "rideCell", for: indexPath) as! AttractionsTableViewCell
         cell.delegate = self
@@ -203,31 +204,20 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         return cell
     }
     
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        attractionsTableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration {
-        let ignore = ignoreAction(at: indexPath)
-        
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let ignore = UIContextualAction(style: .normal, title: "Ignore") { (action,view, nil) in
+            print("ignore button tapped on ride")
+            self.attractionListForTable[indexPath.row].isIgnored = true
+        }
+        ignore.backgroundColor = .lightGray
+
         return UISwipeActionsConfiguration(actions: [ignore])
     }
-    
-    func ignoreAction(at indexPath: IndexPath) ->UIContextualAction{
-        let attraction = attractionListForTable[indexPath.row]
-        let action = UIContextualAction(style: .normal, title: "Ignore") { (action, view, completion) in
-            attraction.isIgnored = !attraction.isIgnored
-            completion(true)
-        }
-        if attraction.isIgnored{
-        action.backgroundColor = .gray
-        }
-        else{
-            action.backgroundColor = .red
-        }
-        return action
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
     }
+    
     func convertRideTypeID(rideTypeID: Int) -> String {
         switch rideTypeID {
         case 1:
