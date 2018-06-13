@@ -18,7 +18,7 @@ class AttractionsModel: NSObject {
     var yearClosed: Int!
     var active: Int!
     var isCheck: Bool!
-    var scoreCard: Int!
+    var hasScoreCard: Int!
     var isFavorite: Bool!
     var isIgnored: Bool!
     var numberOfTimesRidden: Int!
@@ -42,7 +42,7 @@ class AttractionsModel: NSObject {
         self.numberOfTimesRidden = numberOfTimesRidden
         self.dateFirstRidden = dateFirstRidden
         self.dateLastRidden = dateLastRidden
-        self.scoreCard = scoreCard
+        self.hasScoreCard = scoreCard
     }
     
     init(rideID: Int){

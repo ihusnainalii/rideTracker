@@ -294,6 +294,10 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
            self.extinctComplete += "/"
            self.extinctComplete += String (self.totalNumExtinct)
            self.extinctText.text = self.extinctComplete
+            
+            if self.attractionListForTable[indexPath.row].hasScoreCard == 1{
+                self.addScoreToCard(selectedRide: self.attractionListForTable[indexPath.row])
+            }
         }
         alertController.addAction(OKAction)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
@@ -302,6 +306,8 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         alertController.addAction(cancelAction)
         // Present Dialog message
         self.present(alertController, animated: true, completion:nil)
+        
+        
     }
     
     func attractionCellNegativeIncrement(_ sender: AttractionsTableViewCell) {
@@ -345,6 +351,11 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
         attractionListForTable[indexPath.row].numberOfTimesRidden = newIncrement
         attractionListForTable[indexPath.row].dateLastRidden = Date()
         attractionsTableView.reloadData()
+        
+        if attractionListForTable[indexPath.row].hasScoreCard == 1{
+            addScoreToCard(selectedRide: attractionListForTable[indexPath.row])
+        }
+        
     }
     
     
@@ -461,6 +472,45 @@ class AttractionsViewController: UIViewController, UITableViewDataSource, DataMo
        
     }
     
+    func addScoreToCard(selectedRide: AttractionsModel){
+        let scoreAlert = UIAlertController(title: "Add  new score", message: "Enter your new score for \(selectedRide.name!) to your score card. This score card can be viewed on this attractions details page.", preferredStyle: UIAlertControllerStyle.alert)
+        let userInput = UIAlertAction(title: "Add your Score", style: .default) { (alertAction) in
+            let textField = scoreAlert.textFields![0] as UITextField
+            if textField.text != ""{
+                
+                let newScore = Int(textField.text!)!
+                //Saving score to ScoreCard entity in CoreData
+                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                    return
+                }
+                let managedContext = appDelegate.persistentContainer.viewContext
+                let entity = NSEntityDescription.entity(forEntityName: "ScoreCard", in: managedContext)!
+                let newScoreCard = NSManagedObject(entity: entity, insertInto: managedContext)
+                
+                newScoreCard.setValue(newScore, forKey: "score")
+                newScoreCard.setValue(selectedRide.rideID, forKeyPath: "rideID")
+                newScoreCard.setValue(Date(), forKeyPath: "date")
+                
+                do {
+                    try managedContext.save()
+                    print("Saved score")
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+            }
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (alertAction) in
+            print("cancled")
+        }
+        
+        scoreAlert.addTextField { (textField) in
+            textField.placeholder = "Enter your score"
+            textField.keyboardType = UIKeyboardType.numberPad
+        }
+        scoreAlert.addAction(userInput)
+        scoreAlert.addAction(cancel)
+        self.present(scoreAlert, animated: true, completion:nil)
+    }
     
     
 
