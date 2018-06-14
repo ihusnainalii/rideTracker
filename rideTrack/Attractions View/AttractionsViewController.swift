@@ -232,13 +232,18 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                     cell.addRideButton.isOpaque = true
                     attractionListForTable[indexPath.row].isIgnored = true
                     //break
-               }
-                else {
-                    attractionListForTable[indexPath.row].isIgnored = false
-                    cell.rideName?.textColor = UIColor.black
-                    cell.addRideButton.isEnabled = true
-                    cell.addRideButton.isOpaque = false
-                }
+           }
+           else {
+            attractionListForTable[indexPath.row].isIgnored = false
+            if ((attractionListForTable[indexPath.row]).isCheck){
+                cell.rideName?.textColor = UIColor.green
+            }
+            else{
+                cell.rideName?.textColor = UIColor.black
+            }
+                cell.addRideButton.isEnabled = true
+                cell.addRideButton.isOpaque = false
+            }
           //  }
         }
         cell.rideName!.text = item.name
