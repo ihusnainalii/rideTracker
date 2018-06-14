@@ -15,11 +15,9 @@ class SettingsViewController: UIViewController {
     var downloadIncrementor = 0
     // var showExtinct : Int?
     var showExtinct = 0
-    var showPayed = 0
     var resetPressed : Int?
     
     @IBOutlet weak var showExtinctSwitch: UISwitch!
-    @IBOutlet weak var showPayedSwitch: UISwitch!
     
     
     override func viewDidLoad() {
@@ -31,12 +29,7 @@ class SettingsViewController: UIViewController {
         else{
             showExtinctSwitch.isOn = true
         }
-        if showPayed == 0{
-            showPayedSwitch.isOn = false
-        }
-        else {
-            showPayedSwitch.isOn = true
-        }
+        
         // Do any additional setup after loading the view.
     }
     
@@ -103,23 +96,11 @@ class SettingsViewController: UIViewController {
         UserDefaults.standard.set(showExtinct, forKey: "showExtinct")
         
     }
-    @IBAction func showPayed(_ sender: Any) {
-        if (showPayedSwitch.isOn ){
-            showPayed = 1
-            print ("Showing payed attractions")
-        }
-        else {
-            showPayed = 0
-            print("Hiding payed attractions..")
-        }
-        UserDefaults.standard.set(showPayed, forKey: "showPayed")
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toParkList"{
             let listVC = segue.destination as! ViewController
             listVC.showExtinct = showExtinct
-            listVC.showPayed = showPayed
         }
     }
 }

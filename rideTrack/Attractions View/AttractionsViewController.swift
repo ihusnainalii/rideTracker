@@ -23,7 +23,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var parkID = 0
     var attractionListForTable = [AttractionsModel]()
     var showExtinct = 0
-    var showPayed = 0
     var isIgnored = false
     //From the datamigration tool:
     var userAttractionDatabase: [UserAttractionProvider]!
@@ -145,7 +144,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }
         //Hide EXTINCT ATTRACTIONS
-        if(showExtinct == 0 || showPayed == 0){
+        if(showExtinct == 0){
             var countOfRemove = 0
             for i in 0..<attractionListForTable.count{ //sizeOfList
                 if ((attractionListForTable[i - countOfRemove]).active == 0 && showExtinct == 0){
@@ -154,7 +153,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                     countOfRemove = countOfRemove+1
                     continue
                 }
-                if ((attractionListForTable[i-countOfRemove]).rideType == 12 && showPayed == 0){
+                if ((attractionListForTable[i-countOfRemove]).rideType == 12){
                     attractionListForTable.remove(at: i-countOfRemove)
                     countOfRemove = countOfRemove+1
                 }
@@ -173,8 +172,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             extinctText.isHidden = false
             extinctLabel.isHidden = false
             extinctComplete = String (userNumExtinct)
-            extinctComplete += "/"
-            extinctComplete += String (totalNumExtinct)
+           // extinctComplete += "/"
+            //extinctComplete += String (totalNumExtinct)
             extinctText.text = extinctComplete
         }
         else{
@@ -258,6 +257,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
       //  let hideAttraction = attractionListForTable[indexPath.row]
+        if (attractionListForTable[indexPath.row]).active == 1 && attractionListForTable[indexPath.row].isCheck == false {
         let ignoreAction = UIContextualAction(style: .normal, title: "Ignore") { (action, view, nil) in
             print("ignore button tapped on ride")
             //hideAttraction.isIgnored = !hideAttraction.isIgnored //switches back and forth
@@ -290,7 +290,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         ignoreAction.title = attractionListForTable[indexPath.row].isIgnored ? "Include" : "Exclude"
         ignoreAction.backgroundColor = attractionListForTable[indexPath.row].isIgnored ? .blue : .gray
         return UISwipeActionsConfiguration(actions: [ignoreAction])
+        }
+        else {
+            return UISwipeActionsConfiguration.init()
+        }
     }
+        
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        tableView.deselectRow(at: indexPath, animated: true)
 //
@@ -359,8 +364,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.NumCompleteLabel.text = self.RidesComplete
             
             self.extinctComplete = String (self.userNumExtinct)
-           self.extinctComplete += "/"
-           self.extinctComplete += String (self.totalNumExtinct)
+          // self.extinctComplete += "/"
+           // self.extinctComplete += String (self.totalNumExtinct)
            self.extinctText.text = self.extinctComplete
             
             if self.attractionListForTable[indexPath.row].hasScoreCard == 1{
@@ -399,8 +404,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.NumCompleteLabel.text = self.RidesComplete
             
             self.extinctComplete = String (self.userNumExtinct)
-            self.extinctComplete += "/"
-            self.extinctComplete += String (self.totalNumExtinct)
+          //  self.extinctComplete += "/"
+          //  self.extinctComplete += String (self.totalNumExtinct)
             self.extinctText.text = self.extinctComplete
         }
         else{

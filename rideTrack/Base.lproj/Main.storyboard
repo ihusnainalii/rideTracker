@@ -261,10 +261,10 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="Pkp-gL-Uwa">
-                                <rect key="frame" x="33" y="173" width="309" height="80"/>
+                                <rect key="frame" x="45" y="173" width="285.5" height="31"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="t4k-MH-MJM">
-                                        <rect key="frame" x="23.5" y="0.0" width="285.5" height="31"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="285.5" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show extinct Attractions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bbs-sr-Igr">
                                                 <rect key="frame" x="0.0" y="0.0" width="211.5" height="31"/>
@@ -276,23 +276,6 @@
                                                 <rect key="frame" x="236.5" y="0.0" width="51" height="31"/>
                                                 <connections>
                                                     <action selector="showExtinct:" destination="yIe-5s-JbS" eventType="valueChanged" id="yFY-RI-nGu"/>
-                                                </connections>
-                                            </switch>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="iG9-MN-TUe">
-                                        <rect key="frame" x="0.0" y="49" width="309" height="31"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show upcharge Attractions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZT-58-8Z0">
-                                                <rect key="frame" x="0.0" y="0.0" width="235" height="31"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="139-VG-IaJ">
-                                                <rect key="frame" x="260" y="0.0" width="51" height="31"/>
-                                                <connections>
-                                                    <action selector="showPayed:" destination="yIe-5s-JbS" eventType="valueChanged" id="c9c-gB-21A"/>
                                                 </connections>
                                             </switch>
                                         </subviews>
@@ -314,7 +297,6 @@
                     </view>
                     <connections>
                         <outlet property="showExtinctSwitch" destination="eNC-VI-n13" id="IrM-D2-Fh1"/>
-                        <outlet property="showPayedSwitch" destination="139-VG-IaJ" id="7Wk-c8-Enz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OdQ-q0-JAg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -452,13 +434,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" text="0/0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BWZ-6M-pEa" userLabel="Extinct Complete Label">
-                                <rect key="frame" x="116" y="113" width="26" height="20"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" text="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BWZ-6M-pEa" userLabel="Extinct Complete Label">
+                                <rect key="frame" x="116" y="113" width="15" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="4aH-ma-lym"/>
                                 </constraints>
                                 <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
