@@ -242,18 +242,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print ("CALLED")
 
     }
     
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let ignore = UIContextualAction(style: .normal, title: "Ignore") { (action,view, nil) in
-            print("ignore button tapped")
-        }
-        ignore.backgroundColor = .lightGray
-
-        return UISwipeActionsConfiguration(actions: [ignore])
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

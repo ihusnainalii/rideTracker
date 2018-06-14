@@ -29,6 +29,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var userAttractionDatabase: [UserAttractionProvider]!
     var ignore = [Int]()
     let ignoreList = UserDefaults.standard
+    var numIgnore = 0
     
     let green = UIColor(red: 120.0/255.0, green: 205.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor as CGColor
     var userAttractions: [NSManagedObject] = []
@@ -132,6 +133,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                     for j in 0..<ignore.count{
                         if ignore[j] == attractionListForTable[i].rideID{
                             attractionListForTable[i].isIgnored = true
+                            numIgnore += 1
                             break
                         }
                         else {
@@ -182,7 +184,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         RidesComplete = String(userAttractionDatabase.count-userNumExtinct)
         RidesComplete += "/"
-        RidesComplete += String(attractionListForTable.count-totalNumExtinct-ignore.count)
+        RidesComplete += String(attractionListForTable.count-totalNumExtinct-numIgnore)
         NumCompleteLabel.text = RidesComplete
 
         self.attractionsTableView.reloadData()
@@ -244,8 +246,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         cell.numberOfRidesLabel.text = String(item.numberOfTimesRidden)
         return cell
     }
-    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        //turns off trailing action of Delete 
+        return UISwipeActionsConfiguration.init()
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
       //  let hideAttraction = attractionListForTable[indexPath.row]
         let ignoreAction = UIContextualAction(style: .normal, title: "Ignore") { (action, view, nil) in
             print("ignore button tapped on ride")
@@ -254,47 +260,36 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 self.ignore.append(self.attractionListForTable[indexPath.row].rideID!)
                 print("Ignoring ", self.attractionListForTable[indexPath.row].name!)
                 self.attractionListForTable[indexPath.row].isIgnored = true
+                self.numIgnore += 1
             }
             else {
-                for i in 0..<(self.ignore.count-1) {
+                for i in 0..<(self.ignore.count) {
                     if self.ignore[i] == self.attractionListForTable[indexPath.row].rideID{
                         self.ignore.remove(at: i)
+                        break
                     }
                 }
                 print ("Unignoring ", self.attractionListForTable[indexPath.row].name!)
                 self.attractionListForTable[indexPath.row].isIgnored = false
+                self.numIgnore -= 1
             }
-//            for i in 0..<self.ignore.count{
-//                if self.ignore[i] != self.attractionListForTable[indexPath.row].rideID{
-//                    self.ignore.append(self.attractionListForTable[indexPath.row].rideID!)
-//                    print("Ignoring ", self.attractionListForTable[indexPath.row].name!)
-//                    break
-//                }
-//                else {
-//                    self.ignore.remove(at: i)
-//                    print ("Unignoring ", self.attractionListForTable[indexPath.row].name!)
-//                    break
-//            }
-//            }
-
             self.ignoreList.set(self.ignore, forKey: "SavedIgnoreListArray")
             //UPDATE RIDES BEEN ON
             self.RidesComplete = String(self.userRidesRidden-self.userNumExtinct)
             self.RidesComplete += "/"
-            self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.ignore.count)
+            self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
             self.NumCompleteLabel.text = self.RidesComplete
             
             self.attractionsTableView.reloadData()
         }
-       // ignoreAction.backgroundColor = hideAttraction.isIgnored ? .blue : .gray
-        ignoreAction.backgroundColor = .lightGray
-        
+        ignoreAction.title = attractionListForTable[indexPath.row].isIgnored ? "Include" : "Exclude"
+        ignoreAction.backgroundColor = attractionListForTable[indexPath.row].isIgnored ? .blue : .gray
         return UISwipeActionsConfiguration(actions: [ignoreAction])
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: true)
+//
+//    }
     
     func convertRideTypeID(rideTypeID: Int) -> String {
         switch rideTypeID {
@@ -355,7 +350,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             //UPDATE RIDES BEEN ON
             self.RidesComplete = String(self.userRidesRidden-self.userNumExtinct)
             self.RidesComplete += "/"
-            self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.ignore.count)
+            self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
             self.NumCompleteLabel.text = self.RidesComplete
             
             self.extinctComplete = String (self.userNumExtinct)
@@ -395,7 +390,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             //UPDATE RIDES BEEN ON
             self.RidesComplete = String(self.userRidesRidden-self.userNumExtinct)
             self.RidesComplete += "/"
-            self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.ignore.count)
+            self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
             self.NumCompleteLabel.text = self.RidesComplete
             
             self.extinctComplete = String (self.userNumExtinct)
