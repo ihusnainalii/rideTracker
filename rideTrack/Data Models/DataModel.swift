@@ -9,7 +9,7 @@
 import UIKit
 
 protocol DataModelProtocol: class {
-    func itemsDownloaded(items: NSArray)
+    func itemsDownloaded(items: NSArray, returnPath: String)
 }
 
 class DataModel: NSObject, URLSessionDataDelegate {
@@ -18,7 +18,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
     var data = Data()
     
     
-    func downloadData(urlPath: String, dataBase: String) {
+    func downloadData(urlPath: String, dataBase: String, returnPath: String) {
         let url: URL = URL(string: urlPath)!
         let defaultSessions = Foundation.URLSession(configuration: URLSessionConfiguration.default)
         let task = defaultSessions.dataTask(with: url) { (data, response, error)
@@ -34,14 +34,14 @@ class DataModel: NSObject, URLSessionDataDelegate {
             else{
                 print("Data Downloaded")
                 //Able to download data from database, now need to parse it
-                self.parseJSON(data!, dataBase: dataBase)
+                self.parseJSON(data!, dataBase: dataBase, returnPath: returnPath)
             }
             }
         }
         task.resume()
     }
     
-    func parseJSON(_ data:Data, dataBase: String) {
+    func parseJSON(_ data:Data, dataBase: String, returnPath: String) {
         var jsonResult = NSArray()
         do{
             jsonResult = try JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments) as! NSArray
@@ -90,7 +90,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
             }
         }
         DispatchQueue.main.async(execute: { () -> Void in
-            self.delegate.itemsDownloaded(items: dataBaseData)
+            self.delegate.itemsDownloaded(items: dataBaseData, returnPath: returnPath)
         })
     }
 }

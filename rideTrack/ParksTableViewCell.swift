@@ -11,6 +11,7 @@ import UIKit
 class ParksTableViewCell: UITableViewCell {
 
     @IBOutlet weak var parkNameLabel: UILabel!
+    @IBOutlet weak var totalRidesLabel: UILabel!
     
     weak var delegate: ParkTableViewCellDelegate?
 

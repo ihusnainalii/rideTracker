@@ -13,6 +13,7 @@ import CoreLocation
 
 
 class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, NSFetchedResultsControllerDelegate, ParkTableViewCellDelegate {
+ 
     
     
     
@@ -31,6 +32,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
 
     var segueWithTableViewSelect = true
     var selectedIndex = 0
+    var numberOfRides = 0
     
     @IBOutlet weak var currentLocationView: UIView!
     @IBOutlet weak var currentLocationParkNameLabel: UILabel!
@@ -39,6 +41,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     var userAttractionDatabase: [[UserAttractionProvider]] = [[]]
     var userAttractions: [NSManagedObject] = []
+    var savedParkList: [NSManagedObject] = []
+    
     
     var fetchRequest: NSFetchedResultsController<RideTrack>? = nil
     var managedContext: NSManagedObjectContext? = nil
@@ -69,7 +73,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         let dataModel = DataModel()
         dataModel.delegate = self
-        dataModel.downloadData(urlPath: urlPath, dataBase: "parks")
+        dataModel.downloadData(urlPath: urlPath, dataBase: "parks", returnPath: "allParks")
     }
     
     
@@ -98,41 +102,69 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
     }
     
-    func itemsDownloaded(items: NSArray) {
+    func itemsDownloaded(items: NSArray, returnPath: String) {
         
-        
-        arrayOfAllParks = items as! [ParksModel]
-        
-        //Adds parks the user has already saved to the table list
-        //        for i in 0..<userAttractionDatabase.count{
-        //
-        //            //Needs to be changed to match parkID, not index?
-        //            //**MARK FIX THIS***
-        //            usersParkList.add(feedItems[userAttractionDatabase[i][0].parkID])
-        //        }
-        if (userAttractionDatabase[downloadIncrementor].count == 0){
+        if returnPath == "countNumberOfRides"{
+            numberOfRides = items.count
+            print(numberOfRides)
         }
         else{
-            for i in 0..<arrayOfAllParks.count{
-                park = arrayOfAllParks[i]
-                if park.parkID == userAttractionDatabase[downloadIncrementor][0].parkID{
-                    if downloadIncrementor < userAttractionDatabase.count - 1{
-                        downloadIncrementor += 1
-                    }
-                    
-                    usersParkList.append(arrayOfAllParks[i] )
-                }
-                //usersParkList.add(feedItems[userAttractionDatabase[i][0].parkID])
+            arrayOfAllParks = items as! [ParksModel]
+            
+            if (userAttractionDatabase[downloadIncrementor].count == 0){
             }
-            //printUserDatabase()
-            self.listTableView.reloadData()
+            else{
+                for i in 0..<arrayOfAllParks.count{
+                    park = arrayOfAllParks[i]
+                    if park.parkID == userAttractionDatabase[downloadIncrementor][0].parkID{
+                        if downloadIncrementor < userAttractionDatabase.count - 1{
+                            downloadIncrementor += 1
+                        }
+                        
+                        usersParkList.append(arrayOfAllParks[i] )
+                    }
+                }
+                
+                
+                //Get saved ParkList data
+                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                    return
+                }
+                let managedContext = appDelegate.persistentContainer.viewContext
+                let sortDescriptor = NSSortDescriptor(key: "parkID", ascending: true)
+                
+                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
+                fetchRequest.sortDescriptors = [sortDescriptor]
+                do {
+                    savedParkList = try managedContext.fetch(fetchRequest)
+                } catch let error as NSError {
+                    print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
+                }
+                
+                //Add saved parkList data to userParkList
+                for i in 0..<usersParkList.count{
+                    if usersParkList[i].parkID == savedParkList[i].value(forKey: "parkID") as! Int{
+                        usersParkList[i].favorite = savedParkList[i].value(forKey: "favorite") as! Bool
+                        usersParkList[i].totalRides = savedParkList[i].value(forKey: "totalRides") as! Int
+                        usersParkList[i].ridesRidden = savedParkList[i].value(forKey: "ridesRidden") as! Int
+                    }
+                    else{
+                        print("Saved park list data mix up. Not good. Tell Mark this message popped up")
+                    }
+                }
+                
+                
+                usersParkList.sort { $0.name < $1.name }
+                //printUserDatabase()
+                self.listTableView.reloadData()
+            }
+            
+            locationManager.delegate = self
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+            locationManager.requestLocation()
+            print("GETTING GPS DATA")
         }
-        
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-        locationManager.requestLocation()
-        print("GETTING GPS DATA")
     }
     
     
@@ -236,6 +268,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         cell.delegate = self
         let item: ParksModel = usersParkList[indexPath.row]
         cell.parkNameLabel.text = item.name
+        cell.totalRidesLabel.text = "\(usersParkList[indexPath.row].ridesRidden!)/\(usersParkList[indexPath.row].totalRides!)"
         return cell
     }
     
@@ -264,14 +297,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             attractionVC.parkID = selectedPark.parkID
             attractionVC.userAttractions = userAttractions
             attractionVC.showExtinct = showExtinct
-            
-            //What is this next line doing with downloadIncrementor???????
-            //if userAttractionDatabase[downloadIncrementor].count != 0{
-            //if userAttractionDatabase.count != 0{
+    
             if userAttractionDatabase != [[]]{
                 for i in 0..<userAttractionDatabase.count {
                     if userAttractionDatabase[i][0].parkID == selectedPark.parkID{
-                        // attractionVC.userAttractionDatabase = userAttractionDatabase[i]
                         attractionVC.userAttractionDatabase = userAttractionDatabase[i]
                     }
                     else{
@@ -315,11 +344,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func addNewParkToList(newPark: ParksModel) {
         if checkIfNewPark(newPark: newPark){
+            let totalRides = countTotalRides(parkID: newPark.parkID)
+            newPark.favorite = false
+            newPark.totalRides = totalRides
+            newPark.ridesRidden = 0
             usersParkList.append(newPark)
             print("ADDING")
             userAttractionDatabase.append([UserAttractionProvider(parkID: newPark.parkID)])
             self.listTableView.reloadData()
             self.save(parkID: newPark.parkID, rideID: -1)
+            self.saveNewItemToParkList(parkID: newPark.parkID)
+            
             print("new park saved: ", newPark.parkID)
             //UserDefaults.standard.set(parkListData, forKey: "parkListData")
         }
@@ -480,6 +515,37 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location error: \(error)")
+    }
+    
+    func saveNewItemToParkList(parkID: Int) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "ParkList", in: managedContext)!
+        let newPark = NSManagedObject(entity: entity, insertInto: managedContext)
+        
+        newPark.setValue(parkID, forKeyPath: "parkID")
+        newPark.setValue(false, forKeyPath: "favorite")
+        newPark.setValue(0, forKey: "ridesRidden")
+        newPark.setValue(numberOfRides, forKey: "totalRides")
+        print("Just added park to ParkList: ", parkID)
+        do {
+            try managedContext.save()
+            
+            
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func countTotalRides(parkID:Int) -> Int{
+        let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(parkID)"
+        let dataModel = DataModel()
+        dataModel.delegate = self
+        dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "countNumberOfRides")
+        
+        return numberOfRides
     }
     
  

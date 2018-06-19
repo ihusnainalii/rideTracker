@@ -60,7 +60,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         // print ("There are ", feedItems.count, " attactions in park ", parkID)
         dataModel.delegate = self
         
-        dataModel.downloadData(urlPath: urlPath, dataBase: "attractions")
+        
+        dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
         let savedIgnore = ignoreList.array(forKey: "SavedIgnoreListArray")  as? [Int] ?? [Int]()
 
         print ("These are the ignored attractions: ")
@@ -72,7 +73,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
 
     }
 
-    func itemsDownloaded(items: NSArray) {
+    func itemsDownloaded(items: NSArray, returnPath: String) {
         for i in 0..<items.count{
             attractionListForTable.append(items[i] as! AttractionsModel)
             //attractionListForTable.add(items[i])

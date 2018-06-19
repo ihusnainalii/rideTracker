@@ -45,7 +45,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         print(pickerData[row])
     }
     
-    func itemsDownloaded(items: NSArray) {
+    func itemsDownloaded(items: NSArray, returnPath: String) {
         print("items downloads?")
     }
     
@@ -130,7 +130,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(ride!)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(manufacturer!)&notes=\(notes!)"
                 print (urlPath)
                 Active = 1
-                dataModel.downloadData(urlPath: urlPath, dataBase: "upload")
+                dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
                 let ThankAlertController = UIAlertController(title: "Thank You", message: "Thank you for your submission. We will review it and add it to the database.", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default) { (action) -> Void in
                     let ViewController = self.storyboard?.instantiateViewController(withIdentifier: "parksView")
