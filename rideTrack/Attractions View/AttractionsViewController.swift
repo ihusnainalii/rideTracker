@@ -286,7 +286,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
             self.NumCompleteLabel.text = self.RidesComplete
             
-            self.attractionsTableView.reloadData()
+            self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.2)
+           // self.attractionsTableView.reloadData()
+            
         }
         ignoreAction.title = attractionListForTable[indexPath.row].isIgnored ? "Include" : "Exclude"
         ignoreAction.backgroundColor = attractionListForTable[indexPath.row].isIgnored ? .blue : .gray

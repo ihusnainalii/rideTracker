@@ -29,7 +29,10 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         self.view.endEditing(true)
         return true;
     }
-    
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        self.view.endEditing(true)
+        return true;
+    }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -201,14 +204,14 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     func textViewDidBeginEditing(_ textView: UITextView) {
         if (textView == notesText){
             print ("Text field is: ", textView)
-            moveTextField(textField: textView, moveDistance: -250, up: true)
+            moveTextField(textField: textView, moveDistance: -215, up: true)
             print ("BELOW OPENING")
         }
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         if (textView == notesText){
             print ("Text field is: ", textView)
-            moveTextField(textField: textView, moveDistance: -250, up: false)
+            moveTextField(textField: textView, moveDistance: -215, up: false)
             print ("BELOW OPENING")
         }
     }
