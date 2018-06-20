@@ -18,6 +18,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var NumCompleteLabel: UILabel!
     @IBOutlet weak var extinctLabel: UILabel!
     @IBOutlet weak var extinctText: UITextField!
+    @IBOutlet weak var imageView: UIImageView!
     
     var titleName = ""
     var parkID = 0
@@ -42,11 +43,15 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+
+        imageView.backgroundColor = UIColor.white
+        imageView.layer.cornerRadius = 8.0
+        imageView.clipsToBounds = true
         //Removes the two negative 1s that get created while saving to CoreData
         //Not good... always going to assume that there are 2 -1s at the beginning of the list
-        userAttractionDatabase.remove(at: 0)
-        userAttractionDatabase.remove(at: 0)
+       userAttractionDatabase.remove(at: 0)
+       userAttractionDatabase.remove(at: 0)
 
         
        // attractionsTableView.allowsSelection = false
@@ -441,6 +446,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func closeButton(_ sender: Any) { //leaves popup view
+        self.view.removeFromSuperview()
+    }
     
     
   

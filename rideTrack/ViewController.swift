@@ -274,7 +274,36 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
+print ("Select here")
+        let attractionVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sbAttractionsID") as! AttractionsViewController
+        
+                  //  let attractionVC = segue.destination as! AttractionsViewController
+        
+                    if segueWithTableViewSelect{
+                       // selectedIndex = (listTableView.indexPath.row)!
+                        selectedPark = usersParkList[indexPath.row]
+                    }
+                    attractionVC.titleName = selectedPark.name
+                    attractionVC.parkID = selectedPark.parkID
+                    attractionVC.userAttractions = userAttractions
+                    attractionVC.showExtinct = showExtinct
+                    print ("DO this")
+                    if userAttractionDatabase != [[]]{
+                        for i in 0..<userAttractionDatabase.count {
+                            if userAttractionDatabase[i][0].parkID == selectedPark.parkID{
+                                attractionVC.userAttractionDatabase = userAttractionDatabase[i]
+                            }
+                            else{
+                            }
+                        }
+                    }
+                    else{
+                        print("array is empty")
+                    }
+        self.addChildViewController(attractionVC) //for popover view
+        attractionVC.view.frame = self.view.frame
+        self.view.addSubview(attractionVC.view)
+        attractionVC.didMove(toParentViewController: self)
     }
     
     
@@ -285,32 +314,38 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "toAttractions"{
-            let attractionVC = segue.destination as! AttractionsViewController
-        
-            if segueWithTableViewSelect{
-                selectedIndex = (listTableView.indexPathForSelectedRow?.row)!
-                selectedPark = usersParkList[selectedIndex]
-            }
-            attractionVC.titleName = selectedPark.name
-            attractionVC.parkID = selectedPark.parkID
-            attractionVC.userAttractions = userAttractions
-            attractionVC.showExtinct = showExtinct
-    
-            if userAttractionDatabase != [[]]{
-                for i in 0..<userAttractionDatabase.count {
-                    if userAttractionDatabase[i][0].parkID == selectedPark.parkID{
-                        attractionVC.userAttractionDatabase = userAttractionDatabase[i]
-                    }
-                    else{
-                    }
-                }
-            }
-            else{
-                print("array is empty")
-            }
-        }
+
+//        if segue.identifier == "toAttractions"{
+//            let attractionVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sbAttractionsID") as! AttractionsViewController
+//            self.addChildViewController(attractionVC)
+//            attractionVC.view.frame = self.view.frame
+//            self.view.addSubview(attractionVC.view)
+//            attractionVC.didMove(toParentViewController: self)
+//
+//          //  let attractionVC = segue.destination as! AttractionsViewController
+//
+//            if segueWithTableViewSelect{
+//                selectedIndex = (listTableView.indexPathForSelectedRow?.row)!
+//                selectedPark = usersParkList[selectedIndex]
+//            }
+//            attractionVC.titleName = selectedPark.name
+//            attractionVC.parkID = selectedPark.parkID
+//            attractionVC.userAttractions = userAttractions
+//            attractionVC.showExtinct = showExtinct
+//
+//            if userAttractionDatabase != [[]]{
+//                for i in 0..<userAttractionDatabase.count {
+//                    if userAttractionDatabase[i][0].parkID == selectedPark.parkID{
+//                        attractionVC.userAttractionDatabase = userAttractionDatabase[i]
+//                    }
+//                    else{
+//                    }
+//                }
+//            }
+//            else{
+//                print("array is empty")
+//            }
+//        }
         
         if segue.identifier == "toSearch"{
             let searchVC = segue.destination as! ParkSearchViewController
@@ -510,6 +545,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         segueWithTableViewSelect = false
         selectedPark = closestPark
         performSegue(withIdentifier: "toAttractions", sender: nil)
+        //CHANGE THIS
     }
     
     
