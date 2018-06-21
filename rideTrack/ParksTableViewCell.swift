@@ -12,6 +12,7 @@ class ParksTableViewCell: UITableViewCell {
 
     @IBOutlet weak var parkNameLabel: UILabel!
     @IBOutlet weak var totalRidesLabel: UILabel!
+    @IBOutlet weak var favoriteIcon: UILabel!
     
     weak var delegate: ParkTableViewCellDelegate?
 
@@ -31,9 +32,15 @@ class ParksTableViewCell: UITableViewCell {
         delegate?.parkTableViewCellDidRemovePark(self)
     }
     
+    @IBAction func didSelectFavorite(_ sender: Any) {
+        delegate?.parkTableDidSelectFavorite(self)
+    }
+    
+    
 }
 
 
 protocol ParkTableViewCellDelegate : class {
     func parkTableViewCellDidRemovePark(_ sender: ParksTableViewCell)
+    func parkTableDidSelectFavorite(_ sender: ParksTableViewCell)
 }

@@ -290,7 +290,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.RidesComplete += "/"
             self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
             self.NumCompleteLabel.text = self.RidesComplete
-            
+            self.updatingRideCount(parkID: self.parkID, newCount: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore, totalRide: true)
+
             self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.2)
            // self.attractionsTableView.reloadData()
             
@@ -370,7 +371,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.RidesComplete += "/"
             self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
             self.NumCompleteLabel.text = self.RidesComplete
-            
+            self.updatingRideCount(parkID: self.parkID, newCount: self.userRidesRidden-self.userNumExtinct, totalRide: false)
+
             self.extinctComplete = String (self.userNumExtinct)
           // self.extinctComplete += "/"
            // self.extinctComplete += String (self.totalNumExtinct)
@@ -401,6 +403,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             attractionListForTable[indexPath.row].numberOfTimesRidden = 0
             attractionListForTable[indexPath.row].isCheck = false
             attractionsTableView.reloadData()
+            
             if (attractionListForTable[indexPath.row]).active == 0 {
                 userNumExtinct -= 1
             }
@@ -410,6 +413,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.RidesComplete += "/"
             self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
             self.NumCompleteLabel.text = self.RidesComplete
+            updatingRideCount(parkID: parkID, newCount: userRidesRidden-userNumExtinct, totalRide: false)
+
             
             self.extinctComplete = String (self.userNumExtinct)
           //  self.extinctComplete += "/"
@@ -596,7 +601,30 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.present(scoreAlert, animated: true, completion:nil)
     }
     
-    
+    func updatingRideCount(parkID: Int, newCount: Int, totalRide: Bool) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        var key = "ridesRidden"
+        if totalRide{
+            key = "totalRides"
+        }
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
+        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
+        do
+        {
+            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
+            
+            for entity in fetchedResults! {
+                print("updating total ride count")
+                entity.setValue(newCount, forKey: key)
+                try! managedContext.save()
+            }
+        } catch _ {
+            print("Could not save favorite")
+        }
+    }
 
     /*
      // MARK: - Navigation

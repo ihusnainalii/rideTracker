@@ -11,6 +11,7 @@
 		5F16C52520BCE89200E525EF /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */; };
 		5F16C52920BCF3F700E525EF /* ParkListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16C52820BCF3F700E525EF /* ParkListData.swift */; };
 		5F3564B920C381FE00648E30 /* ParksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3564B820C381FE00648E30 /* ParksTableViewCell.swift */; };
+		5FE9F81020DB45030012B98C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FE9F80F20DB45030012B98C /* Media.xcassets */; };
 		5FF0BBBB20CF62C300213DF8 /* ScoreCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF0BBBA20CF62C300213DF8 /* ScoreCardViewController.swift */; };
 		5FF0BBBE20CF639100213DF8 /* ScoreCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF0BBBD20CF639100213DF8 /* ScoreCardTableViewCell.swift */; };
 		5FF0BBC020CF652700213DF8 /* ScoreCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF0BBBF20CF652700213DF8 /* ScoreCardModel.swift */; };
@@ -19,7 +20,6 @@
 		5FF1ECB020B5271800BE1609 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */; };
 		9845395720BC8D8C00C0E36C /* AttractionsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */; };
 		987028F420B7897E00DC3B73 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987028F320B7897E00DC3B73 /* SettingsViewController.swift */; };
-		98AD7F2820A91A2D00540AB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98AD7F2720A91A2D00540AB3 /* Assets.xcassets */; };
 		98AD7F3620A91A2D00540AB3 /* rideTrackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F3520A91A2D00540AB3 /* rideTrackTests.swift */; };
 		98AD7F4120A91A2D00540AB3 /* rideTrackUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F4020A91A2D00540AB3 /* rideTrackUITests.swift */; };
 		98AD7F6F20A91A5C00540AB3 /* AttractionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F6420A91A5A00540AB3 /* AttractionsModel.swift */; };
@@ -55,6 +55,7 @@
 		5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		5F16C52820BCF3F700E525EF /* ParkListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkListData.swift; sourceTree = "<group>"; };
 		5F3564B820C381FE00648E30 /* ParksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksTableViewCell.swift; sourceTree = "<group>"; };
+		5FE9F80F20DB45030012B98C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		5FF0BBBA20CF62C300213DF8 /* ScoreCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardViewController.swift; sourceTree = "<group>"; };
 		5FF0BBBD20CF639100213DF8 /* ScoreCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardTableViewCell.swift; sourceTree = "<group>"; };
 		5FF0BBBF20CF652700213DF8 /* ScoreCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardModel.swift; sourceTree = "<group>"; };
@@ -64,7 +65,6 @@
 		9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionsDetailsViewController.swift; sourceTree = "<group>"; };
 		987028F320B7897E00DC3B73 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		98AD7F1A20A91A2B00540AB3 /* rideTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rideTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		98AD7F2720A91A2D00540AB3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98AD7F3120A91A2D00540AB3 /* rideTrackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rideTrackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98AD7F3520A91A2D00540AB3 /* rideTrackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rideTrackTests.swift; sourceTree = "<group>"; };
 		98AD7F3720A91A2D00540AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -176,8 +176,8 @@
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
 				98AD7F6E20A91A5C00540AB3 /* Info.plist */,
+				5FE9F80F20DB45030012B98C /* Media.xcassets */,
 				98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */,
-				98AD7F2720A91A2D00540AB3 /* Assets.xcassets */,
 			);
 			path = rideTrack;
 			sourceTree = "<group>";
@@ -305,7 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FF1ECB020B5271800BE1609 /* LaunchScreen.storyboard in Resources */,
-				98AD7F2820A91A2D00540AB3 /* Assets.xcassets in Resources */,
+				5FE9F81020DB45030012B98C /* Media.xcassets in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -523,7 +523,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Y48L6965QA;
+				DEVELOPMENT_TEAM = PFP4CHD9U5;
 				INFOPLIST_FILE = rideTrack/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -541,7 +541,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Y48L6965QA;
+				DEVELOPMENT_TEAM = PFP4CHD9U5;
 				INFOPLIST_FILE = rideTrack/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

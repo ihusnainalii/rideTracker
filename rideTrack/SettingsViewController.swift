@@ -78,6 +78,23 @@ class SettingsViewController: UIViewController {
             
         }
         
+        let parkFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ParkList")
+        
+        let parkResult = try? moc.fetch(parkFetchRequest)
+        let parkResultData = parkResult as! [ParkList]
+        for object in parkResultData {
+            moc.delete(object)
+        }
+        
+        do {
+            try moc.save()
+            print("deleted!")
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        } catch {
+            
+        }
+        
     }
     func getContext () -> NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
