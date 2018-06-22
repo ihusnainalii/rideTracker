@@ -14,6 +14,8 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     var parkName = ""
     var parkID = 0
     var rideType = ""
+    var userAttractionDatabase: [UserAttractionProvider]!
+
     @IBOutlet weak var textFieldName: UITextField!
     @IBOutlet weak var textFieldOpen: UITextField!
     @IBOutlet weak var textFieldClose: UITextField!

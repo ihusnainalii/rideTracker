@@ -18,7 +18,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var NumCompleteLabel: UILabel!
     @IBOutlet weak var extinctLabel: UILabel!
     @IBOutlet weak var extinctText: UITextField!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var rectangleView: UIView!
     
     var titleName = ""
     var parkID = 0
@@ -30,6 +30,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var ignore = [Int]()
     let ignoreList = UserDefaults.standard
     var numIgnore = 0
+    var comeFromDetails = false
     
     let green = UIColor(red: 120.0/255.0, green: 205.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor as CGColor
     var userAttractions: [NSManagedObject] = []
@@ -42,17 +43,20 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var totalNumExtinct = 0
     
     override func viewDidLoad() {
+        print ("Come from details is: ", comeFromDetails)
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
-
-        imageView.backgroundColor = UIColor.white
-        imageView.layer.cornerRadius = 8.0
-        imageView.clipsToBounds = true
+        self.modalPresentationStyle = .overCurrentContext
+        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+        
+        rectangleView.backgroundColor = UIColor.white
+        rectangleView.layer.cornerRadius = 10.0
+        rectangleView.clipsToBounds = true
         //Removes the two negative 1s that get created while saving to CoreData
         //Not good... always going to assume that there are 2 -1s at the beginning of the list
+        if (comeFromDetails == false){
        userAttractionDatabase.remove(at: 0)
        userAttractionDatabase.remove(at: 0)
-
+        }
         
        // attractionsTableView.allowsSelection = false
         parkLabel.text = titleName
@@ -537,6 +541,43 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
+//    var interactor:Interactor? = nil //for swipe animation
+//
+//    @IBAction func close(sender: UIButton) {
+//        dismissViewControllerAnimated(true, completion: nil)
+//    }
+//
+//    @IBAction func handleGesture(sender: UIPanGestureRecognizer) { //for swipe animation
+//        let percentThreshold:CGFloat = 0.3
+//
+//        // convert y-position to downward pull progress (percentage)
+//        let translation = sender.translationInView(view)
+//        let verticalMovement = translation.y / view.bounds.height
+//        let downwardMovement = fmaxf(Float(verticalMovement), 0.0)
+//        let downwardMovementPercent = fminf(downwardMovement, 1.0)
+//        let progress = CGFloat(downwardMovementPercent)
+//        guard let interactor = interactor else { return }
+//
+//        switch sender.state {
+//        case .Began:
+//            interactor.hasStarted = true
+//            dismissViewControllerAnimated(true, completion: nil)
+//        case .Changed:
+//            interactor.shouldFinish = progress > percentThreshold
+//            interactor.updateInteractiveTransition(progress)
+//        case .Cancelled:
+//            interactor.hasStarted = false
+//            interactor.cancelInteractiveTransition()
+//        case .Ended:
+//            interactor.hasStarted = false
+//            interactor.shouldFinish
+//                ? interactor.finishInteractiveTransition()
+//                : interactor.cancelInteractiveTransition()
+//        default:
+//            break
+//        }
+//    }
+//
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "toSuggest"{
@@ -544,6 +585,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             //selectedPark = feedItems[selectedIndex!] as! ParksModel
             suggestVC.parkName = titleName
             suggestVC.parkID = parkID
+
         }
         if segue.identifier == "ToDetails"{
             let detailsVC = segue.destination as! AttractionsDetailsViewController
@@ -554,6 +596,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             rideName = selectedRide.name
             print (rideName)
             detailsVC.selectedRide = selectedRide
+            detailsVC.userAttractionDatabase = userAttractionDatabase
+            comeFromDetails = true
+            detailsVC.titleName = titleName
           //  detailsVC.isFavorite = isFavorite!
             
             

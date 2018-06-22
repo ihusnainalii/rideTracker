@@ -17,6 +17,11 @@ class AttractionsDetailsViewController: UIViewController {
     let favList = UserDefaults.standard
     var isFavorite = false
     var modifyDate = Date()
+    var comeFromDetails = false
+    var userAttractionDatabase: [UserAttractionProvider]!
+    var titleName = ""
+
+
     //let favorites = favList.array(forKey: "SavedIntArray")  as? [Int] ?? [Int]()
     
     @IBOutlet weak var dateModifyButton: UIButton!
@@ -204,6 +209,14 @@ class AttractionsDetailsViewController: UIViewController {
         if segue.identifier == "toScoreCard"{
             let newVC = segue.destination as! ScoreCardViewController
             newVC.selectedRide = selectedRide
+        }
+        if segue.identifier == "toAttractions"{
+            print ("Comeing back")
+            let newVC = segue.destination as! AttractionsViewController
+            newVC.comeFromDetails = true
+            newVC.parkID = selectedRide.parkID
+            newVC.titleName = titleName
+            newVC.userAttractionDatabase = userAttractionDatabase
         }
     }
     
