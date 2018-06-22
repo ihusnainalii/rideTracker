@@ -31,6 +31,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     let ignoreList = UserDefaults.standard
     var numIgnore = 0
     var comeFromDetails = false
+    var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
+
     
     let green = UIColor(red: 120.0/255.0, green: 205.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor as CGColor
     var userAttractions: [NSManagedObject] = []
@@ -678,7 +680,28 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBAction func unwindToAttractionsView(sender: UIStoryboardSegue) {
         print("Back to attractions view")
     }
-
+    @IBAction func panGestureReconizer(_ sender: UIPanGestureRecognizer) {
+        let touchPoint = (sender as AnyObject).location(in: self.view?.window)
+        
+        if (sender as AnyObject).state == UIGestureRecognizerState.began{
+            initialToucnPoint = touchPoint
+        }
+        else if sender.state == UIGestureRecognizerState.changed {
+            if touchPoint.y - initialToucnPoint.y > 0 {
+                self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
+            }
+            }
+        else if sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled {
+            if touchPoint.y - initialToucnPoint.y > 100 {
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+                })
+            }
+        }
+    }
+    
     /*
      // MARK: - Navigation
      

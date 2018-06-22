@@ -285,15 +285,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         if segue.identifier == "toAttractions"{
             //Re write this to simplify calling RideTrack coreData only here, while going to Attractions view
-            
-            print ("Going to attractions!")
-            //            let attractionVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sbAttractionsID") as! AttractionsViewController
-            //            print ("Made it here 1")
-            //            self.addChildViewController(attractionVC)
-            //            attractionVC.view.frame = self.view.frame
-            //            self.view.addSubview(attractionVC.view)
-            //            attractionVC.didMove(toParentViewController: self)
-            
             let attractionVC = segue.destination as! AttractionsViewController
             
             if segueWithTableViewSelect{
