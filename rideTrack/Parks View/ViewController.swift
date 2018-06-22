@@ -47,6 +47,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     let screenSize = UIScreen.main.bounds
 
     var locationManager: CLLocationManager = CLLocationManager()
+    let parksCoreData = ParkCoreData()
     
     var latitude: Double?
     var longitude: Double?
@@ -121,7 +122,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 }
             }
             if arrayOfAllRides.count != 0{
-                updatingTotalRideCount(parkID: arrayOfAllRides[0].parkID, totalRideCount: totalRideCount)
+                parksCoreData.updatingTotalRideCount(parkID: arrayOfAllRides[0].parkID, totalRideCount: totalRideCount)
+                for i in 0..<usersParkList.count{
+                    if usersParkList[i].parkID == arrayOfAllRides[0].parkID{
+                        usersParkList[i].totalRides = totalRideCount
+                        break
+                    }
+                }
+                listTableView.reloadData()
             }
             print(totalRideCount, "updating saved label...")
             
@@ -190,7 +198,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             }
         }
         //Delete from coreData and ParkList
-        deletePark(parkID: removedParkID!)
+        parksCoreData.deletePark(parkID: removedParkID!)
         
         for i in 0..<userAttractionDatabase[indexToRemove].count{
             if userAttractionDatabase[indexToRemove][i].rideID != -1{
@@ -205,79 +213,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         printUserDatabase()
         listTableView.reloadData()
     }
-    
-    func save(parkID: Int, rideID: Int) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let entity = NSEntityDescription.entity(forEntityName: "RideTrack",
-                                                in: managedContext)!
-        
-        let newPark = NSManagedObject(entity: entity,
-                                      insertInto: managedContext)
-        
-        newPark.setValue(parkID, forKeyPath: "parkID")
-        newPark.setValue(rideID, forKeyPath: "rideID")
-        newPark.setValue(0, forKey: "numberOfTimesRidden")
-        newPark.setValue(Date(), forKey: "firstRideDate")
-        newPark.setValue(Date(), forKey: "lastRideDate")
-        
-        print("Just saved new park: ", parkID)
-        do {
-            try managedContext.save()
-            userAttractions.append(newPark)
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
-        }
-    }
-    
-    
-    func deletePark(parkID: Int) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
-        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
-
-        do {
-            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
-            for entity in fetchedResults! {
-                managedContext.delete(entity)
-                print("Deleted park \(parkID)")
-                do {
-                    try managedContext.save()
-                } catch {
-                    // Do something... fatalerror
-                }
-            }
-        } catch _ {
-            print("Could not delete")
-        }
-        
-        let parkFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-        parkFetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
-        
-        do {
-            let fetchedResults =  try managedContext.fetch(parkFetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
-            for entity in fetchedResults! {
-                managedContext.delete(entity)
-                print("Deleted parkList \(parkID)")
-                do {
-                    try managedContext.save()
-                } catch {
-                    // Do something... fatalerror
-                }
-            }
-        }
-        catch _ {
-            print("Could not delete")
-        }
-        
-    }
-    
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -333,39 +268,42 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         attractionVC.didMove(toParentViewController: self)
     }
 
+    func addNewParkToList(newPark: ParksModel) {
+        if checkIfNewPark(newPark: newPark){
+            
+            //Adding defualt user saved data values
+            newPark.favorite = false
+            newPark.totalRides = 0
+            newPark.ridesRidden = 0
+            
+            usersParkList.append(newPark)
+            print("ADDING")
+            userAttractionDatabase.append([UserAttractionProvider(parkID: newPark.parkID)])
+            self.listTableView.reloadData()
+            self.parksCoreData.save(parkID: newPark.parkID, rideID: -1)
+            self.parksCoreData.saveNewItemToParkList(parkID: newPark.parkID)
+            
+            //Get total number of rides, need to call database
+            let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(newPark.parkID!)"
+            
+            let dataModel = DataModel()
+            dataModel.delegate = self
+            dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "countNumberOfRides")
+            
+            
+            print("new park saved: ", newPark.parkID)
+            //UserDefaults.standard.set(parkListData, forKey: "parkListData")
+        }
+        else{
+            print("Can not add a park twice")
+        }
+    }
     
     func parkTableDidSelectFavorite(_ sender: ParksTableViewCell) {
         
         guard let indexPath = listTableView.indexPath(for: sender) else { return }
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(usersParkList[indexPath.row].parkID!)")
-        do
-        {
-            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
-
-            for entity in fetchedResults! {
-                print("adding to favorites")
-                if usersParkList[indexPath.row].favorite{
-                    //Remove from favorites list
-                    entity.setValue(false, forKey: "favorite")
-                    usersParkList[indexPath.row].favorite = false
-                }
-                else{
-                    //Add to favorites list
-                    entity.setValue(true, forKey: "favorite")
-                    usersParkList[indexPath.row].favorite = true
-                }
-                try! managedContext.save()
-            }
-        }
-        catch _ {
-            print("Could not save favorite")
-        }
+        parksCoreData.saveFavorite(modifyedPark: usersParkList[indexPath.row])
         listTableView.reloadData()
     }
     
@@ -437,37 +375,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 self.listTableView.reloadData()
                 userAttractionDatabase = [[]]
             }
-        }
-    }
-    
-    func addNewParkToList(newPark: ParksModel) {
-        if checkIfNewPark(newPark: newPark){
-            
-            //Adding defualt user saved data values
-            newPark.favorite = false
-            newPark.totalRides = 0
-            newPark.ridesRidden = 0
-            
-            usersParkList.append(newPark)
-            print("ADDING")
-            userAttractionDatabase.append([UserAttractionProvider(parkID: newPark.parkID)])
-            self.listTableView.reloadData()
-            self.save(parkID: newPark.parkID, rideID: -1)
-            self.saveNewItemToParkList(parkID: newPark.parkID)
-            
-            //Get total number of rides, need to call database
-            let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(newPark.parkID!)"
-
-            let dataModel = DataModel()
-            dataModel.delegate = self
-            dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "countNumberOfRides")
-            
-            
-            print("new park saved: ", newPark.parkID)
-            //UserDefaults.standard.set(parkListData, forKey: "parkListData")
-        }
-        else{
-            print("Can not add a park twice")
         }
     }
     
@@ -605,10 +512,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 })
                 
             }
-        
         }
     }
-    
     
     @IBAction func showCurrentlLocationPark(_ sender: Any) {
         if checkIfNewPark(newPark: closestPark){
@@ -625,59 +530,5 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location error: \(error)")
     }
-    
-    func saveNewItemToParkList(parkID: Int) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "ParkList", in: managedContext)!
-        let newPark = NSManagedObject(entity: entity, insertInto: managedContext)
-        
-        newPark.setValue(parkID, forKeyPath: "parkID")
-        newPark.setValue(false, forKeyPath: "favorite")
-        newPark.setValue(0, forKey: "ridesRidden")
-        newPark.setValue(0, forKey: "totalRides")
-        do {
-            try managedContext.save()
-            print("Just added park to ParkList: ",parkID)
-            
-            
-            
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
-        }
-    }
-    
-    func updatingTotalRideCount(parkID: Int, totalRideCount: Int) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
-        do
-        {
-            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
-            
-            for entity in fetchedResults! {
-                print("updating total ride count")
-                entity.setValue(totalRideCount, forKey: "totalRides")
-                try! managedContext.save()
-            }
-        } catch _ {
-            print("Could not save favorite")
-        }
-        for i in 0..<usersParkList.count{
-            if usersParkList[i].parkID == parkID{
-                usersParkList[i].totalRides = totalRideCount
-                break
-            }
-        }
-        listTableView.reloadData()
-    }
-    
-    
- 
 }
 
