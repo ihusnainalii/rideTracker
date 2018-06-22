@@ -13,21 +13,17 @@ import CoreLocation
 
 
 class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, NSFetchedResultsControllerDelegate, ParkTableViewCellDelegate {
-
+    
     
     @IBOutlet weak var listTableView: UITableView!
     
-    
     var arrayOfAllParks = [ParksModel]()
     var selectedPark: ParksModel = ParksModel()
-    var titleTest = "test"
     var usersParkList = [ParksModel]()
     var park = ParksModel()
     var downloadIncrementor = 0
-   // var showExtinct = 0
     var showExtinct = UserDefaults.standard.integer(forKey: "showExtinct")
-    //var parkListData: [ParkListData] = UserDefaults.standard.array(forKey: "parkListData") as! [ParkListData]
-
+    
     var segueWithTableViewSelect = true
     var selectedIndex = 0
     var numberOfRides = 0
@@ -35,25 +31,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var currentLocationView: UIView!
     @IBOutlet weak var currentLocationParkNameLabel: UILabel!
     var closestPark = ParksModel()
-
+    
     
     var userAttractionDatabase: [[UserAttractionProvider]] = [[]]
     var userAttractions: [NSManagedObject] = []
     var savedParkList: [NSManagedObject] = []
     var indexPathRow = 0
     
-    var fetchRequest: NSFetchedResultsController<RideTrack>? = nil
-    var managedContext: NSManagedObjectContext? = nil
     let screenSize = UIScreen.main.bounds
-
     var locationManager: CLLocationManager = CLLocationManager()
     let parksCoreData = ParkCoreData()
     
-    var latitude: Double?
-    var longitude: Double?
     
-
-
     override func viewDidLoad() {
         
         //Initialize current location UI
@@ -69,29 +58,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         self.listTableView.dataSource = self
         
         let urlPath = "http://www.beingpositioned.com/theparksman/parksdbservice.php"
-        
         let dataModel = DataModel()
         dataModel.delegate = self
         dataModel.downloadData(urlPath: urlPath, dataBase: "parks", returnPath: "allParks")
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
-        print ("AT TOP, ShowExtinct is ", showExtinct)
         segueWithTableViewSelect = true
-
-        print("VIEW WILL APPEAR RAN")
         super.viewWillAppear(animated)
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
+            return }
         
         let managedContext = appDelegate.persistentContainer.viewContext
         let sortDescriptor = NSSortDescriptor(key: "parkID", ascending: true)
-        
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
         fetchRequest.sortDescriptors = [sortDescriptor]
+        
         do {
             userAttractions = try managedContext.fetch(fetchRequest)
             dataMigrationToList()
@@ -108,11 +91,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         } catch let error as NSError {
             print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
         }
-    
-        
     }
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
+        //Rewrite this whole thing to support two tables. Just check against ParkListData array (savedParkList)
+        //Should be able to completely remove data migration tool and fix a ton of bugs
+        
         
         if returnPath == "countNumberOfRides"{
             var totalRideCount = 0
@@ -138,7 +122,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         else{
             arrayOfAllParks = items as! [ParksModel]
-            
             if (userAttractionDatabase[downloadIncrementor].count == 0){
             }
             else{
@@ -148,12 +131,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                         if downloadIncrementor < userAttractionDatabase.count - 1{
                             downloadIncrementor += 1
                         }
-                        
                         usersParkList.append(arrayOfAllParks[i] )
                     }
                 }
-                
-                
+
                 //Get saved ParkList data
                 
                 
@@ -187,7 +168,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func parkTableViewCellDidRemovePark(_ sender: ParksTableViewCell) {
         guard let indexPath = listTableView.indexPath(for: sender) else { return }
-
+        
         //Find and delete all the saved data for the selected parkID
         var indexToRemove = 0
         let removedParkID = usersParkList[indexPath.row].parkID
@@ -210,11 +191,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         userAttractionDatabase[indexToRemove].removeAll()
         userAttractionDatabase.remove(at: indexToRemove)
         usersParkList.remove(at: indexPath.row)
-
+        
         printUserDatabase()
         listTableView.reloadData()
     }
-
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return usersParkList.count
@@ -238,37 +219,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print ("Select here")
         tableView.deselectRow(at: indexPath, animated: true)
-//        let attractionVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sbAttractionsID") as! AttractionsViewController
-//
-//        //  let attractionVC = segue.destination as! AttractionsViewController
-//
-//        if segueWithTableViewSelect{
-//            // selectedIndex = (listTableView.indexPath.row)!
-//            selectedPark = usersParkList[indexPath.row]
-//        }
-//        attractionVC.titleName = selectedPark.name
-//        attractionVC.parkID = selectedPark.parkID
-//        attractionVC.userAttractions = userAttractions
-//        attractionVC.showExtinct = showExtinct
-//        print ("DO this")
-//        if userAttractionDatabase != [[]]{
-//            for i in 0..<userAttractionDatabase.count {
-//                if userAttractionDatabase[i][0].parkID == selectedPark.parkID{
-//                    attractionVC.userAttractionDatabase = userAttractionDatabase[i]
-//                }
-//                else{
-//                }
-//            }
-//        }
-//        else{
-//            print("array is empty")
-//        }
-//        self.addChildViewController(attractionVC) //for popover view
-//        attractionVC.view.frame = self.view.frame
-//        self.view.addSubview(attractionVC.view)
-//        attractionVC.didMove(toParentViewController: self)
     }
-
+    
     func addNewParkToList(newPark: ParksModel) {
         if checkIfNewPark(newPark: newPark){
             
@@ -301,9 +253,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func parkTableDidSelectFavorite(_ sender: ParksTableViewCell) {
-        
         guard let indexPath = listTableView.indexPath(for: sender) else { return }
-        
         parksCoreData.saveFavorite(modifyedPark: usersParkList[indexPath.row])
         listTableView.reloadData()
     }
@@ -314,36 +264,38 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         // Dispose of any resources that can be recreated.
     }
     
-//    let interactor = Interactor() //for swipe
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if let destinationViewController = segue.destinationViewController as? ModalViewController {
-//            destinationViewController.transitioningDelegate = self
-//            destinationViewController.interactor = interactor
-//        }
-//    }
-//}
-//
-//extension ViewController: UIViewControllerTransitioningDelegate {
-//    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        return DismissAnimator()
-//    }
-//    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-//        return interactor.hasStarted ? interactor : nil
-//    }
+    //    let interactor = Interactor() //for swipe
+    //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    //        if let destinationViewController = segue.destinationViewController as? ModalViewController {
+    //            destinationViewController.transitioningDelegate = self
+    //            destinationViewController.interactor = interactor
+    //        }
+    //    }
+    //}
+    //
+    //extension ViewController: UIViewControllerTransitioningDelegate {
+    //    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    //        return DismissAnimator()
+    //    }
+    //    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    //        return interactor.hasStarted ? interactor : nil
+    //    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        
         if segue.identifier == "toAttractions"{
+            //Re write this to simplify calling RideTrack coreData only here, while going to Attractions view
+            
             print ("Going to attractions!")
-//            let attractionVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sbAttractionsID") as! AttractionsViewController
-//            print ("Made it here 1")
-//            self.addChildViewController(attractionVC)
-//            attractionVC.view.frame = self.view.frame
-//            self.view.addSubview(attractionVC.view)
-//            attractionVC.didMove(toParentViewController: self)
-
+            //            let attractionVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sbAttractionsID") as! AttractionsViewController
+            //            print ("Made it here 1")
+            //            self.addChildViewController(attractionVC)
+            //            attractionVC.view.frame = self.view.frame
+            //            self.view.addSubview(attractionVC.view)
+            //            attractionVC.didMove(toParentViewController: self)
+            
             let attractionVC = segue.destination as! AttractionsViewController
-
+            
             if segueWithTableViewSelect{
                 selectedIndex = (listTableView.indexPathForSelectedRow?.row)!
                 selectedPark = usersParkList[selectedIndex]
@@ -353,13 +305,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             attractionVC.parkID = selectedPark.parkID
             attractionVC.userAttractions = userAttractions
             attractionVC.showExtinct = showExtinct
-
+            
             if userAttractionDatabase != [[]]{
                 for i in 0..<userAttractionDatabase.count {
                     if userAttractionDatabase[i][0].parkID == selectedPark.parkID{
                         attractionVC.userAttractionDatabase = userAttractionDatabase[i]
-                    }
-                    else{
                     }
                 }
             }
@@ -378,7 +328,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
     }
     
-  
+    
     
     @IBAction func unwindToParkList(segue:UIStoryboardSegue) {
         if let sourceViewController = segue.source as? SettingsViewController, let pressReset = sourceViewController.resetPressed{
@@ -432,7 +382,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                     stringToPrint += "Empty"
                 }
             }
-
+            
             
             print(stringToPrint)
         }
@@ -490,21 +440,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            latitude = location.coordinate.latitude
-            longitude = location.coordinate.longitude
+            let latitude = location.coordinate.latitude
+            let longitude = location.coordinate.longitude
             var oneMileParks = [ParksModel]()
             
             //Simulate you are at Epcot
-//            latitude = 28.3667
-//            longitude = -81.5495
+            //            latitude = 28.3667
+            //            longitude = -81.5495
             
             //Simulate you are in Magic Kingdom
-//            latitude = 28.4161
-//            longitude = -81.5811
+            //            latitude = 28.4161
+            //            longitude = -81.5811
             
             
             
-            let currentLocation = CLLocation(latitude: latitude!, longitude: longitude!)
+            let currentLocation = CLLocation(latitude: latitude, longitude: longitude)
             for i in 0..<arrayOfAllParks.count{
                 
                 //distance is in meters, so if the distance is less than 1 mile, or 1609 meters, print that
