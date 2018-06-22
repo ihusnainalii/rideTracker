@@ -43,9 +43,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var totalNumExtinct = 0
     
     override func viewDidLoad() {
-        print ("Come from details is: ", comeFromDetails)
         super.viewDidLoad()
-        self.modalPresentationStyle = .overCurrentContext
+        //self.modalPresentationStyle = .overCurrentContext
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.1)
         
         rectangleView.backgroundColor = UIColor.white
@@ -53,14 +52,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         rectangleView.clipsToBounds = true
         //Removes the two negative 1s that get created while saving to CoreData
         //Not good... always going to assume that there are 2 -1s at the beginning of the list
-        if (comeFromDetails == false){
-       userAttractionDatabase.remove(at: 0)
-       userAttractionDatabase.remove(at: 0)
-        }
         
-       // attractionsTableView.allowsSelection = false
+        userAttractionDatabase.remove(at: 0)
+        userAttractionDatabase.remove(at: 0)
+        
+        
+        // attractionsTableView.allowsSelection = false
         parkLabel.text = titleName
-
+        
         self.attractionsTableView.delegate = self
         self.attractionsTableView.dataSource = self
         print(parkID)
@@ -455,9 +454,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func closeButton(_ sender: Any) { //leaves popup view
-        self.view.removeFromSuperview()
-    }
+//    @IBAction func closeButton(_ sender: Any) { //leaves popup view
+//        self.view.removeFromSuperview()
+//    }
     
     
   
@@ -600,8 +599,13 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             comeFromDetails = true
             detailsVC.titleName = titleName
           //  detailsVC.isFavorite = isFavorite!
-            
-            
+        }
+        
+        if segue.identifier == "toParkList"{
+            print("Back to parks list")
+            let parkVC = segue.destination as! ViewController
+            parkVC.unwindFromAttractions(parkID: parkID)
+
         }
        
     }
@@ -669,6 +673,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         } catch _ {
             print("Could not save favorite")
         }
+    }
+    
+    @IBAction func unwindToAttractionsView(sender: UIStoryboardSegue) {
+        print("Back to attractions view")
     }
 
     /*

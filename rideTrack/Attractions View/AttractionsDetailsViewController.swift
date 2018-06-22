@@ -220,4 +220,8 @@ class AttractionsDetailsViewController: UIViewController {
         }
     }
     
+    @IBAction func unwindToDetailsView(sender: UIStoryboardSegue) {
+        print("Back to attractions view")
+    }
+    
 }

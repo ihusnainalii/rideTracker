@@ -108,6 +108,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         } catch let error as NSError {
             print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
         }
+    
         
     }
     
@@ -372,19 +373,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             searchVC.parkArray = arrayOfAllParks as NSArray
         }
         if segue.identifier == "toSettings"{
-            
             let settingVC = segue.destination as! SettingsViewController
             settingVC.showExtinct = showExtinct
         }
     }
     
-    @IBAction func unwindToParkList(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? ParkSearchViewController, let newPark = sourceViewController.selectedPark{
-            addNewParkToList(newPark: newPark)
-        }
-    }
+  
     
-    @IBAction func unwindToList(segue:UIStoryboardSegue) {
+    @IBAction func unwindToParkList(segue:UIStoryboardSegue) {
         if let sourceViewController = segue.source as? SettingsViewController, let pressReset = sourceViewController.resetPressed{
             print ("BACK FROM SETTINGS")
             if (pressReset == 1) {
@@ -394,6 +390,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 self.listTableView.reloadData()
                 userAttractionDatabase = [[]]
             }
+        }
+        else if let sourceViewController = segue.source as? ParkSearchViewController, let newPark = sourceViewController.selectedPark{
+            addNewParkToList(newPark: newPark)
+        }
+        else if segue.source is AttractionsViewController{
+            //print("Back from attractions view, need to update tables with number of rides ridden. I will make this work later")
         }
     }
     
@@ -548,6 +550,45 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location error: \(error)")
+    }
+    
+    func unwindFromAttractions(parkID: Int) {
+        segueWithTableViewSelect = true
+        print("Unwind from attractions")
+        
+        //update CoreData
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let sortDescriptor = NSSortDescriptor(key: "parkID", ascending: true)
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        do {
+            userAttractions = try managedContext.fetch(fetchRequest)
+            dataMigrationToList()
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        //Get ParkList data for the segued parkID from CoreData
+        let parkFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
+        parkFetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
+        print(parkID)
+        do {
+            let savedParkList = try managedContext.fetch(parkFetchRequest)
+            for i in 0..<usersParkList.count{
+                if usersParkList[i].parkID == parkID{
+                    usersParkList[i].favorite = savedParkList[0].value(forKey: "favorite") as! Bool
+                    usersParkList[i].totalRides = savedParkList[0].value(forKey: "totalRides") as! Int
+                    usersParkList[i].ridesRidden = savedParkList[0].value(forKey: "ridesRidden") as! Int
+                    break
+                }
+            }
+            listTableView.reloadData()
+        } catch let error as NSError {
+            print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
+        }
     }
 }
 
