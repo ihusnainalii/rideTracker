@@ -300,37 +300,37 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         print ("Select here")
-        let attractionVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sbAttractionsID") as! AttractionsViewController
-        
-        //  let attractionVC = segue.destination as! AttractionsViewController
-        
-        if segueWithTableViewSelect{
-            // selectedIndex = (listTableView.indexPath.row)!
-            selectedPark = usersParkList[indexPath.row]
-        }
-        attractionVC.titleName = selectedPark.name
-        attractionVC.parkID = selectedPark.parkID
-        attractionVC.userAttractions = userAttractions
-        attractionVC.showExtinct = showExtinct
-        print ("DO this")
-        if userAttractionDatabase != [[]]{
-            for i in 0..<userAttractionDatabase.count {
-                if userAttractionDatabase[i][0].parkID == selectedPark.parkID{
-                    attractionVC.userAttractionDatabase = userAttractionDatabase[i]
-                }
-                else{
-                }
-            }
-        }
-        else{
-            print("array is empty")
-        }
-        self.addChildViewController(attractionVC) //for popover view
-        attractionVC.view.frame = self.view.frame
-        self.view.addSubview(attractionVC.view)
-        attractionVC.didMove(toParentViewController: self)
+        tableView.deselectRow(at: indexPath, animated: true)
+//        let attractionVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sbAttractionsID") as! AttractionsViewController
+//
+//        //  let attractionVC = segue.destination as! AttractionsViewController
+//
+//        if segueWithTableViewSelect{
+//            // selectedIndex = (listTableView.indexPath.row)!
+//            selectedPark = usersParkList[indexPath.row]
+//        }
+//        attractionVC.titleName = selectedPark.name
+//        attractionVC.parkID = selectedPark.parkID
+//        attractionVC.userAttractions = userAttractions
+//        attractionVC.showExtinct = showExtinct
+//        print ("DO this")
+//        if userAttractionDatabase != [[]]{
+//            for i in 0..<userAttractionDatabase.count {
+//                if userAttractionDatabase[i][0].parkID == selectedPark.parkID{
+//                    attractionVC.userAttractionDatabase = userAttractionDatabase[i]
+//                }
+//                else{
+//                }
+//            }
+//        }
+//        else{
+//            print("array is empty")
+//        }
+//        self.addChildViewController(attractionVC) //for popover view
+//        attractionVC.view.frame = self.view.frame
+//        self.view.addSubview(attractionVC.view)
+//        attractionVC.didMove(toParentViewController: self)
     }
 
     
@@ -375,40 +375,59 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         // Dispose of any resources that can be recreated.
     }
     
+//    let interactor = Interactor() //for swipe
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if let destinationViewController = segue.destinationViewController as? ModalViewController {
+//            destinationViewController.transitioningDelegate = self
+//            destinationViewController.interactor = interactor
+//        }
+//    }
+//}
+//
+//extension ViewController: UIViewControllerTransitioningDelegate {
+//    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        return DismissAnimator()
+//    }
+//    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+//        return interactor.hasStarted ? interactor : nil
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-//        if segue.identifier == "toAttractions"{
+        if segue.identifier == "toAttractions"{
+            print ("Going to attractions!")
 //            let attractionVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sbAttractionsID") as! AttractionsViewController
+//            print ("Made it here 1")
 //            self.addChildViewController(attractionVC)
 //            attractionVC.view.frame = self.view.frame
 //            self.view.addSubview(attractionVC.view)
 //            attractionVC.didMove(toParentViewController: self)
-//
-//          //  let attractionVC = segue.destination as! AttractionsViewController
-//
-//            if segueWithTableViewSelect{
-//                selectedIndex = (listTableView.indexPathForSelectedRow?.row)!
-//                selectedPark = usersParkList[selectedIndex]
-//            }
-//            attractionVC.titleName = selectedPark.name
-//            attractionVC.parkID = selectedPark.parkID
-//            attractionVC.userAttractions = userAttractions
-//            attractionVC.showExtinct = showExtinct
-//
-//            if userAttractionDatabase != [[]]{
-//                for i in 0..<userAttractionDatabase.count {
-//                    if userAttractionDatabase[i][0].parkID == selectedPark.parkID{
-//                        attractionVC.userAttractionDatabase = userAttractionDatabase[i]
-//                    }
-//                    else{
-//                    }
-//                }
-//            }
-//            else{
-//                print("array is empty")
-//            }
-//        }
+
+            let attractionVC = segue.destination as! AttractionsViewController
+
+            if segueWithTableViewSelect{
+                selectedIndex = (listTableView.indexPathForSelectedRow?.row)!
+                selectedPark = usersParkList[selectedIndex]
+            }
+            print ("The park is ", selectedPark.name)
+            attractionVC.titleName = selectedPark.name
+            attractionVC.parkID = selectedPark.parkID
+            attractionVC.userAttractions = userAttractions
+            attractionVC.showExtinct = showExtinct
+
+            if userAttractionDatabase != [[]]{
+                for i in 0..<userAttractionDatabase.count {
+                    if userAttractionDatabase[i][0].parkID == selectedPark.parkID{
+                        attractionVC.userAttractionDatabase = userAttractionDatabase[i]
+                    }
+                    else{
+                    }
+                }
+            }
+            else{
+                print("array is empty")
+            }
+        }
         
         if segue.identifier == "toSearch"{
             let searchVC = segue.destination as! ParkSearchViewController
