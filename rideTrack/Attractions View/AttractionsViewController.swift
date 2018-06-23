@@ -5,14 +5,13 @@
 //  Created by Mark Lawrence on 4/15/18.
 //  Copyright © 2018 Mark Lawrence. All rights reserved.
 // Pushed may 8, 5:40
-
 import UIKit
 import CoreData
 import Foundation
 
 
 class AttractionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, AttractionsTableViewCellDelegate {
-
+    
     @IBOutlet weak var attractionsTableView: UITableView!
     @IBOutlet weak var parkLabel: UILabel!
     @IBOutlet weak var NumCompleteLabel: UILabel!
@@ -32,7 +31,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var numIgnore = 0
     var comeFromDetails = false
     var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
-
+    
     
     let green = UIColor(red: 120.0/255.0, green: 205.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor as CGColor
     var userAttractions: [NSManagedObject] = []
@@ -55,8 +54,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         //Removes the two negative 1s that get created while saving to CoreData
         //Not good... always going to assume that there are 2 -1s at the beginning of the list
         
-        userAttractionDatabase.remove(at: 0)
-        userAttractionDatabase.remove(at: 0)
+        
         
         
         // attractionsTableView.allowsSelection = false
@@ -73,22 +71,21 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
         let savedIgnore = ignoreList.array(forKey: "SavedIgnoreListArray")  as? [Int] ?? [Int]()
-
+        
         print ("These are the ignored attractions: ")
         for i in 0..<savedIgnore.count{
             print (savedIgnore [i])
             ignore.append(savedIgnore[i])
         }
         // Do any additional setup after loading the view, typically from a nib.
-
     }
-
+    
     func itemsDownloaded(items: NSArray, returnPath: String) {
         for i in 0..<items.count{
             attractionListForTable.append(items[i] as! AttractionsModel)
             //attractionListForTable.add(items[i])
         }
-       
+        
         if (items.count == 0){
             print ("this park is empty")
         }
@@ -105,7 +102,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                             print ("We have ridden ride # ", userAttractionDatabase[userDataBaseIndex].rideID!)
                             attractionListForTable[i].isCheck = true
                             userRidesRidden += 1
-                        
+                            
                             attractionListForTable[i].numberOfTimesRidden = userAttractionDatabase[userDataBaseIndex].numberOfTimesRidden
                             attractionListForTable[i].dateLastRidden = userAttractionDatabase[userDataBaseIndex].dateLastRidden
                             attractionListForTable[i].dateFirstRidden = userAttractionDatabase[userDataBaseIndex].dateFirstRidden
@@ -114,24 +111,24 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                             }
                             userDataBaseIndex += 1
                         }
-                        
+                            
                         else{
                             //User doesn't have any data stored for this ride
                             attractionListForTable[i].numberOfTimesRidden = 0
                             
                         }
-
+                        
                     }
                     else{
                         //The user does not have any data stored for any of the rest of the rides in this park. Can this be replaced with a break?
                         attractionListForTable[i].numberOfTimesRidden = 0
                         
                     }
-
+                    
                     if attractionListForTable[i].active == 0 && showExtinct == 1 { //&& showExtinct == 1
-                         totalNumExtinct += 1
+                        totalNumExtinct += 1
                     }
-                   
+                    
                     if attractionListForTable[i].numberOfTimesRidden == nil{
                         print("attraction list at rideID \(attractionListForTable[i].rideID!) found nil")
                         attractionListForTable[i].numberOfTimesRidden = 0
@@ -149,7 +146,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                         else {
                             attractionListForTable[i].isIgnored = false
                         }
-
+                        
                     }
                 }
             }
@@ -172,9 +169,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
         //If user wants to show extinct, sort so that the active rides are on top of the list
-            if attractionListForTable.count != 1{
-                //Need both steps to sort name alphabetically and by active or not
-                attractionListForTable.sort { ($0.active, $1.name) > ($1.active, $0.name) }
+        if attractionListForTable.count != 1{
+            //Need both steps to sort name alphabetically and by active or not
+            attractionListForTable.sort { ($0.active, $1.name) > ($1.active, $0.name) }
         }
         
         //Displays number of rides you have been on out of the total number of rides
@@ -183,7 +180,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             extinctText.isHidden = false
             extinctLabel.isHidden = false
             extinctComplete = String (userNumExtinct)
-           // extinctComplete += "/"
+            // extinctComplete += "/"
             //extinctComplete += String (totalNumExtinct)
             extinctText.text = extinctComplete
         }
@@ -196,9 +193,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         RidesComplete += "/"
         RidesComplete += String(attractionListForTable.count-totalNumExtinct-numIgnore)
         NumCompleteLabel.text = RidesComplete
-
+        
         self.attractionsTableView.reloadData()
-
+        
     }
     
     
@@ -225,7 +222,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 cell.numberOfRidesLabel.isHidden = true
                 cell.plusButtonIncrement.isHidden = true
                 cell.minusIncrementButton.isHidden = true
-
+                
             }
             if (attractionListForTable[indexPath.row]).active == 1 {
                 cell.backgroundColor = UIColor.white
@@ -233,28 +230,28 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             else{
                 cell.backgroundColor = UIColor.lightGray
             }
-
-//            for i in 0..<ignore.count{ //this isnt the best way of doing this...
-//                if ignore[i] == attractionListForTable[indexPath.row].rideID{
-           if attractionListForTable[indexPath.row].isIgnored {
-                    cell.rideName?.textColor = UIColor.gray
-                    cell.addRideButton.isEnabled = false
-                    cell.addRideButton.isOpaque = true
-                    attractionListForTable[indexPath.row].isIgnored = true
-                    //break
-           }
-           else {
-            attractionListForTable[indexPath.row].isIgnored = false
-            if ((attractionListForTable[indexPath.row]).isCheck){
-                cell.rideName?.textColor = UIColor.green
+            
+            //            for i in 0..<ignore.count{ //this isnt the best way of doing this...
+            //                if ignore[i] == attractionListForTable[indexPath.row].rideID{
+            if attractionListForTable[indexPath.row].isIgnored {
+                cell.rideName?.textColor = UIColor.gray
+                cell.addRideButton.isEnabled = false
+                cell.addRideButton.isOpaque = true
+                attractionListForTable[indexPath.row].isIgnored = true
+                //break
             }
-            else{
-                cell.rideName?.textColor = UIColor.black
-            }
+            else {
+                attractionListForTable[indexPath.row].isIgnored = false
+                if ((attractionListForTable[indexPath.row]).isCheck){
+                    cell.rideName?.textColor = UIColor.green
+                }
+                else{
+                    cell.rideName?.textColor = UIColor.black
+                }
                 cell.addRideButton.isEnabled = true
                 cell.addRideButton.isOpaque = false
             }
-          //  }
+            //  }
         }
         cell.rideName!.text = item.name
         cell.rideTypeLabel.text = convertRideTypeID(rideTypeID: item.rideType)
@@ -262,58 +259,58 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        //turns off trailing action of Delete 
+        //turns off trailing action of Delete
         return UISwipeActionsConfiguration.init()
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-      //  let hideAttraction = attractionListForTable[indexPath.row]
+        //  let hideAttraction = attractionListForTable[indexPath.row]
         if (attractionListForTable[indexPath.row]).active == 1 && attractionListForTable[indexPath.row].isCheck == false {
-        let ignoreAction = UIContextualAction(style: .normal, title: "Ignore") { (action, view, nil) in
-            print("ignore button tapped on ride")
-            //hideAttraction.isIgnored = !hideAttraction.isIgnored //switches back and forth
-            if self.attractionListForTable[indexPath.row].isIgnored == false {
-                self.ignore.append(self.attractionListForTable[indexPath.row].rideID!)
-                print("Ignoring ", self.attractionListForTable[indexPath.row].name!)
-                self.attractionListForTable[indexPath.row].isIgnored = true
-                self.numIgnore += 1
-            }
-            else {
-                for i in 0..<(self.ignore.count) {
-                    if self.ignore[i] == self.attractionListForTable[indexPath.row].rideID{
-                        self.ignore.remove(at: i)
-                        break
-                    }
+            let ignoreAction = UIContextualAction(style: .normal, title: "Ignore") { (action, view, nil) in
+                print("ignore button tapped on ride")
+                //hideAttraction.isIgnored = !hideAttraction.isIgnored //switches back and forth
+                if self.attractionListForTable[indexPath.row].isIgnored == false {
+                    self.ignore.append(self.attractionListForTable[indexPath.row].rideID!)
+                    print("Ignoring ", self.attractionListForTable[indexPath.row].name!)
+                    self.attractionListForTable[indexPath.row].isIgnored = true
+                    self.numIgnore += 1
                 }
-                print ("Unignoring ", self.attractionListForTable[indexPath.row].name!)
-                self.attractionListForTable[indexPath.row].isIgnored = false
-                self.numIgnore -= 1
+                else {
+                    for i in 0..<(self.ignore.count) {
+                        if self.ignore[i] == self.attractionListForTable[indexPath.row].rideID{
+                            self.ignore.remove(at: i)
+                            break
+                        }
+                    }
+                    print ("Unignoring ", self.attractionListForTable[indexPath.row].name!)
+                    self.attractionListForTable[indexPath.row].isIgnored = false
+                    self.numIgnore -= 1
+                }
+                self.ignoreList.set(self.ignore, forKey: "SavedIgnoreListArray")
+                //UPDATE RIDES BEEN ON
+                self.RidesComplete = String(self.userRidesRidden-self.userNumExtinct)
+                self.RidesComplete += "/"
+                self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
+                self.NumCompleteLabel.text = self.RidesComplete
+                self.updatingRideCount(parkID: self.parkID, newCount: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore, totalRide: true)
+                
+                self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.2)
+                // self.attractionsTableView.reloadData()
+                
             }
-            self.ignoreList.set(self.ignore, forKey: "SavedIgnoreListArray")
-            //UPDATE RIDES BEEN ON
-            self.RidesComplete = String(self.userRidesRidden-self.userNumExtinct)
-            self.RidesComplete += "/"
-            self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
-            self.NumCompleteLabel.text = self.RidesComplete
-            self.updatingRideCount(parkID: self.parkID, newCount: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore, totalRide: true)
-
-            self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.2)
-           // self.attractionsTableView.reloadData()
-            
-        }
-        ignoreAction.title = attractionListForTable[indexPath.row].isIgnored ? "Include" : "Exclude"
-        ignoreAction.backgroundColor = attractionListForTable[indexPath.row].isIgnored ? .blue : .gray
-        return UISwipeActionsConfiguration(actions: [ignoreAction])
+            ignoreAction.title = attractionListForTable[indexPath.row].isIgnored ? "Include" : "Exclude"
+            ignoreAction.backgroundColor = attractionListForTable[indexPath.row].isIgnored ? .blue : .gray
+            return UISwipeActionsConfiguration(actions: [ignoreAction])
         }
         else {
             return UISwipeActionsConfiguration.init()
         }
     }
-        
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//
-//    }
+    
+    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //        tableView.deselectRow(at: indexPath, animated: true)
+    //
+    //    }
     
     func convertRideTypeID(rideTypeID: Int) -> String {
         switch rideTypeID {
@@ -369,7 +366,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 self.userNumExtinct += 1
             }
             
-                self.userRidesRidden += 1
+            self.userRidesRidden += 1
             print ("you have been on this many rides: ", self.userRidesRidden)
             //UPDATE RIDES BEEN ON
             self.RidesComplete = String(self.userRidesRidden-self.userNumExtinct)
@@ -377,11 +374,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
             self.NumCompleteLabel.text = self.RidesComplete
             self.updatingRideCount(parkID: self.parkID, newCount: self.userRidesRidden-self.userNumExtinct, totalRide: false)
-
+            
             self.extinctComplete = String (self.userNumExtinct)
-          // self.extinctComplete += "/"
-           // self.extinctComplete += String (self.totalNumExtinct)
-           self.extinctText.text = self.extinctComplete
+            // self.extinctComplete += "/"
+            // self.extinctComplete += String (self.totalNumExtinct)
+            self.extinctText.text = self.extinctComplete
             
             if self.attractionListForTable[indexPath.row].hasScoreCard == 1{
                 self.addScoreToCard(selectedRide: self.attractionListForTable[indexPath.row])
@@ -419,11 +416,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
             self.NumCompleteLabel.text = self.RidesComplete
             updatingRideCount(parkID: parkID, newCount: userRidesRidden-userNumExtinct, totalRide: false)
-
+            
             
             self.extinctComplete = String (self.userNumExtinct)
-          //  self.extinctComplete += "/"
-          //  self.extinctComplete += String (self.totalNumExtinct)
+            //  self.extinctComplete += "/"
+            //  self.extinctComplete += String (self.totalNumExtinct)
             self.extinctText.text = self.extinctComplete
         }
         else{
@@ -456,12 +453,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         // Dispose of any resources that can be recreated.
     }
     
-//    @IBAction func closeButton(_ sender: Any) { //leaves popup view
-//        self.view.removeFromSuperview()
-//    }
+    //    @IBAction func closeButton(_ sender: Any) { //leaves popup view
+    //        self.view.removeFromSuperview()
+    //    }
     
     
-  
+    
     
     func saveUserCheckOffNewRide(parkID: Int, rideID: Int) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -500,9 +497,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         do
         {
             let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
-
+            
             for entity in fetchedResults! {
-
+                
                 managedContext.delete(entity)
                 try! managedContext.save()
                 print("Deleted ride \(rideID)")
@@ -510,7 +507,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         catch _ {
             print("Could not delete")
-
+            
         }
         
     }
@@ -542,43 +539,43 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
-//    var interactor:Interactor? = nil //for swipe animation
-//
-//    @IBAction func close(sender: UIButton) {
-//        dismissViewControllerAnimated(true, completion: nil)
-//    }
-//
-//    @IBAction func handleGesture(sender: UIPanGestureRecognizer) { //for swipe animation
-//        let percentThreshold:CGFloat = 0.3
-//
-//        // convert y-position to downward pull progress (percentage)
-//        let translation = sender.translationInView(view)
-//        let verticalMovement = translation.y / view.bounds.height
-//        let downwardMovement = fmaxf(Float(verticalMovement), 0.0)
-//        let downwardMovementPercent = fminf(downwardMovement, 1.0)
-//        let progress = CGFloat(downwardMovementPercent)
-//        guard let interactor = interactor else { return }
-//
-//        switch sender.state {
-//        case .Began:
-//            interactor.hasStarted = true
-//            dismissViewControllerAnimated(true, completion: nil)
-//        case .Changed:
-//            interactor.shouldFinish = progress > percentThreshold
-//            interactor.updateInteractiveTransition(progress)
-//        case .Cancelled:
-//            interactor.hasStarted = false
-//            interactor.cancelInteractiveTransition()
-//        case .Ended:
-//            interactor.hasStarted = false
-//            interactor.shouldFinish
-//                ? interactor.finishInteractiveTransition()
-//                : interactor.cancelInteractiveTransition()
-//        default:
-//            break
-//        }
-//    }
-//
+    //    var interactor:Interactor? = nil //for swipe animation
+    //
+    //    @IBAction func close(sender: UIButton) {
+    //        dismissViewControllerAnimated(true, completion: nil)
+    //    }
+    //
+    //    @IBAction func handleGesture(sender: UIPanGestureRecognizer) { //for swipe animation
+    //        let percentThreshold:CGFloat = 0.3
+    //
+    //        // convert y-position to downward pull progress (percentage)
+    //        let translation = sender.translationInView(view)
+    //        let verticalMovement = translation.y / view.bounds.height
+    //        let downwardMovement = fmaxf(Float(verticalMovement), 0.0)
+    //        let downwardMovementPercent = fminf(downwardMovement, 1.0)
+    //        let progress = CGFloat(downwardMovementPercent)
+    //        guard let interactor = interactor else { return }
+    //
+    //        switch sender.state {
+    //        case .Began:
+    //            interactor.hasStarted = true
+    //            dismissViewControllerAnimated(true, completion: nil)
+    //        case .Changed:
+    //            interactor.shouldFinish = progress > percentThreshold
+    //            interactor.updateInteractiveTransition(progress)
+    //        case .Cancelled:
+    //            interactor.hasStarted = false
+    //            interactor.cancelInteractiveTransition()
+    //        case .Ended:
+    //            interactor.hasStarted = false
+    //            interactor.shouldFinish
+    //                ? interactor.finishInteractiveTransition()
+    //                : interactor.cancelInteractiveTransition()
+    //        default:
+    //            break
+    //        }
+    //    }
+    //
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "toSuggest"{
@@ -586,12 +583,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             //selectedPark = feedItems[selectedIndex!] as! ParksModel
             suggestVC.parkName = titleName
             suggestVC.parkID = parkID
-
+            
         }
         if segue.identifier == "ToDetails"{
             let detailsVC = segue.destination as! AttractionsDetailsViewController
             let selectedIndex = attractionsTableView.indexPathForSelectedRow?.row
-
+            
             let selectedRide = attractionListForTable[selectedIndex!]
             rideID = selectedRide.rideID
             rideName = selectedRide.name
@@ -600,16 +597,16 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             detailsVC.userAttractionDatabase = userAttractionDatabase
             comeFromDetails = true
             detailsVC.titleName = titleName
-          //  detailsVC.isFavorite = isFavorite!
+            //  detailsVC.isFavorite = isFavorite!
         }
         
         if segue.identifier == "toParkList"{
             print("Back to parks list")
             let parkVC = segue.destination as! ViewController
             parkVC.unwindFromAttractions(parkID: parkID)
-
+            
         }
-       
+        
     }
     
     func addScoreToCard(selectedRide: AttractionsModel){
@@ -690,7 +687,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             if touchPoint.y - initialToucnPoint.y > 0 {
                 self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
             }
-            }
+        }
         else if sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled {
             if touchPoint.y - initialToucnPoint.y > 100 {
                 self.dismiss(animated: true, completion: nil)
@@ -713,5 +710,3 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
      */
     
 }
-
-

@@ -12,34 +12,27 @@ import Foundation
 import CoreLocation
 
 
-class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, NSFetchedResultsControllerDelegate, ParkTableViewCellDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, NSFetchedResultsControllerDelegate{
     
-    
-    @IBOutlet weak var listTableView: UITableView!
-    
-    var arrayOfAllParks = [ParksModel]()
-    var selectedPark: ParksModel = ParksModel()
-    var usersParkList = [ParksModel]()
-    var park = ParksModel()
-    var downloadIncrementor = 0
-    var showExtinct = UserDefaults.standard.integer(forKey: "showExtinct")
-    
-    var segueWithTableViewSelect = true
-    var selectedIndex = 0
-    var numberOfRides = 0
-    
+    @IBOutlet weak var favoritesTableView: UITableView!
+    @IBOutlet weak var allParksTableView: UITableView!
     @IBOutlet weak var currentLocationView: UIView!
     @IBOutlet weak var currentLocationParkNameLabel: UILabel!
-    var closestPark = ParksModel()
+
+    var selectedPark: ParksModel = ParksModel()
+    var segueWithTableViewSelect = true
     
-    
-    var userAttractionDatabase: [[UserAttractionProvider]] = [[]]
-    var userAttractions: [NSManagedObject] = []
+    var favoiteParkList = [ParksModel]()
+    var allParksList = [ParksModel]()
+    var selectedAttractionsList: [NSManagedObject] = []
     var savedParkList: [NSManagedObject] = []
-    var indexPathRow = 0
+    var arrayOfAllParks = [ParksModel]()
+    
+    var showExtinct = UserDefaults.standard.integer(forKey: "showExtinct")
     
     let screenSize = UIScreen.main.bounds
     var locationManager: CLLocationManager = CLLocationManager()
+    var closestPark = ParksModel()
     let parksCoreData = ParkCoreData()
     
     
@@ -52,10 +45,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         currentLocationView.layer.shadowOpacity = 0.3
         currentLocationView.layer.cornerRadius = 10
         
-        listTableView.isUserInteractionEnabled = true
+        favoritesTableView.isUserInteractionEnabled = true
+        allParksTableView.isUserInteractionEnabled = true
+        
         super.viewDidLoad()
-        self.listTableView.delegate = self
-        self.listTableView.dataSource = self
+        
+        favoritesTableView.delegate = self
+        favoritesTableView.dataSource = self
+        //favoritesTableView.register(FavoritesTableViewCell.self, forCellReuseIdentifier: "favoriteCell")
+        
+        allParksTableView.delegate = self
+        allParksTableView.dataSource = self
+        //allParksTableView.register(AllParksTableViewCell.self, forCellReuseIdentifier: "allCell")
         
         let urlPath = "http://www.beingpositioned.com/theparksman/parksdbservice.php"
         let dataModel = DataModel()
@@ -67,37 +68,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         segueWithTableViewSelect = true
         super.viewWillAppear(animated)
         
+        //Get ParkList data from CoreData
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return }
-        
         let managedContext = appDelegate.persistentContainer.viewContext
         let sortDescriptor = NSSortDescriptor(key: "parkID", ascending: true)
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
         fetchRequest.sortDescriptors = [sortDescriptor]
-        
         do {
-            userAttractions = try managedContext.fetch(fetchRequest)
-            dataMigrationToList()
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        
-        //Get ParkList data from CoreData
-        let parkSortDescriptor = NSSortDescriptor(key: "parkID", ascending: true)
-        let parkFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-        parkFetchRequest.sortDescriptors = [parkSortDescriptor]
-        do {
-            savedParkList = try managedContext.fetch(parkFetchRequest)
+            savedParkList = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
             print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
         }
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     func itemsDownloaded(items: NSArray, returnPath: String) {
-        //Rewrite this whole thing to support two tables. Just check against ParkListData array (savedParkList)
-        //Should be able to completely remove data migration tool and fix a ton of bugs
-        
-        
         if returnPath == "countNumberOfRides"{
             var totalRideCount = 0
             let arrayOfAllRides = items as! [AttractionsModel]
@@ -108,53 +98,48 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             }
             if arrayOfAllRides.count != 0{
                 parksCoreData.updatingTotalRideCount(parkID: arrayOfAllRides[0].parkID, totalRideCount: totalRideCount)
-                for i in 0..<usersParkList.count{
-                    if usersParkList[i].parkID == arrayOfAllRides[0].parkID{
-                        usersParkList[i].totalRides = totalRideCount
+                for i in 0..<allParksList.count{
+                    if allParksList[i].parkID == arrayOfAllRides[0].parkID{
+                        allParksList[i].totalRides = totalRideCount
                         break
                     }
                 }
-                listTableView.reloadData()
+                allParksTableView.reloadData()
+                favoritesTableView.reloadData()
             }
-            print(totalRideCount, "updating saved label...")
-            
-            
+            print(totalRideCount, "updating total ride count label...")
         }
         else{
             arrayOfAllParks = items as! [ParksModel]
-            if (userAttractionDatabase[downloadIncrementor].count == 0){
-            }
-            else{
-                for i in 0..<arrayOfAllParks.count{
-                    park = arrayOfAllParks[i]
-                    if park.parkID == userAttractionDatabase[downloadIncrementor][0].parkID{
-                        if downloadIncrementor < userAttractionDatabase.count - 1{
-                            downloadIncrementor += 1
+            var userParkListIncrementor = 0
+            var allParksIncrementor = 0
+            
+            if savedParkList.count != 0{
+                //Like a do while loop- loop until just before the saved park incrementor goes out of index
+                repeat {
+                    //Check if the rideID in allParks matches that of savedParkList
+                    if arrayOfAllParks[allParksIncrementor].parkID == savedParkList[userParkListIncrementor].value(forKey: "parkID") as! Int{
+                        let addingPark = arrayOfAllParks[allParksIncrementor]
+                        addingPark.favorite = savedParkList[userParkListIncrementor].value(forKey: "favorite") as! Bool
+                        addingPark.totalRides = savedParkList[userParkListIncrementor].value(forKey: "totalRides") as! Int
+                        addingPark.ridesRidden = savedParkList[userParkListIncrementor].value(forKey: "ridesRidden") as! Int
+                        allParksList.append(addingPark)
+                        userParkListIncrementor += 1
+                        
+                        if addingPark.favorite{
+                            favoiteParkList.append(addingPark)
                         }
-                        usersParkList.append(arrayOfAllParks[i] )
                     }
-                }
-
-                //Get saved ParkList data
-                
-                
-                //Add saved parkList data to userParkList
-                for i in 0..<usersParkList.count{
-                    if usersParkList[i].parkID == savedParkList[i].value(forKey: "parkID") as! Int{
-                        usersParkList[i].favorite = savedParkList[i].value(forKey: "favorite") as! Bool
-                        usersParkList[i].totalRides = savedParkList[i].value(forKey: "totalRides") as! Int
-                        usersParkList[i].ridesRidden = savedParkList[i].value(forKey: "ridesRidden") as! Int
-                    }
-                    else{
-                        print("Saved park list data mix up. Not good. Tell Mark this message popped up")
-                    }
-                }
-                
-                
-                usersParkList.sort { $0.name < $1.name }
-                //printUserDatabase()
-                self.listTableView.reloadData()
+                    allParksIncrementor += 1
+                } while userParkListIncrementor < savedParkList.count
             }
+            
+            
+            allParksList.sort { $0.name < $1.name }
+            favoiteParkList.sort { $0.name < $1.name }
+            
+            favoritesTableView.reloadData()
+            allParksTableView.reloadData()
             
             locationManager.delegate = self
             locationManager.requestWhenInUseAuthorization()
@@ -166,59 +151,102 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     
     
-    func parkTableViewCellDidRemovePark(_ sender: ParksTableViewCell) {
-        guard let indexPath = listTableView.indexPath(for: sender) else { return }
-        
-        //Find and delete all the saved data for the selected parkID
-        var indexToRemove = 0
-        let removedParkID = usersParkList[indexPath.row].parkID
-        for i in 0..<userAttractionDatabase.count{
-            if userAttractionDatabase[i][0].parkID == removedParkID{
-                print("Delete all items in this array for park ID \(removedParkID!)")
-                indexToRemove = i
-                break
-            }
-        }
-        //Delete from coreData and ParkList
-        parksCoreData.deletePark(parkID: removedParkID!)
-        
-        for i in 0..<userAttractionDatabase[indexToRemove].count{
-            if userAttractionDatabase[indexToRemove][i].rideID != -1{
-                //deletePark(parkID: removedParkID!)
-            }
-        }
-        
-        userAttractionDatabase[indexToRemove].removeAll()
-        userAttractionDatabase.remove(at: indexToRemove)
-        usersParkList.remove(at: indexPath.row)
-        
-        printUserDatabase()
-        listTableView.reloadData()
-    }
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return usersParkList.count
+        var rowCount = 0
+        if tableView == self.favoritesTableView {
+            rowCount = favoiteParkList.count
+        }
+        if tableView == self.allParksTableView {
+            rowCount =  allParksList.count
+        }
+        return rowCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ParkCell", for: indexPath) as! ParksTableViewCell
-        cell.delegate = self
-        let item: ParksModel = usersParkList[indexPath.row]
-        cell.parkNameLabel.text = item.name
-        cell.totalRidesLabel.text = "\(usersParkList[indexPath.row].ridesRidden!)/\(usersParkList[indexPath.row].totalRides!)"
-        
-        if usersParkList[indexPath.row].favorite{
-            cell.favoriteIcon.text = "⭐️"
-        } else{
-            cell.favoriteIcon.text = "★"
+        if tableView == self.favoritesTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "favoriteCell", for: indexPath) as! FavoritesTableViewCell
+            let parkData = favoiteParkList[indexPath.row]
+            cell.parkNameLabel.text = parkData.name
+            cell.locationLabel.text = parkData.city
+            cell.fractionLabel.text = "\(parkData.ridesRidden!)/\(parkData.totalRides!)"
+            return cell
         }
-        return cell
+        else{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "allCell", for: indexPath) as! AllParksTableViewCell
+            let parkData = allParksList[indexPath.row]
+            cell.parkNameLabel.text = parkData.name
+            cell.locationLabel.text = parkData.city
+            cell.fractionLabel.text = "\(parkData.ridesRidden!)/\(parkData.totalRides!)"
+            return cell
+        }
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print ("Select here")
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let favoriteAction = UIContextualAction(style: .normal, title:  "Favorites", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            if tableView == self.favoritesTableView {
+                let index = self.findIndexInAllParksList(parkID: self.favoiteParkList[indexPath.row].parkID)
+                self.allParksList[index].favorite = false
+                self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[index], add: false)
+                self.favoiteParkList.remove(at: indexPath.row)
+            } else{
+                //Only add if it isn't already a favorite
+                if !self.allParksList[indexPath.row].favorite{
+                    self.allParksList[indexPath.row].favorite = true
+                    self.favoiteParkList.append(self.allParksList[indexPath.row])
+                    self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[indexPath.row], add: true)
+                }
+            }
+            success(true)
+            self.favoritesTableView.perform(#selector(self.favoritesTableView.reloadData), with: nil, afterDelay: 0.3)
+        })
+        
+        if tableView == self.favoritesTableView {
+            favoriteAction.title = "Remove from favorites"
+        } else{
+            if allParksList[indexPath.row].favorite{
+                favoriteAction.title = "Already a favorite"
+            }else{
+                favoriteAction.title = "Add to favorites"
+            }
+        }
+        let configuration = UISwipeActionsConfiguration(actions: [favoriteAction])
+        configuration.performsFirstActionWithFullSwipe = true
+        return configuration
+    }
+    
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let removeAction = UIContextualAction(style: .destructive, title:  "removePark", handler: { (ac:UIContextualAction, view:UIView, success:@escaping (Bool) -> Void) in
+            let deleteAlertController = UIAlertController(title: "Delete Park", message: "Are you sure you want to remove this park from your list? This will remove all assosicated park data along with it, including all rides checked off, the number of times each ride has been ridden, and the dates you rode each ride", preferredStyle: .alert)
+            let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) -> Void in
+                success(true)
+                self.removeParkFromList(parkID: self.allParksList[indexPath.row].parkID, indexPath: indexPath.row)
+                self.favoritesTableView.reloadData()
+            }
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
+                success(false)
+            }
+            deleteAlertController.addAction(cancel)
+            deleteAlertController.addAction(delete)
+            self.present(deleteAlertController, animated: true, completion:nil)
+        })
+        
+        if tableView == self.allParksTableView {
+            removeAction.title = "Remove park from list"
+            let configuration = UISwipeActionsConfiguration(actions: [removeAction])
+            configuration.performsFirstActionWithFullSwipe = true
+            return configuration
+        } else{
+            return UISwipeActionsConfiguration.init()
+        }
+        
     }
     
     func addNewParkToList(newPark: ParksModel) {
@@ -229,84 +257,82 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             newPark.totalRides = 0
             newPark.ridesRidden = 0
             
-            usersParkList.append(newPark)
-            print("ADDING")
-            userAttractionDatabase.append([UserAttractionProvider(parkID: newPark.parkID)])
-            self.listTableView.reloadData()
-            self.parksCoreData.save(parkID: newPark.parkID, rideID: -1)
+            allParksList.append(newPark)
+            self.allParksTableView.reloadData()
             self.parksCoreData.saveNewItemToParkList(parkID: newPark.parkID)
             
             //Get total number of rides, need to call database
             let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(newPark.parkID!)"
-            
             let dataModel = DataModel()
             dataModel.delegate = self
             dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "countNumberOfRides")
-            
-            
             print("new park saved: ", newPark.parkID)
-            //UserDefaults.standard.set(parkListData, forKey: "parkListData")
         }
         else{
             print("Can not add a park twice")
         }
     }
     
-    func parkTableDidSelectFavorite(_ sender: ParksTableViewCell) {
-        guard let indexPath = listTableView.indexPath(for: sender) else { return }
-        parksCoreData.saveFavorite(modifyedPark: usersParkList[indexPath.row])
-        listTableView.reloadData()
+    
+    func removeParkFromList(parkID: Int, indexPath: Int) {
+        //Deletes from both RideTrack and ParkList entities
+        parksCoreData.deletePark(parkID: parkID)
+        
+        //Check if it is in user's favorites list, if so delete it
+        for i in 0..<favoiteParkList.count{
+            if favoiteParkList[i].parkID == parkID{
+                favoiteParkList.remove(at: i)
+                break
+            }
+        }
+        allParksList.remove(at: indexPath)
     }
     
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    //    let interactor = Interactor() //for swipe
-    //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    //        if let destinationViewController = segue.destinationViewController as? ModalViewController {
-    //            destinationViewController.transitioningDelegate = self
-    //            destinationViewController.interactor = interactor
-    //        }
-    //    }
-    //}
-    //
-    //extension ViewController: UIViewControllerTransitioningDelegate {
-    //    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-    //        return DismissAnimator()
-    //    }
-    //    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-    //        return interactor.hasStarted ? interactor : nil
-    //    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "toAttractions"{
+        if segue.identifier == "toAttractionsAll" || segue.identifier == "toAttractionsFavorites"{
             //Re write this to simplify calling RideTrack coreData only here, while going to Attractions view
             let attractionVC = segue.destination as! AttractionsViewController
             
-            if segueWithTableViewSelect{
-                selectedIndex = (listTableView.indexPathForSelectedRow?.row)!
-                selectedPark = usersParkList[selectedIndex]
+            if segueWithTableViewSelect && segue.identifier == "toAttractionsAll"{
+                let selectedIndex = (allParksTableView.indexPathForSelectedRow?.row)!
+                selectedPark = allParksList[selectedIndex]
+            } else{
+                let selectedIndex = (favoritesTableView.indexPathForSelectedRow?.row)!
+                selectedPark = favoiteParkList[selectedIndex]
             }
+            
             print ("The park is ", selectedPark.name)
             attractionVC.titleName = selectedPark.name
             attractionVC.parkID = selectedPark.parkID
-            attractionVC.userAttractions = userAttractions
             attractionVC.showExtinct = showExtinct
             
-            if userAttractionDatabase != [[]]{
-                for i in 0..<userAttractionDatabase.count {
-                    if userAttractionDatabase[i][0].parkID == selectedPark.parkID{
-                        attractionVC.userAttractionDatabase = userAttractionDatabase[i]
-                    }
-                }
+            //Getting coreData Attraction data for the selected park
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                return }
+            let managedContext = appDelegate.persistentContainer.viewContext
+            let sortDescriptor = NSSortDescriptor(key: "rideID", ascending: true)
+            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
+            fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(selectedPark.parkID!)")
+            fetchRequest.sortDescriptors = [sortDescriptor]
+            do {
+                selectedAttractionsList = try managedContext.fetch(fetchRequest)
+            } catch let error as NSError {
+                print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
             }
-            else{
-                print("array is empty")
+            var userAttractions: [UserAttractionProvider] = []
+            for i in 0..<selectedAttractionsList.count{
+                let newAttraction = UserAttractionProvider()
+                newAttraction.dateFirstRidden = selectedAttractionsList[i].value(forKeyPath: "firstRideDate") as! Date
+                newAttraction.dateLastRidden = selectedAttractionsList[i].value(forKeyPath: "lastRideDate") as! Date
+                newAttraction.numberOfTimesRidden = selectedAttractionsList[i].value(forKeyPath: "numberOfTimesRidden") as! Int
+                newAttraction.parkID = selectedAttractionsList[i].value(forKeyPath: "parkID") as! Int
+                newAttraction.rideID = selectedAttractionsList[i].value(forKeyPath: "rideID") as! Int
+                userAttractions.append(newAttraction)
             }
+            attractionVC.userAttractionDatabase = userAttractions
+            
+            print("count: ", userAttractions.count)
         }
         
         if segue.identifier == "toSearch"{
@@ -322,117 +348,31 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     
     @IBAction func unwindToParkList(segue:UIStoryboardSegue) {
-        if let sourceViewController = segue.source as? SettingsViewController, let pressReset = sourceViewController.resetPressed{
+        if segue.source is SettingsViewController{
             print ("BACK FROM SETTINGS")
-            if (pressReset == 1) {
-                print("RESET WAS PRESSED")
-                downloadIncrementor = 0
-                usersParkList = []
-                self.listTableView.reloadData()
-                userAttractionDatabase = [[]]
-            }
         }
         else if let sourceViewController = segue.source as? ParkSearchViewController, let newPark = sourceViewController.selectedPark{
             addNewParkToList(newPark: newPark)
         }
         else if segue.source is AttractionsViewController{
-            //print("Back from attractions view, need to update tables with number of rides ridden. I will make this work later")
+            print("Back from attractions")
         }
     }
     
     func checkIfNewPark(newPark: ParksModel) -> Bool {
         var isNewPark = true
-        for i in 0..<usersParkList.count{
-            if newPark.parkID == usersParkList[i].parkID{
+        for i in 0..<allParksList.count{
+            if newPark.parkID == allParksList[i].parkID{
                 isNewPark = false
             }
         }
         return isNewPark
     }
     
-    
-    func printUserDatabase() {
-        print("Ignore the fact that each park always starts with -1")
-        
-        //FIX: THIS SOMETIMES CAUSES CRASH AFTER DATA RESET
-        //Why use downloadIncrementor????????
-        //if (userAttractionDatabase[downloadIncrementor].count == 0){
-        if userAttractionDatabase == [[]]{
-            print ("Current user database is empty")
-        }
-        else{
-            var stringToPrint = "Current user database:"
-            for i in 0..<userAttractionDatabase.count{
-                //Kind of funcky, but the first entry will always just be the parkID? I don't know how good of an idea this is...
-                stringToPrint += "\n\nPark ID: \(userAttractionDatabase[i][0].parkID!):\n"
-                for j in 1..<userAttractionDatabase[i].count{
-                    //for j in 0..<userAttractionDatabase[i].count{
-                    stringToPrint += "RideID: \(userAttractionDatabase[i][j].rideID!)  "
-                }
-                if userAttractionDatabase[i].count == 1{
-                    stringToPrint += "Empty"
-                }
-            }
-            
-            
-            print(stringToPrint)
-        }
-        print("This is size of UserAttractions (CoreData): ", userAttractions.count)
-        print("")
-    }
-    
-    func dataMigrationToList() {
-        print("DELTE")
-        userAttractionDatabase = [[]]
-        var firstTime = true
-        print("\nPrint the migration:")
-        var parkIndex = 0
-        
-        //Loop through entire userAttractions array, which was fetched from CoreData
-        for i in 0..<userAttractions.count {
-            let ride = userAttractions[i]
-            var rideNext = userAttractions[i]
-            if i != userAttractions.count - 1{
-                rideNext = userAttractions[i+1]
-            }
-            else{
-                rideNext = userAttractions[i]
-            }
-            
-            let compare1 = ride.value(forKeyPath: "parkID") as! Int
-            //Crashes when
-            let compare2 = rideNext.value(forKeyPath: "parkID") as! Int
-            
-            if firstTime{
-                //Create inital entry in the 2D array with first parkID
-                userAttractionDatabase[0] = [UserAttractionProvider(rideID: -1, parkID: compare1, numberOfTimesRidden: ride.value(forKey: "numberOfTimesRidden") as! Int, dateFirstRidden: ride.value(forKey: "firstRideDate") as! Date, dateLastRidden: ride.value(forKey: "lastRideDate") as! Date)]
-                firstTime = false
-            }
-            userAttractionDatabase[parkIndex].append(UserAttractionProvider(rideID: ride.value(forKeyPath: "rideID") as! Int, parkID: compare1, numberOfTimesRidden: ride.value(forKey: "numberOfTimesRidden") as! Int, dateFirstRidden: ride.value(forKey: "firstRideDate") as! Date, dateLastRidden: ride.value(forKey: "lastRideDate") as! Date))
-            
-            if compare1 != compare2 && i != userAttractions.count - 1{
-                //Add a new park to the 2D array
-                parkIndex += 1
-                //userAttractionDatabase.append([UserAttractionProvider(rideID: -1, parkID: compare2)])
-                userAttractionDatabase.append([UserAttractionProvider(rideID: -1, parkID: compare2, numberOfTimesRidden: ride.value(forKey: "numberOfTimesRidden") as! Int, dateFirstRidden: ride.value(forKey: "firstRideDate") as! Date, dateLastRidden: ride.value(forKey: "lastRideDate") as! Date)])
-            }
-        }
-        
-        //Sort each park array in asseding RideID
-        for i in 0..<userAttractionDatabase.count {
-            if userAttractionDatabase[i].count != 1{
-                userAttractionDatabase[i].sort { $0.rideID < $1.rideID }
-            }
-            
-        }
-        
-        printUserDatabase()
-    }
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            let latitude = location.coordinate.latitude
-            let longitude = location.coordinate.longitude
+            var latitude = location.coordinate.latitude
+            var longitude = location.coordinate.longitude
             var oneMileParks = [ParksModel]()
             
             //Simulate you are at Epcot
@@ -440,10 +380,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             //            longitude = -81.5495
             
             //Simulate you are in Magic Kingdom
-            //            latitude = 28.4161
-            //            longitude = -81.5811
-            
-            
+//            latitude = 28.4161
+//            longitude = -81.5811
             
             let currentLocation = CLLocation(latitude: latitude, longitude: longitude)
             for i in 0..<arrayOfAllParks.count{
@@ -480,12 +418,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBAction func showCurrentlLocationPark(_ sender: Any) {
         if checkIfNewPark(newPark: closestPark){
             addNewParkToList(newPark: closestPark)
-            dataMigrationToList()
         }
         segueWithTableViewSelect = false
         selectedPark = closestPark
         performSegue(withIdentifier: "toAttractions", sender: nil)
-        //CHANGE THIS
     }
     
     
@@ -495,41 +431,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func unwindFromAttractions(parkID: Int) {
         segueWithTableViewSelect = true
-        print("Unwind from attractions")
         
-        //update CoreData
+        //Get ParkList data from CoreData
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
+            return }
         let managedContext = appDelegate.persistentContainer.viewContext
         let sortDescriptor = NSSortDescriptor(key: "parkID", ascending: true)
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
         fetchRequest.sortDescriptors = [sortDescriptor]
         do {
-            userAttractions = try managedContext.fetch(fetchRequest)
-            dataMigrationToList()
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        
-        //Get ParkList data for the segued parkID from CoreData
-        let parkFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-        parkFetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
-        print(parkID)
-        do {
-            let savedParkList = try managedContext.fetch(parkFetchRequest)
-            for i in 0..<usersParkList.count{
-                if usersParkList[i].parkID == parkID{
-                    usersParkList[i].favorite = savedParkList[0].value(forKey: "favorite") as! Bool
-                    usersParkList[i].totalRides = savedParkList[0].value(forKey: "totalRides") as! Int
-                    usersParkList[i].ridesRidden = savedParkList[0].value(forKey: "ridesRidden") as! Int
-                    break
-                }
-            }
-            listTableView.reloadData()
+            savedParkList = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
             print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
         }
+    }
+    
+    func findIndexInAllParksList(parkID:Int) -> Int{
+        var allParksIndex = 0
+        for i in 0..<allParksList.count{
+            if allParksList[i].parkID == parkID{
+                allParksIndex = i
+                break
+            }
+        }
+        return allParksIndex
     }
 }
 

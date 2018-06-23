@@ -14,7 +14,7 @@ import Foundation
 class ParkCoreData{
     
     
-    func saveFavorite(modifyedPark: ParksModel){
+    func saveFavoritesChange(modifyedPark: ParksModel, add: Bool){
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return }
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -24,16 +24,14 @@ class ParkCoreData{
             let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
             
             for entity in fetchedResults! {
-                print("adding to favorites")
-                if modifyedPark.favorite{
-                    //Remove from favorites list
-                    entity.setValue(false, forKey: "favorite")
-                    modifyedPark.favorite = false
+                print("FOUND PARK ID \(modifyedPark.parkID!)")
+                if add{
+                    print("adding to favorites")
+                    entity.setValue(true, forKey: "favorite")
                 }
                 else{
-                    //Add to favorites list
-                    entity.setValue(true, forKey: "favorite")
-                    modifyedPark.favorite = true
+                    print("removing from favorites")
+                    entity.setValue(false, forKey: "favorite")
                 }
                 try! managedContext.save()
             }
@@ -131,7 +129,7 @@ class ParkCoreData{
                 try! managedContext.save()
             }
         } catch _ {
-            print("Could not save favorite")
+            print("Could not save rideCount")
         }
     
     }

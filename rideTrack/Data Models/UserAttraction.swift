@@ -22,9 +22,9 @@ class UserAttractionProvider: NSObject {
     var dateFirstRidden: Date!
     var dateLastRidden: Date!
     
-    var favorite: Bool!
-    var numberOfRides: Int!
-    var numberOfCheckedRides: Int!
+//    var favorite: Bool!
+//    var numberOfRides: Int!
+//    var numberOfCheckedRides: Int!
     
     func getContext() -> NSManagedObjectContext {
         let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
