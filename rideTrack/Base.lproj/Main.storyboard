@@ -268,6 +268,7 @@
                         <outlet property="currentLocationParkNameLabel" destination="9eZ-s2-SZ1" id="pap-sW-bjc"/>
                         <outlet property="currentLocationView" destination="KOS-Dh-fGQ" id="O4G-G4-Nbf"/>
                         <outlet property="favoritesTableView" destination="uXX-yk-zP8" id="Bk6-5H-FrE"/>
+                        <segue destination="u3h-iL-PsR" kind="unwind" unwindAction="unwindToParkListWithSegue:" id="8wY-gf-6iw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -483,7 +484,7 @@
                                                     <outlet property="plusButtonIncrement" destination="7hY-Fv-Y20" id="u89-QP-9Cd"/>
                                                     <outlet property="rideName" destination="5NX-fB-zEo" id="UYT-HF-VTz"/>
                                                     <outlet property="rideTypeLabel" destination="S5W-Vh-fGx" id="qRD-nt-pLN"/>
-                                                    <segue destination="S7M-68-41E" kind="showDetail" identifier="ToDetails" id="dSs-Jp-6lX"/>
+                                                    <segue destination="S7M-68-41E" kind="showDetail" identifier="ToDetails" customClass="SlideForSegue" customModule="rideTrack" customModuleProvider="target" id="dSs-Jp-6lX"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -526,9 +527,11 @@
                         <outlet property="extinctText" destination="BWZ-6M-pEa" id="mdI-YO-5DS"/>
                         <outlet property="parkLabel" destination="uVR-cf-Ne8" id="AeQ-bv-7ml"/>
                         <outlet property="rectangleView" destination="qGY-Pc-WCD" id="81w-5E-zKt"/>
+                        <segue destination="091-aH-31t" kind="unwind" unwindAction="unwindfromdetails:" id="e0P-3a-7mx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nYe-zN-g6a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="u3h-iL-PsR" userLabel="Exit" sceneMemberID="exit"/>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="DkN-ak-nCv">
                     <connections>
                         <action selector="panGestureReconizer:" destination="zaz-Kb-2WY" id="dZo-bX-GxA"/>
@@ -682,7 +685,7 @@
                                 <rect key="frame" x="322" y="25" width="37" height="30"/>
                                 <state key="normal" title="Done"/>
                                 <connections>
-                                    <segue destination="091-aH-31t" kind="unwind" unwindAction="unwindToAttractionsViewWithSender:" id="bL1-XE-Dkw"/>
+                                    <segue destination="091-aH-31t" kind="unwind" unwindAction="unwindfromdetails:" id="GWL-AQ-5Jx"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -782,9 +785,6 @@
                                 <rect key="frame" x="318" y="26" width="37" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Done"/>
-                                <connections>
-                                    <segue destination="oue-fU-9X5" kind="unwind" unwindAction="unwindToDetailsViewWithSender:" id="uOa-my-tAq"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -797,7 +797,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c4C-Et-YsM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="oue-fU-9X5" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3558" y="489"/>
         </scene>

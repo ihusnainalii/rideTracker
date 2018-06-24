@@ -264,9 +264,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        //  let hideAttraction = attractionListForTable[indexPath.row]
         if (attractionListForTable[indexPath.row]).active == 1 && attractionListForTable[indexPath.row].isCheck == false {
-            let ignoreAction = UIContextualAction(style: .normal, title: "Ignore") { (action, view, nil) in
+            let ignoreAction = UIContextualAction(style: .normal, title: "Ignore", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
                 print("ignore button tapped on ride")
                 //hideAttraction.isIgnored = !hideAttraction.isIgnored //switches back and forth
                 if self.attractionListForTable[indexPath.row].isIgnored == false {
@@ -287,20 +286,23 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                     self.numIgnore -= 1
                 }
                 self.ignoreList.set(self.ignore, forKey: "SavedIgnoreListArray")
-                //UPDATE RIDES BEEN ON
                 self.RidesComplete = String(self.userRidesRidden-self.userNumExtinct)
                 self.RidesComplete += "/"
                 self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
                 self.NumCompleteLabel.text = self.RidesComplete
                 self.updatingRideCount(parkID: self.parkID, newCount: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore, totalRide: true)
                 
-                self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.2)
+            success(true)
+            self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.2)
                 // self.attractionsTableView.reloadData()
                 
-            }
+            })
+
             ignoreAction.title = attractionListForTable[indexPath.row].isIgnored ? "Include" : "Exclude"
             ignoreAction.backgroundColor = attractionListForTable[indexPath.row].isIgnored ? .blue : .gray
-            return UISwipeActionsConfiguration(actions: [ignoreAction])
+            let configurations = UISwipeActionsConfiguration(actions: [ignoreAction])
+            configurations.performsFirstActionWithFullSwipe = true
+            return configurations //UISwipeActionsConfiguration(actions: [ignoreAction])
         }
         else {
             return UISwipeActionsConfiguration.init()
@@ -677,6 +679,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBAction func unwindToAttractionsView(sender: UIStoryboardSegue) {
         print("Back to attractions view")
     }
+    
+    @IBAction func unwindfromdetails(_ sender: UIStoryboardSegue) {
+        print ("Back from deatils")
+        
+    }
+    
     @IBAction func panGestureReconizer(_ sender: UIPanGestureRecognizer) {
         let touchPoint = (sender as AnyObject).location(in: self.view?.window)
         
@@ -689,8 +697,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }
         else if sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled {
-            if touchPoint.y - initialToucnPoint.y > 100 {
+            if touchPoint.y - initialToucnPoint.y > 300 {
                 self.dismiss(animated: true, completion: nil)
+              //  performSegue(withIdentifier: "toParkList", sender: nil)
+              //  performSegue(withIdentifier: "toParkList", sender: nil)
+                
             } else {
                 UIView.animate(withDuration: 0.3, animations: {
                     self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)

@@ -11,8 +11,6 @@ import UIKit
 class SlideForSegue: UIStoryboardSegue {
     override func perform() {
         
-        //credits to http://www.appcoda.com/custom-segue-animations/
-        
         let firstClassView = self.source.view
         let secondClassView = self.destination.view
         
