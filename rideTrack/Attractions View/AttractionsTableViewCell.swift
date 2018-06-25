@@ -17,6 +17,7 @@ class AttractionsTableViewCell: UITableViewCell {
     @IBOutlet weak var minusIncrementButton: UIView!
     @IBOutlet weak var plusButtonIncrement: UIButton!
     
+   // @IBOutlet weak var addRideButton: UIImageView!
     weak var delegate: AttractionsTableViewCellDelegate?
     
     @IBAction func addButtonTapped(_ sender: Any) {

@@ -18,6 +18,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var extinctLabel: UILabel!
     @IBOutlet weak var extinctText: UITextField!
     @IBOutlet weak var rectangleView: UIView!
+    @IBOutlet weak var suggestButton: UIButton!
+    @IBOutlet weak var progressBar: UIProgressView!
+    
+    @IBOutlet weak var downBar: UIImageView!
+    @IBOutlet weak var flatBar: UIImageView!
     
     var titleName = ""
     var parkID = 0
@@ -45,12 +50,18 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.modalPresentationStyle = .overCurrentContext
+
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.1)
-        
+        suggestButton.layer.cornerRadius = 7
+        let suggestColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
+       suggestButton.backgroundColor = suggestColor
+        progressBar.backgroundColor = UIColor.green
+        progressBar.transform = progressBar.transform.scaledBy(x: 1, y: 6)
+        flatBar.isHidden = true
         rectangleView.backgroundColor = UIColor.white
         rectangleView.layer.cornerRadius = 10.0
         rectangleView.clipsToBounds = true
+        progressBar.progress = 0.5
         //Removes the two negative 1s that get created while saving to CoreData
         //Not good... always going to assume that there are 2 -1s at the beginning of the list
         
@@ -189,11 +200,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             extinctLabel.isHidden = true
         }
         
-        RidesComplete = String(userAttractionDatabase.count-userNumExtinct)
-        RidesComplete += "/"
-        RidesComplete += String(attractionListForTable.count-totalNumExtinct-numIgnore)
-        NumCompleteLabel.text = RidesComplete
-        
+        self.updatingRideCount(parkID: self.parkID, newCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore, totalRide: false)
+    
         self.attractionsTableView.reloadData()
         
     }
@@ -286,12 +294,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                     self.numIgnore -= 1
                 }
                 self.ignoreList.set(self.ignore, forKey: "SavedIgnoreListArray")
-                self.RidesComplete = String(self.userRidesRidden-self.userNumExtinct)
-                self.RidesComplete += "/"
-                self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
-                self.NumCompleteLabel.text = self.RidesComplete
-                self.updatingRideCount(parkID: self.parkID, newCount: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore, totalRide: true)
                 
+                self.updatingRideCount(parkID: self.parkID, newCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore, totalRide: false)
+                
+               
             success(true)
             self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.2)
                 // self.attractionsTableView.reloadData()
@@ -370,13 +376,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             
             self.userRidesRidden += 1
             print ("you have been on this many rides: ", self.userRidesRidden)
-            //UPDATE RIDES BEEN ON
-            self.RidesComplete = String(self.userRidesRidden-self.userNumExtinct)
-            self.RidesComplete += "/"
-            self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
-            self.NumCompleteLabel.text = self.RidesComplete
-            self.updatingRideCount(parkID: self.parkID, newCount: self.userRidesRidden-self.userNumExtinct, totalRide: false)
             
+            //UPDATE RIDES BEEN ON
+            self.updatingRideCount(parkID: self.parkID, newCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore, totalRide: false)
+           
             self.extinctComplete = String (self.userNumExtinct)
             // self.extinctComplete += "/"
             // self.extinctComplete += String (self.totalNumExtinct)
@@ -413,12 +416,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             }
             userRidesRidden -= 1
             //UPDATE RIDES BEEN ON
-            self.RidesComplete = String(self.userRidesRidden-self.userNumExtinct)
-            self.RidesComplete += "/"
-            self.RidesComplete += String(self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
-            self.NumCompleteLabel.text = self.RidesComplete
-            updatingRideCount(parkID: parkID, newCount: userRidesRidden-userNumExtinct, totalRide: false)
             
+            self.updatingRideCount(parkID: self.parkID, newCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore, totalRide: false)
             
             self.extinctComplete = String (self.userNumExtinct)
             //  self.extinctComplete += "/"
@@ -651,7 +650,15 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.present(scoreAlert, animated: true, completion:nil)
     }
     
-    func updatingRideCount(parkID: Int, newCount: Int, totalRide: Bool) {
+    func updatingRideCount(parkID: Int, newCount: Int, totNum: Int, totalRide: Bool) {
+        self.RidesComplete = String(newCount)
+        self.RidesComplete += "/"
+        self.RidesComplete += String(totNum)
+        self.NumCompleteLabel.text = self.RidesComplete
+        
+        var percentage = Float(newCount)/Float(totNum)
+        self.progressBar.progress = Float(percentage)
+        
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
@@ -693,6 +700,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         else if sender.state == UIGestureRecognizerState.changed {
             if touchPoint.y - initialToucnPoint.y > 0 {
+                self.downBar.isHidden = true
+                self.flatBar.isHidden = false
                 self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
             }
         }
@@ -704,15 +713,19 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 
             } else {
                 UIView.animate(withDuration: 0.3, animations: {
+                    self.downBar.isHidden = false
+                    self.flatBar.isHidden = true
                     self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
                 })
             }
         }
     }
     
-    /*
-     // MARK: - Navigation
+    
+     // MARK: - UI Design
      
+    
+    /*
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      // Get the new view controller using segue.destinationViewController.
