@@ -223,5 +223,7 @@ class AttractionsDetailsViewController: UIViewController {
     @IBAction func unwindToDetailsView(sender: UIStoryboardSegue) {
         print("Back to attractions view")
     }
-    
+    @IBAction func unwindToAttractionsView(sender: UIStoryboardSegue) {
+        print("Back to attractions view")
+    }
 }

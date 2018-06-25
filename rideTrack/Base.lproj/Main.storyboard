@@ -640,7 +640,7 @@
                                                     <outlet property="plusButtonIncrement" destination="7hY-Fv-Y20" id="u89-QP-9Cd"/>
                                                     <outlet property="rideName" destination="5NX-fB-zEo" id="UYT-HF-VTz"/>
                                                     <outlet property="rideTypeLabel" destination="S5W-Vh-fGx" id="qRD-nt-pLN"/>
-                                                    <segue destination="S7M-68-41E" kind="showDetail" identifier="ToDetails" customClass="SlideForSegue" customModule="rideTrack" customModuleProvider="target" id="dSs-Jp-6lX"/>
+                                                    <segue destination="S7M-68-41E" kind="showDetail" identifier="ToDetails" id="dSs-Jp-6lX"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
