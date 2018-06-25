@@ -219,6 +219,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
             print ("BELOW OPENING")
         }
     }
+    
     func TextFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

@@ -13,9 +13,20 @@ class FavoritesTableViewCell: UITableViewCell {
     @IBOutlet weak var parkNameLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var fractionLabel: UILabel!
+    @IBOutlet weak var fractionView: UIView!
+    @IBOutlet weak var progressView: UIView!
+    
+    var progressWidth: CGFloat!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        fractionView.layer.cornerRadius = 10
+        progressWidth = fractionView.frame.width
+        
+        progressView.layer.shadowOpacity = 0.5
+        progressView.layer.shadowOffset = CGSize.zero
+        progressView.layer.shadowRadius = 8
+        
         // Initialization code
     }
 

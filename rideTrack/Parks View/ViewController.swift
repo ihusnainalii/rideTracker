@@ -18,7 +18,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var allParksTableView: UITableView!
     @IBOutlet weak var currentLocationView: UIView!
     @IBOutlet weak var currentLocationParkNameLabel: UILabel!
-
+    @IBOutlet var backgroundView: UIView!
+    @IBOutlet weak var favoritesView: UIView!
+    @IBOutlet weak var allParksView: UIView!
+    @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var navigationBar: UIView!
+    @IBOutlet weak var addParkButton: UIButton!
+    @IBOutlet weak var searchParkView: UIView!
+    
     var selectedPark: ParksModel = ParksModel()
     var segueWithTableViewSelect = true
     
@@ -41,22 +48,49 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         //Initialize current location UI
         currentLocationView.frame = CGRect(x: 0, y: Int(screenSize.height + 100), width: Int(screenSize.width), height: 100)
         currentLocationView.layer.shadowOffset = CGSize.zero
-        currentLocationView.layer.shadowRadius = 12
+        currentLocationView.layer.shadowRadius = 5
         currentLocationView.layer.shadowOpacity = 0.3
         currentLocationView.layer.cornerRadius = 10
         
-        favoritesTableView.isUserInteractionEnabled = true
-        allParksTableView.isUserInteractionEnabled = true
+        let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
+        settingsButton.backgroundColor = settingsColor
+        settingsButton.layer.cornerRadius = 7
+        
+        navigationBar.layer.shadowOpacity = 0.5
+        navigationBar.layer.shadowOffset = CGSize.zero
+        navigationBar.layer.shadowRadius = 12
+        
+        favoritesView.layer.cornerRadius = 7
+        favoritesTableView.layer.cornerRadius = 7
+        
+        allParksView.layer.cornerRadius = 7
+        allParksTableView.layer.cornerRadius = 7
+        
+        addParkButton.layer.shadowOpacity = 0.5
+        addParkButton.layer.shadowOffset = CGSize.zero
+        addParkButton.layer.shadowRadius = 12
+        
+        searchParkView.layer.cornerRadius = 7
+        
+        let gradient = CAGradientLayer()
+        gradient.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
+        let lightGreen = UIColor(red: 38.0/255.0, green: 214.0/255.0, blue: 32.0/255.0, alpha: 1.0).cgColor
+        let darkGreen = UIColor(red: 47.0/255.0, green: 104.0/255.0, blue: 40.0/255.0, alpha: 1.0).cgColor
+        gradient.colors = [lightGreen, darkGreen]
+        gradient.startPoint = CGPoint(x: 1, y: 0)
+        gradient.endPoint = CGPoint(x: 0, y: 1)
+        
+        backgroundView.layer.addSublayer(gradient)
         
         super.viewDidLoad()
         
+        favoritesTableView.isUserInteractionEnabled = true
         favoritesTableView.delegate = self
         favoritesTableView.dataSource = self
-        //favoritesTableView.register(FavoritesTableViewCell.self, forCellReuseIdentifier: "favoriteCell")
-        
+
+        allParksTableView.isUserInteractionEnabled = true
         allParksTableView.delegate = self
         allParksTableView.dataSource = self
-        //allParksTableView.register(AllParksTableViewCell.self, forCellReuseIdentifier: "allCell")
         
         let urlPath = "http://www.beingpositioned.com/theparksman/parksdbservice.php"
         let dataModel = DataModel()
@@ -169,6 +203,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             cell.parkNameLabel.text = parkData.name
             cell.locationLabel.text = parkData.city
             cell.fractionLabel.text = "\(parkData.ridesRidden!)/\(parkData.totalRides!)"
+            
+            let rides: Double = Double(parkData.ridesRidden)
+            let total = Double(parkData.totalRides)
+            let progressToShow = CGFloat(Double(cell.progressWidth + 4) * (rides/total))
+            print(progressToShow)
+            cell.progressView.frame.size.width = progressToShow
+            
+            if rides/total == 1{
+                cell.progressView.backgroundColor = UIColor(red: 218.0/255.0, green: 195.0/255.0, blue: 32.0/255.0, alpha: 1.0)
+            } else{
+                cell.progressView.backgroundColor = UIColor(red: 74.0/255.0, green: 166.0/255.0, blue: 65.0/255.0, alpha: 1.0)
+            }
+            
             return cell
         }
         else{
