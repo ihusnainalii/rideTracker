@@ -79,7 +79,6 @@ class ParkCoreData{
             let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
             for entity in fetchedResults! {
                 managedContext.delete(entity)
-                print("Deleted park \(parkID)")
                 do {
                     try managedContext.save()
                 } catch {

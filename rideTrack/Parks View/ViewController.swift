@@ -25,6 +25,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var navigationBar: UIView!
     @IBOutlet weak var addParkButton: UIButton!
     @IBOutlet weak var searchParkView: UIView!
+
     
     var selectedPark: ParksModel = ParksModel()
     var segueWithTableViewSelect = true
@@ -55,6 +56,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
         settingsButton.backgroundColor = settingsColor
         settingsButton.layer.cornerRadius = 7
+        settingsButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
         navigationBar.layer.shadowOpacity = 0.5
         navigationBar.layer.shadowOffset = CGSize.zero
@@ -128,8 +130,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             for i in 0..<arrayOfAllRides.count{
                 if arrayOfAllRides[i].active == 1{
                     totalRideCount += 1
+                    print(arrayOfAllRides[i].name)
+                    print(totalRideCount)
                 }
             }
+            print(totalRideCount, "updating total ride count label...")
+            
             if arrayOfAllRides.count != 0{
                 parksCoreData.updatingTotalRideCount(parkID: arrayOfAllRides[0].parkID, totalRideCount: totalRideCount)
                 for i in 0..<allParksList.count{
@@ -141,7 +147,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 allParksTableView.reloadData()
                 favoritesTableView.reloadData()
             }
-            print(totalRideCount, "updating total ride count label...")
+            
         }
         else{
             arrayOfAllParks = items as! [ParksModel]
@@ -206,15 +212,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             
             let rides: Double = Double(parkData.ridesRidden)
             let total = Double(parkData.totalRides)
-            let progressToShow = CGFloat(Double(cell.progressWidth + 4) * (rides/total))
-            print(progressToShow)
-            cell.progressView.frame.size.width = progressToShow
-            
-            if rides/total == 1{
-                cell.progressView.backgroundColor = UIColor(red: 218.0/255.0, green: 195.0/255.0, blue: 32.0/255.0, alpha: 1.0)
-            } else{
-                cell.progressView.backgroundColor = UIColor(red: 74.0/255.0, green: 166.0/255.0, blue: 65.0/255.0, alpha: 1.0)
+            var progressToShow = CGFloat(0)
+            if total != 0{
+                progressToShow = CGFloat(Double(cell.progressWidth + 4) * (rides/total))
+                if rides/total == 1{
+                    cell.progressView.backgroundColor = UIColor(red: 218.0/255.0, green: 195.0/255.0, blue: 32.0/255.0, alpha: 1.0)
+                } else{
+                    cell.progressView.backgroundColor = UIColor(red: 74.0/255.0, green: 166.0/255.0, blue: 65.0/255.0, alpha: 1.0)
+                }
             }
+            cell.progressView.frame.size.width = progressToShow
             
             return cell
         }
@@ -224,6 +231,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             cell.parkNameLabel.text = parkData.name
             cell.locationLabel.text = parkData.city
             cell.fractionLabel.text = "\(parkData.ridesRidden!)/\(parkData.totalRides!)"
+            
+            let rides: Double = Double(parkData.ridesRidden)
+            let total = Double(parkData.totalRides)
+            var progressToShow = CGFloat(0)
+            if total != 0{
+                progressToShow = CGFloat(Double(cell.progressWidth + 4) * (rides/total))
+                if rides/total == 1{
+                    cell.progressView.backgroundColor = UIColor(red: 218.0/255.0, green: 195.0/255.0, blue: 32.0/255.0, alpha: 1.0)
+                } else{
+                    cell.progressView.backgroundColor = UIColor(red: 74.0/255.0, green: 166.0/255.0, blue: 65.0/255.0, alpha: 1.0)
+                }
+            }
+            cell.progressView.frame.size.width = progressToShow
             return cell
         }
     }
@@ -276,6 +296,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 success(true)
                 self.removeParkFromList(parkID: self.allParksList[indexPath.row].parkID, indexPath: indexPath.row)
                 self.favoritesTableView.reloadData()
+                self.allParksTableView.reloadData()
             }
             let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
                 success(false)
