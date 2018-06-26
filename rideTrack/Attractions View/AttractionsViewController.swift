@@ -11,6 +11,7 @@ import Foundation
 
 
 class AttractionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, AttractionsTableViewCellDelegate {
+
     
     @IBOutlet weak var attractionsTableView: UITableView!
     @IBOutlet weak var parkLabel: UILabel!
@@ -20,6 +21,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var rectangleView: UIView!
     @IBOutlet weak var suggestButton: UIButton!
     @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var VisualEffectsLayer: UIVisualEffectView!
+    //@IBOutlet weak var rideCellSquare: UIView!
     
     @IBOutlet weak var downBar: UIImageView!
     @IBOutlet weak var flatBar: UIImageView!
@@ -55,13 +58,19 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         suggestButton.layer.cornerRadius = 7
         let suggestColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
        suggestButton.backgroundColor = suggestColor
+        suggestButton.layer.shadowOpacity = 0.5
+        suggestButton.layer.shadowOffset = CGSize.zero
+        suggestButton.layer.shadowRadius = 12
         progressBar.backgroundColor = UIColor.green
         progressBar.transform = progressBar.transform.scaledBy(x: 1, y: 6)
         flatBar.isHidden = true
-        rectangleView.backgroundColor = UIColor.white
-        rectangleView.layer.cornerRadius = 10.0
+        rectangleView.backgroundColor = UIColor.clear
+       // rectangleView.layer.cornerRadius = 10.0
         rectangleView.clipsToBounds = true
-        progressBar.progress = 0.5
+        VisualEffectsLayer.layer.cornerRadius = 10.0
+        VisualEffectsLayer.clipsToBounds = true
+        
+        
         //Removes the two negative 1s that get created while saving to CoreData
         //Not good... always going to assume that there are 2 -1s at the beginning of the list
         
@@ -200,7 +209,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             extinctLabel.isHidden = true
         }
         
-        self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore, totalRide: false)
+        self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
     
         self.attractionsTableView.reloadData()
         
@@ -216,12 +225,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         let item: AttractionsModel = attractionListForTable[indexPath.row]
         if attractionListForTable.count != 1{
             if ((attractionListForTable[indexPath.row]).isCheck){
-                cell.rideName?.textColor = UIColor.green
+                cell.rideName?.textColor = UIColor.black //used to turn green***
                 cell.addRideButton.isEnabled = false
                 cell.addRideButton.isHidden = true
                 cell.numberOfRidesLabel.isHidden = false
                 cell.plusButtonIncrement.isHidden = false
-                cell.minusIncrementButton.isHidden = false
+               // cell.minusIncrementButton.isHidden = false
             }
             else{
                 cell.rideName?.textColor = UIColor.black
@@ -229,14 +238,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 cell.addRideButton.isHidden = false
                 cell.numberOfRidesLabel.isHidden = true
                 cell.plusButtonIncrement.isHidden = true
-                cell.minusIncrementButton.isHidden = true
+              //  cell.minusIncrementButton.isHidden = true
                 
             }
             if (attractionListForTable[indexPath.row]).active == 1 {
-                cell.backgroundColor = UIColor.white
+                cell.backgroundColor = UIColor.clear
             }
             else{
-                cell.backgroundColor = UIColor.lightGray
+                cell.backgroundColor = UIColor.black.withAlphaComponent(0.2)
             }
             
             //            for i in 0..<ignore.count{ //this isnt the best way of doing this...
@@ -251,7 +260,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             else {
                 attractionListForTable[indexPath.row].isIgnored = false
                 if ((attractionListForTable[indexPath.row]).isCheck){
-                    cell.rideName?.textColor = UIColor.green
+                    cell.rideName?.textColor = UIColor.black //Used to turn green***
                 }
                 else{
                     cell.rideName?.textColor = UIColor.black
@@ -267,15 +276,30 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        //turns off trailing action of Delete
-        return UISwipeActionsConfiguration.init()
+        if (attractionListForTable[indexPath.row]).numberOfTimesRidden != 0{
+        let minusAction = UIContextualAction(style: .normal, title: "Minus", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            print ("Subtracting")
+            self.attractionCellNegativeIncrement(indexPath: indexPath)
+            self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.3)
+            success(true)
+
+        })
+        let minusColor = UIColor(red: 174/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
+        minusAction.backgroundColor = minusColor
+            minusAction.image = UIImage (named:"Minus Button")
+        let configurations = UISwipeActionsConfiguration(actions: [minusAction])
+        configurations.performsFirstActionWithFullSwipe = true
+        return configurations
+        }
+        else {
+            return UISwipeActionsConfiguration.init()
+        }
     }
-    
+ 
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if (attractionListForTable[indexPath.row]).active == 1 && attractionListForTable[indexPath.row].isCheck == false {
             let ignoreAction = UIContextualAction(style: .normal, title: "Ignore", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
                 print("ignore button tapped on ride")
-                //hideAttraction.isIgnored = !hideAttraction.isIgnored //switches back and forth
                 if self.attractionListForTable[indexPath.row].isIgnored == false {
                     self.ignore.append(self.attractionListForTable[indexPath.row].rideID!)
                     print("Ignoring ", self.attractionListForTable[indexPath.row].name!)
@@ -295,9 +319,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
                 self.ignoreList.set(self.ignore, forKey: "SavedIgnoreListArray")
                 
-                self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore, totalRide: false)
-                
-               
+                self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
             success(true)
             self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.2)
                 // self.attractionsTableView.reloadData()
@@ -314,6 +336,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             return UISwipeActionsConfiguration.init()
         }
     }
+    
     
     //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     //        tableView.deselectRow(at: indexPath, animated: true)
@@ -378,7 +401,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             print ("you have been on this many rides: ", self.userRidesRidden)
             
             //UPDATE RIDES BEEN ON
-            self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore, totalRide: false)
+            self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
            
             self.extinctComplete = String (self.userNumExtinct)
             // self.extinctComplete += "/"
@@ -400,8 +423,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
-    func attractionCellNegativeIncrement(_ sender: AttractionsTableViewCell) {
-        guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
+    func attractionCellNegativeIncrement (indexPath: IndexPath) { //(_ sender: AttractionsTableViewCell)
+      //  guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
         print("Minus")
         
         if attractionListForTable[indexPath.row].numberOfTimesRidden == 1{
@@ -417,7 +440,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             userRidesRidden -= 1
             //UPDATE RIDES BEEN ON
             
-            self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore, totalRide: false)
+            self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
             
             self.extinctComplete = String (self.userNumExtinct)
             //  self.extinctComplete += "/"
@@ -650,7 +673,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.present(scoreAlert, animated: true, completion:nil)
     }
     
-    func updatingRideCount(parkID: Int, userCount: Int, totNum: Int, totalRide: Bool) {
+    func updatingRideCount(parkID: Int, userCount: Int, totNum: Int) {
         self.RidesComplete = String(userCount)
         self.RidesComplete += "/"
         self.RidesComplete += String(totNum)

@@ -16,6 +16,7 @@ class AttractionsTableViewCell: UITableViewCell {
     @IBOutlet weak var minusIncrementButton: UIView!
     @IBOutlet weak var plusButtonIncrement: UIButton!
     @IBOutlet weak var addRideButton: UIButton!
+    @IBOutlet weak var rideCellSquare: UIView!
     
    // @IBOutlet weak var addRideButton: UIImageView!
     weak var delegate: AttractionsTableViewCellDelegate?
@@ -24,9 +25,9 @@ class AttractionsTableViewCell: UITableViewCell {
         delegate?.attractionsTableViewCellDidTapAddRide(self)
     }
     
-    @IBAction func didSelectNegIncrementor(_ sender: Any) {
-        delegate?.attractionCellNegativeIncrement(self)
-    }
+//    @IBAction func didSelectNegIncrementor(_ sender: Any) {
+//        delegate?.attractionCellNegativeIncrement(self)
+//    }
     
     @IBAction func didSelectPosIncrement(_ sender: Any) {
         delegate?.attractionCellPositiveIncrement(self)
@@ -34,13 +35,17 @@ class AttractionsTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        minusIncrementButton.layer.borderColor = UIColor(red: 69/255, green: 121/255, blue: 251/255, alpha: 1).cgColor
-        minusIncrementButton.layer.borderWidth = 1
-        minusIncrementButton.layer.cornerRadius = 7
+//        minusIncrementButton.layer.borderColor = UIColor(red: 69/255, green: 121/255, blue: 251/255, alpha: 1).cgColor
+//        minusIncrementButton.layer.borderWidth = 1
+//        minusIncrementButton.layer.cornerRadius = 7
         
-        plusButtonIncrement.layer.borderColor = UIColor(red: 69/255, green: 121/255, blue: 251/255, alpha: 1).cgColor
-        plusButtonIncrement.layer.borderWidth = 1
-        plusButtonIncrement.layer.cornerRadius = 7
+        rideCellSquare.layer.shadowOpacity = 0.5
+        rideCellSquare.layer.shadowOffset = CGSize.zero
+        rideCellSquare.layer.shadowRadius = 12
+        
+        rideCellSquare.layer.backgroundColor = UIColor.white.cgColor
+        rideCellSquare.layer.cornerRadius = 10.0
+        rideCellSquare.clipsToBounds = true
         // Initialization code
     }
 
@@ -54,7 +59,7 @@ class AttractionsTableViewCell: UITableViewCell {
 protocol AttractionsTableViewCellDelegate : class {
     func attractionsTableViewCellDidTapAddRide(_ sender: AttractionsTableViewCell)
     func attractionCellPositiveIncrement(_ sender: AttractionsTableViewCell)
-    func attractionCellNegativeIncrement(_ sender: AttractionsTableViewCell)
+   // func attractionCellNegativeIncrement(_ sender: AttractionsTableViewCell)
 
    // func ignoreAction(_sender: AttractionsViewController)
     
