@@ -15,6 +15,10 @@ class FavoritesTableViewCell: UITableViewCell {
     @IBOutlet weak var fractionLabel: UILabel!
     @IBOutlet weak var fractionView: UIView!
     @IBOutlet weak var progressView: UIView!
+    @IBOutlet weak var progressViewWidth: NSLayoutConstraint!
+    @IBOutlet weak var progressViewHeight: NSLayoutConstraint!
+    
+    let screenSize = UIScreen.main.bounds
     
     var progressWidth: CGFloat!
     
@@ -26,6 +30,12 @@ class FavoritesTableViewCell: UITableViewCell {
         progressView.layer.shadowOpacity = 0.5
         progressView.layer.shadowOffset = CGSize.zero
         progressView.layer.shadowRadius = 8
+        
+        //If iPhone 5s
+        if screenSize.width == 320.0{
+            progressViewWidth.constant = 67.5
+            progressViewHeight.constant = 28.8
+        }
         
         // Initialization code
     }
