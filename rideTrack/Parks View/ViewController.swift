@@ -376,6 +376,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             attractionVC.titleName = selectedPark.name
             attractionVC.parkID = selectedPark.parkID
             attractionVC.showExtinct = showExtinct
+            attractionVC.parksViewController = self
             
             //Getting coreData Attraction data for the selected park
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -502,19 +503,43 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func unwindFromAttractions(parkID: Int) {
         segueWithTableViewSelect = true
-        
+        print("unwinding")
         //Get ParkList data from CoreData
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return }
         let managedContext = appDelegate.persistentContainer.viewContext
-        let sortDescriptor = NSSortDescriptor(key: "parkID", ascending: true)
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-        fetchRequest.sortDescriptors = [sortDescriptor]
+        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
+        var updatedPark:[NSManagedObject] = []
         do {
-            savedParkList = try managedContext.fetch(fetchRequest)
+            updatedPark = try managedContext.fetch(fetchRequest)
+            
         } catch let error as NSError {
             print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
         }
+        
+        let allParksIndex = findIndexInAllParksList(parkID: parkID)
+        allParksList[allParksIndex].totalRides = updatedPark[0].value(forKey: "totalRides") as! Int
+        allParksList[allParksIndex].ridesRidden = updatedPark[0].value(forKey: "ridesRidden") as! Int
+        
+        if favoiteParkList.count != 0{
+            let favoritesIndex = findIndexFavoritesList(parkID: parkID)
+            favoiteParkList[favoritesIndex].totalRides = updatedPark[0].value(forKey: "totalRides") as! Int
+            favoiteParkList[favoritesIndex].ridesRidden = updatedPark[0].value(forKey: "ridesRidden") as! Int
+            favoritesTableView.reloadData()
+        }
+        allParksTableView.reloadData()
+    }
+    
+    func findIndexFavoritesList(parkID: Int) -> Int{
+        var favoritesIndex = 0
+        for i in 0..<favoiteParkList.count{
+            if favoiteParkList[i].parkID == parkID{
+                favoritesIndex = i
+                break
+            }
+        }
+        return favoritesIndex
     }
     
     func findIndexInAllParksList(parkID:Int) -> Int{

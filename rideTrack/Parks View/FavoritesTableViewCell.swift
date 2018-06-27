@@ -27,7 +27,7 @@ class FavoritesTableViewCell: UITableViewCell {
         fractionView.layer.cornerRadius = 10
         progressWidth = fractionView.frame.width
         
-        progressView.layer.shadowOpacity = 0.5
+        progressView.layer.shadowOpacity = 0.4
         progressView.layer.shadowOffset = CGSize.zero
         progressView.layer.shadowRadius = 8
         

@@ -24,6 +24,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var VisualEffectsLayer: UIVisualEffectView!
     //@IBOutlet weak var rideCellSquare: UIView!
     
+    
     @IBOutlet weak var downBar: UIImageView!
     @IBOutlet weak var flatBar: UIImageView!
     
@@ -39,7 +40,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var numIgnore = 0
     var comeFromDetails = false
     var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
-    
+    var parksViewController: ViewController!
     
     let green = UIColor(red: 120.0/255.0, green: 205.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor as CGColor
     var userAttractions: [NSManagedObject] = []
@@ -735,6 +736,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 self.dismiss(animated: true, completion: nil)
               //  performSegue(withIdentifier: "toParkList", sender: nil)
               //  performSegue(withIdentifier: "toParkList", sender: nil)
+                parksViewController.unwindFromAttractions(parkID: parkID)
                 
             } else {
                 UIView.animate(withDuration: 0.3, animations: {
