@@ -22,11 +22,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var suggestButton: UIButton!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var VisualEffectsLayer: UIVisualEffectView!
-    //@IBOutlet weak var rideCellSquare: UIView!
+    @IBOutlet weak var rideCellSquare: UIView!
     
     
-    @IBOutlet weak var downBar: UIImageView!
-    @IBOutlet weak var flatBar: UIImageView!
+    
+    @IBOutlet weak var downBar: UIButton!
+    //@IBOutlet weak var downBar: UIImageView!
     
     var titleName = ""
     var parkID = 0
@@ -42,6 +43,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
     var parksViewController: ViewController!
     
+    var widthofCounter: NSLayoutConstraint!
+    var plusButton: UIButton!
     let green = UIColor(red: 120.0/255.0, green: 205.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor as CGColor
     var userAttractions: [NSManagedObject] = []
     var userNumExtinct = 0
@@ -63,17 +66,16 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
        suggestButton.backgroundColor = suggestColor
         suggestButton.layer.shadowOpacity = 0.5
         suggestButton.layer.shadowOffset = CGSize.zero
-        suggestButton.layer.shadowRadius = 12
+        suggestButton.layer.shadowRadius = 9
         progressBar.backgroundColor = UIColor.green
         progressBar.transform = progressBar.transform.scaledBy(x: 1, y: 6)
-        flatBar.isHidden = true
         rectangleView.backgroundColor = UIColor.clear
        // rectangleView.layer.cornerRadius = 10.0
         rectangleView.clipsToBounds = true
         VisualEffectsLayer.layer.cornerRadius = 10.0
         VisualEffectsLayer.clipsToBounds = true
         
-        
+        downBar.setImage(UIImage(named: "Down Bar"), for: .normal)
         //Removes the two negative 1s that get created while saving to CoreData
         //Not good... always going to assume that there are 2 -1s at the beginning of the list
         
@@ -102,6 +104,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         // Do any additional setup after loading the view, typically from a nib.
     }
+
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
         for i in 0..<items.count{
@@ -226,6 +229,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         let cell = tableView.dequeueReusableCell(withIdentifier: "rideCell", for: indexPath) as! AttractionsTableViewCell
         cell.delegate = self
         let item: AttractionsModel = attractionListForTable[indexPath.row]
+        self.widthofCounter = cell.rideCounterCellWidth
+        if attractionListForTable[indexPath.row].numberOfTimesRidden == 0 {
+            self.widthofCounter.constant = 50
+        }
+        else{
+            self.widthofCounter.constant = 80
+        }
+        self.plusButton = cell.plusButtonIncrement
         if attractionListForTable.count != 1{
             if ((attractionListForTable[indexPath.row]).isCheck){
                 cell.rideName?.textColor = UIColor.black //used to turn green***
@@ -401,6 +412,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             if (self.attractionListForTable[indexPath.row]).active == 0{
                 self.userNumExtinct += 1
             }
+            print ("Animate here!")
+            //self.CounterCellWidth.constant = 80
+            
+            UIView.animate(withDuration: 1, animations: {
+                self.plusButton.isHidden = true
+                self.widthofCounter.constant = 80
+                self.view.layoutIfNeeded()
+            })
             
             self.userRidesRidden += 1
             print ("you have been on this many rides: ", self.userRidesRidden)
@@ -437,8 +456,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             deleteRideCheck(rideID: attractionListForTable[indexPath.row].rideID)
             attractionListForTable[indexPath.row].numberOfTimesRidden = 0
             attractionListForTable[indexPath.row].isCheck = false
-           // attractionsTableView.reloadData()
-            
+
+            print ("Animate here")
+            UIView.animate(withDuration: 1, animations: {
+                self.plusButton.isHidden = false
+                self.widthofCounter.constant = 50
+                self.view.layoutIfNeeded()
+            })
+    
             if (attractionListForTable[indexPath.row]).active == 0 {
                 userNumExtinct -= 1
             }
@@ -726,13 +751,13 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         else if sender.state == UIGestureRecognizerState.changed {
             if touchPoint.y - initialToucnPoint.y > 0 {
-                self.downBar.isHidden = true
-                self.flatBar.isHidden = false
+                self.downBar.setImage(UIImage(named: "Flat Bar"), for: .normal)
+
                 self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
             }
         }
         else if sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled {
-            if touchPoint.y - initialToucnPoint.y > 300 {
+            if touchPoint.y - initialToucnPoint.y > 200 {
                 self.dismiss(animated: true, completion: nil)
               //  performSegue(withIdentifier: "toParkList", sender: nil)
               //  performSegue(withIdentifier: "toParkList", sender: nil)
@@ -740,12 +765,15 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 
             } else {
                 UIView.animate(withDuration: 0.3, animations: {
-                    self.downBar.isHidden = false
-                    self.flatBar.isHidden = true
+                    self.downBar.setImage(UIImage(named: "Down Bar"), for: .normal)
                     self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
                 })
             }
         }
+    }
+    @IBAction func tapDownBar(_ sender: Any) {
+        print ("tap to leave")
+        parksViewController.unwindFromAttractions(parkID: parkID)
     }
     
     

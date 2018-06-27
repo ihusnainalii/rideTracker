@@ -17,6 +17,8 @@ class AttractionsTableViewCell: UITableViewCell {
     @IBOutlet weak var plusButtonIncrement: UIButton!
     @IBOutlet weak var addRideButton: UIButton!
     @IBOutlet weak var rideCellSquare: UIView!
+    @IBOutlet weak var rideCounterCellWidth: NSLayoutConstraint!
+    
     
    // @IBOutlet weak var addRideButton: UIImageView!
     weak var delegate: AttractionsTableViewCellDelegate?
@@ -39,13 +41,19 @@ class AttractionsTableViewCell: UITableViewCell {
 //        minusIncrementButton.layer.borderWidth = 1
 //        minusIncrementButton.layer.cornerRadius = 7
         
-        rideCellSquare.layer.shadowOpacity = 0.5
-        rideCellSquare.layer.shadowOffset = CGSize.zero
-        rideCellSquare.layer.shadowRadius = 12
+    
         
         rideCellSquare.layer.backgroundColor = UIColor.white.cgColor
         rideCellSquare.layer.cornerRadius = 10.0
-        rideCellSquare.clipsToBounds = true
+        rideCellSquare.clipsToBounds = false
+        
+        rideCellSquare.layer.shadowOpacity = 0.4
+        rideCellSquare.layer.shadowOffset = CGSize.zero
+        rideCellSquare.layer.shadowRadius = 9
+        rideCellSquare.layer.shadowColor = UIColor.black.cgColor
+        
+        rideCounterCellWidth.constant = 50
+
         // Initialization code
     }
 

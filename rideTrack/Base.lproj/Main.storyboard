@@ -617,7 +617,7 @@
                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="50" id="l2s-h3-nej"/>
-                                                                            <constraint firstAttribute="width" constant="50" id="zMs-jf-IEB"/>
+                                                                            <constraint firstAttribute="width" constant="50" identifier="width" id="zMs-jf-IEB"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="y4O-c0-W55">
@@ -659,23 +659,8 @@
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
-                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7hY-Fv-Y20">
-                                                                                <rect key="frame" x="247" y="0.0" width="50" height="50"/>
-                                                                                <accessibility key="accessibilityConfiguration">
-                                                                                    <accessibilityTraits key="traits" button="YES" image="YES"/>
-                                                                                </accessibility>
-                                                                                <constraints>
-                                                                                    <constraint firstAttribute="width" secondItem="7hY-Fv-Y20" secondAttribute="height" multiplier="1:1" id="MGL-D1-KSq"/>
-                                                                                    <constraint firstAttribute="width" constant="50" id="bGc-0W-dYB"/>
-                                                                                    <constraint firstAttribute="height" constant="50" id="sNQ-zQ-O5Z"/>
-                                                                                </constraints>
-                                                                                <state key="normal" title="+" image="Plus Attraction"/>
-                                                                                <connections>
-                                                                                    <action selector="didSelectPosIncrement:" destination="NuC-H2-735" eventType="touchUpInside" id="OJb-5C-mEg"/>
-                                                                                </connections>
-                                                                            </button>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GtQ-5d-cjS">
-                                                                                <rect key="frame" x="305" y="0.0" width="50" height="50"/>
+                                                                                <rect key="frame" x="247" y="0.0" width="50" height="50"/>
                                                                                 <accessibility key="accessibilityConfiguration">
                                                                                     <accessibilityTraits key="traits" button="YES" image="YES"/>
                                                                                 </accessibility>
@@ -689,10 +674,25 @@
                                                                                     <action selector="addButtonTapped:" destination="NuC-H2-735" eventType="touchUpInside" id="aV1-j1-Cgr"/>
                                                                                 </connections>
                                                                             </button>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7hY-Fv-Y20">
+                                                                                <rect key="frame" x="305" y="0.0" width="50" height="50"/>
+                                                                                <accessibility key="accessibilityConfiguration">
+                                                                                    <accessibilityTraits key="traits" button="YES" image="YES"/>
+                                                                                </accessibility>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" secondItem="7hY-Fv-Y20" secondAttribute="height" multiplier="1:1" id="MGL-D1-KSq"/>
+                                                                                    <constraint firstAttribute="width" constant="50" id="bGc-0W-dYB"/>
+                                                                                    <constraint firstAttribute="height" constant="50" id="sNQ-zQ-O5Z"/>
+                                                                                </constraints>
+                                                                                <state key="normal" title="+" image="Plus Attraction"/>
+                                                                                <connections>
+                                                                                    <action selector="didSelectPosIncrement:" destination="NuC-H2-735" eventType="touchUpInside" id="OJb-5C-mEg"/>
+                                                                                </connections>
+                                                                            </button>
                                                                         </subviews>
                                                                         <constraints>
                                                                             <constraint firstAttribute="bottom" secondItem="GtQ-5d-cjS" secondAttribute="bottom" id="BBn-7x-hoC"/>
-                                                                            <constraint firstAttribute="trailing" secondItem="GtQ-5d-cjS" secondAttribute="trailing" id="gxl-Gc-J0C"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="7hY-Fv-Y20" secondAttribute="trailing" id="l5b-hc-gQ9"/>
                                                                             <constraint firstItem="GtQ-5d-cjS" firstAttribute="top" secondItem="y4O-c0-W55" secondAttribute="top" id="vu7-CT-Ja0"/>
                                                                         </constraints>
                                                                     </stackView>
@@ -712,6 +712,7 @@
                                                                 <outlet property="numberOfRidesLabel" destination="1s7-jz-3Dh" id="A3h-Eq-dLF"/>
                                                                 <outlet property="plusButtonIncrement" destination="7hY-Fv-Y20" id="u89-QP-9Cd"/>
                                                                 <outlet property="rideCellSquare" destination="rvz-C6-4do" id="O7p-is-i7b"/>
+                                                                <outlet property="rideCounterCellWidth" destination="zMs-jf-IEB" id="rCF-Ao-fr3"/>
                                                                 <outlet property="rideName" destination="5NX-fB-zEo" id="UYT-HF-VTz"/>
                                                                 <outlet property="rideTypeLabel" destination="S5W-Vh-fGx" id="qRD-nt-pLN"/>
                                                                 <segue destination="S7M-68-41E" kind="showDetail" identifier="ToDetails" id="dSs-Jp-6lX"/>
@@ -730,20 +731,21 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Down Bar" translatesAutoresizingMaskIntoConstraints="NO" id="Pho-Y7-tkc">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MqX-V1-51p">
                                                     <rect key="frame" x="165" y="1" width="45" height="45"/>
+                                                    <accessibility key="accessibilityConfiguration">
+                                                        <accessibilityTraits key="traits" button="YES" image="YES"/>
+                                                    </accessibility>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="45" id="1nx-ya-3m5"/>
-                                                        <constraint firstAttribute="height" constant="45" id="Jni-I9-J2l"/>
+                                                        <constraint firstAttribute="width" constant="45" id="AB0-0I-gDR"/>
+                                                        <constraint firstAttribute="height" constant="45" id="IUo-R5-dvj"/>
                                                     </constraints>
-                                                </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Flat Bar" translatesAutoresizingMaskIntoConstraints="NO" id="dH2-38-Ftc">
-                                                    <rect key="frame" x="165" y="0.0" width="45" height="45"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="45" id="TDe-hw-a0I"/>
-                                                        <constraint firstAttribute="width" constant="45" id="abn-N7-FSM"/>
-                                                    </constraints>
-                                                </imageView>
+                                                    <state key="normal" title="Button" image="Down Bar"/>
+                                                    <connections>
+                                                        <action selector="tapDownBar:" destination="zaz-Kb-2WY" eventType="touchUpInside" id="0aa-ZS-AgA"/>
+                                                        <segue destination="u3h-iL-PsR" kind="unwind" unwindAction="unwindToParkListWithSegue:" id="61e-nt-W1B"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <gestureRecognizers/>
@@ -755,9 +757,9 @@
                                                 <constraint firstItem="Ww5-cA-KWO" firstAttribute="leading" secondItem="qGY-Pc-WCD" secondAttribute="leading" id="H6h-SO-LE8"/>
                                                 <constraint firstItem="lfq-1a-KsT" firstAttribute="leading" secondItem="k8C-3n-n9A" secondAttribute="trailing" constant="8" id="Hl0-KE-jm5"/>
                                                 <constraint firstItem="rKa-vC-Lf2" firstAttribute="top" secondItem="VFt-15-utf" secondAttribute="bottom" constant="4" id="I9v-UY-2Yc"/>
+                                                <constraint firstItem="MqX-V1-51p" firstAttribute="centerX" secondItem="qGY-Pc-WCD" secondAttribute="centerX" id="IAQ-bF-AkC"/>
                                                 <constraint firstItem="fqB-3X-RMS" firstAttribute="top" secondItem="qGY-Pc-WCD" secondAttribute="top" constant="8" id="IhR-Oo-deg"/>
                                                 <constraint firstItem="cFg-8l-Dke" firstAttribute="top" secondItem="rKa-vC-Lf2" secondAttribute="bottom" constant="4" id="Izt-Nr-dzo"/>
-                                                <constraint firstItem="Pho-Y7-tkc" firstAttribute="centerX" secondItem="qGY-Pc-WCD" secondAttribute="centerX" id="K2L-jZ-2Zl"/>
                                                 <constraint firstAttribute="trailing" secondItem="rKa-vC-Lf2" secondAttribute="trailing" id="KYb-5i-BXg"/>
                                                 <constraint firstItem="VFt-15-utf" firstAttribute="top" secondItem="uVR-cf-Ne8" secondAttribute="bottom" constant="6" id="KkY-bv-dlV"/>
                                                 <constraint firstItem="rKa-vC-Lf2" firstAttribute="top" secondItem="Ww5-cA-KWO" secondAttribute="bottom" id="Mnw-jG-VhD"/>
@@ -767,28 +769,14 @@
                                                 <constraint firstItem="Ww5-cA-KWO" firstAttribute="top" secondItem="qGY-Pc-WCD" secondAttribute="top" id="SWb-UN-9Q8"/>
                                                 <constraint firstAttribute="trailing" secondItem="uVR-cf-Ne8" secondAttribute="trailing" id="Uwv-iI-Haw"/>
                                                 <constraint firstItem="cFg-8l-Dke" firstAttribute="leading" secondItem="qGY-Pc-WCD" secondAttribute="leading" id="VX3-Pz-taP"/>
-                                                <constraint firstItem="dH2-38-Ftc" firstAttribute="top" secondItem="qGY-Pc-WCD" secondAttribute="top" id="b82-h4-mel"/>
                                                 <constraint firstItem="k8C-3n-n9A" firstAttribute="top" secondItem="uVR-cf-Ne8" secondAttribute="bottom" constant="6" id="efX-7b-iTs"/>
                                                 <constraint firstItem="lfq-1a-KsT" firstAttribute="top" secondItem="uVR-cf-Ne8" secondAttribute="bottom" constant="6" id="h2D-pP-0xe"/>
-                                                <constraint firstItem="dH2-38-Ftc" firstAttribute="centerX" secondItem="qGY-Pc-WCD" secondAttribute="centerX" id="h4O-CV-Pbe"/>
                                                 <constraint firstItem="uVR-cf-Ne8" firstAttribute="leading" secondItem="qGY-Pc-WCD" secondAttribute="leading" id="ir2-Ka-H8X"/>
+                                                <constraint firstItem="MqX-V1-51p" firstAttribute="top" secondItem="qGY-Pc-WCD" secondAttribute="top" constant="1" id="ixO-gq-Kvx"/>
                                                 <constraint firstItem="BWZ-6M-pEa" firstAttribute="top" secondItem="uVR-cf-Ne8" secondAttribute="bottom" constant="6" id="qKP-Mh-Wnv"/>
                                                 <constraint firstItem="uVR-cf-Ne8" firstAttribute="top" secondItem="fqB-3X-RMS" secondAttribute="bottom" constant="6" id="tKn-Mt-ujj"/>
                                                 <constraint firstAttribute="trailing" secondItem="fqB-3X-RMS" secondAttribute="trailing" constant="5" id="tT0-4U-R7I"/>
-                                                <constraint firstItem="Pho-Y7-tkc" firstAttribute="top" secondItem="qGY-Pc-WCD" secondAttribute="top" constant="1" id="zmQ-sJ-1Me"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="h4O-CV-Pbe"/>
-                                                    <exclude reference="K2L-jZ-2Zl"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <mask key="constraints">
-                                                    <include reference="h4O-CV-Pbe"/>
-                                                    <include reference="K2L-jZ-2Zl"/>
-                                                </mask>
-                                            </variation>
                                         </view>
                                     </subviews>
                                     <constraints>
@@ -814,10 +802,9 @@
                         <outlet property="NumCompleteLabel" destination="lfq-1a-KsT" id="fjf-8G-MLI"/>
                         <outlet property="VisualEffectsLayer" destination="2Ff-tE-lFu" id="n3s-ex-My0"/>
                         <outlet property="attractionsTableView" destination="cFg-8l-Dke" id="gQc-sL-xZd"/>
-                        <outlet property="downBar" destination="Pho-Y7-tkc" id="WQa-D5-IsH"/>
+                        <outlet property="downBar" destination="MqX-V1-51p" id="wUi-13-iQO"/>
                         <outlet property="extinctLabel" destination="VFt-15-utf" id="9lH-4i-P4i"/>
                         <outlet property="extinctText" destination="BWZ-6M-pEa" id="mdI-YO-5DS"/>
-                        <outlet property="flatBar" destination="dH2-38-Ftc" id="6QE-4x-tY9"/>
                         <outlet property="parkLabel" destination="uVR-cf-Ne8" id="AeQ-bv-7ml"/>
                         <outlet property="progressBar" destination="rKa-vC-Lf2" id="uwW-Gj-q4m"/>
                         <outlet property="rectangleView" destination="qGY-Pc-WCD" id="81w-5E-zKt"/>
@@ -1281,7 +1268,6 @@
     <resources>
         <image name="Check Button" width="100" height="100"/>
         <image name="Down Bar" width="65" height="65"/>
-        <image name="Flat Bar" width="65" height="65"/>
         <image name="Plus Attraction" width="100" height="100"/>
         <image name="Plus button" width="150" height="150"/>
         <image name="Screen Shot 2018-06-24 at 12.52.26 PM" width="670" height="1196"/>
