@@ -25,7 +25,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var navigationBar: UIView!
     @IBOutlet weak var addParkButton: UIButton!
     @IBOutlet weak var searchParkView: UIView!
-
+    
     
     var selectedPark: ParksModel = ParksModel()
     var segueWithTableViewSelect = true
@@ -73,6 +73,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         addParkButton.layer.shadowRadius = 12
         
         searchParkView.layer.cornerRadius = 7
+        
         
         let gradient = CAGradientLayer()
         gradient.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
@@ -365,6 +366,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             if segueWithTableViewSelect && segue.identifier == "toAttractionsAll"{
                 let selectedIndex = (allParksTableView.indexPathForSelectedRow?.row)!
                 selectedPark = allParksList[selectedIndex]
+                print ("going to attractions")
             } else{
                 let selectedIndex = (favoritesTableView.indexPathForSelectedRow?.row)!
                 selectedPark = favoiteParkList[selectedIndex]
@@ -424,6 +426,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         else if segue.source is AttractionsViewController{
             print("Back from attractions")
+
         }
     }
     

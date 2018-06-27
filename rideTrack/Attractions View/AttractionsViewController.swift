@@ -54,7 +54,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+        self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
+        
+        
         suggestButton.layer.cornerRadius = 7
         let suggestColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
        suggestButton.backgroundColor = suggestColor
@@ -279,13 +281,15 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         if (attractionListForTable[indexPath.row]).numberOfTimesRidden != 0{
         let minusAction = UIContextualAction(style: .normal, title: "Minus", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             print ("Subtracting")
-            self.attractionCellNegativeIncrement(indexPath: indexPath)
-            self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.3)
             success(true)
+            self.attractionCellNegativeIncrement(indexPath: indexPath)
+            //success(true)
+            self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.4)
 
         })
-        let minusColor = UIColor(red: 174/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
+        let minusColor = UIColor(red: 203/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
         minusAction.backgroundColor = minusColor
+        minusAction.title = "Minus"
             minusAction.image = UIImage (named:"Minus Button")
         let configurations = UISwipeActionsConfiguration(actions: [minusAction])
         configurations.performsFirstActionWithFullSwipe = true
@@ -321,7 +325,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 
                 self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
             success(true)
-            self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.2)
+            self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.4)
                 // self.attractionsTableView.reloadData()
                 
             })
@@ -432,7 +436,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             deleteRideCheck(rideID: attractionListForTable[indexPath.row].rideID)
             attractionListForTable[indexPath.row].numberOfTimesRidden = 0
             attractionListForTable[indexPath.row].isCheck = false
-            attractionsTableView.reloadData()
+           // attractionsTableView.reloadData()
             
             if (attractionListForTable[indexPath.row]).active == 0 {
                 userNumExtinct -= 1
@@ -451,7 +455,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             let newIncrement = attractionListForTable[indexPath.row].numberOfTimesRidden - 1
             saveIncrementRideCount(rideID:  attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement, postive: false)
             attractionListForTable[indexPath.row].numberOfTimesRidden = newIncrement
-            attractionsTableView.reloadData()
+           // attractionsTableView.reloadData()
         }
     }
     
