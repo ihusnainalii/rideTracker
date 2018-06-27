@@ -524,15 +524,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         if favoiteParkList.count != 0{
             let favoritesIndex = findIndexFavoritesList(parkID: parkID)
-            favoiteParkList[favoritesIndex].totalRides = updatedPark[0].value(forKey: "totalRides") as! Int
-            favoiteParkList[favoritesIndex].ridesRidden = updatedPark[0].value(forKey: "ridesRidden") as! Int
-            favoritesTableView.reloadData()
+            if favoritesIndex != -1{
+                favoiteParkList[favoritesIndex].totalRides = updatedPark[0].value(forKey: "totalRides") as! Int
+                favoiteParkList[favoritesIndex].ridesRidden = updatedPark[0].value(forKey: "ridesRidden") as! Int
+                favoritesTableView.reloadData()
+            }
         }
         allParksTableView.reloadData()
     }
     
     func findIndexFavoritesList(parkID: Int) -> Int{
-        var favoritesIndex = 0
+        var favoritesIndex = -1
         for i in 0..<favoiteParkList.count{
             if favoiteParkList[i].parkID == parkID{
                 favoritesIndex = i
