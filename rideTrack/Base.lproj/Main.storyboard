@@ -742,7 +742,7 @@
                                                     </constraints>
                                                     <state key="normal" title="Button" image="Down Bar"/>
                                                     <connections>
-                                                        <action selector="tapDownBar:" destination="zaz-Kb-2WY" eventType="touchUpInside" id="0aa-ZS-AgA"/>
+                                                        <action selector="tapDownBar:" destination="zaz-Kb-2WY" eventType="touchUpOutside" id="Gnw-FU-wkZ"/>
                                                         <segue destination="u3h-iL-PsR" kind="unwind" unwindAction="unwindToParkListWithSegue:" id="61e-nt-W1B"/>
                                                     </connections>
                                                 </button>

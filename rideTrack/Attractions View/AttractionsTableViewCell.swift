@@ -52,7 +52,7 @@ class AttractionsTableViewCell: UITableViewCell {
         rideCellSquare.layer.shadowRadius = 9
         rideCellSquare.layer.shadowColor = UIColor.black.cgColor
         
-        rideCounterCellWidth.constant = 50
+       // rideCounterCellWidth.constant = 50
 
         // Initialization code
     }

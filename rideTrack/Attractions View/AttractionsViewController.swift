@@ -42,9 +42,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var comeFromDetails = false
     var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
     var parksViewController: ViewController!
+    var animateRow = -1
     
     var widthofCounter: NSLayoutConstraint!
     var plusButton: UIButton!
+    
     let green = UIColor(red: 120.0/255.0, green: 205.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor as CGColor
     var userAttractions: [NSManagedObject] = []
     var userNumExtinct = 0
@@ -60,13 +62,13 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
 
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
         
-        
+        animateRow = -1
         suggestButton.layer.cornerRadius = 7
         let suggestColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
        suggestButton.backgroundColor = suggestColor
-        suggestButton.layer.shadowOpacity = 0.5
+        suggestButton.layer.shadowOpacity = 0.4
         suggestButton.layer.shadowOffset = CGSize.zero
-        suggestButton.layer.shadowRadius = 9
+        suggestButton.layer.shadowRadius = 7
         progressBar.backgroundColor = UIColor.green
         progressBar.transform = progressBar.transform.scaledBy(x: 1, y: 6)
         rectangleView.backgroundColor = UIColor.clear
@@ -228,15 +230,46 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "rideCell", for: indexPath) as! AttractionsTableViewCell
         cell.delegate = self
+        
         let item: AttractionsModel = attractionListForTable[indexPath.row]
         self.widthofCounter = cell.rideCounterCellWidth
-        if attractionListForTable[indexPath.row].numberOfTimesRidden == 0 {
-            self.widthofCounter.constant = 50
-        }
-        else{
-            self.widthofCounter.constant = 80
-        }
         self.plusButton = cell.plusButtonIncrement
+        
+        rideCellSquare = cell.rideCellSquare
+        if animateRow == indexPath.row { //animates cells here!!!
+            if attractionListForTable[indexPath.row].numberOfTimesRidden == 0 {
+                self.widthofCounter.constant = 80
+                UIView.animate(withDuration: 0.3, animations: { //Animate Here
+                    // self.plusButton.isHidden = true
+                    self.widthofCounter.constant -= 30
+                    self.view.layoutIfNeeded()
+                }, completion: nil)
+            }
+            else{
+                self.widthofCounter.constant = 50
+                UIView.animate(withDuration: 0.4, animations: { //Animate Here
+                    // self.plusButton.isHidden = true
+                    self.widthofCounter.constant += 30
+                    self.view.layoutIfNeeded()
+                }, completion: nil)
+            }
+        }
+        else {
+           // print ("We got here")
+            if attractionListForTable[indexPath.row].numberOfTimesRidden == 0 {
+                self.widthofCounter.constant = 50
+            }
+            else if attractionListForTable[indexPath.row].numberOfTimesRidden >= 100 {
+                self.widthofCounter.constant = 110
+            }
+            else if attractionListForTable[indexPath.row].numberOfTimesRidden >= 10 {
+                self.widthofCounter.constant = 95
+            }
+            else{
+                self.widthofCounter.constant = 80
+            }
+            
+        }
         if attractionListForTable.count != 1{
             if ((attractionListForTable[indexPath.row]).isCheck){
                 cell.rideName?.textColor = UIColor.black //used to turn green***
@@ -266,8 +299,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             //                if ignore[i] == attractionListForTable[indexPath.row].rideID{
             if attractionListForTable[indexPath.row].isIgnored {
                 cell.rideName?.textColor = UIColor.gray
+                cell.addRideButton.setImage(UIImage(named: "Ignore Button"), for: .normal)
                 cell.addRideButton.isEnabled = false
-                cell.addRideButton.isOpaque = true
+               // cell.addRideButton.isOpaque = true
                 attractionListForTable[indexPath.row].isIgnored = true
                 //break
             }
@@ -279,8 +313,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 else{
                     cell.rideName?.textColor = UIColor.black
                 }
+                cell.addRideButton.setImage(UIImage(named: "Check Button"), for: .normal)
                 cell.addRideButton.isEnabled = true
-                cell.addRideButton.isOpaque = false
+                //cell.addRideButton.isOpaque = false
             }
             //  }
         }
@@ -412,21 +447,18 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             if (self.attractionListForTable[indexPath.row]).active == 0{
                 self.userNumExtinct += 1
             }
-            print ("Animate here!")
-            //self.CounterCellWidth.constant = 80
-            
-            UIView.animate(withDuration: 1, animations: {
-                self.plusButton.isHidden = true
-                self.widthofCounter.constant = 80
-                self.view.layoutIfNeeded()
-            })
-            
+            self.animateRow = indexPath.row //animate here!
+           // self.attractionsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+
+            //let indexPathVar = IndexPath(item: indexPath.row, section: 0)
+            //self.attractionsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+           // self.prepareToAnimate = false
             self.userRidesRidden += 1
             print ("you have been on this many rides: ", self.userRidesRidden)
             
             //UPDATE RIDES BEEN ON
             self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
-           
+            
             self.extinctComplete = String (self.userNumExtinct)
             // self.extinctComplete += "/"
             // self.extinctComplete += String (self.totalNumExtinct)
@@ -443,7 +475,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         alertController.addAction(cancelAction)
         // Present Dialog message
         self.present(alertController, animated: true, completion:nil)
-        
+
         
     }
     
@@ -457,13 +489,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             attractionListForTable[indexPath.row].numberOfTimesRidden = 0
             attractionListForTable[indexPath.row].isCheck = false
 
-            print ("Animate here")
-            UIView.animate(withDuration: 1, animations: {
-                self.plusButton.isHidden = false
-                self.widthofCounter.constant = 50
-                self.view.layoutIfNeeded()
-            })
-    
+            self.animateRow = indexPath.row    //"Animate here")
+            //self.attractionsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+            
             if (attractionListForTable[indexPath.row]).active == 0 {
                 userNumExtinct -= 1
             }
@@ -471,7 +499,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             //UPDATE RIDES BEEN ON
             
             self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
-            
+
             self.extinctComplete = String (self.userNumExtinct)
             //  self.extinctComplete += "/"
             //  self.extinctComplete += String (self.totalNumExtinct)
@@ -775,6 +803,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         print ("tap to leave")
         parksViewController.unwindFromAttractions(parkID: parkID)
     }
+   
+//    @IBAction func tapDownBar(_ sender: Any) {
+//        print ("tap to leave")
+//        parksViewController.unwindFromAttractions(parkID: parkID)
+//    }
     
     
      // MARK: - UI Design
