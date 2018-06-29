@@ -462,8 +462,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            let latitude = location.coordinate.latitude
-            let longitude = location.coordinate.longitude
+            var latitude = location.coordinate.latitude
+            var longitude = location.coordinate.longitude
             var oneMileParks = [ParksModel]()
             
             //Simulate you are at Epcot
@@ -471,8 +471,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             //            longitude = -81.5495
             
             //Simulate you are in Magic Kingdom
-//            latitude = 28.4161
-//            longitude = -81.5811
+            latitude = 28.4161
+            longitude = -81.5811
             
             let currentLocation = CLLocation(latitude: latitude, longitude: longitude)
             for i in 0..<arrayOfAllParks.count{
@@ -496,21 +496,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 }
                 print("Closest park is \(closestPark.name!)")
                 
-                UIView.animate(withDuration: 1.0, animations: {
-                    self.currentLocationParkNameLabel.text = self.closestPark.name!
-                })
-
+                self.currentLocationParkNameLabel.text = self.closestPark.name!
+                self.view.layoutIfNeeded()
                 //Begin animating the UI with the new current location park
                 self.searchRideButtonHeightConstraint.constant = 50
                 self.currentLocationViewBottomConstraint.constant = -4
+
                 UIView.animate(withDuration: 0.6, animations: {
                     self.view.layoutIfNeeded()
-
                 })
             }
         }
     }
     
+
     @IBAction func showCurrentlLocationPark(_ sender: Any) {
         
         if checkIfNewPark(newPark: closestPark){
