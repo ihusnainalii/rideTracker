@@ -38,7 +38,6 @@ class AttractionsDetailsViewController: UIViewController {
     
     @IBOutlet weak var detailViewHeight: NSLayoutConstraint!
     @IBOutlet weak var userDatesView: UIView!
-    @IBOutlet weak var downBar: UIButton!
     @IBOutlet weak var detailsView: UIView!
     @IBOutlet weak var OverlayView: UIView!
     var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
@@ -49,7 +48,6 @@ class AttractionsDetailsViewController: UIViewController {
         super.viewDidLoad()
         OverlayView.layer.cornerRadius = 10.0
 
-        downBar.setImage(UIImage(named: "Down Bar"), for: .normal)
         
         modifyDatePicker.maximumDate = Date()
         scoreCardButton.isHidden = true
@@ -162,6 +160,13 @@ class AttractionsDetailsViewController: UIViewController {
         }, completion: nil)
     }
     
+    @IBAction func pressDownBar(_ sender: Any) {
+        UIView.animate(withDuration: 0.2, animations: { //Animate Here
+            self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0)
+            // self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
     @IBAction func didSaveModifyDate(_ sender: Any) {
         modifyDateView.isHidden = true
         dateModifyButton.isEnabled = true
@@ -226,7 +231,6 @@ class AttractionsDetailsViewController: UIViewController {
         }
         else if sender.state == UIGestureRecognizerState.changed {
             if touchPoint.y - initialToucnPoint.y > 0 {
-                self.downBar.setImage(UIImage(named: "Flat Bar"), for: .normal)
                 self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
                 UIView.animate(withDuration: 0.2, animations: { //Animate Here
                     self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0)
@@ -240,7 +244,6 @@ class AttractionsDetailsViewController: UIViewController {
                
             } else {
                 UIView.animate(withDuration: 0.3, animations: {
-                    self.downBar.setImage(UIImage(named: "Down Bar"), for: .normal)
                     self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
                     UIView.animate(withDuration: 0.2, animations: { //Animate Here
                         self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0.3)

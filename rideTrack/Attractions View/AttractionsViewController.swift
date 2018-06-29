@@ -389,7 +389,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
     
     func attractionsTableViewCellDidTapAddRide(_ sender: AttractionsTableViewCell) {
         guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
