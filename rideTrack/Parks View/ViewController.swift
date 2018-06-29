@@ -25,7 +25,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var navigationBar: UIView!
     @IBOutlet weak var addParkButton: UIButton!
     @IBOutlet weak var searchParkView: UIView!
+    @IBOutlet weak var viewAttractionLocationButton: UIButton!
+    @IBOutlet weak var currentLocationViewBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var searchRideButtonHeightConstraint: NSLayoutConstraint!
     
     var selectedPark: ParksModel = ParksModel()
     var segueWithTableViewSelect = true
@@ -42,18 +45,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var locationManager: CLLocationManager = CLLocationManager()
     var closestPark = ParksModel()
     let parksCoreData = ParkCoreData()
-    
+    let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     
     override func viewDidLoad() {
         
         //Initialize current location UI
-        currentLocationView.frame = CGRect(x: 0, y: Int(screenSize.height + 100), width: Int(screenSize.width), height: 100)
         currentLocationView.layer.shadowOffset = CGSize.zero
         currentLocationView.layer.shadowRadius = 5
         currentLocationView.layer.shadowOpacity = 0.3
         currentLocationView.layer.cornerRadius = 10
+        currentLocationViewBottomConstraint.constant = -61
         
-        let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
+        viewAttractionLocationButton.backgroundColor = settingsColor
+        viewAttractionLocationButton.layer.cornerRadius = 7
+        viewAttractionLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        
+        
         settingsButton.backgroundColor = settingsColor
         settingsButton.layer.cornerRadius = 7
         settingsButton.titleLabel?.adjustsFontSizeToFitWidth = true
@@ -125,6 +132,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
+        
+        //Returns the number of total rides in the park, for the fraction view
         if returnPath == "countNumberOfRides"{
             var totalRideCount = 0
             let arrayOfAllRides = items as! [AttractionsModel]
@@ -150,6 +159,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             }
             
         }
+            
+        //Gets all the parks from the database, sets up the favoritesList and allMyParksList
         else{
             arrayOfAllParks = items as! [ParksModel]
             var userParkListIncrementor = 0
@@ -182,6 +193,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             favoritesTableView.reloadData()
             allParksTableView.reloadData()
             
+            
             locationManager.delegate = self
             locationManager.requestWhenInUseAuthorization()
             locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
@@ -204,6 +216,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //Sets up favoites table
         if tableView == self.favoritesTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "favoriteCell", for: indexPath) as! FavoritesTableViewCell
             let parkData = favoiteParkList[indexPath.row]
@@ -226,6 +239,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             
             return cell
         }
+            
+        //sets up all parks table
         else{
             let cell = tableView.dequeueReusableCell(withIdentifier: "allCell", for: indexPath) as! AllParksTableViewCell
             let parkData = allParksList[indexPath.row]
@@ -257,6 +272,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
+        //Add/remove ride to favorites list
         let favoriteAction = UIContextualAction(style: .normal, title:  "Favorites", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             if tableView == self.favoritesTableView {
                 let index = self.findIndexInAllParksList(parkID: self.favoiteParkList[indexPath.row].parkID)
@@ -289,7 +305,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         return configuration
     }
     
-    
+    //Remove park from list (only allowed to do this from all parks list)
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let removeAction = UIContextualAction(style: .destructive, title:  "removePark", handler: { (ac:UIContextualAction, view:UIView, success:@escaping (Bool) -> Void) in
             let deleteAlertController = UIAlertController(title: "Delete Park", message: "Are you sure you want to remove this park from your list? This will remove all assosicated park data along with it, including all rides checked off, the number of times each ride has been ridden, and the dates you rode each ride", preferredStyle: .alert)
@@ -317,6 +333,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         
     }
+    
     
     func addNewParkToList(newPark: ParksModel) {
         if checkIfNewPark(newPark: newPark){
@@ -362,12 +379,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         if segue.identifier == "toAttractionsAll" || segue.identifier == "toAttractionsFavorites"{
             //Re write this to simplify calling RideTrack coreData only here, while going to Attractions view
             let attractionVC = segue.destination as! AttractionsViewController
-            
+            print("SEGUE")
             if segueWithTableViewSelect && segue.identifier == "toAttractionsAll"{
                 let selectedIndex = (allParksTableView.indexPathForSelectedRow?.row)!
                 selectedPark = allParksList[selectedIndex]
                 print ("going to attractions")
-            } else{
+            } else if segueWithTableViewSelect && segue.identifier == "toAttractionsFavorites"{
                 let selectedIndex = (favoritesTableView.indexPathForSelectedRow?.row)!
                 selectedPark = favoiteParkList[selectedIndex]
             }
@@ -409,6 +426,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         if segue.identifier == "toSearch"{
             let searchVC = segue.destination as! ParkSearchViewController
             searchVC.parkArray = arrayOfAllParks as NSArray
+            
         }
         if segue.identifier == "toSettings"{
             let settingVC = segue.destination as! SettingsViewController
@@ -426,7 +444,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             addNewParkToList(newPark: newPark)
         }
         else if segue.source is AttractionsViewController{
-            print("Back from attractions")
+            print("DO NOT USE THIS, IT WILL NOT UPDATE THE FRACTIONS. INSTEAD CALL THE UNWIND METHOD")
+           
 
         }
     }
@@ -443,8 +462,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            var latitude = location.coordinate.latitude
-            var longitude = location.coordinate.longitude
+            let latitude = location.coordinate.latitude
+            let longitude = location.coordinate.longitude
             var oneMileParks = [ParksModel]()
             
             //Simulate you are at Epcot
@@ -477,23 +496,33 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 }
                 print("Closest park is \(closestPark.name!)")
                 
-                //Begin animating the UI with the new current location park
-                currentLocationParkNameLabel.text = closestPark.name!
-                UIView.animate(withDuration: 0.6, animations: {
-                    self.currentLocationView.frame = CGRect(x: 0, y: Int(self.screenSize.height - 100), width: Int(self.screenSize.width), height: 100)
+                UIView.animate(withDuration: 1.0, animations: {
+                    self.currentLocationParkNameLabel.text = self.closestPark.name!
                 })
-                
+
+                //Begin animating the UI with the new current location park
+                self.searchRideButtonHeightConstraint.constant = 50
+                self.currentLocationViewBottomConstraint.constant = -4
+                UIView.animate(withDuration: 0.6, animations: {
+                    self.view.layoutIfNeeded()
+
+                })
             }
         }
     }
     
     @IBAction func showCurrentlLocationPark(_ sender: Any) {
+        
         if checkIfNewPark(newPark: closestPark){
+            print("new park")
             addNewParkToList(newPark: closestPark)
+        } else{
+            print("old")
         }
+        
         segueWithTableViewSelect = false
         selectedPark = closestPark
-        performSegue(withIdentifier: "toAttractions", sender: nil)
+        performSegue(withIdentifier: "toAttractionsAll", sender: nil)
     }
     
     

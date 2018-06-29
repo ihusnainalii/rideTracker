@@ -49,7 +49,12 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "scoreCell", for: indexPath) as! ScoreCardTableViewCell
         cell.dateLabel.text = dateFormatter(date: scoreCard[indexPath.row].date)
-        cell.scoreLabel.text = String(scoreCard[indexPath.row].score)
+        
+        //Formate score with commas
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = NumberFormatter.Style.decimal
+        cell.scoreLabel.text = numberFormatter.string(from: NSNumber(value:scoreCard[indexPath.row].score))
+        
         return cell
     }
     
@@ -108,7 +113,12 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
                 highScore = scoreCard[i].score
             }
         }
-        highScoreLabel.text = "High score: \(highScore)"
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = NumberFormatter.Style.decimal
+        highScoreLabel.text = "High score: \(String(describing: numberFormatter.string(from: NSNumber(value:highScore))!))"
+        
+        
     }
     
     func getScoreCardData(){

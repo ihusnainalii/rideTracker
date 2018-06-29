@@ -430,57 +430,45 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     func attractionsTableViewCellDidTapAddRide(_ sender: AttractionsTableViewCell) {
         guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
         
-        let alertController = UIAlertController(title: "Add Attraction", message: "Are you sure you want to add this attraction to your list?", preferredStyle: .alert)
+        // Code in this block will trigger when OK button tapped.
+        print ("Seclected Attraction is: ", (self.attractionListForTable[indexPath.row]).rideID)
         
-        // Create OK button
-        let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
-            // Code in this block will trigger when OK button tapped.
-            print ("Seclected Attraction is: ", (self.attractionListForTable[indexPath.row]).rideID)
-            
-            (self.attractionListForTable[indexPath.row]).isCheck = true
-            self.attractionListForTable[indexPath.row].numberOfTimesRidden = 1
-            self.attractionListForTable[indexPath.row].dateFirstRidden = Date()
-            self.attractionListForTable[indexPath.row].dateLastRidden = Date()
-            self.saveUserCheckOffNewRide(parkID: self.parkID, rideID: (self.attractionListForTable[indexPath.row]).rideID);
-            self.attractionsTableView.reloadData()
-            
-            if (self.attractionListForTable[indexPath.row]).active == 0{
-                self.userNumExtinct += 1
-            }
-            self.animateRow = indexPath.row //animate here!
-           // self.attractionsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
-
-            //let indexPathVar = IndexPath(item: indexPath.row, section: 0)
-            //self.attractionsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-           // self.prepareToAnimate = false
-            self.userRidesRidden += 1
-            print ("you have been on this many rides: ", self.userRidesRidden)
-            
-            //UPDATE RIDES BEEN ON
-            self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
-            
-            self.extinctComplete = String (self.userNumExtinct)
-            // self.extinctComplete += "/"
-            // self.extinctComplete += String (self.totalNumExtinct)
-            self.extinctText.text = self.extinctComplete
-            
-            if self.attractionListForTable[indexPath.row].hasScoreCard == 1{
-                self.addScoreToCard(selectedRide: self.attractionListForTable[indexPath.row])
-            }
+        (self.attractionListForTable[indexPath.row]).isCheck = true
+        self.attractionListForTable[indexPath.row].numberOfTimesRidden = 1
+        self.attractionListForTable[indexPath.row].dateFirstRidden = Date()
+        self.attractionListForTable[indexPath.row].dateLastRidden = Date()
+        self.saveUserCheckOffNewRide(parkID: self.parkID, rideID: (self.attractionListForTable[indexPath.row]).rideID);
+        self.attractionsTableView.reloadData()
+        
+        if (self.attractionListForTable[indexPath.row]).active == 0{
+            self.userNumExtinct += 1
         }
-        alertController.addAction(OKAction)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
-            print("Cancel button tapped");
+        self.animateRow = indexPath.row //animate here!
+        // self.attractionsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+        
+        //let indexPathVar = IndexPath(item: indexPath.row, section: 0)
+        //self.attractionsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+        // self.prepareToAnimate = false
+        self.userRidesRidden += 1
+        print ("you have been on this many rides: ", self.userRidesRidden)
+        
+        //UPDATE RIDES BEEN ON
+        self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
+        
+        self.extinctComplete = String (self.userNumExtinct)
+        // self.extinctComplete += "/"
+        // self.extinctComplete += String (self.totalNumExtinct)
+        self.extinctText.text = self.extinctComplete
+        
+        if self.attractionListForTable[indexPath.row].hasScoreCard == 1{
+            self.addScoreToCard(selectedRide: self.attractionListForTable[indexPath.row])
         }
-        alertController.addAction(cancelAction)
-        // Present Dialog message
-        self.present(alertController, animated: true, completion:nil)
-
+        
         
     }
     
     func attractionCellNegativeIncrement (indexPath: IndexPath) { //(_ sender: AttractionsTableViewCell)
-      //  guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
+        //  guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
         print("Minus")
         
         if attractionListForTable[indexPath.row].numberOfTimesRidden == 1{
@@ -488,7 +476,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             deleteRideCheck(rideID: attractionListForTable[indexPath.row].rideID)
             attractionListForTable[indexPath.row].numberOfTimesRidden = 0
             attractionListForTable[indexPath.row].isCheck = false
-
+            
             self.animateRow = indexPath.row    //"Animate here")
             //self.attractionsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
             
@@ -499,7 +487,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             //UPDATE RIDES BEEN ON
             
             self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
-
+            
             self.extinctComplete = String (self.userNumExtinct)
             //  self.extinctComplete += "/"
             //  self.extinctComplete += String (self.totalNumExtinct)
@@ -509,9 +497,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             let newIncrement = attractionListForTable[indexPath.row].numberOfTimesRidden - 1
             saveIncrementRideCount(rideID:  attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement, postive: false)
             attractionListForTable[indexPath.row].numberOfTimesRidden = newIncrement
-           // attractionsTableView.reloadData()
+            // attractionsTableView.reloadData()
         }
     }
+    
+    
     
     func attractionCellPositiveIncrement(_ sender: AttractionsTableViewCell) {
         print("plus")
@@ -802,6 +792,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBAction func tapDownBar(_ sender: Any) {
         print ("tap to leave")
         parksViewController.unwindFromAttractions(parkID: parkID)
+        self.dismiss(animated: true, completion: nil)
     }
    
 //    @IBAction func tapDownBar(_ sender: Any) {

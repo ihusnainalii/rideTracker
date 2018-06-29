@@ -20,49 +20,87 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     
     @IBOutlet weak var searchTextFeild: UITextField!
     @IBOutlet weak var resultsTableView: UITableView!
+    @IBOutlet weak var blurBackgroundView: UIVisualEffectView!
+    @IBOutlet weak var searchView: UIView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        blurBackgroundView.layer.cornerRadius = 10
         searchTextFeild.becomeFirstResponder()
+        searchedParksList.addObjects(from: parkArray as! [Any])
         self.searchTextFeild.delegate = self
         self.resultsTableView.delegate = self
         // Do any additional setup after loading the view.
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+   
+    @IBAction func didUpdateText(_ sender: Any) {
         searchedParksList.removeAllObjects()
-        print(parkArray.count)
         for i in 0..<parkArray.count {
             park = parkArray[i] as! ParksModel
             firstEntry = true
             if (park.name.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil){
-                print("name match! \(park.name!) ")
                 searchedParksList.add(park)
                 firstEntry = false
             }
-//            if park.city.caseInsensitiveCompare(searchTextFeild.text!) == ComparisonResult.orderedSame{
-//                print("Match! \(park.name) ")
-//                searchedParksList.add(park)
-//            }
+            //            if park.city.caseInsensitiveCompare(searchTextFeild.text!) == ComparisonResult.orderedSame{
+            //                print("Match! \(park.name) ")
+            //                searchedParksList.add(park)
+            //            }
             
             //Not allow you to add duplicates
             if (park.city.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil) && firstEntry{
-                print("state/city match! \(park.name!) ")
                 searchedParksList.add(park)
                 firstEntry = false
             }
             if (park.country.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil) && firstEntry{
-                print("country match! \(park.name!) ")
                 searchedParksList.add(park)
                 firstEntry = false
             }
         }
-        print(searchedParksList.count)
         self.resultsTableView.reloadData()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
+    
+    
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        searchedParksList.removeAllObjects()
+//        print(parkArray.count)
+//        for i in 0..<parkArray.count {
+//            park = parkArray[i] as! ParksModel
+//            firstEntry = true
+//            if (park.name.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil){
+//                print("name match! \(park.name!) ")
+//                searchedParksList.add(park)
+//                firstEntry = false
+//            }
+////            if park.city.caseInsensitiveCompare(searchTextFeild.text!) == ComparisonResult.orderedSame{
+////                print("Match! \(park.name) ")
+////                searchedParksList.add(park)
+////            }
+//
+//            //Not allow you to add duplicates
+//            if (park.city.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil) && firstEntry{
+//                print("state/city match! \(park.name!) ")
+//                searchedParksList.add(park)
+//                firstEntry = false
+//            }
+//            if (park.country.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil) && firstEntry{
+//                print("country match! \(park.name!) ")
+//                searchedParksList.add(park)
+//                firstEntry = false
+//            }
+//        }
+//        print(searchedParksList.count)
+//        self.resultsTableView.reloadData()
+//        self.view.endEditing(true)
+//        return false
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
