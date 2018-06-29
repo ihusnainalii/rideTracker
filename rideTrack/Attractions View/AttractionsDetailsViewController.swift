@@ -21,8 +21,7 @@ class AttractionsDetailsViewController: UIViewController {
     var userAttractionDatabase: [UserAttractionProvider]!
     var titleName = ""
 
-
-    //let favorites = favList.array(forKey: "SavedIntArray")  as? [Int] ?? [Int]()
+    let greyColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     
     @IBOutlet weak var dateModifyButton: UIButton!
     @IBOutlet weak var CurrentlyOpenLabel: UILabel!
@@ -31,21 +30,36 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var yearOpenLabel: UITextField!
     @IBOutlet weak var yearCloseText: UILabel!
     @IBOutlet weak var attractiontype: UITextField!
-    @IBOutlet weak var favButton: UIButton!
     @IBOutlet weak var dateFirstRiddenLabel: UILabel!
     @IBOutlet weak var dateLastRiddenLabel: UILabel!
     @IBOutlet weak var modifyDateView: UIView!
     @IBOutlet weak var modifyDatePicker: UIDatePicker!
     @IBOutlet weak var scoreCardButton: UIButton!
     
+    @IBOutlet weak var detailViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var userDatesView: UIView!
+    @IBOutlet weak var downBar: UIButton!
+    @IBOutlet weak var detailsView: UIView!
+    @IBOutlet weak var OverlayView: UIView!
+    var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
+    @IBOutlet weak var darkenLayer: UIView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let savedFavorite = favList.array(forKey: "SavedIntArray")  as? [Int] ?? [Int]()
+        OverlayView.layer.cornerRadius = 10.0
+
+        downBar.setImage(UIImage(named: "Down Bar"), for: .normal)
         
         modifyDatePicker.maximumDate = Date()
         scoreCardButton.isHidden = true
+        scoreCardButton.backgroundColor = greyColor
+        scoreCardButton.layer.cornerRadius = 6.0
         
+        dateModifyButton.layer.cornerRadius = 5.0
+        dateModifyButton.backgroundColor = UIColor.lightGray
+        userDatesView.backgroundColor = greyColor
+        userDatesView.layer.cornerRadius = 10.0
         rideNameLabel.text = selectedRide.name
         if selectedRide.yearOpen == 0{
             yearOpenLabel.text = "Unknown"
@@ -64,7 +78,8 @@ class AttractionsDetailsViewController: UIViewController {
         }
         if selectedRide.isCheck{
             dateFirstRiddenLabel.text = dateFormatter(date: selectedRide.dateFirstRidden)
-            
+            userDatesView.isHidden = false
+
             //Do not show last ride if the user has only ridden the ride once
             if selectedRide.numberOfTimesRidden > 1{
                 dateLastRiddenLabel.text = dateFormatter(date: selectedRide.dateLastRidden)
@@ -77,6 +92,7 @@ class AttractionsDetailsViewController: UIViewController {
             dateFirstRiddenLabel.isHidden = true
             dateLastRiddenLabel.isHidden = true
             dateModifyButton.isHidden = true
+            userDatesView.isHidden = true
         }
         
         if selectedRide.hasScoreCard == 1{
@@ -117,17 +133,17 @@ class AttractionsDetailsViewController: UIViewController {
             attractiontype.isHidden = true
         }
         attractiontype.text = typeString
-        print ("Printing favorite rides")
-        for i in 0..<savedFavorite.count{
-            print (savedFavorite [i])
-            if savedFavorite[i] == selectedRide.rideID {
-                print("this is a favorite")
-                isFavorite = true
-                favButton.setTitleColor(UIColor.yellow, for: .normal)
-            }
-            favorites.append(savedFavorite[i])
-        }
+
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        UIView.animate(withDuration: 0.7, animations: { //Animate Here
+            self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+           // self.view.layoutIfNeeded()
+        }, completion: nil)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -135,39 +151,29 @@ class AttractionsDetailsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func favButtonToggled(_ sender: Any) {
-        if isFavorite == false{
-            favButton.setTitleColor(UIColor.yellow, for: .normal)
-            isFavorite = true
-            print ("Adding ride ID to fav list: ", selectedRide.rideID)
-            favorites.append(selectedRide.rideID)
-            
-        }
-        else {
-            for i in 0..<favorites.count{
-                if favorites[i] == selectedRide.rideID {
-                    print("Deleting from list: ", selectedRide.rideID)
-                    favorites.remove(at: i)
-                    break
-                }
-            }
-            //favorites.remove(at: rideID)
-            favButton.setTitleColor(UIColor.black, for: .normal)
-            isFavorite = false
-        }
-        favList.set(favorites, forKey: "SavedIntArray")
-    }
-    
     @IBAction func didPressModifyDate(_ sender: Any) {
         modifyDateView.isHidden = false
+        dateModifyButton.isEnabled = false
         modifyDatePicker.setDate(selectedRide.dateFirstRidden, animated: false)
+        UIView.animate(withDuration: 0.3, animations: { //Animate Here
+            self.detailViewHeight.constant += 130
+            self.detailsView.frame.origin.y -= 10
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
     
     @IBAction func didSaveModifyDate(_ sender: Any) {
         modifyDateView.isHidden = true
+        dateModifyButton.isEnabled = true
         dateFirstRiddenLabel.text = dateFormatter(date: modifyDatePicker.date)
         selectedRide.dateFirstRidden = modifyDatePicker.date
         saveModifyFirstRideDate(rideID: selectedRide.rideID, firstRideDate: modifyDatePicker.date)
+        UIView.animate(withDuration: 0.3, animations: { //Animate Here
+            self.detailViewHeight.constant -= 130
+            self.detailsView.frame.origin.y += 10
+
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
     
     func saveModifyFirstRideDate(rideID: Int, firstRideDate: Date){
@@ -196,10 +202,55 @@ class AttractionsDetailsViewController: UIViewController {
         //let date = Date(timeIntervalSince1970: Double (timeToFormat))
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "MMMM d, yyyy h:mm" //Specify your format that you want
+        dateFormatter.dateFormat = "MMMM d, yyyy" //took off  h:mm Specify your format that you want
         let strDate = dateFormatter.string(from: date)
         return strDate
     }
+    
+    @IBAction func tapToExit(_ sender: UITapGestureRecognizer) {
+        print ("Tap")
+        UIView.animate(withDuration: 0.2, animations: { //Animate Here
+            print ("Animating")
+            self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0)
+            // self.view.layoutIfNeeded()
+        }, completion: nil)
+         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func panToExit(_ sender: UIPanGestureRecognizer) {
+        let touchPoint = (sender as AnyObject).location(in: self.view?.window)
+        
+        if (sender as AnyObject).state == UIGestureRecognizerState.began{
+            initialToucnPoint = touchPoint
+            
+        }
+        else if sender.state == UIGestureRecognizerState.changed {
+            if touchPoint.y - initialToucnPoint.y > 0 {
+                self.downBar.setImage(UIImage(named: "Flat Bar"), for: .normal)
+                self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
+                UIView.animate(withDuration: 0.2, animations: { //Animate Here
+                    self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0)
+                    // self.view.layoutIfNeeded()
+                }, completion: nil)
+            }
+        }
+        else if sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled {
+            if touchPoint.y - initialToucnPoint.y > 100 {
+                self.dismiss(animated: true, completion: nil)
+               
+            } else {
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.downBar.setImage(UIImage(named: "Down Bar"), for: .normal)
+                    self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+                    UIView.animate(withDuration: 0.2, animations: { //Animate Here
+                        self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+                        // self.view.layoutIfNeeded()
+                    }, completion: nil)
+                })
+            }
+        }
+    }
+
     
     
      // MARK: - Navigation
