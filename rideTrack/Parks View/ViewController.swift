@@ -269,7 +269,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         //Add/remove ride to favorites list
@@ -279,16 +278,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 self.allParksList[index].favorite = false
                 self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[index], add: false)
                 self.favoiteParkList.remove(at: indexPath.row)
+                self.favoritesTableView.deleteRows(at: [indexPath], with: .left)
             } else{
                 //Only add if it isn't already a favorite
                 if !self.allParksList[indexPath.row].favorite{
                     self.allParksList[indexPath.row].favorite = true
-                    self.favoiteParkList.append(self.allParksList[indexPath.row])
                     self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[indexPath.row], add: true)
+                    
+                    self.favoritesTableView.beginUpdates()
+                    self.favoiteParkList.append(self.allParksList[indexPath.row])
+                    let indexPath:IndexPath = IndexPath(row:(self.favoiteParkList.count - 1), section:0)
+                    self.favoritesTableView.insertRows(at: [indexPath], with: .automatic)
+                    self.favoritesTableView.endUpdates()
+                    
                 }
+                
             }
             success(true)
-            self.favoritesTableView.perform(#selector(self.favoritesTableView.reloadData), with: nil, afterDelay: 0.3)
         })
         
         if tableView == self.favoritesTableView {
@@ -312,8 +318,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) -> Void in
                 success(true)
                 self.removeParkFromList(parkID: self.allParksList[indexPath.row].parkID, indexPath: indexPath.row)
-                self.favoritesTableView.reloadData()
-                self.allParksTableView.reloadData()
             }
             let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
                 success(false)
@@ -368,6 +372,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         for i in 0..<favoiteParkList.count{
             if favoiteParkList[i].parkID == parkID{
                 favoiteParkList.remove(at: i)
+                favoritesTableView.deleteRows(at: [IndexPath(row: i, section: 0)], with: .left)
                 break
             }
         }
@@ -471,8 +476,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             //            longitude = -81.5495
             
             //Simulate you are in Magic Kingdom
-            latitude = 28.4161
-            longitude = -81.5811
+//            latitude = 28.4161
+//            longitude = -81.5811
             
             let currentLocation = CLLocation(latitude: latitude, longitude: longitude)
             for i in 0..<arrayOfAllParks.count{
