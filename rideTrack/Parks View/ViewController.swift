@@ -14,6 +14,9 @@ import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, NSFetchedResultsControllerDelegate{
     
+    let screenSize = UIScreen.main.bounds
+
+    
     @IBOutlet weak var favoritesTableView: UITableView!
     @IBOutlet weak var allParksTableView: UITableView!
     @IBOutlet weak var currentLocationView: UIView!
@@ -26,9 +29,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var addParkButton: UIButton!
     @IBOutlet weak var searchParkView: UIView!
     @IBOutlet weak var viewAttractionLocationButton: UIButton!
-    @IBOutlet weak var currentLocationViewBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var addParkHeightConstrant: NSLayoutConstraint!
+    @IBOutlet weak var currentLocationViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var searchRideButtonHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var favoritesViewHeightConstrant: NSLayoutConstraint!
+    var favoitesHeight: CGFloat = 190.0
     
     var selectedPark: ParksModel = ParksModel()
     var segueWithTableViewSelect = true
@@ -41,13 +47,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     var showExtinct = UserDefaults.standard.integer(forKey: "showExtinct")
     
-    let screenSize = UIScreen.main.bounds
-    var locationManager: CLLocationManager = CLLocationManager()
+        var locationManager: CLLocationManager = CLLocationManager()
     var closestPark = ParksModel()
     let parksCoreData = ParkCoreData()
     let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     
     override func viewDidLoad() {
+        
+        print(screenSize.width)
+        
+        //If iPhone 5s
+        if screenSize.width == 320.0{
+            favoitesHeight = 150.0
+            addParkHeightConstrant.constant = 55
+        }
+        
+        
+        print(favoitesHeight)
+        
         
         //Initialize current location UI
         currentLocationView.layer.shadowOffset = CGSize.zero
@@ -186,6 +203,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 } while userParkListIncrementor < savedParkList.count
             }
             
+            var allParksViewTableAlpha: CGFloat = 1.0
+            var favoritesTableAlpha: CGFloat = 1.0
+
+            if favoiteParkList.count == 0{
+                favoritesViewHeightConstrant.constant = 70
+                favoritesTableAlpha = 0.0
+            }
+            if allParksList.count == 0{
+                allParksViewTableAlpha = 0.0
+            }
+            UIView.animate(withDuration: 0.6, animations: {
+                self.favoritesTableView.alpha = favoritesTableAlpha
+                self.allParksTableView.alpha = allParksViewTableAlpha
+                self.view.layoutIfNeeded()
+            })
             
             allParksList.sort { $0.name < $1.name }
             favoiteParkList.sort { $0.name < $1.name }
@@ -278,6 +310,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 self.allParksList[index].favorite = false
                 self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[index], add: false)
                 self.favoiteParkList.remove(at: indexPath.row)
+                
+                //Animate away favorites view to dissappear if the last park is being removed from the list
+                if self.favoiteParkList.count == 0{
+                    //Need to get this value to work for all devices
+                    self.favoritesViewHeightConstrant.constant = 70
+                    UIView.animate(withDuration: 0.6, animations: {
+                        self.favoritesTableView.alpha = 0.0
+                        self.view.layoutIfNeeded()
+                    })
+                }
+                
+                
                 self.favoritesTableView.deleteRows(at: [indexPath], with: .left)
             } else{
                 //Only add if it isn't already a favorite
@@ -285,6 +329,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                     self.allParksList[indexPath.row].favorite = true
                     self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[indexPath.row], add: true)
                     
+                    //Animate the favorites view to appear if the first park is being added to the list
+                    if self.favoiteParkList.count == 0{
+                        //Need to get this value to work for all devices
+                        self.favoritesViewHeightConstrant.constant = self.favoitesHeight
+                        UIView.animate(withDuration: 0.6, animations: {
+                            self.favoritesTableView.alpha = 1.0
+                            self.view.layoutIfNeeded()
+                        })
+                    }
+   
                     self.favoritesTableView.beginUpdates()
                     self.favoiteParkList.append(self.allParksList[indexPath.row])
                     let indexPath:IndexPath = IndexPath(row:(self.favoiteParkList.count - 1), section:0)
@@ -300,6 +354,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         if tableView == self.favoritesTableView {
             favoriteAction.title = "Remove from favorites"
         } else{
+            print("INDEX PATH ", indexPath.row)
             if allParksList[indexPath.row].favorite{
                 favoriteAction.title = "Already a favorite"
             }else{
@@ -317,7 +372,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let deleteAlertController = UIAlertController(title: "Delete Park", message: "Are you sure you want to remove this park from your list? This will remove all assosicated park data along with it, including all rides checked off, the number of times each ride has been ridden, and the dates you rode each ride", preferredStyle: .alert)
             let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) -> Void in
                 success(true)
+                print(self.allParksList[indexPath.row].parkID)
                 self.removeParkFromList(parkID: self.allParksList[indexPath.row].parkID, indexPath: indexPath.row)
+                
             }
             let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
                 success(false)
@@ -327,6 +384,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             self.present(deleteAlertController, animated: true, completion:nil)
         })
         
+        
+        
         if tableView == self.allParksTableView {
             removeAction.title = "Remove park from list"
             let configuration = UISwipeActionsConfiguration(actions: [removeAction])
@@ -335,6 +394,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         } else{
             return UISwipeActionsConfiguration.init()
         }
+       
         
     }
     
@@ -346,6 +406,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             newPark.favorite = false
             newPark.totalRides = 0
             newPark.ridesRidden = 0
+
+            //Animate in the all parks table veiw when adding the first park
+            if allParksList.count == 0{
+                UIView.animate(withDuration: 0.6, animations: {
+                    self.allParksTableView.alpha = 1.0
+                })
+            }
             
             allParksList.append(newPark)
             self.allParksTableView.reloadData()
@@ -376,7 +443,31 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 break
             }
         }
+        
         allParksList.remove(at: indexPath)
+        
+        print("Animate delete")
+        
+        allParksTableView.reloadData()
+        favoritesTableView.reloadData()
+        
+        //Animate away favorites view to dissappear if the last park is being removed from the list
+        var allParksViewTableAlpha: CGFloat = 1.0
+        var favoritesTableAlpha: CGFloat = 1.0
+
+        if favoiteParkList.count == 0{
+            favoritesViewHeightConstrant.constant = 70
+            favoritesTableAlpha = 0.0
+        }
+        if allParksList.count == 0{
+            allParksViewTableAlpha = 0.0
+        }
+        UIView.animate(withDuration: 0.6, animations: {
+            self.favoritesTableView.alpha = favoritesTableAlpha
+            self.allParksTableView.alpha = allParksViewTableAlpha
+            self.view.layoutIfNeeded()
+        })
+        
     }
     
     
@@ -447,6 +538,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         else if let sourceViewController = segue.source as? ParkSearchViewController, let newPark = sourceViewController.selectedPark{
             addNewParkToList(newPark: newPark)
+            
         }
         else if segue.source is AttractionsViewController{
             print("DO NOT USE THIS, IT WILL NOT UPDATE THE FRACTIONS. INSTEAD CALL THE UNWIND METHOD")
@@ -476,8 +568,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             //            longitude = -81.5495
             
             //Simulate you are in Magic Kingdom
-//            latitude = 28.4161
-//            longitude = -81.5811
+            latitude = 28.4161
+            longitude = -81.5811
             
             let currentLocation = CLLocation(latitude: latitude, longitude: longitude)
             for i in 0..<arrayOfAllParks.count{
