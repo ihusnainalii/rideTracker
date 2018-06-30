@@ -97,33 +97,31 @@ class AttractionsDetailsViewController: UIViewController {
             scoreCardButton.isHidden = false
         }
         
-        switch selectedRide.rideType {                       //FIX THIS....THIS ONLY WORKS NOW AS THE DATABASE IS WRONG!!!!
+        switch selectedRide.rideType {                      
         case 1:
             typeString = "Roller Coaster"
         case 2:
             typeString = "Water Ride"
-        case 2:
-            typeString = "Children's ride"
         case 3:
-            typeString = "Flat Ride"
+            typeString = "Children's Ride"
         case 4:
-            typeString = "Transportation Ride"
+            typeString = "Flat Ride"
         case 5:
-            typeString = "Dark Ride"
+            typeString = "Transport Ride"
         case 6:
-            typeString = "Explore"
+            typeString = "Dark Ride"
         case 7:
-            typeString = "Spectacular"
+            typeString = "Explore"
         case 8:
-            typeString = "Show"
+            typeString = "Spectacular"
         case 9:
-            typeString = "Film"
+            typeString = "Show"
         case 10:
-            typeString = "Parade"
+            typeString = "Film"
         case 11:
-            typeString = "Play Area"
+            typeString = "Parade"
         case 12:
-            typeString = "Upcharge Attraction"
+            typeString = "Play Area"
         default:
             typeString = "Unknown"
         }

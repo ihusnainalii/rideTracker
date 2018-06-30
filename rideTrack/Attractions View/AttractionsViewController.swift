@@ -365,25 +365,25 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         case 2:
             return "Water Ride"
         case 3:
-            return "Flat Ride"
+            return "Children's Ride"
         case 4:
-            return "Transportation Ride"
+            return "Flat Ride"
         case 5:
-            return "Dark Ride"
+            return "Transport Ride"
         case 6:
-            return "Explore"
+            return "Dark Ride"
         case 7:
-            return "Spectacular"
+            return "Explore"
         case 8:
-            return "Show"
+            return "Spectacular"
         case 9:
-            return "Film"
+            return "Show"
         case 10:
-            return "Parade"
+            return "Film"
         case 11:
-            return "Play Area"
+            return "Parade"
         case 12:
-            return "Upcharge Attraction"
+            return "Play Area"
         default:
             return ""
         }
