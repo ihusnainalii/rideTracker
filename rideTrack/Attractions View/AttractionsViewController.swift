@@ -42,6 +42,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
     var parksViewController: ViewController!
     var animateRow = -1
+    var countOfRemove = 0
     
     var widthofCounter: NSLayoutConstraint!
     var plusButton: UIButton!
@@ -50,6 +51,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var userAttractions: [NSManagedObject] = []
     var userNumExtinct = 0
     var userRidesRidden = 0
+    var numExtinctSelected = 0
     var RidesComplete = ""
     var extinctComplete = ""
     var rideID = 0
@@ -165,24 +167,26 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         //Hide EXTINCT ATTRACTIONS
         if(showExtinct == 0){
-            var countOfRemove = 0
             for i in 0..<attractionListForTable.count{ //sizeOfList
-                if ((attractionListForTable[i - countOfRemove]).active == 0 && showExtinct == 0){
+                if ((attractionListForTable[i - countOfRemove]).active == 0 && showExtinct == 0 && (attractionListForTable[i - countOfRemove]).isCheck == false){
                     //attractionListForTable.removeObject(at: i - countOfRemove)
                     attractionListForTable.remove(at: i-countOfRemove)
                     countOfRemove = countOfRemove+1
                     continue
                 }
+                else if (attractionListForTable[i - countOfRemove]).active == 0 && (attractionListForTable[i - countOfRemove]).isCheck == true {
+                    numExtinctSelected += 1
+                }
             }
         }
-        
+        print ("There are this many num extinct selected,", numExtinctSelected )
         //If user wants to show extinct, sort so that the active rides are on top of the list
         if attractionListForTable.count != 1{
             //Need both steps to sort name alphabetically and by active or not
             attractionListForTable.sort { ($0.active, $1.name) > ($1.active, $0.name) }
         }
         
-        if showExtinct == 1 {
+        if showExtinct == 1 || userNumExtinct >= 1 {
             extinctText.isHidden = false
             extinctLabel.isHidden = false
             extinctComplete = String (userNumExtinct)
@@ -195,12 +199,15 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             extinctLabel.isHidden = true
         }
         
-        self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
+        self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore-numExtinctSelected)
     
         self.attractionsTableView.reloadData()
         
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return attractionListForTable.count
@@ -340,7 +347,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
                 self.ignoreList.set(self.ignore, forKey: "SavedIgnoreListArray")
                 
-                self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
+                self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore-self.numExtinctSelected)
             success(true)
             self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.4)
                 // self.attractionsTableView.reloadData()
@@ -415,7 +422,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         print ("you have been on this many rides: ", self.userRidesRidden)
         
         //UPDATE RIDES BEEN ON
-        self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
+        self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore-self.numExtinctSelected)
         
         self.extinctComplete = String (self.userNumExtinct)
         // self.extinctComplete += "/"
@@ -447,7 +454,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             userRidesRidden -= 1
             //UPDATE RIDES BEEN ON
             
-            self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore)
+            self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore-self.numExtinctSelected)
             
             self.extinctComplete = String (self.userNumExtinct)
             //  self.extinctComplete += "/"
