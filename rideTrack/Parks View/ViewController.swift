@@ -430,7 +430,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         if segue.identifier == "toSearch"{
             let searchVC = segue.destination as! ParkSearchViewController
-            searchVC.parkArray = arrayOfAllParks as NSArray
+            searchVC.parkArray = arrayOfAllParks
             
         }
         if segue.identifier == "toSettings"{

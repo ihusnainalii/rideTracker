@@ -10,13 +10,13 @@ import UIKit
 
 class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
     
-    var parkArray:NSArray = NSArray()
+    var parkArray: [ParksModel]!
     var selectedPark: ParksModel?
     var park = ParksModel()
     var firstEntry = true
     
     //A list of parks searched for, to display in results table
-    var searchedParksList: NSMutableArray = NSMutableArray()
+    var searchedParksList: [ParksModel]!
     
     @IBOutlet weak var searchTextFeild: UITextField!
     @IBOutlet weak var resultsTableView: UITableView!
@@ -27,8 +27,10 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         blurBackgroundView.layer.cornerRadius = 10
+        parkArray.sort { $0.name < $1.name }
         searchTextFeild.becomeFirstResponder()
-        searchedParksList.addObjects(from: parkArray as! [Any])
+        searchedParksList = parkArray
+        
         self.searchTextFeild.delegate = self
         self.resultsTableView.delegate = self
         // Do any additional setup after loading the view.
@@ -36,12 +38,12 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     
    
     @IBAction func didUpdateText(_ sender: Any) {
-        searchedParksList.removeAllObjects()
+        searchedParksList.removeAll()
         for i in 0..<parkArray.count {
             park = parkArray[i] as! ParksModel
             firstEntry = true
             if (park.name.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil){
-                searchedParksList.add(park)
+                searchedParksList.append(park)
                 firstEntry = false
             }
             //            if park.city.caseInsensitiveCompare(searchTextFeild.text!) == ComparisonResult.orderedSame{
@@ -51,11 +53,11 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
             
             //Not allow you to add duplicates
             if (park.city.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil) && firstEntry{
-                searchedParksList.add(park)
+                searchedParksList.append(park)
                 firstEntry = false
             }
             if (park.country.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil) && firstEntry{
-                searchedParksList.add(park)
+                searchedParksList.append(park)
                 firstEntry = false
             }
         }
@@ -68,39 +70,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     }
     
     
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        searchedParksList.removeAllObjects()
-//        print(parkArray.count)
-//        for i in 0..<parkArray.count {
-//            park = parkArray[i] as! ParksModel
-//            firstEntry = true
-//            if (park.name.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil){
-//                print("name match! \(park.name!) ")
-//                searchedParksList.add(park)
-//                firstEntry = false
-//            }
-////            if park.city.caseInsensitiveCompare(searchTextFeild.text!) == ComparisonResult.orderedSame{
-////                print("Match! \(park.name) ")
-////                searchedParksList.add(park)
-////            }
-//
-//            //Not allow you to add duplicates
-//            if (park.city.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil) && firstEntry{
-//                print("state/city match! \(park.name!) ")
-//                searchedParksList.add(park)
-//                firstEntry = false
-//            }
-//            if (park.country.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil) && firstEntry{
-//                print("country match! \(park.name!) ")
-//                searchedParksList.add(park)
-//                firstEntry = false
-//            }
-//        }
-//        print(searchedParksList.count)
-//        self.resultsTableView.reloadData()
-//        self.view.endEditing(true)
-//        return false
-//    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -113,7 +83,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchedParkCell", for: indexPath) as! SearchTableViewCell
-        let item: ParksModel = searchedParksList[indexPath.row] as! ParksModel
+        let item: ParksModel = searchedParksList[indexPath.row]
         cell.parkNameLabel.text = item.name
         cell.parkLocationLabel.text = item.city
         return cell
@@ -125,7 +95,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         
         if (segue.identifier == "addNewParkToList") {
             if let indexPath = resultsTableView.indexPathForSelectedRow {
-                selectedPark = (searchedParksList[indexPath.row] as! ParksModel)
+                selectedPark = (searchedParksList[indexPath.row] )
             }
         }
         

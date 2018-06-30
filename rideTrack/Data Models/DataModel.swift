@@ -71,6 +71,8 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 park.longitude = Double(jsonElement["Longitude"] as! String)!
                 park.latitude = Double(jsonElement["Latitude"] as! String)!
                 park.seasonal = Int(jsonElement["Active"] as! String)!
+                park.perviousNames = jsonElement["PreviousNames"] as! String
+                park.type = jsonElement["Type"] as! String
                 
                 dataBaseData.add(park)
                 
@@ -85,6 +87,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.yearClosed = Int (jsonElement["YearClosed"] as! String)
                 attraction.active = Int (jsonElement["Active"] as! String)
                 attraction.hasScoreCard = Int (jsonElement["ScoreCard"] as! String)
+                attraction.manufacturer = jsonElement["Manufacturer"] as? String
                 attraction.isCheck = false
                 dataBaseData.add(attraction)
             }
