@@ -46,8 +46,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var arrayOfAllParks = [ParksModel]()
     
     var showExtinct = UserDefaults.standard.integer(forKey: "showExtinct")
+    var simulateLocation = UserDefaults.standard.integer(forKey: "simulateLocation")
     
-        var locationManager: CLLocationManager = CLLocationManager()
+    var locationManager: CLLocationManager = CLLocationManager()
     var closestPark = ParksModel()
     let parksCoreData = ParkCoreData()
     let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
@@ -527,6 +528,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         if segue.identifier == "toSettings"{
             let settingVC = segue.destination as! SettingsViewController
             settingVC.showExtinct = showExtinct
+            settingVC.simulateLocation = simulateLocation
         }
     }
     
@@ -534,7 +536,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     @IBAction func unwindToParkList(segue:UIStoryboardSegue) {
         if segue.source is SettingsViewController{
-            print ("BACK FROM SETTINGS")
         }
         else if let sourceViewController = segue.source as? ParkSearchViewController, let newPark = sourceViewController.selectedPark{
             addNewParkToList(newPark: newPark)
@@ -568,8 +569,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             //            longitude = -81.5495
             
             //Simulate you are in Magic Kingdom
-            latitude = 28.4161
-            longitude = -81.5811
+            print("Simulate", simulateLocation)
+            if simulateLocation == 1{
+                latitude = 28.4161
+                longitude = -81.5811
+            }
             
             let currentLocation = CLLocation(latitude: latitude, longitude: longitude)
             for i in 0..<arrayOfAllParks.count{

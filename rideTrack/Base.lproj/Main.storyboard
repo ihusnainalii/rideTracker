@@ -553,20 +553,20 @@
                                     <segue destination="5gB-Pn-MPZ" kind="unwind" identifier="toParkList" unwindAction="unwindToParkListWithSegue:" id="yLD-tI-c7a"/>
                                 </connections>
                             </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="Pkp-gL-Uwa">
-                                <rect key="frame" x="45.5" y="172.5" width="285.5" height="31"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="top" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="PSj-xF-Xbv">
+                                <rect key="frame" x="10" y="172.5" width="355" height="31"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="t4k-MH-MJM">
-                                        <rect key="frame" x="0.0" y="0.0" width="285.5" height="31"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show extinct Attractions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bbs-sr-Igr">
-                                                <rect key="frame" x="0.0" y="0.0" width="211.5" height="31"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="281" height="31"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eNC-VI-n13">
-                                                <rect key="frame" x="236.5" y="0.0" width="51" height="31"/>
+                                                <rect key="frame" x="306" y="0.0" width="51" height="31"/>
                                                 <connections>
                                                     <action selector="showExtinct:" destination="yIe-5s-JbS" eventType="valueChanged" id="yFY-RI-nGu"/>
                                                 </connections>
@@ -574,22 +574,44 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="t4k-MH-MJM" secondAttribute="trailing" id="VpX-eD-RIZ"/>
+                                </constraints>
                             </stackView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IQU-RJ-HOO">
+                                <rect key="frame" x="280" y="230" width="51" height="31"/>
+                                <connections>
+                                    <action selector="simulateLocation:" destination="yIe-5s-JbS" eventType="valueChanged" id="Cqn-xK-fMl"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simulate you are in the magic kingdom" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cju-sr-LTz">
+                                <rect key="frame" x="29" y="235" width="234" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="IQU-RJ-HOO" firstAttribute="leading" secondItem="cju-sr-LTz" secondAttribute="trailing" constant="17" id="2KG-PE-ryZ"/>
                             <constraint firstItem="n5x-99-Ie6" firstAttribute="top" secondItem="zul-pj-D7d" secondAttribute="top" constant="20" id="5TP-UH-3z0"/>
-                            <constraint firstItem="Pkp-gL-Uwa" firstAttribute="top" secondItem="n5x-99-Ie6" secondAttribute="bottom" constant="101" id="AyJ-um-Wrx"/>
+                            <constraint firstItem="IQU-RJ-HOO" firstAttribute="top" secondItem="PSj-xF-Xbv" secondAttribute="bottom" constant="26.5" id="66r-fw-oBu"/>
                             <constraint firstItem="zul-pj-D7d" firstAttribute="trailing" secondItem="oxu-PM-AdC" secondAttribute="trailing" constant="20" id="D9A-6N-FRT"/>
+                            <constraint firstItem="PSj-xF-Xbv" firstAttribute="leading" secondItem="zul-pj-D7d" secondAttribute="leading" constant="10" id="HgH-qW-OaY"/>
+                            <constraint firstItem="zul-pj-D7d" firstAttribute="trailing" secondItem="PSj-xF-Xbv" secondAttribute="trailing" constant="10" id="Hh6-JX-BN4"/>
                             <constraint firstItem="n5x-99-Ie6" firstAttribute="leading" secondItem="2XR-Pj-Woa" secondAttribute="leadingMargin" id="ILQ-lO-CSq"/>
-                            <constraint firstItem="Pkp-gL-Uwa" firstAttribute="centerX" secondItem="2XR-Pj-Woa" secondAttribute="centerX" id="O2l-xC-Pt2"/>
+                            <constraint firstItem="cju-sr-LTz" firstAttribute="top" secondItem="PSj-xF-Xbv" secondAttribute="bottom" constant="31.5" id="Jfi-zv-Ynr"/>
+                            <constraint firstItem="zul-pj-D7d" firstAttribute="trailing" secondItem="IQU-RJ-HOO" secondAttribute="trailing" constant="46" id="bvl-Ol-dKd"/>
                             <constraint firstItem="oxu-PM-AdC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2XR-Pj-Woa" secondAttribute="leading" constant="20" symbolic="YES" id="fbx-WD-AbL"/>
+                            <constraint firstItem="PSj-xF-Xbv" firstAttribute="top" secondItem="n5x-99-Ie6" secondAttribute="bottom" constant="101" id="qVz-cj-19O"/>
                             <constraint firstItem="oxu-PM-AdC" firstAttribute="top" secondItem="zul-pj-D7d" secondAttribute="top" constant="10" id="rT6-31-sTZ"/>
+                            <constraint firstItem="cju-sr-LTz" firstAttribute="leading" secondItem="zul-pj-D7d" secondAttribute="leading" constant="29" id="yZA-RN-AN5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zul-pj-D7d"/>
                     </view>
                     <connections>
                         <outlet property="showExtinctSwitch" destination="eNC-VI-n13" id="IrM-D2-Fh1"/>
+                        <outlet property="simulateLocationSwitch" destination="IQU-RJ-HOO" id="oIz-aw-LUu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OdQ-q0-JAg" userLabel="First Responder" sceneMemberID="firstResponder"/>
