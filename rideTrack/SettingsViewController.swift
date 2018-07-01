@@ -80,6 +80,7 @@ class SettingsViewController: UIViewController {
             listVC.showExtinct = showExtinct
             listVC.simulateLocation = simulateLocation
 
+            listVC.searchRideButtonHeightConstraint.constant = 23
             listVC.currentLocationViewBottomConstraint.constant = -61
             listVC.locationManager.requestWhenInUseAuthorization()
             listVC.locationManager.requestLocation()
