@@ -79,17 +79,11 @@ class SettingsViewController: UIViewController {
             let listVC = segue.destination as! ViewController
             listVC.showExtinct = showExtinct
             listVC.simulateLocation = simulateLocation
-            
-            if simulateLocation == 1{
-                listVC.currentLocationViewBottomConstraint.constant = -61
-                listVC.locationManager.requestWhenInUseAuthorization()
-                listVC.locationManager.requestLocation()
-                print("GETTING GPS DATA")
-            } else{
-                listVC.currentLocationViewBottomConstraint.constant = -61
 
-            }
-            
+            listVC.currentLocationViewBottomConstraint.constant = -61
+            listVC.locationManager.requestWhenInUseAuthorization()
+            listVC.locationManager.requestLocation()
+            print("GETTING GPS DATA")
         }
     }
 }
