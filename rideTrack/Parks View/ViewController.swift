@@ -491,6 +491,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             attractionVC.parkID = selectedPark.parkID
             attractionVC.showExtinct = showExtinct
             attractionVC.parksViewController = self
+            attractionVC.parkData = selectedPark
             
             //Getting coreData Attraction data for the selected park
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -516,6 +517,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 userAttractions.append(newAttraction)
             }
             attractionVC.userAttractionDatabase = userAttractions
+            
             
             print("count: ", userAttractions.count)
         }

@@ -31,6 +31,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var titleName = ""
     var parkID = 0
     var attractionListForTable = [AttractionsModel]()
+    var parkData: ParksModel!
     var showExtinct = 0
     var isIgnored = false
     //From the datamigration tool:
@@ -65,8 +66,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         animateRow = -1
         suggestButton.layer.cornerRadius = 7
-        let suggestColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
-       suggestButton.backgroundColor = suggestColor
+        //let suggestColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
+        //suggestButton.backgroundColor = suggestColor
         suggestButton.layer.shadowOpacity = 0.4
         suggestButton.layer.shadowOffset = CGSize.zero
         suggestButton.layer.shadowRadius = 7
@@ -575,10 +576,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "toSuggest"{
-            let suggestVC = segue.destination as! SuggestRideViewController
-            suggestVC.parkName = titleName
-            suggestVC.parkID = parkID
+        if segue.identifier == "toParkInfo"{
+            let infoVC = segue.destination as! ParksDetailViewController
+            infoVC.parksData = parkData
             
         }
         if segue.identifier == "ToDetails"{

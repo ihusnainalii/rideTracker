@@ -129,7 +129,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FLl-xD-4LP" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="R6N-UU-UtL" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1728.8" y="-518.59070464767615"/>
+            <point key="canvasLocation" x="1017" y="-591"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -663,14 +663,17 @@
                                                     </connections>
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqB-3X-RMS">
-                                                    <rect key="frame" x="235" y="8" width="135" height="30"/>
+                                                    <rect key="frame" x="290" y="15" width="70" height="32"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                    <state key="normal" title="Suggest attraction ">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="70" id="2Je-s9-Ejc"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                                    <state key="normal" title="Park Info">
                                                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="d4P-N9-9bs" kind="presentation" identifier="toSuggest" id="QYy-Oc-N79"/>
+                                                        <segue destination="jMr-JT-Io1" kind="show" identifier="toParkInfo" id="cZm-vy-7FN"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Extinct" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFt-15-utf" userLabel="Extinct Complete ">
@@ -839,13 +842,14 @@
                                             <gestureRecognizers/>
                                             <constraints>
                                                 <constraint firstItem="rKa-vC-Lf2" firstAttribute="leading" secondItem="qGY-Pc-WCD" secondAttribute="leading" id="1zb-Qy-tBj"/>
+                                                <constraint firstItem="uVR-cf-Ne8" firstAttribute="top" secondItem="MqX-V1-51p" secondAttribute="bottom" constant="5" id="4z4-qO-hwW"/>
                                                 <constraint firstAttribute="trailing" secondItem="cFg-8l-Dke" secondAttribute="trailing" id="9hD-if-fTD"/>
                                                 <constraint firstItem="k8C-3n-n9A" firstAttribute="leading" secondItem="qGY-Pc-WCD" secondAttribute="leading" constant="20" id="Bp6-mp-1Og"/>
                                                 <constraint firstItem="BWZ-6M-pEa" firstAttribute="leading" secondItem="VFt-15-utf" secondAttribute="trailing" constant="8" id="CHh-tA-wHq"/>
                                                 <constraint firstItem="Ww5-cA-KWO" firstAttribute="leading" secondItem="qGY-Pc-WCD" secondAttribute="leading" id="H6h-SO-LE8"/>
                                                 <constraint firstItem="lfq-1a-KsT" firstAttribute="leading" secondItem="k8C-3n-n9A" secondAttribute="trailing" constant="8" id="Hl0-KE-jm5"/>
                                                 <constraint firstItem="rKa-vC-Lf2" firstAttribute="top" secondItem="VFt-15-utf" secondAttribute="bottom" constant="4" id="I9v-UY-2Yc"/>
-                                                <constraint firstItem="fqB-3X-RMS" firstAttribute="top" secondItem="qGY-Pc-WCD" secondAttribute="top" constant="8" id="IhR-Oo-deg"/>
+                                                <constraint firstItem="fqB-3X-RMS" firstAttribute="top" secondItem="qGY-Pc-WCD" secondAttribute="top" constant="15" id="IhR-Oo-deg"/>
                                                 <constraint firstItem="cFg-8l-Dke" firstAttribute="top" secondItem="rKa-vC-Lf2" secondAttribute="bottom" constant="4" id="Izt-Nr-dzo"/>
                                                 <constraint firstAttribute="trailing" secondItem="rKa-vC-Lf2" secondAttribute="trailing" id="KYb-5i-BXg"/>
                                                 <constraint firstItem="VFt-15-utf" firstAttribute="top" secondItem="uVR-cf-Ne8" secondAttribute="bottom" constant="6" id="KkY-bv-dlV"/>
@@ -860,8 +864,7 @@
                                                 <constraint firstItem="lfq-1a-KsT" firstAttribute="top" secondItem="uVR-cf-Ne8" secondAttribute="bottom" constant="6" id="h2D-pP-0xe"/>
                                                 <constraint firstItem="uVR-cf-Ne8" firstAttribute="leading" secondItem="qGY-Pc-WCD" secondAttribute="leading" id="ir2-Ka-H8X"/>
                                                 <constraint firstItem="BWZ-6M-pEa" firstAttribute="top" secondItem="uVR-cf-Ne8" secondAttribute="bottom" constant="6" id="qKP-Mh-Wnv"/>
-                                                <constraint firstItem="uVR-cf-Ne8" firstAttribute="top" secondItem="fqB-3X-RMS" secondAttribute="bottom" constant="6" id="tKn-Mt-ujj"/>
-                                                <constraint firstAttribute="trailing" secondItem="fqB-3X-RMS" secondAttribute="trailing" constant="5" id="tT0-4U-R7I"/>
+                                                <constraint firstAttribute="trailing" secondItem="fqB-3X-RMS" secondAttribute="trailing" constant="15" id="tT0-4U-R7I"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -906,7 +909,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1869.5999999999999" y="380.95952023988008"/>
+            <point key="canvasLocation" x="1815" y="104"/>
         </scene>
         <!--Attractions Details View Controller-->
         <scene sceneID="1Ub-aA-CmN">
@@ -1184,7 +1187,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2821.5999999999999" y="488.90554722638683"/>
+            <point key="canvasLocation" x="2737" y="430"/>
         </scene>
         <!--Score Card View Controller-->
         <scene sceneID="FTK-h2-0ff">
@@ -1280,7 +1283,140 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c4C-Et-YsM" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="2j4-58-alU" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3558" y="489"/>
+            <point key="canvasLocation" x="3486" y="430"/>
+        </scene>
+        <!--Parks Detail View Controller-->
+        <scene sceneID="7Q5-cN-EYA">
+            <objects>
+                <viewController id="jMr-JT-Io1" customClass="ParksDetailViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="upx-sv-vtT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L2t-Qm-gkq">
+                                <rect key="frame" x="123" y="313.5" width="129" height="30"/>
+                                <state key="normal" title="Suggest Attraction"/>
+                                <connections>
+                                    <segue destination="d4P-N9-9bs" kind="show" identifier="toSuggestRide" id="AAq-ar-G6A"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zei-0l-DbR">
+                                <rect key="frame" x="307" y="37" width="34" height="30"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <segue destination="THd-IV-uU9" kind="unwind" unwindAction="unwindToAttractionsViewWithSender:" id="SVT-Ds-Fwi"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Park Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nee-Ik-lVn">
+                                <rect key="frame" x="124" y="64" width="127.5" height="31.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Park Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ymb-sl-Vs1">
+                                <rect key="frame" x="149" y="99.5" width="76" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="FSy-DO-veA">
+                                <rect key="frame" x="16" y="351.5" width="343" height="304.5"/>
+                            </mapView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="ZGe-RB-7X1">
+                                <rect key="frame" x="8" y="136" width="359" height="87.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="FLS-kH-tdZ">
+                                        <rect key="frame" x="110.5" y="0.0" width="138.5" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Year open:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F6N-Vc-qdb">
+                                                <rect key="frame" x="0.0" y="0.0" width="81.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2q-6W-ahr">
+                                                <rect key="frame" x="96.5" y="0.0" width="42" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="1MB-9Z-w3y">
+                                        <rect key="frame" x="104.5" y="33.5" width="150.5" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Year closed:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9OE-pQ-fGX">
+                                                <rect key="frame" x="0.0" y="0.0" width="93.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QeP-Jq-uFm">
+                                                <rect key="frame" x="108.5" y="0.0" width="42" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Vhs-v8-aj0">
+                                        <rect key="frame" x="87" y="67" width="185.5" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Previous Names:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p4S-25-fkh">
+                                                <rect key="frame" x="0.0" y="0.0" width="128.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1GS-Fl-7IO">
+                                                <rect key="frame" x="143.5" y="0.0" width="42" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Nee-Ik-lVn" firstAttribute="centerX" secondItem="upx-sv-vtT" secondAttribute="centerX" id="0Hi-ui-GIP"/>
+                            <constraint firstItem="Ymb-sl-Vs1" firstAttribute="centerX" secondItem="upx-sv-vtT" secondAttribute="centerX" id="6TP-K1-yH8"/>
+                            <constraint firstItem="L2t-Qm-gkq" firstAttribute="centerX" secondItem="upx-sv-vtT" secondAttribute="centerX" id="8WT-gf-YX9"/>
+                            <constraint firstItem="FSy-DO-veA" firstAttribute="top" secondItem="L2t-Qm-gkq" secondAttribute="bottom" constant="8" id="FUb-v8-afz"/>
+                            <constraint firstItem="IPz-gp-Unu" firstAttribute="trailing" secondItem="zei-0l-DbR" secondAttribute="trailing" constant="34" id="IQJ-Z8-UCt"/>
+                            <constraint firstItem="ZGe-RB-7X1" firstAttribute="top" secondItem="Ymb-sl-Vs1" secondAttribute="bottom" constant="16" id="LWc-sq-xhu"/>
+                            <constraint firstItem="Ymb-sl-Vs1" firstAttribute="top" secondItem="Nee-Ik-lVn" secondAttribute="bottom" constant="4" id="P8b-Di-1uU"/>
+                            <constraint firstItem="IPz-gp-Unu" firstAttribute="trailing" secondItem="ZGe-RB-7X1" secondAttribute="trailing" constant="8" id="QHq-zo-CRe"/>
+                            <constraint firstItem="zei-0l-DbR" firstAttribute="top" secondItem="IPz-gp-Unu" secondAttribute="top" constant="17" id="UlS-BO-pWL"/>
+                            <constraint firstItem="IPz-gp-Unu" firstAttribute="bottom" secondItem="FSy-DO-veA" secondAttribute="bottom" constant="11" id="eT3-iG-Exm"/>
+                            <constraint firstItem="ZGe-RB-7X1" firstAttribute="centerX" secondItem="upx-sv-vtT" secondAttribute="centerX" id="fbA-Qy-cVz"/>
+                            <constraint firstItem="L2t-Qm-gkq" firstAttribute="top" secondItem="ZGe-RB-7X1" secondAttribute="bottom" constant="90" id="guG-54-Dot"/>
+                            <constraint firstItem="FSy-DO-veA" firstAttribute="leading" secondItem="IPz-gp-Unu" secondAttribute="leading" constant="16" id="sIt-vT-2JM"/>
+                            <constraint firstItem="FSy-DO-veA" firstAttribute="centerX" secondItem="upx-sv-vtT" secondAttribute="centerX" id="srG-lL-NmL"/>
+                            <constraint firstItem="ZGe-RB-7X1" firstAttribute="leading" secondItem="IPz-gp-Unu" secondAttribute="leading" constant="8" id="xGb-k1-ZjZ"/>
+                            <constraint firstItem="IPz-gp-Unu" firstAttribute="trailing" secondItem="FSy-DO-veA" secondAttribute="trailing" constant="16" id="yCW-rs-11m"/>
+                            <constraint firstItem="Nee-Ik-lVn" firstAttribute="top" secondItem="IPz-gp-Unu" secondAttribute="top" constant="44" id="z5w-Ke-3C6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="IPz-gp-Unu"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="FSy-DO-veA" id="rfp-tM-X0Q"/>
+                        <outlet property="parkNameLabel" destination="Nee-Ik-lVn" id="4kQ-c3-Twp"/>
+                        <outlet property="parkTypeLabel" destination="Ymb-sl-Vs1" id="BUj-dM-Crc"/>
+                        <outlet property="previousNameLabel" destination="1GS-Fl-7IO" id="w8R-rk-dLz"/>
+                        <outlet property="previousNamesStack" destination="Vhs-v8-aj0" id="IKx-gO-3BA"/>
+                        <outlet property="yearClosedLabel" destination="QeP-Jq-uFm" id="ncN-Ov-XaY"/>
+                        <outlet property="yearClosedStack" destination="1MB-9Z-w3y" id="RbN-VT-FRQ"/>
+                        <outlet property="yearOpenLabel" destination="W2q-6W-ahr" id="7ot-T5-YPI"/>
+                        <outlet property="yearOpenStack" destination="FLS-kH-tdZ" id="sX7-l7-Dwx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yKd-zK-QDk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="THd-IV-uU9" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2737" y="-300"/>
         </scene>
         <!--Suggest Ride View Controller-->
         <scene sceneID="SRl-hi-v5J">
@@ -1462,7 +1598,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WdM-Xn-OVG" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="W0a-ic-zgZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2822" y="-212"/>
+            <point key="canvasLocation" x="3438" y="-299"/>
         </scene>
     </scenes>
     <resources>

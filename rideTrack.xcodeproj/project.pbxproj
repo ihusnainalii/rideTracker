@@ -11,6 +11,7 @@
 		5F16C52520BCE89200E525EF /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */; };
 		5F16C52920BCF3F700E525EF /* ParkListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16C52820BCF3F700E525EF /* ParkListData.swift */; };
 		5F202C5B20E6E8AF00FFE408 /* NeverClearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F202C5A20E6E8AF00FFE408 /* NeverClearView.swift */; };
+		5F202C5D20EB257700FFE408 /* ParksDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F202C5C20EB257700FFE408 /* ParksDetailViewController.swift */; };
 		5FE9F81020DB45030012B98C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FE9F80F20DB45030012B98C /* Media.xcassets */; };
 		5FE9F81320DCA43C0012B98C /* ParksCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE9F81220DCA43C0012B98C /* ParksCoreData.swift */; };
 		5FE9F81520DDCEF20012B98C /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE9F81420DDCEF20012B98C /* FavoritesTableViewCell.swift */; };
@@ -58,6 +59,7 @@
 		5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		5F16C52820BCF3F700E525EF /* ParkListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkListData.swift; sourceTree = "<group>"; };
 		5F202C5A20E6E8AF00FFE408 /* NeverClearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeverClearView.swift; sourceTree = "<group>"; };
+		5F202C5C20EB257700FFE408 /* ParksDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksDetailViewController.swift; sourceTree = "<group>"; };
 		5FE9F80F20DB45030012B98C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		5FE9F81220DCA43C0012B98C /* ParksCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksCoreData.swift; sourceTree = "<group>"; };
 		5FE9F81420DDCEF20012B98C /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */,
 				5F16C51C20BB92FC00E525EF /* AttractionsTableViewCell.swift */,
 				5FF0BBBC20CF637700213DF8 /* Score Card */,
+				5F202C5C20EB257700FFE408 /* ParksDetailViewController.swift */,
 			);
 			path = "Attractions View";
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				5F16C51D20BB92FC00E525EF /* AttractionsTableViewCell.swift in Sources */,
 				5FF0BBBB20CF62C300213DF8 /* ScoreCardViewController.swift in Sources */,
 				5FF0BBBE20CF639100213DF8 /* ScoreCardTableViewCell.swift in Sources */,
+				5F202C5D20EB257700FFE408 /* ParksDetailViewController.swift in Sources */,
 				98AD7F7220A91A5C00540AB3 /* UserAttraction.swift in Sources */,
 				5FF0BBC020CF652700213DF8 /* ScoreCardModel.swift in Sources */,
 				98AD7F7420A91A5C00540AB3 /* AttractionsViewController.swift in Sources */,
