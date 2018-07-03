@@ -91,6 +91,20 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.isCheck = false
                 dataBaseData.add(attraction)
             }
+            if dataBase == "Suggest" {
+                let attraction = ApproveSuggestAttracionModel()
+                attraction.parkID = Int (jsonElement["ParkID"] as! String)
+                attraction.rideName = jsonElement["RideName"] as? String
+                attraction.YearOpen = Int (jsonElement["YearOpen"] as! String)
+                attraction.YearClose = Int (jsonElement["YearClose"] as! String)
+                attraction.type = jsonElement["Type"] as? String
+                attraction.parkName = jsonElement["Park"] as? String
+                attraction.active = Int (jsonElement["Active"] as! String)
+                attraction.manufacturer = jsonElement["Manufacturer"] as? String
+                attraction.notes = jsonElement["Notes"] as? String
+                dataBaseData.add(attraction)
+                print ("Ride name is: ", attraction.rideName!)
+            }
         }
         DispatchQueue.main.async(execute: { () -> Void in
             self.delegate.itemsDownloaded(items: dataBaseData, returnPath: returnPath)

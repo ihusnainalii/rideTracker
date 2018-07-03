@@ -215,6 +215,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "rideCell", for: indexPath) as! AttractionsTableViewCell
+    
         cell.delegate = self
         
         let item: AttractionsModel = attractionListForTable[indexPath.row]

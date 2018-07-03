@@ -71,6 +71,9 @@ class SettingsViewController: UIViewController {
         UserDefaults.standard.set(simulateLocation, forKey: "simulateLocation")
     }
     
+    @IBAction func unwindToSettingsView(sender: UIStoryboardSegue) {
+        print("Back to settings")
+    }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
