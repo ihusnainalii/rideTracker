@@ -58,11 +58,38 @@ class ApproveSuggestedAttractionViewController: UIViewController, UITableViewDat
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
+    }
+    
+func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let acceptAction = UIContextualAction(style: .destructive, title: "Accept", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+        //code to remove from database****
+            //code to add to main database****
+            self.listOfSuggestions.remove(at: indexPath.row)
+            success(true)
+            self.ApproveAttractionTableView.reloadData()
+    })
+    acceptAction.backgroundColor = UIColor.green
+    let configurations = UISwipeActionsConfiguration(actions: [acceptAction])
+    configurations.performsFirstActionWithFullSwipe = true
+    return configurations
+    }
+    
+func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            //code to remove from database****
+            self.listOfSuggestions.remove(at: indexPath.row)
+            success(true)
+            self.ApproveAttractionTableView.reloadData()
+    })
+    deleteAction.backgroundColor = UIColor.red
+    let configurations = UISwipeActionsConfiguration(actions: [deleteAction])
+    configurations.performsFirstActionWithFullSwipe = true
+    return configurations
     }
     /*
     // MARK: - Navigation

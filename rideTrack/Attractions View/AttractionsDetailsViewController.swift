@@ -23,6 +23,8 @@ class AttractionsDetailsViewController: UIViewController {
 
     let greyColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     
+    @IBOutlet weak var manufacturerLabel: UILabel!
+    @IBOutlet weak var manufacturText: UILabel!
     @IBOutlet weak var dateModifyButton: UIButton!
     @IBOutlet weak var CurrentlyOpenLabel: UILabel!
     @IBOutlet weak var rideNameLabel: UILabel!
@@ -77,7 +79,6 @@ class AttractionsDetailsViewController: UIViewController {
         if selectedRide.isCheck{
             dateFirstRiddenLabel.text = dateFormatter(date: selectedRide.dateFirstRidden)
             userDatesView.isHidden = false
-
             //Do not show last ride if the user has only ridden the ride once
             if selectedRide.numberOfTimesRidden > 1{
                 dateLastRiddenLabel.text = dateFormatter(date: selectedRide.dateLastRidden)
@@ -91,10 +92,20 @@ class AttractionsDetailsViewController: UIViewController {
             dateLastRiddenLabel.isHidden = true
             dateModifyButton.isHidden = true
             userDatesView.isHidden = true
+            
         }
         
         if selectedRide.hasScoreCard == 1{
             scoreCardButton.isHidden = false
+        }
+        if selectedRide.manufacturer == "" {
+            manufacturText.isHidden = true
+            manufacturerLabel.isHidden = true
+        }
+        else {
+            manufacturerLabel.isHidden = false
+            manufacturText.isHidden = false
+            manufacturerLabel.text = selectedRide.manufacturer
         }
         
         switch selectedRide.rideType {                      
