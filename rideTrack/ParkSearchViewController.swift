@@ -14,6 +14,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     var selectedPark: ParksModel?
     var park = ParksModel()
     var firstEntry = true
+    var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
     
     //A list of parks searched for, to display in results table
     var searchedParksList: [ParksModel]!
@@ -22,6 +23,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     @IBOutlet weak var resultsTableView: UITableView!
     @IBOutlet weak var blurBackgroundView: UIVisualEffectView!
     @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var downButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -105,6 +107,33 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         }
         
     }
+    
+    @IBAction func panSeachAway(_ sender: UIPanGestureRecognizer) {
+        let touchPoint = (sender as AnyObject).location(in: self.view?.window)
+        
+        if (sender as AnyObject).state == UIGestureRecognizerState.began{
+            initialToucnPoint = touchPoint
+        }
+        else if sender.state == UIGestureRecognizerState.changed {
+            if touchPoint.y - initialToucnPoint.y > 0 {
+                self.downButton.setImage(UIImage(named: "Flat Bar"), for: .normal)
+                
+                self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
+            }
+        }
+        else if sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled {
+            if touchPoint.y - initialToucnPoint.y > 200 {
+                self.dismiss(animated: true, completion: nil)                
+            } else {
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.downButton.setImage(UIImage(named: "Down Bar"), for: .normal)
+                    self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+                })
+            }
+        }
+
+    }
+    
     
     /*
      // MARK: - Navigation
