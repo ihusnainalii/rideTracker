@@ -31,12 +31,7 @@ class AllParksTableViewCell: UITableViewCell {
         progressView.layer.shadowOffset = CGSize.zero
         progressView.layer.shadowRadius = 8
         
-        //If iPhone 5s
-        if screenSize.width == 320.0{
-            fractionViewWidth.constant = 67.5
-            fractionViewHeight.constant = 28.8
-        }
-        
+    
         // Initialization code
     }
 

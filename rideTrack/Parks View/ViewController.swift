@@ -29,7 +29,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var addParkButton: UIButton!
     @IBOutlet weak var searchParkView: UIView!
     @IBOutlet weak var viewAttractionLocationButton: UIButton!
+    @IBOutlet weak var parksLabel: UILabel!
+    @IBOutlet weak var favoritesLabel: UILabel!
+    @IBOutlet weak var myParksLabel: UILabel!
+    @IBOutlet weak var currentLocationLabel: UILabel!
     
+    @IBOutlet weak var settingsButtonHeightConstrant: NSLayoutConstraint!
+    @IBOutlet weak var settingsButtonWidthConstrant: NSLayoutConstraint!
+    @IBOutlet weak var navBarHeightConstants: NSLayoutConstraint!
     @IBOutlet weak var addParkHeightConstrant: NSLayoutConstraint!
     @IBOutlet weak var currentLocationViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var searchRideButtonHeightConstraint: NSLayoutConstraint!
@@ -59,8 +66,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         //If iPhone 5s
         if screenSize.width == 320.0{
-            favoitesHeight = 150.0
-            addParkHeightConstrant.constant = 55
+            ConfigureSmallerLayout().configureParksView(parksView: self)
         }
         
         
@@ -257,11 +263,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             cell.locationLabel.text = parkData.city
             cell.fractionLabel.text = "\(parkData.ridesRidden!)/\(parkData.totalRides!)"
             
+            if screenSize.width == 320.0{
+                ConfigureSmallerLayout().favoriteCellLayout(favoriteCell: cell)
+            }
+            
             let rides: Double = Double(parkData.ridesRidden)
             let total = Double(parkData.totalRides)
             var progressToShow = CGFloat(0)
             if total != 0{
-                progressToShow = CGFloat(Double(cell.progressWidth + 4) * (rides/total))
+                progressToShow = CGFloat(Double(cell.progressViewWidth.constant) * (rides/total))
                 if rides/total == 1{
                     cell.progressView.backgroundColor = UIColor(red: 218.0/255.0, green: 195.0/255.0, blue: 32.0/255.0, alpha: 1.0)
                 } else{
@@ -281,11 +291,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             cell.locationLabel.text = parkData.city
             cell.fractionLabel.text = "\(parkData.ridesRidden!)/\(parkData.totalRides!)"
             
+            if screenSize.width == 320.0{
+                ConfigureSmallerLayout().allParksCellLayout(allParksCell: cell)
+            }
+            
+            
             let rides: Double = Double(parkData.ridesRidden)
             let total = Double(parkData.totalRides)
             var progressToShow = CGFloat(0)
             if total != 0{
-                progressToShow = CGFloat(Double(cell.progressWidth + 4) * (rides/total))
+                progressToShow = CGFloat(Double(cell.fractionViewWidth.constant) * (rides/total))
                 if rides/total == 1{
                     cell.progressView.backgroundColor = UIColor(red: 218.0/255.0, green: 195.0/255.0, blue: 32.0/255.0, alpha: 1.0)
                 } else{
