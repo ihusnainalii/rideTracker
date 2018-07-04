@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+//change
 //This makes sure that the UIViews in the table view cell do not become transparent when selecting a cell
 class NeverClearView: UIView {
     override var backgroundColor: UIColor? {
