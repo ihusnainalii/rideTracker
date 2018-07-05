@@ -59,7 +59,6 @@ class DataModel: NSObject, URLSessionDataDelegate {
             //There are currently two databases, parks and attractions
             if dataBase == "parks"{
                 let park = ParksModel()
-                
                 //Redo these as Bools, like in attractions DB
                 park.parkID = Int(jsonElement["id"] as! String)!
                 park.name = jsonElement["Name"] as! String
@@ -78,8 +77,10 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 
             }
             if dataBase == "attractions"{
+                var tempName = ""
                 let attraction = AttractionsModel()
-                attraction.name = jsonElement["Name"] as? String
+                tempName = jsonElement["Name"] as! String
+                attraction.name = tempName.replacingOccurrences(of: "_", with: " ")
                 attraction.rideID = Int (jsonElement["RideID"] as! String)
                 attraction.parkID = Int (jsonElement["ParkID"] as! String)
                 attraction.rideType = Int (jsonElement["RideType"] as! String)
@@ -99,6 +100,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.YearClose = Int (jsonElement["YearClose"] as! String)
                 attraction.type = jsonElement["Type"] as? String
                 attraction.parkName = jsonElement["Park"] as? String
+                attraction.id = Int (jsonElement["id"] as! String)
                 attraction.active = Int (jsonElement["Active"] as! String)
                 attraction.manufacturer = jsonElement["Manufacturer"] as? String
                 attraction.notes = jsonElement["Notes"] as? String

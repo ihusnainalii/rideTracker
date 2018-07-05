@@ -35,7 +35,7 @@ class ApproveSuggestedAttractionViewController: UIViewController, UITableViewDat
         let arrayOfAllRides = items as! [ApproveSuggestAttracionModel]
         print ("size of array",arrayOfAllRides.count)
         for i in 0..<arrayOfAllRides.count{
-                print(arrayOfAllRides[i].rideName!)
+                print(arrayOfAllRides[i].rideName!, arrayOfAllRides[i].id!)
         listOfSuggestions.append(arrayOfAllRides[i])
         }
         self.ApproveAttractionTableView.reloadData()
@@ -43,7 +43,6 @@ class ApproveSuggestedAttractionViewController: UIViewController, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print ("Size is ", listOfSuggestions.count)
         return listOfSuggestions.count
     }
     
@@ -69,6 +68,24 @@ func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowA
         let acceptAction = UIContextualAction(style: .destructive, title: "Accept", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
         //code to remove from database****
             //code to add to main database****
+            let name = self.listOfSuggestions[indexPath.row].rideName!
+            let ParkID = self.listOfSuggestions[indexPath.row].parkID!
+            let type = self.listOfSuggestions[indexPath.row].type!
+            let yearOpen = self.listOfSuggestions[indexPath.row].YearOpen!
+            let YearClosed = self.listOfSuggestions[indexPath.row].YearClose!
+            let Active = self.listOfSuggestions[indexPath.row].active!
+            let manufacturer = self.listOfSuggestions[indexPath.row].manufacturer!
+
+            
+            let urlPath = "http://www.beingpositioned.com/theparksman/uploadToAttractionDB.php?name=\(name)&ParkID=\(ParkID)&type=\(type)&yearOpen=\(yearOpen)&YearClosed=\(YearClosed)&active=\(Active)&manufacturer=\(manufacturer)" //uploads to main list
+            print (urlPath)
+            let dataModel = DataModel()
+            dataModel.delegate = self
+            
+            let urlPath2 = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(self.listOfSuggestions[indexPath.row].id!)" //deletes from suggested list
+            dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+            dataModel.downloadData(urlPath: urlPath2, dataBase: "upload", returnPath: "upload")
+
             self.listOfSuggestions.remove(at: indexPath.row)
             success(true)
             self.ApproveAttractionTableView.reloadData()
@@ -82,6 +99,13 @@ func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowA
 func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             //code to remove from database****
+            print ("Deleting key ", self.listOfSuggestions[indexPath.row].id!)
+            let dataModel = DataModel()
+            dataModel.delegate = self
+            let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(self.listOfSuggestions[indexPath.row].id!)"
+            print (urlPath)
+            dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+
             self.listOfSuggestions.remove(at: indexPath.row)
             success(true)
             self.ApproveAttractionTableView.reloadData()

@@ -13,7 +13,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     
     var parkName = ""
     var parkID = 0
-    var rideType = ""
+    var rideType = 0
     var userAttractionDatabase: [UserAttractionProvider]!
 
     @IBOutlet weak var textFieldName: UITextField!
@@ -46,8 +46,36 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         return pickerData[row] as String
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        rideType = pickerData[row]
-        print(pickerData[row])
+        //rideType = pickerData[row]
+        switch pickerData[row] {
+        case "Roller Coaster":
+            rideType = 1
+        case "Water Ride":
+            rideType = 2
+        case "Children's Ride":
+            rideType = 3
+        case "Flat Ride":
+            rideType = 4
+        case "Transport Ride":
+            rideType = 5
+        case "Dark Ride":
+            rideType = 6
+        case "Explore":
+            rideType = 7
+        case "Spectacular":
+            rideType = 8
+        case "Show":
+            rideType = 9
+        case "Film":
+            rideType = 10
+        case "Parade":
+            rideType = 11
+        case "Play Area":
+            rideType = 12
+        default:
+            rideType = 0
+        }
+        print("Ride type is: ",rideType)
     }
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
@@ -61,7 +89,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         textFieldClose.delegate = self
         self.pickerType.delegate = self
         self.pickerType.dataSource = self
-        pickerData = ["Roller_Coaster", "Water_Ride", "Childrens_Ride", "Transporation_Ride", "Dark_Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Pay_Area"]
+        pickerData = ["Roller Coaster", "Water_Ride", "Childrens Ride", "Transporation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Pay Area"]
         activeSwitch.isOn=false
         textFieldClose.isHidden = true
         YearClosedText.isHidden = true
