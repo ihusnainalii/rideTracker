@@ -854,7 +854,7 @@
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="jZi-L2-hpH">
                                                                         <rect key="frame" x="5" y="5" width="303" height="43.5"/>
                                                                         <subviews>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Ride name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="5NX-fB-zEo">
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Ride name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="5NX-fB-zEo">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="94.5" height="24"/>
                                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                                                                 <nil key="textColor"/>
@@ -894,8 +894,8 @@
                                                                 </constraints>
                                                             </tableViewCellContentView>
                                                             <connections>
+                                                                <outlet property="attractionButton" destination="7hY-Fv-Y20" id="may-YR-Fj5"/>
                                                                 <outlet property="numberOfRidesLabel" destination="1s7-jz-3Dh" id="A3h-Eq-dLF"/>
-                                                                <outlet property="plusButtonIncrement" destination="7hY-Fv-Y20" id="u89-QP-9Cd"/>
                                                                 <outlet property="rideCellSquare" destination="rvz-C6-4do" id="O7p-is-i7b"/>
                                                                 <outlet property="rideName" destination="5NX-fB-zEo" id="UYT-HF-VTz"/>
                                                                 <outlet property="rideTypeLabel" destination="S5W-Vh-fGx" id="qRD-nt-pLN"/>
