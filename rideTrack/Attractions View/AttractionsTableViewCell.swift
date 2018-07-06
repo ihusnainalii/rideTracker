@@ -13,26 +13,20 @@ class AttractionsTableViewCell: UITableViewCell {
     @IBOutlet weak var rideName: UILabel!
     @IBOutlet weak var rideTypeLabel: UILabel!
     @IBOutlet weak var numberOfRidesLabel: UILabel!
-    @IBOutlet weak var minusIncrementButton: UIView!
-    @IBOutlet weak var plusButtonIncrement: UIButton!
-    @IBOutlet weak var addRideButton: UIButton!
+    @IBOutlet weak var attractionButton: UIButton!
     @IBOutlet weak var rideCellSquare: UIView!
-    @IBOutlet weak var rideCounterCellWidth: NSLayoutConstraint!
     
     
    // @IBOutlet weak var addRideButton: UIImageView!
     weak var delegate: AttractionsTableViewCellDelegate?
     
-    @IBAction func addButtonTapped(_ sender: Any) {
-        delegate?.attractionsTableViewCellDidTapAddRide(self)
-    }
-    
+   
 //    @IBAction func didSelectNegIncrementor(_ sender: Any) {
 //        delegate?.attractionCellNegativeIncrement(self)
 //    }
     
     @IBAction func didSelectPosIncrement(_ sender: Any) {
-        delegate?.attractionCellPositiveIncrement(self)
+        delegate?.attractionCellTapButton(self)
     }
     
     override func awakeFromNib() {
@@ -65,8 +59,7 @@ class AttractionsTableViewCell: UITableViewCell {
 }
 
 protocol AttractionsTableViewCellDelegate : class {
-    func attractionsTableViewCellDidTapAddRide(_ sender: AttractionsTableViewCell)
-    func attractionCellPositiveIncrement(_ sender: AttractionsTableViewCell)
+    func attractionCellTapButton(_ sender: AttractionsTableViewCell)
    // func attractionCellNegativeIncrement(_ sender: AttractionsTableViewCell)
 
    // func ignoreAction(_sender: AttractionsViewController)

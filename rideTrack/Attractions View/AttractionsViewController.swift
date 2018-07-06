@@ -11,7 +11,7 @@ import Foundation
 
 
 class AttractionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, AttractionsTableViewCellDelegate {
-
+    
     
     @IBOutlet weak var attractionsTableView: UITableView!
     @IBOutlet weak var parkLabel: UILabel!
@@ -22,7 +22,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var suggestButton: UIButton!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var VisualEffectsLayer: UIVisualEffectView!
-    @IBOutlet weak var rideCellSquare: UIView!
     
     
     
@@ -45,8 +44,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var animateRow = -1
     var countOfRemove = 0
     
-    var widthofCounter: NSLayoutConstraint!
-    var plusButton: UIButton!
     
     let green = UIColor(red: 120.0/255.0, green: 205.0/255.0, blue: 80.0/255.0, alpha: 1.0).cgColor as CGColor
     var userAttractions: [NSManagedObject] = []
@@ -93,10 +90,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
         ignore = ignoreList.array(forKey: "SavedIgnoreListArray")  as? [Int] ?? [Int]()
-    
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
-
+    
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
         for i in 0..<items.count{
@@ -115,7 +112,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                         if (attractionListForTable[i]).rideID == userAttractionDatabase[userDataBaseIndex].rideID{
                             
                             //The user does have data for this ride
-                           // print ("We have ridden ride # ", userAttractionDatabase[userDataBaseIndex].rideID!)
+                            // print ("We have ridden ride # ", userAttractionDatabase[userDataBaseIndex].rideID!)
                             attractionListForTable[i].isCheck = true
                             userRidesRidden += 1
                             
@@ -201,131 +198,77 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
         self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore-numExtinctSelected)
-    
+        
         self.attractionsTableView.reloadData()
         
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
+    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    //        return UITableViewAutomaticDimension
+    //    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return attractionListForTable.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "rideCell", for: indexPath) as! AttractionsTableViewCell
-    
+        
         cell.delegate = self
-        
         let item: AttractionsModel = attractionListForTable[indexPath.row]
-        self.widthofCounter = cell.rideCounterCellWidth
-        self.plusButton = cell.plusButtonIncrement
         
-        rideCellSquare = cell.rideCellSquare
-        if animateRow == indexPath.row { //animates cells here!!!
-            if attractionListForTable[indexPath.row].numberOfTimesRidden == 0 {
-                self.widthofCounter.constant = 80
-                UIView.animate(withDuration: 0.3, animations: { //Animate Here
-                    self.widthofCounter.constant -= 30
-                    self.view.layoutIfNeeded()
-                }, completion: nil)
-            }
-            else{
-                self.widthofCounter.constant = 50
-                UIView.animate(withDuration: 0.4, animations: { //Animate Here
-                    self.widthofCounter.constant += 30
-                    self.view.layoutIfNeeded()
-                }, completion: nil)
-            }
+        if ((attractionListForTable[indexPath.row]).isCheck){
+            cell.attractionButton.setImage(#imageLiteral(resourceName: "Plus Attraction"), for: .normal)
+            cell.numberOfRidesLabel.isHidden = false
+            cell.rideName?.textColor = UIColor.black
+            attractionListForTable[indexPath.row].isIgnored = false
+        } else if attractionListForTable[indexPath.row].isIgnored{
+            cell.rideName?.textColor = UIColor.gray
+            cell.attractionButton.setImage(#imageLiteral(resourceName: "Ignore Button"), for: .normal)
+            attractionListForTable[indexPath.row].isIgnored = true
+            cell.numberOfRidesLabel.isHidden = true
+        } else{
+            cell.attractionButton.setImage(#imageLiteral(resourceName: "Check Button"), for: .normal)
+            cell.rideName?.textColor = UIColor.black
+            cell.numberOfRidesLabel.isHidden = true
+            attractionListForTable[indexPath.row].isIgnored = false
         }
-        else {
-            if attractionListForTable[indexPath.row].numberOfTimesRidden == 0 {
-                self.widthofCounter.constant = 50
-            }
-            else if attractionListForTable[indexPath.row].numberOfTimesRidden >= 100 {
-                self.widthofCounter.constant = 110
-            }
-            else if attractionListForTable[indexPath.row].numberOfTimesRidden >= 10 {
-                self.widthofCounter.constant = 95
-            }
-            else{
-                self.widthofCounter.constant = 80
-            }
-            
+        
+        if (attractionListForTable[indexPath.row]).active == 1 {
+            cell.backgroundColor = UIColor.clear
         }
-        if attractionListForTable.count != 1{
-            if ((attractionListForTable[indexPath.row]).isCheck){
-                cell.rideName?.textColor = UIColor.black //used to turn green***
-                cell.addRideButton.isEnabled = false
-                cell.addRideButton.isHidden = true
-                cell.numberOfRidesLabel.isHidden = false
-                cell.plusButtonIncrement.isHidden = false
-            }
-            else{
-                cell.rideName?.textColor = UIColor.black
-                cell.addRideButton.isEnabled = true
-                cell.addRideButton.isHidden = false
-                cell.numberOfRidesLabel.isHidden = true
-                cell.plusButtonIncrement.isHidden = true
-                
-            }
-            if (attractionListForTable[indexPath.row]).active == 1 {
-                cell.backgroundColor = UIColor.clear
-            }
-            else{
-                cell.backgroundColor = UIColor.black.withAlphaComponent(0.2)
-            }
-            
-            
-            if attractionListForTable[indexPath.row].isIgnored {
-                cell.rideName?.textColor = UIColor.gray
-                cell.addRideButton.setImage(UIImage(named: "Ignore Button"), for: .normal)
-                cell.addRideButton.isEnabled = false
-               // cell.addRideButton.isOpaque = true
-                attractionListForTable[indexPath.row].isIgnored = true
-                //break
-            }
-            else {
-                attractionListForTable[indexPath.row].isIgnored = false
-                if ((attractionListForTable[indexPath.row]).isCheck){
-                    cell.rideName?.textColor = UIColor.black //Used to turn green***
-                }
-                else{
-                    cell.rideName?.textColor = UIColor.black
-                }
-                cell.addRideButton.setImage(UIImage(named: "Check Button"), for: .normal)
-                cell.addRideButton.isEnabled = true
-            }
+        else{
+            cell.backgroundColor = UIColor.black.withAlphaComponent(0.2)
         }
+        
         cell.rideName!.text = item.name
         cell.rideTypeLabel.text = convertRideTypeID(rideTypeID: item.rideType)
         cell.numberOfRidesLabel.text = String(item.numberOfTimesRidden)
         return cell
     }
+    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if (attractionListForTable[indexPath.row]).numberOfTimesRidden != 0{
-        let minusAction = UIContextualAction(style: .normal, title: "Minus", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            print ("Subtracting")
-            success(true)
-            self.attractionCellNegativeIncrement(indexPath: indexPath)
-            //success(true)
-            self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.4)
-
-        })
-        let minusColor = UIColor(red: 203/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
-        minusAction.backgroundColor = minusColor
-        minusAction.title = "Minus"
+            let minusAction = UIContextualAction(style: .normal, title: "Minus", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+                print ("Subtracting")
+                success(true)
+                self.attractionCellNegativeIncrement(indexPath: indexPath)
+                //success(true)
+                self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.4)
+                
+            })
+            let minusColor = UIColor(red: 203/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
+            minusAction.backgroundColor = minusColor
+            minusAction.title = "Minus"
             minusAction.image = UIImage (named:"Minus Button")
-        let configurations = UISwipeActionsConfiguration(actions: [minusAction])
-        configurations.performsFirstActionWithFullSwipe = true
-        return configurations
+            let configurations = UISwipeActionsConfiguration(actions: [minusAction])
+            configurations.performsFirstActionWithFullSwipe = true
+            return configurations
         }
         else {
             return UISwipeActionsConfiguration.init()
         }
     }
- 
+    
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if (attractionListForTable[indexPath.row]).active == 1 && attractionListForTable[indexPath.row].isCheck == false {
             let ignoreAction = UIContextualAction(style: .normal, title: "Ignore", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
@@ -350,12 +293,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 self.ignoreList.set(self.ignore, forKey: "SavedIgnoreListArray")
                 
                 self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore-self.numExtinctSelected)
-            success(true)
-            self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.4)
+                success(true)
+                self.attractionsTableView.perform(#selector(self.attractionsTableView.reloadData), with: nil, afterDelay: 0.4)
                 // self.attractionsTableView.reloadData()
                 
             })
-
+            
             ignoreAction.title = attractionListForTable[indexPath.row].isIgnored ? "Include" : "Exclude"
             ignoreAction.backgroundColor = attractionListForTable[indexPath.row].isIgnored ? .blue : .gray
             let configurations = UISwipeActionsConfiguration(actions: [ignoreAction])
@@ -402,10 +345,21 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func attractionsTableViewCellDidTapAddRide(_ sender: AttractionsTableViewCell) {
+    
+    func attractionCellTapButton(_ sender: AttractionsTableViewCell) {
+        print("plus")
         guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
-        
-        // Code in this block will trigger when OK button tapped.
+        if !attractionListForTable[indexPath.row].isCheck && !attractionListForTable[indexPath.row].isIgnored{
+            addFirstCheckRide(indexPath: indexPath)
+        } else if attractionListForTable[indexPath.row].isCheck && !attractionListForTable[indexPath.row].isIgnored{
+            positiveIncrementCount(indexPath: indexPath)
+        } else{
+            print("Can't change it when ignored")
+        }
+    }
+    
+    
+    func addFirstCheckRide(indexPath: IndexPath){
         print ("Seclected Attraction is: ", (self.attractionListForTable[indexPath.row]).rideID)
         
         (self.attractionListForTable[indexPath.row]).isCheck = true
@@ -413,12 +367,26 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.attractionListForTable[indexPath.row].dateFirstRidden = Date()
         self.attractionListForTable[indexPath.row].dateLastRidden = Date()
         self.saveUserCheckOffNewRide(parkID: self.parkID, rideID: (self.attractionListForTable[indexPath.row]).rideID);
-        self.attractionsTableView.reloadData()
+        
+        let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
+       
+        cell.numberOfRidesLabel.isHidden = false
+        cell.numberOfRidesLabel.alpha = 0.0
+        cell.numberOfRidesLabel.text = "TEST"
+        
+        //self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.5, animations: { //Animate Here
+            cell.numberOfRidesLabel.alpha = 1.0
+            cell.numberOfRidesLabel.text = String(self.attractionListForTable[indexPath.row].numberOfTimesRidden)
+            cell.attractionButton.setImage(#imageLiteral(resourceName: "Plus Attraction"), for: .normal)
+            cell.rideName?.textColor = UIColor.black
+        }, completion: nil)
+        
+        self.view.layoutIfNeeded()
         
         if (self.attractionListForTable[indexPath.row]).active == 0{
             self.userNumExtinct += 1
         }
-        self.animateRow = indexPath.row //animate here!
         
         self.userRidesRidden += 1
         print ("you have been on this many rides: ", self.userRidesRidden)
@@ -434,12 +402,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         if self.attractionListForTable[indexPath.row].hasScoreCard == 1{
             self.addScoreToCard(selectedRide: self.attractionListForTable[indexPath.row])
         }
-        
-        
     }
     
     func attractionCellNegativeIncrement (indexPath: IndexPath) {
-        //  guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
         
         if attractionListForTable[indexPath.row].numberOfTimesRidden == 1{
             //User is unchecking the ride from their list
@@ -471,11 +436,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
-    
-    
-    func attractionCellPositiveIncrement(_ sender: AttractionsTableViewCell) {
-        print("plus")
-        guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
+    func positiveIncrementCount(indexPath: IndexPath){
         let newIncrement = attractionListForTable[indexPath.row].numberOfTimesRidden + 1
         saveIncrementRideCount(rideID:  attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement, postive: true)
         attractionListForTable[indexPath.row].numberOfTimesRidden = newIncrement
@@ -485,9 +446,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         if attractionListForTable[indexPath.row].hasScoreCard == 1{
             addScoreToCard(selectedRide: attractionListForTable[indexPath.row])
         }
-        
     }
-
+    
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -594,7 +556,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             detailsVC.userAttractionDatabase = userAttractionDatabase
             comeFromDetails = true
             detailsVC.titleName = titleName
-          
+            
         }
         
         if segue.identifier == "toParkList"{
@@ -659,7 +621,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             return
         }
         let managedContext = appDelegate.persistentContainer.viewContext
-       
+        
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
         fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
         do
@@ -695,7 +657,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         else if sender.state == UIGestureRecognizerState.changed {
             if touchPoint.y - initialToucnPoint.y > 0 {
                 self.downBar.setImage(UIImage(named: "Flat Bar"), for: .normal)
-
+                
                 self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
             }
         }
