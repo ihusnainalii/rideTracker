@@ -78,6 +78,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
             }
             if dataBase == "attractions"{
                 var tempName = ""
+                var tempManu = ""
                 let attraction = AttractionsModel()
                 tempName = jsonElement["Name"] as! String
                 attraction.name = tempName.replacingOccurrences(of: "_", with: " ")
@@ -88,7 +89,8 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.yearClosed = Int (jsonElement["YearClosed"] as! String)
                 attraction.active = Int (jsonElement["Active"] as! String)
                 attraction.hasScoreCard = Int (jsonElement["ScoreCard"] as! String)
-                attraction.manufacturer = jsonElement["Manufacturer"] as? String
+                tempManu = jsonElement["Manufacturer"] as! String
+                attraction.manufacturer = tempManu.replacingOccurrences(of: "_", with: " ")
                 attraction.isCheck = false
                 dataBaseData.add(attraction)
             }

@@ -73,7 +73,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         case "Play Area":
             rideType = 12
         default:
-            rideType = 0
+            rideType = 1
         }
         print("Ride type is: ",rideType)
     }
@@ -120,6 +120,9 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         let dataModel = DataModel()
         dataModel.delegate = self
         print ("This is the type: ", rideType)
+        if rideType == 0 {
+            rideType = 1
+        }
         //getting values from text fields
         let parknum = parkID
         let orgRide = textFieldName.text
@@ -167,9 +170,8 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 let ThankAlertController = UIAlertController(title: "Thank You", message: "Thank you for your submission. We will review it and add it to the database.", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default) { (action) -> Void in
                     //let ViewController = self.storyboard?.instantiateViewController(withIdentifier: "parksView")
-                    //self.present(ViewController!, animated: true, completion: nil)
-                    self.performSegue(withIdentifier: "unwindToAttractions", sender: self)
-                    
+                    self.performSegue(withIdentifier: "unwindToDetailsView", sender: self)
+                   // self.performSegue(withIdentifier: "unwindToDetailsView", sender: self)
                 }
                 ThankAlertController.addAction(action)
                 self.present(ThankAlertController, animated: true, completion:nil)
@@ -238,6 +240,9 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
             print ("Text field is: ", textView)
             moveTextField(textField: textView, moveDistance: -215, up: true)
             print ("BELOW OPENING")
+        }
+        if notesText.text == "Enter notes or citations here" {
+            notesText.text = ""
         }
     }
     func textViewDidEndEditing(_ textView: UITextView) {

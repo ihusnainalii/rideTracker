@@ -61,6 +61,9 @@ class ParksDetailViewController: UIViewController {
         mapView.setRegion(coordinateRegion, animated: true)
     }
 
+    @IBAction func unwindToDetailsView(sender: UIStoryboardSegue) {
+        print("Back to details view")
+    }
     
     // MARK: - Navigation
 
