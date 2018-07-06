@@ -271,7 +271,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let total = Double(parkData.totalRides)
             var progressToShow = CGFloat(0)
             if total != 0{
-                progressToShow = CGFloat(Double(cell.progressViewWidth.constant) * (rides/total))
+                //Plus 4 becasue the
+                progressToShow = CGFloat(Double(cell.progressViewBackgroundWidth.constant) * (rides/total))
+                print(rides/total)
+                print(progressToShow)
+                print(cell.progressViewBackgroundWidth.constant)
                 if rides/total == 1{
                     cell.progressView.backgroundColor = UIColor(red: 218.0/255.0, green: 195.0/255.0, blue: 32.0/255.0, alpha: 1.0)
                 } else{

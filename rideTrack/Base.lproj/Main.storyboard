@@ -228,7 +228,7 @@
                                                                     <rect key="frame" x="265" y="3" width="75" height="31.5"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gQP-OW-gdF" customClass="NeverClearView" customModule="rideTrack" customModuleProvider="target">
-                                                                            <rect key="frame" x="-4" y="-4" width="69" height="38"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="69" height="32"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <color key="backgroundColor" red="0.36470588235294116" green="0.69803921568627447" blue="0.34509803921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </view>
@@ -263,12 +263,12 @@
                                                 </tableViewCellContentView>
                                                 <connections>
                                                     <outlet property="fractionLabel" destination="zhZ-Ao-su9" id="xIs-aP-vWu"/>
-                                                    <outlet property="fractionView" destination="DgR-w1-D94" id="vhu-P3-Z1t"/>
                                                     <outlet property="locationLabel" destination="irD-gR-D2r" id="aBA-MT-kLM"/>
                                                     <outlet property="parkNameLabel" destination="70d-qh-6a5" id="ZWt-2S-Hzv"/>
                                                     <outlet property="progressView" destination="gQP-OW-gdF" id="lGg-XL-Cn6"/>
-                                                    <outlet property="progressViewHeight" destination="Oxk-bZ-gRG" id="wHV-z3-Y6R"/>
-                                                    <outlet property="progressViewWidth" destination="JSa-h2-stG" id="bNf-WG-FZ2"/>
+                                                    <outlet property="progressViewBackground" destination="DgR-w1-D94" id="vhu-P3-Z1t"/>
+                                                    <outlet property="progressViewBackgroundHeight" destination="Oxk-bZ-gRG" id="wHV-z3-Y6R"/>
+                                                    <outlet property="progressViewBackgroundWidth" destination="JSa-h2-stG" id="bNf-WG-FZ2"/>
                                                     <segue destination="zaz-Kb-2WY" kind="presentation" identifier="toAttractionsFavorites" modalPresentationStyle="overCurrentContext" id="fvO-Lv-ILn"/>
                                                 </connections>
                                             </tableViewCell>
@@ -345,7 +345,7 @@
                                                                     <rect key="frame" x="269" y="3" width="75" height="32"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zPl-15-2Dg" customClass="NeverClearView" customModule="rideTrack" customModuleProvider="target">
-                                                                            <rect key="frame" x="-4" y="-4" width="69" height="38"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="69" height="32"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <color key="backgroundColor" red="0.36470588240000001" green="0.69803921570000005" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </view>

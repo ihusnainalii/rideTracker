@@ -18,9 +18,9 @@ class ConfigureSmallerLayout{
         favoriteCell.locationLabel.font = favoriteCell.locationLabel.font.withSize(12.0)
         favoriteCell.fractionLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         
-        favoriteCell.fractionView.layer.cornerRadius = 8
-        favoriteCell.progressViewWidth.constant = 64.5
-        favoriteCell.progressViewHeight.constant = 25.8
+        favoriteCell.progressViewBackground.layer.cornerRadius = 8
+        favoriteCell.progressViewBackgroundWidth.constant = 64.5
+        favoriteCell.progressViewBackgroundHeight.constant = 25.8
         
     }
     

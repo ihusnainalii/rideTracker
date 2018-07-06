@@ -13,10 +13,10 @@ class FavoritesTableViewCell: UITableViewCell {
     @IBOutlet weak var parkNameLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var fractionLabel: UILabel!
-    @IBOutlet weak var fractionView: UIView!
+    @IBOutlet weak var progressViewBackground: UIView!
     @IBOutlet weak var progressView: UIView!
-    @IBOutlet weak var progressViewWidth: NSLayoutConstraint!
-    @IBOutlet weak var progressViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var progressViewBackgroundWidth: NSLayoutConstraint!
+    @IBOutlet weak var progressViewBackgroundHeight: NSLayoutConstraint!
     
     let screenSize = UIScreen.main.bounds
     
@@ -24,8 +24,8 @@ class FavoritesTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        fractionView.layer.cornerRadius = 10
-        progressWidth = fractionView.frame.width
+        progressViewBackground.layer.cornerRadius = 10
+        progressWidth = progressViewBackground.frame.width
         
         progressView.layer.shadowOpacity = 0.4
         progressView.layer.shadowOffset = CGSize.zero
