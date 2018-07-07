@@ -49,5 +49,19 @@ class ConfigureSmallerLayout{
         parksView.currentLocationLabel.font = UIFont.systemFont(ofSize: 12, weight: .light)
         parksView.viewAttractionLocationButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
     }
+    
+    func attractionsViewLayout(attractionsView: AttractionsViewController){
+        attractionsView.parkLabel.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        attractionsView.rideCountLabel.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        attractionsView.NumCompleteLabel.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        attractionsView.extinctLabel.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        attractionsView.extinctText.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        attractionsView.suggestButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+    }
+    
+    func attractionCellLayout(attractionsCell: AttractionsTableViewCell){
+        attractionsCell.rideName.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        attractionsCell.rideTypeLabel.font = UIFont.systemFont(ofSize: 12, weight: .light)
+    }
 
 }

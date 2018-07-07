@@ -240,8 +240,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             print("GETTING GPS DATA")
         }
     }
-    
-    
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rowCount = 0

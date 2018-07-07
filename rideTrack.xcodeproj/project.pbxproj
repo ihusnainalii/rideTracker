@@ -159,7 +159,6 @@
 				5FE9F81420DDCEF20012B98C /* FavoritesTableViewCell.swift */,
 				5FE9F81620DDCF040012B98C /* AllParksTableViewCell.swift */,
 				5F202C5A20E6E8AF00FFE408 /* NeverClearView.swift */,
-				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 			);
 			path = "Parks View";
 			sourceTree = "<group>";
@@ -212,6 +211,7 @@
 				5F16C52720BCF38200E525EF /* Attractions View */,
 				5FE9F81120DCA3E10012B98C /* Parks View */,
 				982F068C20EBC2FA00B08474 /* User Suggest */,
+				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
 				987028F320B7897E00DC3B73 /* SettingsViewController.swift */,

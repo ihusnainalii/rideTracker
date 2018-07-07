@@ -15,6 +15,7 @@ class AttractionsTableViewCell: UITableViewCell {
     @IBOutlet weak var numberOfRidesLabel: UILabel!
     @IBOutlet weak var attractionButton: UIButton!
     @IBOutlet weak var rideCellSquare: UIView!
+    @IBOutlet weak var rideCountViewLeadingConstraint: NSLayoutConstraint!
     
     
    // @IBOutlet weak var addRideButton: UIImageView!
