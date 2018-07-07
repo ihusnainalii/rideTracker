@@ -668,7 +668,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.NumCompleteLabel.text = self.RidesComplete
         
         var percentage = Float(userCount)/Float(totNum)
-        self.progressBar.progress = Float(percentage)
+        
+        self.progressBar.setProgress(Float(percentage), animated: true)
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
