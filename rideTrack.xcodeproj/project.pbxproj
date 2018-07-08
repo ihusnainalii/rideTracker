@@ -12,6 +12,7 @@
 		5F16C52920BCF3F700E525EF /* ParkListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16C52820BCF3F700E525EF /* ParkListData.swift */; };
 		5F202C5B20E6E8AF00FFE408 /* NeverClearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F202C5A20E6E8AF00FFE408 /* NeverClearView.swift */; };
 		5F202C5D20EB257700FFE408 /* ParksDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F202C5C20EB257700FFE408 /* ParksDetailViewController.swift */; };
+		5F21419620F18087009A2E3A /* SearchMyParksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F21419520F18087009A2E3A /* SearchMyParksView.swift */; };
 		5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */; };
 		5FE9F81020DB45030012B98C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FE9F80F20DB45030012B98C /* Media.xcassets */; };
 		5FE9F81320DCA43C0012B98C /* ParksCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE9F81220DCA43C0012B98C /* ParksCoreData.swift */; };
@@ -65,6 +66,7 @@
 		5F16C52820BCF3F700E525EF /* ParkListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkListData.swift; sourceTree = "<group>"; };
 		5F202C5A20E6E8AF00FFE408 /* NeverClearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeverClearView.swift; sourceTree = "<group>"; };
 		5F202C5C20EB257700FFE408 /* ParksDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksDetailViewController.swift; sourceTree = "<group>"; };
+		5F21419520F18087009A2E3A /* SearchMyParksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMyParksView.swift; sourceTree = "<group>"; };
 		5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSmallerLayout.swift; sourceTree = "<group>"; };
 		5FE9F80F20DB45030012B98C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		5FE9F81220DCA43C0012B98C /* ParksCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksCoreData.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				5FE9F81420DDCEF20012B98C /* FavoritesTableViewCell.swift */,
 				5FE9F81620DDCF040012B98C /* AllParksTableViewCell.swift */,
 				5F202C5A20E6E8AF00FFE408 /* NeverClearView.swift */,
+				5F21419520F18087009A2E3A /* SearchMyParksView.swift */,
 			);
 			path = "Parks View";
 			sourceTree = "<group>";
@@ -377,6 +380,7 @@
 				98C28A9F20EBE9CE00C7229E /* SuggestTableViewCell.swift in Sources */,
 				98AD7F7320A91A5C00540AB3 /* ParkSearchViewController.swift in Sources */,
 				9845395720BC8D8C00C0E36C /* AttractionsDetailsViewController.swift in Sources */,
+				5F21419620F18087009A2E3A /* SearchMyParksView.swift in Sources */,
 				5F16C52920BCF3F700E525EF /* ParkListData.swift in Sources */,
 				98AD7F7720A91A5C00540AB3 /* AppDelegate.swift in Sources */,
 				987028F420B7897E00DC3B73 /* SettingsViewController.swift in Sources */,

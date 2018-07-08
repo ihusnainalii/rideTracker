@@ -154,11 +154,26 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SFN-kt-0Xx">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                 <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ggp-Ep-vO0">
+                                        <rect key="frame" x="274" y="34" width="90" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="90" id="SW8-PH-V20"/>
+                                            <constraint firstAttribute="height" constant="36" id="ZCo-vJ-gDS"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                        <state key="normal" title="Done">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapDownSearchParks:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aOk-vk-TqH"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BzP-aD-VQn">
-                                        <rect key="frame" x="257.5" y="34" width="106.5" height="36"/>
+                                        <rect key="frame" x="274" y="34" width="90" height="36"/>
+                                        <color key="backgroundColor" red="0.91564949587253353" green="0.92708591642771998" blue="0.93617248925126906" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="f7C-5b-yQN"/>
-                                            <constraint firstAttribute="width" constant="106.5" id="iGy-eD-pdJ"/>
+                                            <constraint firstAttribute="width" constant="90" id="iGy-eD-pdJ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                         <state key="normal" title="Profile">
@@ -182,6 +197,8 @@
                                     <constraint firstItem="RKG-r3-1wv" firstAttribute="leading" secondItem="SFN-kt-0Xx" secondAttribute="leading" constant="14" id="EKg-lA-hfb"/>
                                     <constraint firstAttribute="height" constant="80" id="Go3-Ny-0yP"/>
                                     <constraint firstAttribute="bottom" secondItem="RKG-r3-1wv" secondAttribute="bottom" constant="2" id="IGo-iP-aaj"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ggp-Ep-vO0" secondAttribute="trailing" constant="11" id="vuv-xO-QCI"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ggp-Ep-vO0" secondAttribute="bottom" constant="10" id="y8C-2O-S0H"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wjJ-uA-bd2">
@@ -298,6 +315,16 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sWj-I5-Xhq">
                                 <rect key="frame" x="7" y="285" width="361" height="329"/>
                                 <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search my parks" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ATh-qj-u0A">
+                                        <rect key="frame" x="5" y="7" width="351" height="30"/>
+                                        <color key="backgroundColor" red="0.86666666670000003" green="0.87058823529999996" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="search"/>
+                                        <connections>
+                                            <action selector="didChangeMySearchText:" destination="BYZ-38-t0r" eventType="editingChanged" id="0db-FQ-sCU"/>
+                                        </connections>
+                                    </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Parks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="dHc-jO-smP">
                                         <rect key="frame" x="5" y="7" width="123" height="35"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="29"/>
@@ -393,6 +420,8 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="ATh-qj-u0A" firstAttribute="top" secondItem="sWj-I5-Xhq" secondAttribute="top" constant="7" id="2Jw-s6-C7Q"/>
+                                    <constraint firstItem="ATh-qj-u0A" firstAttribute="centerX" secondItem="sWj-I5-Xhq" secondAttribute="centerX" id="8mH-nH-amJ"/>
                                     <constraint firstItem="dHc-jO-smP" firstAttribute="leading" secondItem="sWj-I5-Xhq" secondAttribute="leading" constant="5" id="BP5-j7-EAL"/>
                                     <constraint firstAttribute="trailing" secondItem="T2A-XL-wHa" secondAttribute="trailing" constant="5" id="FpV-9K-tDm"/>
                                     <constraint firstItem="VXB-kA-HSX" firstAttribute="leading" secondItem="sWj-I5-Xhq" secondAttribute="leading" constant="7" id="HCE-fJ-7eJ"/>
@@ -402,25 +431,35 @@
                                     <constraint firstItem="VXB-kA-HSX" firstAttribute="top" secondItem="dHc-jO-smP" secondAttribute="bottom" constant="3" id="aJn-DN-7cB"/>
                                     <constraint firstItem="T2A-XL-wHa" firstAttribute="leading" secondItem="sWj-I5-Xhq" secondAttribute="leading" constant="5" id="eQR-rP-GJ6"/>
                                     <constraint firstAttribute="trailing" secondItem="VXB-kA-HSX" secondAttribute="trailing" id="fVa-JJ-ffk"/>
+                                    <constraint firstAttribute="trailing" secondItem="ATh-qj-u0A" secondAttribute="trailing" constant="5" id="rVH-XN-lSV"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hBl-RG-inl">
                                 <rect key="frame" x="7" y="619" width="361" height="42"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search my parks" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GKR-rW-ThF">
-                                        <rect key="frame" x="6" y="6" width="349" height="30"/>
-                                        <color key="backgroundColor" red="0.8666666666666667" green="0.87058823529411766" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sSe-yI-CGl">
+                                        <rect key="frame" x="5" y="5" width="351" height="32"/>
+                                        <color key="backgroundColor" red="0.86666666670000003" green="0.87058823529999996" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                        <connections>
+                                            <action selector="didTapSearchMyParks:" destination="BYZ-38-t0r" eventType="touchUpInside" id="efX-P6-2eM"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search my parks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ib8-zm-s1n">
+                                        <rect key="frame" x="9" y="12" width="114" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="GKR-rW-ThF" firstAttribute="leading" secondItem="hBl-RG-inl" secondAttribute="leading" constant="6" id="MWI-Lh-Pxk"/>
-                                    <constraint firstItem="GKR-rW-ThF" firstAttribute="top" secondItem="hBl-RG-inl" secondAttribute="top" constant="6" id="MXU-bW-Tq3"/>
-                                    <constraint firstAttribute="trailing" secondItem="GKR-rW-ThF" secondAttribute="trailing" constant="6" id="Uyt-Wa-raS"/>
-                                    <constraint firstAttribute="bottom" secondItem="GKR-rW-ThF" secondAttribute="bottom" constant="6" id="iv7-n5-d05"/>
+                                    <constraint firstAttribute="trailing" secondItem="sSe-yI-CGl" secondAttribute="trailing" constant="5" id="1cz-Qt-2oN"/>
+                                    <constraint firstItem="Ib8-zm-s1n" firstAttribute="leading" secondItem="hBl-RG-inl" secondAttribute="leading" constant="9" id="EoK-Qi-HNb"/>
+                                    <constraint firstItem="sSe-yI-CGl" firstAttribute="leading" secondItem="hBl-RG-inl" secondAttribute="leading" constant="5" id="QRq-KD-PFu"/>
+                                    <constraint firstItem="sSe-yI-CGl" firstAttribute="top" secondItem="hBl-RG-inl" secondAttribute="top" constant="5" id="UC9-rm-YgH"/>
+                                    <constraint firstAttribute="bottom" secondItem="sSe-yI-CGl" secondAttribute="bottom" constant="5" id="aP6-bE-Dd0"/>
+                                    <constraint firstItem="Ib8-zm-s1n" firstAttribute="centerY" secondItem="hBl-RG-inl" secondAttribute="centerY" id="dID-NY-4Ee"/>
                                     <constraint firstAttribute="width" secondItem="hBl-RG-inl" secondAttribute="height" multiplier="361:42" id="vbI-OR-z2X"/>
                                 </constraints>
                             </view>
@@ -518,6 +557,7 @@
                     <connections>
                         <outlet property="addParkButton" destination="0nb-Xl-qwe" id="XDt-lM-vDx"/>
                         <outlet property="addParkHeightConstrant" destination="M2k-M9-T6B" id="X9b-S8-ITw"/>
+                        <outlet property="allParksBottomConstrant" destination="V2k-q4-Gp0" id="okG-1k-lxe"/>
                         <outlet property="allParksTableView" destination="VXB-kA-HSX" id="BwI-f7-C0h"/>
                         <outlet property="allParksView" destination="sWj-I5-Xhq" id="3ib-cF-ceC"/>
                         <outlet property="backgroundView" destination="8bC-Xf-vdC" id="3rY-lT-PWf"/>
@@ -525,6 +565,9 @@
                         <outlet property="currentLocationParkNameLabel" destination="9eZ-s2-SZ1" id="pap-sW-bjc"/>
                         <outlet property="currentLocationView" destination="KOS-Dh-fGQ" id="O4G-G4-Nbf"/>
                         <outlet property="currentLocationViewBottomConstraint" destination="ktq-8M-4XU" id="0xO-Lb-RQO"/>
+                        <outlet property="doneSearchButton" destination="Ggp-Ep-vO0" id="fYY-6o-gRt"/>
+                        <outlet property="doneSearchHeightConstrant" destination="ZCo-vJ-gDS" id="YAg-Dh-qCU"/>
+                        <outlet property="doneSearchWidthConstrant" destination="SW8-PH-V20" id="JhX-OA-Enw"/>
                         <outlet property="favoritesLabel" destination="Bm2-ed-wDI" id="8IR-9r-Sqm"/>
                         <outlet property="favoritesTableView" destination="uXX-yk-zP8" id="Bk6-5H-FrE"/>
                         <outlet property="favoritesView" destination="wjJ-uA-bd2" id="hEn-Zv-jns"/>
@@ -533,7 +576,9 @@
                         <outlet property="navBarHeightConstants" destination="Go3-Ny-0yP" id="2lG-5R-xJT"/>
                         <outlet property="navigationBar" destination="SFN-kt-0Xx" id="8qU-ba-8ej"/>
                         <outlet property="parksLabel" destination="RKG-r3-1wv" id="kre-8J-QTc"/>
+                        <outlet property="searchMyParksButton" destination="sSe-yI-CGl" id="M3R-6n-kVd"/>
                         <outlet property="searchParkView" destination="hBl-RG-inl" id="zTN-Hs-Wvm"/>
+                        <outlet property="searchParksTextField" destination="ATh-qj-u0A" id="7Ox-zu-wdh"/>
                         <outlet property="searchRideButtonHeightConstraint" destination="TlX-Rq-kVi" id="0kI-5i-hII"/>
                         <outlet property="settingsButton" destination="BzP-aD-VQn" id="OoY-nL-HsQ"/>
                         <outlet property="settingsButtonHeightConstrant" destination="f7C-5b-yQN" id="rfm-i2-Syw"/>

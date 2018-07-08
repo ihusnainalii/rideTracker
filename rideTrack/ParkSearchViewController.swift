@@ -48,11 +48,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
                 searchedParksList.append(park)
                 firstEntry = false
             }
-            //            if park.city.caseInsensitiveCompare(searchTextFeild.text!) == ComparisonResult.orderedSame{
-            //                print("Match! \(park.name) ")
-            //                searchedParksList.add(park)
-            //            }
-            
+
             //Not allow you to add duplicates
             if (park.city.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil) && firstEntry{
                 searchedParksList.append(park)
@@ -99,11 +95,13 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
             if let indexPath = resultsTableView.indexPathForSelectedRow {
                 selectedPark = (searchedParksList[indexPath.row] )
             }
+            searchTextFeild.resignFirstResponder()
         }
         
         if (segue.identifier == "cancel") {
             print("CANCEL")
             selectedPark = nil
+            searchTextFeild.resignFirstResponder()
         }
         
     }
@@ -123,7 +121,8 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         }
         else if sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled {
             if touchPoint.y - initialToucnPoint.y > 200 {
-                self.dismiss(animated: true, completion: nil)                
+                self.dismiss(animated: true, completion: nil)
+                self.searchTextFeild.resignFirstResponder()
             } else {
                 UIView.animate(withDuration: 0.3, animations: {
                     self.downButton.setImage(UIImage(named: "Down Bar"), for: .normal)

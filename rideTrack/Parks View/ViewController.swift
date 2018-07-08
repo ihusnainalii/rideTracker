@@ -12,7 +12,7 @@ import Foundation
 import CoreLocation
 
 
-class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, NSFetchedResultsControllerDelegate{
+class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, NSFetchedResultsControllerDelegate, UITextFieldDelegate{
     
     let screenSize = UIScreen.main.bounds
 
@@ -33,6 +33,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var favoritesLabel: UILabel!
     @IBOutlet weak var myParksLabel: UILabel!
     @IBOutlet weak var currentLocationLabel: UILabel!
+    @IBOutlet weak var searchParksTextField: UITextField!
+    @IBOutlet weak var searchMyParksButton: UIButton!
+    @IBOutlet weak var doneSearchButton: UIButton!
     
     @IBOutlet weak var settingsButtonHeightConstrant: NSLayoutConstraint!
     @IBOutlet weak var settingsButtonWidthConstrant: NSLayoutConstraint!
@@ -41,6 +44,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var currentLocationViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var searchRideButtonHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var favoritesViewHeightConstrant: NSLayoutConstraint!
+    @IBOutlet weak var allParksBottomConstrant: NSLayoutConstraint!
+    @IBOutlet weak var doneSearchWidthConstrant: NSLayoutConstraint!
+    @IBOutlet weak var doneSearchHeightConstrant: NSLayoutConstraint!
+    
     var favoitesHeight: CGFloat = 190.0
     
     var selectedPark: ParksModel = ParksModel()
@@ -51,6 +58,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var selectedAttractionsList: [NSManagedObject] = []
     var savedParkList: [NSManagedObject] = []
     var arrayOfAllParks = [ParksModel]()
+    var savedMyParksForSearch = [ParksModel]()
     
     var showExtinct = UserDefaults.standard.integer(forKey: "showExtinct")
     var simulateLocation = UserDefaults.standard.integer(forKey: "simulateLocation")
@@ -59,6 +67,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var closestPark = ParksModel()
     let parksCoreData = ParkCoreData()
     let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
+    
+    var favoritesViewHeightBeforeAnimating: CGFloat!
     
     override func viewDidLoad() {
         
@@ -89,6 +99,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         settingsButton.layer.cornerRadius = 7
         settingsButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
+        doneSearchButton.backgroundColor = settingsColor
+        doneSearchButton.layer.cornerRadius = 7
+        doneSearchButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        
+        
         navigationBar.layer.shadowOpacity = 0.5
         navigationBar.layer.shadowOffset = CGSize.zero
         navigationBar.layer.shadowRadius = 12
@@ -104,7 +119,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         addParkButton.layer.shadowRadius = 12
         
         searchParkView.layer.cornerRadius = 7
+        searchMyParksButton.layer.cornerRadius = 7
+        searchMyParksButton.layer.borderWidth = 0.3
+        searchMyParksButton.layer.borderColor = UIColor.gray.cgColor
         
+        searchParksTextField.alpha = 0.0
         
         let gradient = CAGradientLayer()
         gradient.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
@@ -125,6 +144,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         allParksTableView.isUserInteractionEnabled = true
         allParksTableView.delegate = self
         allParksTableView.dataSource = self
+        
+        searchParksTextField.delegate = self
         
         let urlPath = "http://www.beingpositioned.com/theparksman/parksdbservice.php"
         let dataModel = DataModel()
@@ -536,6 +557,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             }
             attractionVC.userAttractionDatabase = userAttractions
             
+            SearchMyParks().animateOutOfParkSearch(parksView: self)
             
             print("count: ", userAttractions.count)
         }
@@ -568,6 +590,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
     }
     
+
     func checkIfNewPark(newPark: ParksModel) -> Bool {
         var isNewPark = true
         for i in 0..<allParksList.count{
@@ -630,6 +653,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
     }
     
+    
+    @IBAction func didTapSearchMyParks(_ sender: Any) {
+        print("searching my parks")
+        SearchMyParks().animateIntoSearchView(parksView: self)
+    }
+    
+    
+    @IBAction func didTapDownSearchParks(_ sender: Any) {
+        print("Done searching my parks")
+        SearchMyParks().animateOutOfParkSearch(parksView: self)
+    }
+    
+    @IBAction func didChangeMySearchText(_ sender: Any) {
+        SearchMyParks().updateSearchResults(parksView: self)
+    }
+    
+    
 
     @IBAction func showCurrentlLocationPark(_ sender: Any) {
         
@@ -680,6 +720,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             }
         }
         allParksTableView.reloadData()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     func findIndexFavoritesList(parkID: Int) -> Int{

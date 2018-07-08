@@ -237,6 +237,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             cell.attractionButton.setImage(#imageLiteral(resourceName: "Plus Attraction"), for: .normal)
             cell.numberOfRidesLabel.isHidden = false
             cell.rideCountViewLeadingConstraint.constant = 3
+            cell.numberOfRidesLabel.alpha = 1.0
             cell.rideName?.textColor = UIColor.black
             
             attractionListForTable[indexPath.row].isIgnored = false
@@ -245,6 +246,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             cell.attractionButton.setImage(#imageLiteral(resourceName: "Ignore Button"), for: .normal)
             attractionListForTable[indexPath.row].isIgnored = true
             cell.rideCountViewLeadingConstraint.constant = 1
+            cell.numberOfRidesLabel.alpha = 0.0
             cell.numberOfRidesLabel.isHidden = true
         } else{
             cell.attractionButton.setImage(#imageLiteral(resourceName: "Check Button"), for: .normal)
@@ -252,6 +254,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             cell.numberOfRidesLabel.isHidden = true
             cell.rideCountViewLeadingConstraint.constant = 1
             attractionListForTable[indexPath.row].isIgnored = false
+            cell.numberOfRidesLabel.alpha = 0.0
         }
         
         if (attractionListForTable[indexPath.row]).active == 1 {
