@@ -92,7 +92,7 @@
                                             <color key="backgroundColor" red="0.0011725673188915406" green="0.41295153993096445" blue="0.0018193449580243392" alpha="0.43691138698630139" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="search"/>
                                             <connections>
                                                 <action selector="didUpdateText:" destination="0zg-md-OYR" eventType="editingChanged" id="i3T-ZQ-qiF"/>
                                             </connections>
@@ -120,7 +120,7 @@
                         <constraints>
                             <constraint firstItem="7ZS-Wp-Nki" firstAttribute="top" secondItem="qkc-FO-5F3" secondAttribute="top" constant="13" id="ESl-wC-hIB"/>
                             <constraint firstItem="7ZS-Wp-Nki" firstAttribute="leading" secondItem="qkc-FO-5F3" secondAttribute="leading" id="ctz-Dr-v1j"/>
-                            <constraint firstItem="7ZS-Wp-Nki" firstAttribute="bottom" secondItem="qkc-FO-5F3" secondAttribute="bottom" id="xfW-k6-mhx"/>
+                            <constraint firstItem="7ZS-Wp-Nki" firstAttribute="bottom" secondItem="Fyi-UF-vQO" secondAttribute="bottom" id="xfW-k6-mhx"/>
                             <constraint firstItem="7ZS-Wp-Nki" firstAttribute="trailing" secondItem="qkc-FO-5F3" secondAttribute="trailing" id="zbt-aT-lLp"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qkc-FO-5F3"/>
@@ -1066,7 +1066,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eOf-af-g5N" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="WCJ-ri-KmA" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2736.8000000000002" y="1222.488755622189"/>
+            <point key="canvasLocation" x="2674" y="1223"/>
         </scene>
         <!--Attractions View Controller-->
         <scene sceneID="OSf-k8-4Sg">
@@ -1082,7 +1082,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="627"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qGY-Pc-WCD">
+                                        <view clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qGY-Pc-WCD">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="627"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ww5-cA-KWO">
@@ -1307,7 +1307,7 @@
                             <constraint firstItem="2Ff-tE-lFu" firstAttribute="leading" secondItem="1VQ-lA-yzH" secondAttribute="leading" id="MHa-mP-h6h"/>
                             <constraint firstItem="2Ff-tE-lFu" firstAttribute="trailing" secondItem="1VQ-lA-yzH" secondAttribute="trailing" id="VMh-hi-ii2"/>
                             <constraint firstItem="2Ff-tE-lFu" firstAttribute="top" secondItem="1VQ-lA-yzH" secondAttribute="top" constant="20" id="YKU-Xs-Mob"/>
-                            <constraint firstItem="2Ff-tE-lFu" firstAttribute="bottom" secondItem="1VQ-lA-yzH" secondAttribute="bottom" id="pYo-Ja-INM"/>
+                            <constraint firstItem="2Ff-tE-lFu" firstAttribute="bottom" secondItem="49z-lz-1Ke" secondAttribute="bottom" id="pYo-Ja-INM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1VQ-lA-yzH"/>
                     </view>
@@ -1346,14 +1346,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h3m-6R-6it">
-                                <rect key="frame" x="0.0" y="-133" width="375" height="800"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" button="YES"/>
                                 </accessibility>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="800" id="1Zp-0m-smT"/>
-                                </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="r4J-hT-G4x" appends="YES" id="ON6-Fu-4Z8"/>
                                 </connections>
@@ -1583,7 +1580,8 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="h3m-6R-6it" firstAttribute="bottom" secondItem="cJr-Oe-NCN" secondAttribute="bottom" id="1ny-2J-E9a"/>
+                            <constraint firstItem="h3m-6R-6it" firstAttribute="bottom" secondItem="Bwz-yM-ppu" secondAttribute="bottom" id="1ny-2J-E9a"/>
+                            <constraint firstItem="h3m-6R-6it" firstAttribute="top" secondItem="Bwz-yM-ppu" secondAttribute="top" id="2qz-Db-hcj"/>
                             <constraint firstItem="Cxv-Gr-wFA" firstAttribute="leading" secondItem="cJr-Oe-NCN" secondAttribute="leading" constant="10" id="Xi8-Nr-sV8"/>
                             <constraint firstItem="KpE-N1-tqN" firstAttribute="trailing" secondItem="Cxv-Gr-wFA" secondAttribute="trailing" id="Z9n-E0-DSU"/>
                             <constraint firstItem="h3m-6R-6it" firstAttribute="trailing" secondItem="cJr-Oe-NCN" secondAttribute="trailing" id="dpW-qc-h5r"/>

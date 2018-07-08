@@ -15,6 +15,7 @@ class SearchMyParks{
     var park = ParksModel()
     
     func animateIntoSearchView(parksView: ViewController){
+        parksView.isSearchingMyParks = true
         parksView.savedMyParksForSearch = parksView.allParksList
         parksView.favoritesViewHeightBeforeAnimating = parksView.favoritesViewHeightConstrant.constant
         parksView.favoritesViewHeightConstrant.constant = 5.0
@@ -37,6 +38,8 @@ class SearchMyParks{
     }
     
     func animateOutOfParkSearch(parksView: ViewController){
+        print("animating out of park search")
+        parksView.isSearchingMyParks = false
         parksView.favoritesViewHeightConstrant.constant = parksView.favoritesViewHeightBeforeAnimating
         parksView.allParksBottomConstrant.constant = 5
         parksView.allParksList = parksView.savedMyParksForSearch

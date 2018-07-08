@@ -58,7 +58,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var selectedAttractionsList: [NSManagedObject] = []
     var savedParkList: [NSManagedObject] = []
     var arrayOfAllParks = [ParksModel]()
+    
     var savedMyParksForSearch = [ParksModel]()
+    var isSearchingMyParks = false
     
     var showExtinct = UserDefaults.standard.integer(forKey: "showExtinct")
     var simulateLocation = UserDefaults.standard.integer(forKey: "simulateLocation")
@@ -246,6 +248,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 self.allParksTableView.alpha = allParksViewTableAlpha
                 self.view.layoutIfNeeded()
             })
+            
+           favoritesViewHeightBeforeAnimating = favoritesViewHeightConstrant.constant
             
             allParksList.sort { $0.name < $1.name }
             favoiteParkList.sort { $0.name < $1.name }
@@ -557,8 +561,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             }
             attractionVC.userAttractionDatabase = userAttractions
             
-            SearchMyParks().animateOutOfParkSearch(parksView: self)
-            
+            if isSearchingMyParks{
+                SearchMyParks().animateOutOfParkSearch(parksView: self)
+            }
             print("count: ", userAttractions.count)
         }
         
