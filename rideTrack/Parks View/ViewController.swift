@@ -302,7 +302,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 print(progressToShow)
                 print(cell.progressViewBackgroundWidth.constant)
                 if rides/total == 1{
-                    cell.progressView.backgroundColor = UIColor(red: 218.0/255.0, green: 195.0/255.0, blue: 32.0/255.0, alpha: 1.0)
+                    cell.progressView.backgroundColor = UIColor(red: 250/255.0, green: 204/255.0, blue: 73/255.0, alpha: 1.0)
                 } else{
                     cell.progressView.backgroundColor = UIColor(red: 74.0/255.0, green: 166.0/255.0, blue: 65.0/255.0, alpha: 1.0)
                 }
@@ -331,7 +331,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             if total != 0{
                 progressToShow = CGFloat(Double(cell.fractionViewWidth.constant) * (rides/total))
                 if rides/total == 1{
-                    cell.progressView.backgroundColor = UIColor(red: 218.0/255.0, green: 195.0/255.0, blue: 32.0/255.0, alpha: 1.0)
+                    cell.progressView.backgroundColor = UIColor(red: 250/255.0, green: 204/255.0, blue: 73/255.0, alpha: 1.0)
                 } else{
                     cell.progressView.backgroundColor = UIColor(red: 74.0/255.0, green: 166.0/255.0, blue: 65.0/255.0, alpha: 1.0)
                 }

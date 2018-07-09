@@ -36,7 +36,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(selectedAttraction.parkID!)"
         let dataModel = DataModel()
         dataModel.delegate = self
@@ -48,10 +48,10 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         openTextField.delegate = self
         closedTextField.delegate = self
         manufacturerTextField.delegate = self
-        
         parkNameLabel.text = selectedAttraction.parkName
         nameTextField.text = selectedAttraction.rideName
-        pickerData = ["Roller Coaster", "Water Ride", "Childrens Ride", "Transporation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Pay Area"]
+        pickerData = ["Roller Coaster", "Water Ride", "Childrens Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Pay Area"]
+        
         openTextField.text = String(selectedAttraction.YearOpen)
         closedTextField.text = String(selectedAttraction.YearClose)
         manufacturerTextField.text = selectedAttraction.manufacturer
@@ -63,6 +63,8 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         }
         scoreCardSwitch.isOn = false
         
+        typeSwitcher.selectRow((Int(selectedAttraction.type!)!-1), inComponent: 0, animated: true)
+
         // Do any additional setup after loading the view.
     }
     
@@ -111,11 +113,11 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
             rideType = 1
         case "Water Ride":
             rideType = 2
-        case "Children's Ride":
+        case "Childrens Ride":
             rideType = 3
         case "Flat Ride":
             rideType = 4
-        case "Transport Ride":
+        case "Transportation Ride":
             rideType = 5
         case "Dark Ride":
             rideType = 6
@@ -132,7 +134,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         case "Play Area":
             rideType = 12
         default:
-            rideType = 1
+            rideType = 0
         }
         print("Ride type is: ",rideType)
     }

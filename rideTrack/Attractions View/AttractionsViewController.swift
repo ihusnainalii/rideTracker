@@ -53,6 +53,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     let greenBar = UIColor(red: 29.0/255.0, green: 127.0/255.0, blue: 70.0/255.0, alpha: 1.0)
+    let goldBar = UIColor(red: 250/255.0, green: 204/255.0, blue: 73/255.0, alpha: 1.0)
     let lightGreyBar = UIColor(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1.0)
     var userAttractions: [NSManagedObject] = []
     var userNumExtinct = 0
@@ -633,7 +634,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             comeFromDetails = true
             detailsVC.titleName = titleName
             UIView.animate(withDuration: 0.3, animations: ({
-                self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+                self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0.4)
                 self.view.layoutIfNeeded()
                 
             }))
@@ -698,7 +699,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         var percentage = Float(userCount)/Float(totNum)
         
         self.progressBar.setProgress(Float(percentage), animated: true)
-        
+        if percentage == 1 {
+            progressBar.progressTintColor = goldBar
+        }
+        else {
+            progressBar.progressTintColor = greenBar
+        }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }

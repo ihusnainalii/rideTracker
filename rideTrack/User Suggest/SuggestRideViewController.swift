@@ -52,11 +52,11 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
             rideType = 1
         case "Water Ride":
             rideType = 2
-        case "Children's Ride":
+        case "Childrens Ride":
             rideType = 3
         case "Flat Ride":
             rideType = 4
-        case "Transport Ride":
+        case "Transportation Ride":
             rideType = 5
         case "Dark Ride":
             rideType = 6
@@ -89,7 +89,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         textFieldClose.delegate = self
         self.pickerType.delegate = self
         self.pickerType.dataSource = self
-        pickerData = ["Roller Coaster", "Water Ride", "Childrens Ride", "Transporation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Pay Area"]
+        pickerData = ["Roller Coaster", "Water Ride", "Childrens Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Pay Area"]
         activeSwitch.isOn=false
         textFieldClose.isHidden = true
         YearClosedText.isHidden = true
