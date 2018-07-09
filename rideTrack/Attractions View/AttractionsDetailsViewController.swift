@@ -168,7 +168,7 @@ class AttractionsDetailsViewController: UIViewController {
         dateModifyButton.isEnabled = false
         modifyDatePicker.setDate(selectedRide.dateFirstRidden, animated: false)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
-            self.detailViewHeight.constant += 170
+            self.detailViewHeight.constant += 140
          //   self.detailsView.frame.origin.y -= 10
             self.view.layoutIfNeeded()
         }, completion: nil)
@@ -187,7 +187,7 @@ class AttractionsDetailsViewController: UIViewController {
         selectedRide.dateFirstRidden = modifyDatePicker.date
         saveModifyFirstRideDate(rideID: selectedRide.rideID, firstRideDate: modifyDatePicker.date)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
-            self.detailViewHeight.constant -= 170
+            self.detailViewHeight.constant -= 140
        //     self.detailsView.frame.origin.y += 10
 
             self.view.layoutIfNeeded()

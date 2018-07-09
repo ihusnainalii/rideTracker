@@ -1189,14 +1189,13 @@
                                                     </connections>
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqB-3X-RMS">
-                                                    <rect key="frame" x="290" y="10" width="70" height="32"/>
+                                                    <rect key="frame" x="290" y="10" width="70" height="30"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="70" id="2Je-s9-Ejc"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                     <state key="normal" title="Park Info">
-                                                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
                                                         <segue destination="jMr-JT-Io1" kind="show" identifier="toParkInfo" id="cZm-vy-7FN"/>
@@ -1388,9 +1387,8 @@
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZxP-Ez-Emz" userLabel="DarkenView">
+                            <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZxP-Ez-Emz" userLabel="DarkenView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration">
@@ -1400,9 +1398,13 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="ZxP-Ez-Emz" firstAttribute="top" secondItem="49z-lz-1Ke" secondAttribute="top" id="0RR-Ty-w8x"/>
+                            <constraint firstItem="ZxP-Ez-Emz" firstAttribute="bottom" secondItem="1VQ-lA-yzH" secondAttribute="bottom" id="HsR-L5-uCh"/>
                             <constraint firstItem="2Ff-tE-lFu" firstAttribute="leading" secondItem="1VQ-lA-yzH" secondAttribute="leading" id="MHa-mP-h6h"/>
                             <constraint firstItem="2Ff-tE-lFu" firstAttribute="trailing" secondItem="1VQ-lA-yzH" secondAttribute="trailing" id="VMh-hi-ii2"/>
                             <constraint firstItem="2Ff-tE-lFu" firstAttribute="top" secondItem="1VQ-lA-yzH" secondAttribute="top" constant="20" id="YKU-Xs-Mob"/>
+                            <constraint firstItem="ZxP-Ez-Emz" firstAttribute="trailing" secondItem="1VQ-lA-yzH" secondAttribute="trailing" id="YR9-lj-llb"/>
+                            <constraint firstItem="ZxP-Ez-Emz" firstAttribute="leading" secondItem="1VQ-lA-yzH" secondAttribute="leading" id="jc1-E2-Fvg"/>
                             <constraint firstItem="2Ff-tE-lFu" firstAttribute="bottom" secondItem="49z-lz-1Ke" secondAttribute="bottom" id="pYo-Ja-INM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1VQ-lA-yzH"/>
@@ -1608,10 +1610,11 @@
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yFP-y9-2Ds" userLabel="Modify">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yFP-y9-2Ds" userLabel="Modify">
                                         <rect key="frame" x="0.0" y="295.5" width="355" height="30"/>
+                                        <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
                                         <state key="normal" title="Modify    ">
-                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
                                             <action selector="didPressModifyDate:" destination="S7M-68-41E" eventType="touchUpInside" id="Wyi-5h-qaY"/>
@@ -1634,6 +1637,13 @@
                                     <outletCollection property="gestureRecognizers" destination="QNf-3v-qOp" appends="YES" id="cAA-no-5U3"/>
                                 </connections>
                             </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QL7-61-DhJ" userLabel="upperView">
+                                <rect key="frame" x="0.0" y="20" width="375" height="294.5"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="r4J-hT-G4x" appends="YES" id="Q4m-jc-fnk"/>
+                                </connections>
+                            </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KpE-N1-tqN">
                                 <rect key="frame" x="10" y="477" width="355" height="190"/>
                                 <subviews>
@@ -1670,22 +1680,18 @@
                             <constraint firstItem="4dk-a8-P3E" firstAttribute="bottom" secondItem="Cxv-Gr-wFA" secondAttribute="bottom" id="4u7-l4-XYg"/>
                             <constraint firstItem="cJr-Oe-NCN" firstAttribute="trailing" secondItem="Cxv-Gr-wFA" secondAttribute="trailing" constant="10" id="77j-cx-4Oo"/>
                             <constraint firstItem="KpE-N1-tqN" firstAttribute="leading" secondItem="Cxv-Gr-wFA" secondAttribute="leading" id="AJr-UC-VDm"/>
+                            <constraint firstItem="Cxv-Gr-wFA" firstAttribute="top" secondItem="QL7-61-DhJ" secondAttribute="bottom" id="I0a-Q5-OVU"/>
                             <constraint firstItem="Cxv-Gr-wFA" firstAttribute="leading" secondItem="cJr-Oe-NCN" secondAttribute="leading" constant="10" id="JIQ-Eu-rAq"/>
                             <constraint firstItem="Cxv-Gr-wFA" firstAttribute="top" secondItem="4dk-a8-P3E" secondAttribute="top" id="Jky-Cl-c5L"/>
                             <constraint firstItem="cJr-Oe-NCN" firstAttribute="trailing" secondItem="4dk-a8-P3E" secondAttribute="trailing" constant="10" id="OXt-Qn-iHl"/>
+                            <constraint firstItem="QL7-61-DhJ" firstAttribute="leading" secondItem="cJr-Oe-NCN" secondAttribute="leading" id="R0b-VQ-o3j"/>
                             <constraint firstItem="4dk-a8-P3E" firstAttribute="leading" secondItem="cJr-Oe-NCN" secondAttribute="leading" constant="10" id="S76-lH-Shm"/>
                             <constraint firstItem="cJr-Oe-NCN" firstAttribute="bottom" secondItem="KpE-N1-tqN" secondAttribute="bottom" id="Wp1-LT-WMC"/>
                             <constraint firstItem="KpE-N1-tqN" firstAttribute="trailing" secondItem="Cxv-Gr-wFA" secondAttribute="trailing" id="gc6-v7-SAy"/>
+                            <constraint firstItem="QL7-61-DhJ" firstAttribute="top" secondItem="cJr-Oe-NCN" secondAttribute="top" id="mfQ-qd-5c5"/>
+                            <constraint firstItem="cJr-Oe-NCN" firstAttribute="trailing" secondItem="QL7-61-DhJ" secondAttribute="trailing" id="oLP-CG-Aop"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cJr-Oe-NCN"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="KpE-N1-tqN"/>
-                            </mask>
-                        </variation>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="r4J-hT-G4x" appends="YES" id="gTW-5O-fkd"/>
-                        </connections>
                     </view>
                     <connections>
                         <outlet property="CurrentlyOpenLabel" destination="RCR-Wi-8Su" id="PqD-zO-fPG"/>

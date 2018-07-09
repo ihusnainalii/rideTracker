@@ -62,9 +62,9 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
             extinctSwitch.isOn = true
         }
         scoreCardSwitch.isOn = false
-        
-        typeSwitcher.selectRow((Int(selectedAttraction.type!)!-1), inComponent: 0, animated: true)
-
+        print ("Ride type is: ", Int(selectedAttraction.type!)!)
+        typeSwitcher.selectRow((Int(selectedAttraction.type!)!+2), inComponent: 0, animated: true)
+       // typeSwitcher.selectRow(6, inComponent: 0, animated: true)
         // Do any additional setup after loading the view.
     }
     
