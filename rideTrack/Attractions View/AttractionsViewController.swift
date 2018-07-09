@@ -24,6 +24,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var VisualEffectsLayer: UIVisualEffectView!
     @IBOutlet weak var rideCountLabel: UILabel!
     @IBOutlet weak var extinctCountLabel: UILabel!
+    @IBOutlet weak var emptyParkInstructionsLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var downBar: UIButton!
    
@@ -63,6 +65,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        emptyParkInstructionsLabel.alpha = 0.0
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
         
         animateRow = -1
@@ -108,12 +111,20 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
+        
+        activityIndicator.stopAnimating()
         for i in 0..<items.count{
             attractionListForTable.append(items[i] as! AttractionsModel)
         }
         
         if (items.count == 0){
             print ("this park is empty")
+            UIView.animate(withDuration: 0.5, animations: ({
+                self.emptyParkInstructionsLabel.alpha = 1.0
+                self.attractionsTableView.alpha = 0.0
+            }))
+            
+            
         }
         else {
             if (userAttractionDatabase != nil){
@@ -227,6 +238,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return attractionListForTable.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "rideCell", for: indexPath) as! AttractionsTableViewCell
         
@@ -235,26 +247,29 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         if ((attractionListForTable[indexPath.row]).isCheck){
             cell.attractionButton.setImage(#imageLiteral(resourceName: "Plus Attraction"), for: .normal)
-            cell.numberOfRidesLabel.isHidden = false
+            cell.numberOfRidesLabel.alpha = 1.0
             cell.rideCountViewLeadingConstraint.constant = 3
             cell.numberOfRidesLabel.alpha = 1.0
             cell.rideName?.textColor = UIColor.black
-            
+            cell.numberOfRidesLabel.text = String(item.numberOfTimesRidden)
             attractionListForTable[indexPath.row].isIgnored = false
+            
         } else if attractionListForTable[indexPath.row].isIgnored{
             cell.rideName?.textColor = UIColor.gray
             cell.attractionButton.setImage(#imageLiteral(resourceName: "Ignore Button"), for: .normal)
             attractionListForTable[indexPath.row].isIgnored = true
-            cell.rideCountViewLeadingConstraint.constant = 1
+            cell.rideCountViewLeadingConstraint.constant = -1
             cell.numberOfRidesLabel.alpha = 0.0
-            cell.numberOfRidesLabel.isHidden = true
+            cell.numberOfRidesLabel.text = ""
+            
         } else{
             cell.attractionButton.setImage(#imageLiteral(resourceName: "Check Button"), for: .normal)
             cell.rideName?.textColor = UIColor.black
-            cell.numberOfRidesLabel.isHidden = true
-            cell.rideCountViewLeadingConstraint.constant = 1
-            attractionListForTable[indexPath.row].isIgnored = false
             cell.numberOfRidesLabel.alpha = 0.0
+            cell.rideCountViewLeadingConstraint.constant = -1
+            attractionListForTable[indexPath.row].isIgnored = false
+            //cell.numberOfRidesLabel.alpha = 0.0
+            cell.numberOfRidesLabel.text = ""
         }
         
         if (attractionListForTable[indexPath.row]).active == 1 {
@@ -266,7 +281,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         cell.rideName!.text = item.name
         cell.rideTypeLabel.text = convertRideTypeID(rideTypeID: item.rideType)
-        cell.numberOfRidesLabel.text = String(item.numberOfTimesRidden)
+        
         
         //If iPhone 5s
         if screenSize.width == 320.0{
@@ -405,14 +420,15 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.saveUserCheckOffNewRide(parkID: self.parkID, rideID: (self.attractionListForTable[indexPath.row]).rideID);
         
         let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
-    
+        
+        cell.numberOfRidesLabel.text = String(self.attractionListForTable[indexPath.row].numberOfTimesRidden)
+        
 
-        UIView.animate(withDuration: 0.5, animations: ({
+        UIView.animate(withDuration: 0.3, animations: ({
             cell.attractionButton.setImage(#imageLiteral(resourceName: "Plus Attraction"), for: .normal)
-            cell.numberOfRidesLabel.text = String(self.attractionListForTable[indexPath.row].numberOfTimesRidden)
-            cell.numberOfRidesLabel.isHidden = false
             cell.numberOfRidesLabel.alpha = 1.0
             cell.rideCountViewLeadingConstraint.constant = 3
+            self.view.layoutIfNeeded()
 
         }))
         
@@ -468,13 +484,15 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             
             //Update tableview cell
             let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
+            cell.rideCountViewLeadingConstraint.constant = -1
             UIView.animate(withDuration: 0.5, animations: ({
                 cell.attractionButton.setImage(#imageLiteral(resourceName: "Check Button"), for: .normal)
-                cell.numberOfRidesLabel.isHidden = true
                 cell.numberOfRidesLabel.alpha = 0.0
-                cell.rideCountViewLeadingConstraint.constant = 1
+                cell.numberOfRidesLabel.text = ""
+                
+                self.view.layoutIfNeeded()
             }))
-         
+    
         }
         else{
             let newIncrement = attractionListForTable[indexPath.row].numberOfTimesRidden - 1

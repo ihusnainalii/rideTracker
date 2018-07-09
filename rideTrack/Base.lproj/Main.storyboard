@@ -189,15 +189,20 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="AI4-ob-FA5">
+                                        <rect key="frame" x="117.5" y="46" width="20" height="20"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="BzP-aD-VQn" secondAttribute="bottom" constant="10" id="1SY-fR-4By"/>
+                                    <constraint firstAttribute="bottom" secondItem="AI4-ob-FA5" secondAttribute="bottom" constant="14" id="27B-te-aej"/>
                                     <constraint firstAttribute="trailing" secondItem="BzP-aD-VQn" secondAttribute="trailing" constant="11" id="2sh-rv-LCy"/>
                                     <constraint firstItem="RKG-r3-1wv" firstAttribute="leading" secondItem="SFN-kt-0Xx" secondAttribute="leading" constant="14" id="EKg-lA-hfb"/>
                                     <constraint firstAttribute="height" constant="80" id="Go3-Ny-0yP"/>
                                     <constraint firstAttribute="bottom" secondItem="RKG-r3-1wv" secondAttribute="bottom" constant="2" id="IGo-iP-aaj"/>
                                     <constraint firstAttribute="trailing" secondItem="Ggp-Ep-vO0" secondAttribute="trailing" constant="11" id="vuv-xO-QCI"/>
+                                    <constraint firstItem="AI4-ob-FA5" firstAttribute="leading" secondItem="RKG-r3-1wv" secondAttribute="trailing" constant="10" id="x2c-MA-jHZ"/>
                                     <constraint firstAttribute="bottom" secondItem="Ggp-Ep-vO0" secondAttribute="bottom" constant="10" id="y8C-2O-S0H"/>
                                 </constraints>
                             </view>
@@ -555,6 +560,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="lBF-mF-fvE"/>
                     <connections>
+                        <outlet property="activityIndictor" destination="AI4-ob-FA5" id="LCy-Ur-XAc"/>
                         <outlet property="addParkButton" destination="0nb-Xl-qwe" id="XDt-lM-vDx"/>
                         <outlet property="addParkHeightConstrant" destination="M2k-M9-T6B" id="X9b-S8-ITw"/>
                         <outlet property="allParksBottomConstrant" destination="V2k-q4-Gp0" id="okG-1k-lxe"/>
@@ -1066,7 +1072,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eOf-af-g5N" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="WCJ-ri-KmA" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2674" y="1223"/>
+            <point key="canvasLocation" x="2622" y="1223"/>
         </scene>
         <!--Attractions View Controller-->
         <scene sceneID="OSf-k8-4Sg">
@@ -1102,10 +1108,15 @@
                                                                 <action selector="tapDownBar:" destination="zaz-Kb-2WY" eventType="touchUpInside" id="2cN-cj-cpf"/>
                                                             </connections>
                                                         </button>
+                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6J7-gI-0Jk">
+                                                            <rect key="frame" x="20" y="15" width="20" height="20"/>
+                                                        </activityIndicatorView>
                                                     </subviews>
                                                     <constraints>
+                                                        <constraint firstItem="6J7-gI-0Jk" firstAttribute="top" secondItem="Ww5-cA-KWO" secondAttribute="top" constant="15" id="Knm-3g-wO3"/>
                                                         <constraint firstItem="MqX-V1-51p" firstAttribute="centerX" secondItem="Ww5-cA-KWO" secondAttribute="centerX" id="dcd-Jz-Xqc"/>
                                                         <constraint firstItem="MqX-V1-51p" firstAttribute="top" secondItem="Ww5-cA-KWO" secondAttribute="top" constant="4" id="xQA-EV-ncv"/>
+                                                        <constraint firstItem="6J7-gI-0Jk" firstAttribute="leading" secondItem="Ww5-cA-KWO" secondAttribute="leading" constant="20" id="xfT-Mi-52X"/>
                                                     </constraints>
                                                     <connections>
                                                         <outletCollection property="gestureRecognizers" destination="DkN-ak-nCv" appends="YES" id="GJ0-mf-qdb"/>
@@ -1146,6 +1157,13 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="uVR-cf-Ne8">
                                                     <rect key="frame" x="5" y="41" width="365" height="35"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="29"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QUX-K1-VXu">
+                                                    <rect key="frame" x="6" y="130" width="363" height="61"/>
+                                                    <string key="text">We currently do not have any attractions for this park. Please tap on the Park Info button to suggest attractions to be added to this park</string>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1267,6 +1285,7 @@
                                             <constraints>
                                                 <constraint firstItem="rKa-vC-Lf2" firstAttribute="leading" secondItem="qGY-Pc-WCD" secondAttribute="leading" id="1zb-Qy-tBj"/>
                                                 <constraint firstItem="uVR-cf-Ne8" firstAttribute="top" secondItem="MqX-V1-51p" secondAttribute="bottom" constant="2" id="4z4-qO-hwW"/>
+                                                <constraint firstItem="QUX-K1-VXu" firstAttribute="top" secondItem="Ww5-cA-KWO" secondAttribute="bottom" constant="27.5" id="6yY-ki-Lql"/>
                                                 <constraint firstAttribute="trailing" secondItem="cFg-8l-Dke" secondAttribute="trailing" id="9hD-if-fTD"/>
                                                 <constraint firstItem="k8C-3n-n9A" firstAttribute="leading" secondItem="qGY-Pc-WCD" secondAttribute="leading" constant="10" id="Bp6-mp-1Og"/>
                                                 <constraint firstItem="BWZ-6M-pEa" firstAttribute="leading" secondItem="VFt-15-utf" secondAttribute="trailing" constant="8" id="CHh-tA-wHq"/>
@@ -1282,11 +1301,14 @@
                                                 <constraint firstAttribute="trailing" secondItem="BWZ-6M-pEa" secondAttribute="trailing" constant="10" id="Pix-Bv-kgM"/>
                                                 <constraint firstAttribute="trailing" secondItem="Ww5-cA-KWO" secondAttribute="trailing" id="Pk2-Yx-332"/>
                                                 <constraint firstItem="Ww5-cA-KWO" firstAttribute="top" secondItem="qGY-Pc-WCD" secondAttribute="top" id="SWb-UN-9Q8"/>
+                                                <constraint firstItem="QUX-K1-VXu" firstAttribute="leading" secondItem="qGY-Pc-WCD" secondAttribute="leading" constant="6" id="UJZ-Qz-Z8f"/>
                                                 <constraint firstAttribute="trailing" secondItem="uVR-cf-Ne8" secondAttribute="trailing" constant="5" id="Uwv-iI-Haw"/>
                                                 <constraint firstItem="cFg-8l-Dke" firstAttribute="leading" secondItem="qGY-Pc-WCD" secondAttribute="leading" id="VX3-Pz-taP"/>
                                                 <constraint firstItem="k8C-3n-n9A" firstAttribute="top" secondItem="uVR-cf-Ne8" secondAttribute="bottom" constant="3" id="efX-7b-iTs"/>
+                                                <constraint firstItem="QUX-K1-VXu" firstAttribute="centerX" secondItem="qGY-Pc-WCD" secondAttribute="centerX" id="gkn-l1-AJM"/>
                                                 <constraint firstItem="lfq-1a-KsT" firstAttribute="top" secondItem="uVR-cf-Ne8" secondAttribute="bottom" constant="3" id="h2D-pP-0xe"/>
                                                 <constraint firstItem="uVR-cf-Ne8" firstAttribute="leading" secondItem="qGY-Pc-WCD" secondAttribute="leading" constant="5" id="ir2-Ka-H8X"/>
+                                                <constraint firstAttribute="trailing" secondItem="QUX-K1-VXu" secondAttribute="trailing" constant="6" id="pWQ-8g-JB3"/>
                                                 <constraint firstItem="BWZ-6M-pEa" firstAttribute="top" secondItem="uVR-cf-Ne8" secondAttribute="bottom" constant="3" id="qKP-Mh-Wnv"/>
                                                 <constraint firstAttribute="trailing" secondItem="fqB-3X-RMS" secondAttribute="trailing" constant="15" id="tT0-4U-R7I"/>
                                             </constraints>
@@ -1314,8 +1336,10 @@
                     <connections>
                         <outlet property="NumCompleteLabel" destination="lfq-1a-KsT" id="fjf-8G-MLI"/>
                         <outlet property="VisualEffectsLayer" destination="2Ff-tE-lFu" id="n3s-ex-My0"/>
+                        <outlet property="activityIndicator" destination="6J7-gI-0Jk" id="YzN-zD-mYd"/>
                         <outlet property="attractionsTableView" destination="cFg-8l-Dke" id="gQc-sL-xZd"/>
                         <outlet property="downBar" destination="MqX-V1-51p" id="Af6-0x-5dI"/>
+                        <outlet property="emptyParkInstructionsLabel" destination="QUX-K1-VXu" id="AV1-qi-ht2"/>
                         <outlet property="extinctCountLabel" destination="VFt-15-utf" id="kfi-E5-ML4"/>
                         <outlet property="extinctLabel" destination="VFt-15-utf" id="9lH-4i-P4i"/>
                         <outlet property="extinctText" destination="BWZ-6M-pEa" id="mdI-YO-5DS"/>
@@ -1335,7 +1359,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1813.5999999999999" y="103.89805097451276"/>
+            <point key="canvasLocation" x="1815" y="133"/>
         </scene>
         <!--Attractions Details View Controller-->
         <scene sceneID="1Ub-aA-CmN">
@@ -2056,6 +2080,6 @@
         <image name="Screen Shot 2018-06-24 at 12.52.26 PM" width="670" height="1196"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="LuG-qw-GfC"/>
+        <segue reference="fvO-Lv-ILn"/>
     </inferredMetricsTieBreakers>
 </document>

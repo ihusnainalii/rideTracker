@@ -36,6 +36,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var searchParksTextField: UITextField!
     @IBOutlet weak var searchMyParksButton: UIButton!
     @IBOutlet weak var doneSearchButton: UIButton!
+    @IBOutlet weak var activityIndictor: UIActivityIndicatorView!
     
     @IBOutlet weak var settingsButtonHeightConstrant: NSLayoutConstraint!
     @IBOutlet weak var settingsButtonWidthConstrant: NSLayoutConstraint!
@@ -179,7 +180,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
-        
+        activityIndictor.stopAnimating()
         //Returns the number of total rides in the park, for the fraction view
         if returnPath == "countNumberOfRides"{
             var totalRideCount = 0
