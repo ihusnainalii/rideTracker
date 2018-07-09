@@ -21,7 +21,15 @@ class AttractionsDetailsViewController: UIViewController {
     var userAttractionDatabase: [UserAttractionProvider]!
     var titleName = ""
 
+    
     let greyColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
+    
+    
+    @IBOutlet weak var blankView: UIView!
+    @IBOutlet weak var manufacturerStack: UIStackView!
+    @IBOutlet weak var firstRideStack: UIStackView!
+    @IBOutlet weak var LatestRideStack: UIStackView!
+    @IBOutlet weak var yearClosedStack: UIStackView!
     
     @IBOutlet weak var manufacturerLabel: UILabel!
     @IBOutlet weak var manufacturText: UILabel!
@@ -39,28 +47,27 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var scoreCardButton: UIButton!
     
     @IBOutlet weak var detailViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var userDatesView: UIView!
-    @IBOutlet weak var detailsView: UIView!
+  //  @IBOutlet weak var userDatesView: UIView!
+    //@IBOutlet weak var detailsView: UIView!
     @IBOutlet weak var OverlayView: UIView!
     var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
-    @IBOutlet weak var darkenLayer: UIView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         OverlayView.layer.cornerRadius = 10.0
-
+        OverlayView.backgroundColor = UIColor.white
         
         modifyDatePicker.maximumDate = Date()
         scoreCardButton.isHidden = true
         scoreCardButton.backgroundColor = greyColor
         scoreCardButton.layer.cornerRadius = 6.0
         
-        dateModifyButton.layer.cornerRadius = 5.0
-        dateModifyButton.backgroundColor = UIColor.lightGray
-        userDatesView.backgroundColor = greyColor
-        userDatesView.layer.cornerRadius = 10.0
-        rideNameLabel.text = selectedRide.name
+        //dateModifyButton.layer.cornerRadius = 5.0
+      //  userDatesView.backgroundColor = greyColor
+        //userDatesView.layer.cornerRadius = 10.0
+        let tempName = "  "+selectedRide.name
+        rideNameLabel.text = tempName
         if selectedRide.yearOpen == 0{
             yearOpenLabel.text = "Unknown"
         }
@@ -68,9 +75,7 @@ class AttractionsDetailsViewController: UIViewController {
             yearOpenLabel.text = String(selectedRide.yearOpen)
         }
         if selectedRide.active == 1 {
-            yearCloseLabel.isHidden = true
-            yearCloseText.isHidden = true
-            
+            yearClosedStack.isHidden = true
         }
         else {
             yearCloseLabel.text = String (selectedRide.yearClosed)
@@ -78,20 +83,21 @@ class AttractionsDetailsViewController: UIViewController {
         }
         if selectedRide.isCheck{
             dateFirstRiddenLabel.text = dateFormatter(date: selectedRide.dateFirstRidden)
-            userDatesView.isHidden = false
+            firstRideStack.isHidden = false
+            LatestRideStack.isHidden = false
             //Do not show last ride if the user has only ridden the ride once
             if selectedRide.numberOfTimesRidden > 1{
                 dateLastRiddenLabel.text = dateFormatter(date: selectedRide.dateLastRidden)
             }
             else{
-                dateLastRiddenLabel.isHidden = true
+                LatestRideStack.isHidden = true
             }
         }
         else{
-            dateFirstRiddenLabel.isHidden = true
-            dateLastRiddenLabel.isHidden = true
             dateModifyButton.isHidden = true
-            userDatesView.isHidden = true
+            firstRideStack.isHidden = true
+            LatestRideStack.isHidden = true
+            //userDatesView.isHidden = true
             
         }
         
@@ -99,44 +105,44 @@ class AttractionsDetailsViewController: UIViewController {
             scoreCardButton.isHidden = false
         }
         if selectedRide.manufacturer == "" {
-            manufacturText.isHidden = true
-            manufacturerLabel.isHidden = true
+            manufacturerStack.isHidden = true
+            blankView.isHidden = true
         }
         else {
-            manufacturerLabel.isHidden = false
-            manufacturText.isHidden = false
+            manufacturerStack.isHidden = false
             manufacturerLabel.text = selectedRide.manufacturer
+            blankView.isHidden = false
         }
         
         switch selectedRide.rideType {                      
         case 1:
-            typeString = "Roller Coaster"
+            typeString = "  Roller Coaster"
         case 2:
-            typeString = "Water Ride"
+            typeString = "  Water Ride"
         case 3:
-            typeString = "Children's Ride"
+            typeString = "  Children's Ride"
         case 4:
-            typeString = "Flat Ride"
+            typeString = "  Flat Ride"
         case 5:
-            typeString = "Transport Ride"
+            typeString = "  Transport Ride"
         case 6:
-            typeString = "Dark Ride"
+            typeString = "  Dark Ride"
         case 7:
-            typeString = "Explore"
+            typeString = "  Explore"
         case 8:
-            typeString = "Spectacular"
+            typeString = "  Spectacular"
         case 9:
-            typeString = "Show"
+            typeString = "  Show"
         case 10:
-            typeString = "Film"
+            typeString = "  Film"
         case 11:
-            typeString = "Parade"
+            typeString = "  Parade"
         case 12:
-            typeString = "Play Area"
+            typeString = "  Play Area"
         default:
-            typeString = "Unknown"
+            typeString = "  Unknown"
         }
-        if typeString == "Unknown"{
+        if typeString == "  Unknown"{
             attractiontype.isHidden = true
         }
         attractiontype.text = typeString
@@ -147,7 +153,6 @@ class AttractionsDetailsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         UIView.animate(withDuration: 0.7, animations: { //Animate Here
-            self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0.3)
            // self.view.layoutIfNeeded()
         }, completion: nil)
         
@@ -163,15 +168,14 @@ class AttractionsDetailsViewController: UIViewController {
         dateModifyButton.isEnabled = false
         modifyDatePicker.setDate(selectedRide.dateFirstRidden, animated: false)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
-            self.detailViewHeight.constant += 130
-            self.detailsView.frame.origin.y -= 10
+            self.detailViewHeight.constant += 170
+         //   self.detailsView.frame.origin.y -= 10
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
     
     @IBAction func pressDownBar(_ sender: Any) {
         UIView.animate(withDuration: 0.2, animations: { //Animate Here
-            self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0)
             // self.view.layoutIfNeeded()
         }, completion: nil)
     }
@@ -183,8 +187,8 @@ class AttractionsDetailsViewController: UIViewController {
         selectedRide.dateFirstRidden = modifyDatePicker.date
         saveModifyFirstRideDate(rideID: selectedRide.rideID, firstRideDate: modifyDatePicker.date)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
-            self.detailViewHeight.constant -= 130
-            self.detailsView.frame.origin.y += 10
+            self.detailViewHeight.constant -= 170
+       //     self.detailsView.frame.origin.y += 10
 
             self.view.layoutIfNeeded()
         }, completion: nil)
@@ -225,9 +229,9 @@ class AttractionsDetailsViewController: UIViewController {
         print ("Tap")
         UIView.animate(withDuration: 0.2, animations: { //Animate Here
             print ("Animating")
-            self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0)
             // self.view.layoutIfNeeded()
         }, completion: nil)
+        self.performSegue(withIdentifier: "unwindToAttractions", sender: self)
          self.dismiss(animated: true, completion: nil)
     }
     
@@ -241,23 +245,18 @@ class AttractionsDetailsViewController: UIViewController {
         else if sender.state == UIGestureRecognizerState.changed {
             if touchPoint.y - initialToucnPoint.y > 0 {
                 self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
-                UIView.animate(withDuration: 0.2, animations: { //Animate Here
-                    self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0)
-                    // self.view.layoutIfNeeded()
-                }, completion: nil)
             }
         }
         else if sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled {
-            if touchPoint.y - initialToucnPoint.y > 100 {
-                //self.dismiss(animated: true, completion: nil)
+            if touchPoint.y - initialToucnPoint.y > 50 {
                 self.performSegue(withIdentifier: "unwindToAttractions", sender: self)
+                self.dismiss(animated: true, completion: nil)
 
                
             } else {
                 UIView.animate(withDuration: 0.3, animations: {
                     self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
                     UIView.animate(withDuration: 0.2, animations: { //Animate Here
-                        self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0.3)
                         // self.view.layoutIfNeeded()
                     }, completion: nil)
                 })
