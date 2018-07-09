@@ -89,7 +89,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         textFieldClose.delegate = self
         self.pickerType.delegate = self
         self.pickerType.dataSource = self
-        pickerData = ["Roller Coaster", "Water_Ride", "Childrens Ride", "Transporation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Pay Area"]
+        pickerData = ["Roller Coaster", "Water Ride", "Childrens Ride", "Transporation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Pay Area"]
         activeSwitch.isOn=false
         textFieldClose.isHidden = true
         YearClosedText.isHidden = true
@@ -188,31 +188,6 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         }
         
     }
-    //    func addDoneButtonOnKeyboard() {
-    //        print ("MADE DONE TOOL")
-    //
-    //        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
-    //        doneToolbar.barStyle       = UIBarStyle.default
-    //        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-    //        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(SuggestRideViewController.doneButtonAction))
-    //
-    //        var items = [UIBarButtonItem]()
-    //        items.append(flexSpace)
-    //        items.append(done)
-    //
-    //        doneToolbar.items = items
-    //        doneToolbar.sizeToFit()
-    //
-    //        self.textFieldOpen.inputAccessoryView = doneToolbar
-    //    }
-    //
-    //    @objc func doneButtonAction() {
-    //        print ("CALLED DONE")
-    //        //self.resignFirstResponder()
-    //        self.view.endEditing(true)
-    //
-    //    }
-    //
 
     
     func isStringAnInt(string: String) -> Bool {
@@ -249,7 +224,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         if (textView == notesText){
             print ("Text field is: ", textView)
             moveTextField(textField: textView, moveDistance: -215, up: false)
-            print ("BELOW OPENING")
+            print ("End OPENING")
         }
     }
     

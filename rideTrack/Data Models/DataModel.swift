@@ -96,6 +96,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
             }
             if dataBase == "Suggest" {
                 let attraction = ApproveSuggestAttracionModel()
+                var tempNotes = ""
                 attraction.parkID = Int (jsonElement["ParkID"] as! String)
                 attraction.rideName = jsonElement["RideName"] as? String
                 attraction.YearOpen = Int (jsonElement["YearOpen"] as! String)
@@ -105,7 +106,8 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.id = Int (jsonElement["id"] as! String)
                 attraction.active = Int (jsonElement["Active"] as! String)
                 attraction.manufacturer = jsonElement["Manufacturer"] as? String
-                attraction.notes = jsonElement["Notes"] as? String
+                tempNotes = (jsonElement["Notes"] as? String)!
+                attraction.notes = tempNotes.replacingOccurrences(of: "_", with: " ")
                 dataBaseData.add(attraction)
                 print ("Ride name is: ", attraction.rideName!)
             }

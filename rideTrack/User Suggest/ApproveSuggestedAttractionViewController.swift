@@ -38,7 +38,6 @@ class ApproveSuggestedAttractionViewController: UIViewController, UITableViewDat
         let arrayOfAllRides = items as! [ApproveSuggestAttracionModel]
         print ("size of array",arrayOfAllRides.count)
         for i in 0..<arrayOfAllRides.count{
-                print(arrayOfAllRides[i].rideName!, arrayOfAllRides[i].id!)
         listOfSuggestions.append(arrayOfAllRides[i])
         }
         self.ApproveAttractionTableView.reloadData()
@@ -54,12 +53,16 @@ class ApproveSuggestedAttractionViewController: UIViewController, UITableViewDat
         let cell = tableView.dequeueReusableCell(withIdentifier: "suggestCell", for: indexPath) as! SuggestTableViewCell
         let item: ApproveSuggestAttracionModel = listOfSuggestions[indexPath.row]
         let typeConvert = convertRideTypeID(rideTypeID: Int(item.type)!)
+        if item.notes == "Enter notes or citations here" {
+            item.notes = "None given"
+        }
         cell.parkNameLabel!.text = item.parkName
         cell.rideNameLabel!.text = item.rideName
         cell.openLabel!.text = String(item.YearOpen)
         cell.closeLabel!.text = String(item.YearClose)
         cell.notesLabel!.text = item.notes
         cell.typeLabel!.text = typeConvert
+    
         return cell
     }
     
@@ -153,9 +156,17 @@ func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRow
         }
     }
     
+    
     @IBAction func unwindToApproveView(sender: UIStoryboardSegue) {
         print("Back to approve attractions view")
         print ("ID IS ", selectedAttraction.id)
+        print ("The deleted ride was ", selectedAttraction.rideName)
+        for i in 0..<self.listOfSuggestions.count {
+            if self.listOfSuggestions[i].id! == selectedAttraction.id! {
+            self.listOfSuggestions.remove(at: i)
+                break
+            }
+        }
         ApproveAttractionTableView.reloadData()
     }
     

@@ -26,6 +26,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var extinctCountLabel: UILabel!
     @IBOutlet weak var emptyParkInstructionsLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+   // @IBOutlet weak var darkenLayer: UIView!
+    @IBOutlet var darkenLayer: UIView!
     
     @IBOutlet weak var downBar: UIButton!
    
@@ -66,8 +68,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         super.viewDidLoad()
         
         emptyParkInstructionsLabel.alpha = 0.0
-        self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
-        
+       // self.darkenLayer.backgroundColor = UIColor.clear
+        self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0)
         animateRow = -1
         suggestButton.layer.cornerRadius = 7
         //let suggestColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
@@ -630,6 +632,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             detailsVC.userAttractionDatabase = userAttractionDatabase
             comeFromDetails = true
             detailsVC.titleName = titleName
+            UIView.animate(withDuration: 0.3, animations: ({
+                self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+                self.view.layoutIfNeeded()
+                
+            }))
             
         }
         
@@ -716,11 +723,20 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func unwindToAttractionsView(sender: UIStoryboardSegue) {
         print("Back to attractions view")
+        UIView.animate(withDuration: 0.3, animations: ({
+            self.darkenLayer.backgroundColor = UIColor.clear
+            self.view.layoutIfNeeded()
+            
+        }))
     }
     
     @IBAction func unwindfromdetails(_ sender: UIStoryboardSegue) {
         print ("Back from deatils")
-        
+        UIView.animate(withDuration: 0.3, animations: ({
+            self.darkenLayer.backgroundColor = UIColor.clear
+            self.view.layoutIfNeeded()
+            
+        }))
     }
     
     @IBAction func panGestureReconizer(_ sender: UIPanGestureRecognizer) {

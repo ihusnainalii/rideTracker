@@ -249,7 +249,9 @@ class AttractionsDetailsViewController: UIViewController {
         }
         else if sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled {
             if touchPoint.y - initialToucnPoint.y > 100 {
-                self.dismiss(animated: true, completion: nil)
+                //self.dismiss(animated: true, completion: nil)
+                self.performSegue(withIdentifier: "unwindToAttractions", sender: self)
+
                
             } else {
                 UIView.animate(withDuration: 0.3, animations: {

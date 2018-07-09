@@ -8,21 +8,18 @@
 
 import UIKit
 
-class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource, DataModelProtocol{
-    func itemsDownloaded(items: NSArray, returnPath: String) {
-    
-    }
-    
+class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource,UITableViewDataSource, UITableViewDelegate, DataModelProtocol{
 
-    
-    
 
+    @IBOutlet weak var exisitingAttractionsTableView: UITableView!
+    var selectedAttraction: ApproveSuggestAttracionModel = ApproveSuggestAttracionModel()
+    var listOfAttractionsAtPark = [AttractionsModel]()
+    let deleteColor = UIColor(red: 206/255.0, green: 59/255.0, blue: 63/255.0, alpha: 1.0)
     
-var selectedAttraction: ApproveSuggestAttracionModel = ApproveSuggestAttracionModel()
-
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var parkNameLabel: UILabel!
     @IBOutlet weak var scoreCardSwitch: UISwitch!
     @IBOutlet weak var extinctSwitch: UISwitch!
@@ -31,17 +28,30 @@ var selectedAttraction: ApproveSuggestAttracionModel = ApproveSuggestAttracionMo
     @IBOutlet weak var openTextField: UITextField!
     @IBOutlet weak var closedTextField: UITextField!
     @IBOutlet weak var manufacturerTextField: UITextField!
+    @IBOutlet weak var constraintContentHeight: NSLayoutConstraint!
     
+  
     var pickerData: [String] = [String]()
     var rideType = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(selectedAttraction.parkID!)"
+        let dataModel = DataModel()
+        dataModel.delegate = self
+        dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
+        
         self.typeSwitcher.delegate = self
         self.typeSwitcher.dataSource = self
+        nameTextField.delegate = self
+        openTextField.delegate = self
+        closedTextField.delegate = self
+        manufacturerTextField.delegate = self
+        
         parkNameLabel.text = selectedAttraction.parkName
         nameTextField.text = selectedAttraction.rideName
-        pickerData = ["Roller Coaster", "Water_Ride", "Childrens Ride", "Transporation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Pay Area"]
+        pickerData = ["Roller Coaster", "Water Ride", "Childrens Ride", "Transporation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Pay Area"]
         openTextField.text = String(selectedAttraction.YearOpen)
         closedTextField.text = String(selectedAttraction.YearClose)
         manufacturerTextField.text = selectedAttraction.manufacturer
@@ -54,6 +64,33 @@ var selectedAttraction: ApproveSuggestAttracionModel = ApproveSuggestAttracionMo
         scoreCardSwitch.isOn = false
         
         // Do any additional setup after loading the view.
+    }
+    
+    func itemsDownloaded(items: NSArray, returnPath: String) {
+        let arrayOfRides = items as! [AttractionsModel]
+        print ("number of rides at park: ", arrayOfRides.count)
+        for i in 0..<arrayOfRides.count{
+        listOfAttractionsAtPark.append(arrayOfRides[i])
+        }
+        listOfAttractionsAtPark.sort { ($0.active, $1.name) > ($1.active, $0.name) }
+        exisitingAttractionsTableView.reloadData()
+        
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return listOfAttractionsAtPark.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = exisitingAttractionsTableView.dequeueReusableCell(withIdentifier: "attractionCell", for: indexPath)
+        cell.textLabel?.text = listOfAttractionsAtPark[indexPath.row].name!
+        if listOfAttractionsAtPark[indexPath.row].active == 1 {
+            cell.backgroundColor = UIColor.white
+        }
+        else {
+            cell.backgroundColor = UIColor.gray
+        }
+        return cell
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -134,6 +171,37 @@ var selectedAttraction: ApproveSuggestAttracionModel = ApproveSuggestAttracionMo
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         self.performSegue(withIdentifier: "toApproveSuggestions", sender: self)
     }
+    
+    func moveTextField(textField: UITextField, moveDistance: Int, up: Bool) {
+        let moveDuration = 0.3
+        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
+        
+        UIView.beginAnimations("animateTextField", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(moveDuration)
+        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+        UIView.commitAnimations()
+    }
+    
+    
+    func textFieldDidBeginEditing(_ textView: UITextField) {
+            moveTextField(textField: textView, moveDistance: -215, up: true)
+            print ("BELOW OPENING")
+    }
+//    func textFieldDidEndEditing(_ textView: UITextField) {
+//            moveTextField(textField: textView, moveDistance: -215, up: false)
+//            print ("End OPENING")
+//    }
+
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        moveTextField(textField: textField, moveDistance: -215, up: false)
+        self.view.endEditing(true)
+        print ("End DONE")
+        return true
+    }
+    
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
