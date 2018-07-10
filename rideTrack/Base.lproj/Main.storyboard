@@ -184,7 +184,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="RKG-r3-1wv">
-                                        <rect key="frame" x="15" y="35" width="93.5" height="43"/>
+                                        <rect key="frame" x="14" y="35" width="93.5" height="43"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -210,7 +210,7 @@
                                 <rect key="frame" x="7" y="88" width="361" height="190"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe right on a park to save it as a favorite" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="DEz-zI-i4C">
-                                        <rect key="frame" x="8" y="163.5" width="347" height="18"/>
+                                        <rect key="frame" x="7" y="163.5" width="347" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -343,7 +343,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VXB-kA-HSX">
-                                        <rect key="frame" x="8" y="45" width="354" height="284"/>
+                                        <rect key="frame" x="7" y="45" width="354" height="284"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="allCell" id="YvR-yN-6en" customClass="AllParksTableViewCell" customModule="rideTrack" customModuleProvider="target">
@@ -451,7 +451,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search my parks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ib8-zm-s1n">
-                                        <rect key="frame" x="8" y="12" width="114" height="18"/>
+                                        <rect key="frame" x="9" y="12" width="114" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -1911,6 +1911,18 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Count the number of times you have ridden each ride" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yr9-xg-xkH">
+                                <rect key="frame" x="8" y="241" width="283" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fSe-mw-Jhh">
+                                <rect key="frame" x="299" y="236" width="51" height="31"/>
+                                <connections>
+                                    <action selector="didToggleIncrementorSwitch:" destination="jMr-JT-Io1" eventType="valueChanged" id="pOE-z9-jUU"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -1920,12 +1932,17 @@
                             <constraint firstItem="FSy-DO-veA" firstAttribute="top" secondItem="L2t-Qm-gkq" secondAttribute="bottom" constant="8" id="FUb-v8-afz"/>
                             <constraint firstItem="IPz-gp-Unu" firstAttribute="trailing" secondItem="zei-0l-DbR" secondAttribute="trailing" constant="34" id="IQJ-Z8-UCt"/>
                             <constraint firstItem="ZGe-RB-7X1" firstAttribute="top" secondItem="Ymb-sl-Vs1" secondAttribute="bottom" constant="16" id="LWc-sq-xhu"/>
+                            <constraint firstItem="yr9-xg-xkH" firstAttribute="leading" secondItem="IPz-gp-Unu" secondAttribute="leading" constant="8" id="Lio-yn-hr1"/>
                             <constraint firstItem="Ymb-sl-Vs1" firstAttribute="top" secondItem="Nee-Ik-lVn" secondAttribute="bottom" constant="4" id="P8b-Di-1uU"/>
                             <constraint firstItem="IPz-gp-Unu" firstAttribute="trailing" secondItem="ZGe-RB-7X1" secondAttribute="trailing" constant="8" id="QHq-zo-CRe"/>
+                            <constraint firstItem="fSe-mw-Jhh" firstAttribute="leading" secondItem="yr9-xg-xkH" secondAttribute="trailing" constant="8" id="RWs-qb-0PY"/>
                             <constraint firstItem="zei-0l-DbR" firstAttribute="top" secondItem="IPz-gp-Unu" secondAttribute="top" constant="17" id="UlS-BO-pWL"/>
+                            <constraint firstItem="yr9-xg-xkH" firstAttribute="top" secondItem="ZGe-RB-7X1" secondAttribute="bottom" constant="17.5" id="Zqz-ri-OBk"/>
+                            <constraint firstItem="IPz-gp-Unu" firstAttribute="trailing" secondItem="fSe-mw-Jhh" secondAttribute="trailing" constant="27" id="acT-mn-fdf"/>
                             <constraint firstItem="IPz-gp-Unu" firstAttribute="bottom" secondItem="FSy-DO-veA" secondAttribute="bottom" constant="11" id="eT3-iG-Exm"/>
                             <constraint firstItem="ZGe-RB-7X1" firstAttribute="centerX" secondItem="upx-sv-vtT" secondAttribute="centerX" id="fbA-Qy-cVz"/>
                             <constraint firstItem="L2t-Qm-gkq" firstAttribute="top" secondItem="ZGe-RB-7X1" secondAttribute="bottom" constant="90" id="guG-54-Dot"/>
+                            <constraint firstItem="fSe-mw-Jhh" firstAttribute="top" secondItem="ZGe-RB-7X1" secondAttribute="bottom" constant="12.5" id="kmi-rR-OMK"/>
                             <constraint firstItem="FSy-DO-veA" firstAttribute="leading" secondItem="IPz-gp-Unu" secondAttribute="leading" constant="16" id="sIt-vT-2JM"/>
                             <constraint firstItem="FSy-DO-veA" firstAttribute="centerX" secondItem="upx-sv-vtT" secondAttribute="centerX" id="srG-lL-NmL"/>
                             <constraint firstItem="ZGe-RB-7X1" firstAttribute="leading" secondItem="IPz-gp-Unu" secondAttribute="leading" constant="8" id="xGb-k1-ZjZ"/>
@@ -1935,6 +1952,7 @@
                         <viewLayoutGuide key="safeArea" id="IPz-gp-Unu"/>
                     </view>
                     <connections>
+                        <outlet property="incrementorSwitch" destination="fSe-mw-Jhh" id="P2V-j5-OkZ"/>
                         <outlet property="mapView" destination="FSy-DO-veA" id="rfp-tM-X0Q"/>
                         <outlet property="parkNameLabel" destination="Nee-Ik-lVn" id="4kQ-c3-Twp"/>
                         <outlet property="parkTypeLabel" destination="Ymb-sl-Vs1" id="BUj-dM-Crc"/>
@@ -1949,7 +1967,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yKd-zK-QDk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="THd-IV-uU9" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2737" y="-300"/>
+            <point key="canvasLocation" x="2736.8000000000002" y="-300"/>
         </scene>
         <!--Suggest Ride View Controller-->
         <scene sceneID="SRl-hi-v5J">

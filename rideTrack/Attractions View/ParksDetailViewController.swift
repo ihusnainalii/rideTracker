@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class ParksDetailViewController: UIViewController {
 
@@ -20,6 +21,7 @@ class ParksDetailViewController: UIViewController {
     @IBOutlet weak var yearClosedStack: UIStackView!
     @IBOutlet weak var previousNamesStack: UIStackView!
     @IBOutlet weak var yearOpenStack: UIStackView!
+    @IBOutlet weak var incrementorSwitch: UISwitch!
     
     var initialLocation: CLLocation!
     let regionRadius: CLLocationDistance = 1000
@@ -28,6 +30,7 @@ class ParksDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configueLayout()
+        incrementorSwitch.isOn = parksData.incrementorEnabled
         initialLocation = CLLocation(latitude: parksData.latitude, longitude: parksData.longitude)
         centerMapOnLocation(location: initialLocation)
         // Do any additional setup after loading the view.
@@ -55,6 +58,10 @@ class ParksDetailViewController: UIViewController {
             previousNameLabel.text = parksData.perviousNames
         } else{previousNamesStack.isHidden = true}
     }
+    @IBAction func didToggleIncrementorSwitch(_ sender: Any) {
+        parksData.incrementorEnabled = incrementorSwitch.isOn
+        saveIncrementorChange(incrementorEnabled: incrementorSwitch.isOn)
+    }
     
     func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
@@ -63,6 +70,27 @@ class ParksDetailViewController: UIViewController {
 
     @IBAction func unwindToDetailsView(sender: UIStoryboardSegue) {
         print("Back to details view")
+    }
+    
+    
+    func saveIncrementorChange(incrementorEnabled: Bool){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
+        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parksData.parkID!)")
+        do {
+            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
+            
+            for entity in fetchedResults! {
+                print("Setting incrementor enabled to \(incrementorEnabled)")
+                entity.setValue(incrementorEnabled, forKey: "incrementorEnabled")
+                try! managedContext.save()
+            }
+        }
+        catch _ {
+            print("Could not save favorite")
+        }
     }
     
     // MARK: - Navigation

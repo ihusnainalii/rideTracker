@@ -223,6 +223,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                         addingPark.favorite = savedParkList[userParkListIncrementor].value(forKey: "favorite") as! Bool
                         addingPark.totalRides = savedParkList[userParkListIncrementor].value(forKey: "totalRides") as! Int
                         addingPark.ridesRidden = savedParkList[userParkListIncrementor].value(forKey: "ridesRidden") as! Int
+                        
+                        if let incrementorShown = savedParkList[userParkListIncrementor].value(forKey: "incrementorEnabled"){
+                            addingPark.incrementorEnabled = incrementorShown as! Bool
+                        } else{
+                            addingPark.incrementorEnabled = true
+                        }
                         allParksList.append(addingPark)
                         userParkListIncrementor += 1
                         
@@ -451,6 +457,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             newPark.favorite = false
             newPark.totalRides = 0
             newPark.ridesRidden = 0
+            newPark.incrementorEnabled = true
 
             //Animate in the all parks table veiw when adding the first park
             if allParksList.count == 0{
