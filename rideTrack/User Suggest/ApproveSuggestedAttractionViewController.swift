@@ -132,7 +132,7 @@ func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRow
         case 2:
             return "Water Ride"
         case 3:
-            return "Children's Ride"
+            return "Childrens Ride"
         case 4:
             return "Flat Ride"
         case 5:

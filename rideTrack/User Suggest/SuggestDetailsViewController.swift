@@ -17,6 +17,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     let screenSize = UIScreen.main.bounds
 
     var selectedAttraction: ApproveSuggestAttracionModel = ApproveSuggestAttracionModel()
+    var modifyAttraction: AttractionsModel = AttractionsModel()
     var listOfAttractionsAtPark = [AttractionsModel]()
     let deleteColor = UIColor(red: 206/255.0, green: 59/255.0, blue: 63/255.0, alpha: 1.0)
     
@@ -91,6 +92,10 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
                 }))
                 alert.addAction(UIAlertAction(title: "Modify", style: .default, handler: { action in
                 print ("modify")
+                    self.modifyAttraction = self.listOfAttractionsAtPark[i]
+                   // let vc = ModifyAttractionViewController()
+                    //self.present(vc, animated: true, completion: nil)
+                    self.performSegue(withIdentifier: "toModifyVC", sender: self)
                 }))
                 alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
                     print ("delete")
@@ -242,14 +247,14 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     }
     
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "toModifyVC"{
+            let modifyVC = segue.destination as! ModifyAttractionViewController
+            modifyVC.suggestedAttraction = selectedAttraction
+            modifyVC.originalAttraction = modifyAttraction
+        }
     }
-    */
+
 
 }
