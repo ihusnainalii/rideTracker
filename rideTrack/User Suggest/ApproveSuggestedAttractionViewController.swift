@@ -169,6 +169,9 @@ func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRow
         }
         ApproveAttractionTableView.reloadData()
     }
+    @IBAction func unwindFromcancelButton(sender: UIStoryboardSegue) {
+        print ("back from cancel")
+    }
     
 override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "toDetails"{

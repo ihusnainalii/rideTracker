@@ -159,11 +159,13 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 let park = orgPark.replacingOccurrences(of: " ", with: "_")
                 let ride = orgRide?.replacingOccurrences(of: " ", with: "_")
                 let manufacturer = orgmanufacturer?.replacingOccurrences(of: " ", with: "_")
-                let notes = orgnotes?.replacingOccurrences(of: " ", with: "_")
+                let tempNotes = orgnotes?.replacingOccurrences(of: " ", with: "_")
+                let notes = String (tempNotes!.filter { !" \n\t".contains($0) })
                 
                 //creating the post parameter by concatenating the keys and values from text field
                 
-                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(ride!)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(manufacturer!)&notes=\(notes!)"
+                
+                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(ride!.stripped)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(manufacturer!)&notes=\(notes.stripped)"
                 print (urlPath)
                 Active = 1
                 dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
@@ -232,6 +234,15 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         textField.resignFirstResponder()
         return true
     }
+    
    
+}
+
+extension String {
+    
+    var stripped: String {
+        let chars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890+-=().!_")
+        return self.filter {chars.contains($0) }
+    }
 }
 

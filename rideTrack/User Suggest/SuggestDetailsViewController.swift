@@ -11,7 +11,11 @@ import UIKit
 class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource,UITableViewDataSource, UITableViewDelegate, DataModelProtocol{
 
 
+    @IBOutlet weak var scrollWidth: NSLayoutConstraint!
     @IBOutlet weak var exisitingAttractionsTableView: UITableView!
+    
+    let screenSize = UIScreen.main.bounds
+
     var selectedAttraction: ApproveSuggestAttracionModel = ApproveSuggestAttracionModel()
     var listOfAttractionsAtPark = [AttractionsModel]()
     let deleteColor = UIColor(red: 206/255.0, green: 59/255.0, blue: 63/255.0, alpha: 1.0)
@@ -62,21 +66,45 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
             extinctSwitch.isOn = true
         }
         scoreCardSwitch.isOn = false
-        print ("Ride type is: ", Int(selectedAttraction.type!)!)
-        typeSwitcher.selectRow((Int(selectedAttraction.type!)!+2), inComponent: 0, animated: true)
-       // typeSwitcher.selectRow(6, inComponent: 0, animated: true)
+        typeSwitcher.selectRow((Int(selectedAttraction.type!)!-2), inComponent: 0, animated: true)
+        //typeSwitcher.selectRow(, inComponent: 0, animated: true)
         // Do any additional setup after loading the view.
+        //if iphone 5 class
+        if screenSize.width == 320 {
+            scrollWidth.constant = 320
+        }
     }
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
         let arrayOfRides = items as! [AttractionsModel]
-        print ("number of rides at park: ", arrayOfRides.count)
         for i in 0..<arrayOfRides.count{
         listOfAttractionsAtPark.append(arrayOfRides[i])
         }
         listOfAttractionsAtPark.sort { ($0.active, $1.name) > ($1.active, $0.name) }
         exisitingAttractionsTableView.reloadData()
-        
+
+        for i in 0..<listOfAttractionsAtPark.count {
+            if listOfAttractionsAtPark[i].name! == selectedAttraction.rideName!{
+                let alert = UIAlertController(title: "Duplicate Attraction", message: "This attraction already exists in the database. Would you like to delete the suggestion or update the existing attraction?", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+                   print ("cancel")
+                }))
+                alert.addAction(UIAlertAction(title: "Modify", style: .default, handler: { action in
+                print ("modify")
+                }))
+                alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
+                    print ("delete")
+                    let dataModel = DataModel()
+                    dataModel.delegate = self
+                    let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(self.selectedAttraction.id!)"
+                    print (urlPath)
+                    dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+                    self.performSegue(withIdentifier: "toApproveSuggestions", sender: self)
+                }))
+                self.present(alert, animated: true, completion: nil)
+                break
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -151,8 +179,11 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
              active = 0
         }
         let manufacturer = manufacturerTextField.text!
-        
-        let urlPath = "http://www.beingpositioned.com/theparksman/uploadToAttractionDB.php?name=\(rideName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&manufacturer=\(manufacturer)" //uploads to main list
+        var scoreCard = 0
+        if scoreCardSwitch.isOn {
+            scoreCard = 1
+        }
+        let urlPath = "http://www.beingpositioned.com/theparksman/uploadToAttractionDB.php?name=\(rideName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(manufacturer)" //uploads to main list
         print (urlPath)
         let dataModel = DataModel()
         dataModel.delegate = self
