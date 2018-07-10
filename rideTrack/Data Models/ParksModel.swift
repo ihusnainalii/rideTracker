@@ -27,7 +27,7 @@ class ParksModel: NSObject {
     var favorite: Bool!
     var ridesRidden: Int!
     var totalRides: Int!
-    
+    var incrementorEnabled: Bool!
 
     
     override init() {
