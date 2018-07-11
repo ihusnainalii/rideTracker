@@ -8,7 +8,8 @@
 
 import UIKit
 
-class ModifyAttractionViewController: UIViewController {
+class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, DataModelProtocol {
+    
 
     @IBOutlet weak var suggestedManufacturer: UILabel!
     @IBOutlet weak var suggestedClose: UILabel!
@@ -16,6 +17,20 @@ class ModifyAttractionViewController: UIViewController {
     @IBOutlet weak var suggestedType: UILabel!
     @IBOutlet weak var suggestedNotes: UILabel!
     @IBOutlet weak var suggestedOpen: UILabel!
+    
+    @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var rideTypeSwitch: UIPickerView!
+    @IBOutlet weak var openField: UITextField!
+    @IBOutlet weak var closeField: UITextField!
+    @IBOutlet weak var manufacturerField: UITextField!
+    @IBOutlet weak var extinctSwitch: UISwitch!
+    @IBOutlet weak var scoreCardSwtich: UISwitch!
+    
+    @IBOutlet weak var scrollWidth: NSLayoutConstraint!
+    let screenSize = UIScreen.main.bounds
+
+    var rideType = 0
+    var pickerData: [String] = [String]()
     var originalAttraction: AttractionsModel = AttractionsModel()
     var suggestedAttraction: ApproveSuggestAttracionModel = ApproveSuggestAttracionModel()
     
@@ -27,12 +42,90 @@ class ModifyAttractionViewController: UIViewController {
         suggestedOpen.text = String(suggestedAttraction.YearOpen)
         suggestedClose.text = String(suggestedAttraction.YearClose)
         suggestedNotes.text = suggestedAttraction.notes
+        
+        nameField.text=originalAttraction.name
+        openField.text=String(originalAttraction.yearOpen)
+        closeField.text=String(originalAttraction.yearClosed)
+        manufacturerField.text=originalAttraction.manufacturer
+        
+        self.rideTypeSwitch.delegate = self
+        self.rideTypeSwitch.dataSource = self
+        
+        pickerData = ["Roller Coaster", "Water Ride", "Childrens Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
+        rideTypeSwitch.selectRow(Int(originalAttraction.rideType!)-2, inComponent: 0, animated: true)
+        if originalAttraction.active == 1{
+            extinctSwitch.isOn = false
+        }
+        else {
+            extinctSwitch.isOn = true
+        }
+        if originalAttraction.hasScoreCard == 1 {
+            scoreCardSwtich.isOn = true
+        }
+        else {
+            scoreCardSwtich.isOn = false
+        }
+        if screenSize.width == 320 {
+            scrollWidth.constant = 320
+        }
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //hide keyboard when tapping the anywhere else
         // Do any additional setup after loading the view.
     }
-
+    
+    func itemsDownloaded(items: NSArray, returnPath: String) {
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerData.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerData[row] as String
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        //rideType = pickerData[row]
+        switch pickerData[row] {
+        case "Roller Coaster":
+            rideType = 1
+        case "Water Ride":
+            rideType = 2
+        case "Childrens Ride":
+            rideType = 3
+        case "Flat Ride":
+            rideType = 4
+        case "Transportation Ride":
+            rideType = 5
+        case "Dark Ride":
+            rideType = 6
+        case "Explore":
+            rideType = 7
+        case "Spectacular":
+            rideType = 8
+        case "Show":
+            rideType = 9
+        case "Film":
+            rideType = 10
+        case "Parade":
+            rideType = 11
+        case "Play Area":
+            rideType = 12
+        case "Upcharge":
+            rideType = 13
+        default:
+            rideType = 0
+        }
+        print("Ride type is: ", rideType)
     }
     
     func convertRideTypeID(rideTypeID: Int) -> String {
@@ -67,6 +160,75 @@ class ModifyAttractionViewController: UIViewController {
             return ""
         }
     }
+    
+    @IBAction func deleteButton(_ sender: Any) {
+        let dataModel = DataModel()
+        dataModel.delegate = self
+        let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(originalAttraction.rideID!)"
+        print (urlPath)
+        dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+        self.performSegue(withIdentifier: "toApproveSuggestions", sender: self)
+    }
+    
+    
+    @IBAction func submitButton(_ sender: Any) {
+        let tempName = nameField.text
+        let rideName = (tempName?.replacingOccurrences(of: " ", with: "_"))!
+        let parkID = originalAttraction.parkID!
+        let yearOpen = openField.text!
+        let yearClosed = closeField.text!
+        
+        var active = 1
+        if extinctSwitch.isOn{
+            active = 0
+        }
+        let manufacturer = manufacturerField.text!
+        var scoreCard = 0
+        if scoreCardSwtich.isOn {
+            scoreCard = 1
+        }
+        if rideType == 0 {
+            rideType = originalAttraction.rideType
+        }
+        let urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(originalAttraction.rideID!)&name=\(rideName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(manufacturer)" //uploads to main list
+        print (urlPath)
+        let dataModel = DataModel()
+        dataModel.delegate = self
+        let urlPath2 = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(suggestedAttraction.id!)" //deletes from suggested list
+        print(urlPath2)
+        dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+        dataModel.downloadData(urlPath: urlPath2, dataBase: "upload", returnPath: "upload")
+        self.performSegue(withIdentifier: "toApproveSuggestions", sender: self)
+    }
+    
+    func moveTextField(textField: UITextField, moveDistance: Int, up: Bool) {
+        let moveDuration = 0.3
+        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
+        
+        UIView.beginAnimations("animateTextField", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(moveDuration)
+        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+        UIView.commitAnimations()
+    }
+    
+    func textFieldDidBeginEditing(_ textView: UITextField) {
+        moveTextField(textField: textView, moveDistance: -215, up: true)
+        print ("BELOW OPENING")
+    }
+
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        moveTextField(textField: textField, moveDistance: -215, up: false)
+        self.view.endEditing(true)
+        print ("End DONE")
+        return true
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        moveTextField(textField: textField, moveDistance: -215, up: false)
+    }
+    
     /*
     // MARK: - Navigation
 

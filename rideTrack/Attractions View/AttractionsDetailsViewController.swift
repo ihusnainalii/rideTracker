@@ -55,6 +55,7 @@ class AttractionsDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print ("ride ID: ", self.selectedRide.rideID!)
         OverlayView.layer.cornerRadius = 10.0
         OverlayView.backgroundColor = UIColor.white
         

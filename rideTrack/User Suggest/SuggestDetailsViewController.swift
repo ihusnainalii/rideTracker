@@ -55,7 +55,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         manufacturerTextField.delegate = self
         parkNameLabel.text = selectedAttraction.parkName
         nameTextField.text = selectedAttraction.rideName
-        pickerData = ["Roller Coaster", "Water Ride", "Childrens Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Pay Area"]
+        pickerData = ["Roller Coaster", "Water Ride", "Childrens Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
         
         openTextField.text = String(selectedAttraction.YearOpen)
         closedTextField.text = String(selectedAttraction.YearClose)
@@ -74,6 +74,9 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         if screenSize.width == 320 {
             scrollWidth.constant = 320
         }
+        
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //hide keyboard when tapping the anywhere else
+        
     }
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
@@ -166,6 +169,8 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
             rideType = 11
         case "Play Area":
             rideType = 12
+        case "Upcharge":
+            rideType = 13
         default:
             rideType = 0
         }
@@ -180,6 +185,9 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         let yearOpen = openTextField.text!
         let yearClosed = closedTextField.text!
         var active = 1
+        if rideType == 0{
+            rideType = Int(selectedAttraction.type)!
+        }
         if extinctSwitch.isOn{
              active = 0
         }
@@ -238,7 +246,9 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         print ("End DONE")
         return true
     }
-    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        moveTextField(textField: textField, moveDistance: -215, up: false)
+    }
 
     
     override func didReceiveMemoryWarning() {
