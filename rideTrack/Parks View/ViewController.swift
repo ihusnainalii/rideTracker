@@ -229,6 +229,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                         } else{
                             addingPark.incrementorEnabled = true
                         }
+                        
                         allParksList.append(addingPark)
                         userParkListIncrementor += 1
                         

@@ -26,17 +26,16 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var extinctCountLabel: UILabel!
     @IBOutlet weak var emptyParkInstructionsLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-   // @IBOutlet weak var darkenLayer: UIView!
     @IBOutlet var darkenLayer: UIView!
-    
     @IBOutlet weak var downBar: UIButton!
    
     let screenSize = UIScreen.main.bounds
-
     
+    var userDataBaseIndex = 0
     var titleName = ""
     var parkID = 0
     var attractionListForTable = [AttractionsModel]()
+    var savedItems: NSArray!
     var parkData: ParksModel!
     var showExtinct = 0
     var isIgnored = false
@@ -50,7 +49,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var parksViewController: ViewController!
     var animateRow = -1
     var countOfRemove = 0
-    
+    var selectedAttractionsList: [NSManagedObject] = []
     
     let greenBar = UIColor(red: 29.0/255.0, green: 127.0/255.0, blue: 70.0/255.0, alpha: 1.0)
     let goldBar = UIColor(red: 250/255.0, green: 204/255.0, blue: 73/255.0, alpha: 1.0)
@@ -66,15 +65,13 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var totalNumExtinct = 0
     
     override func viewDidLoad() {
+        print("Show incrementor is \(parkData.incrementorEnabled)")
         super.viewDidLoad()
         
         emptyParkInstructionsLabel.alpha = 0.0
         self.darkenLayer.backgroundColor = UIColor.clear
-       // self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0)
         animateRow = -1
         suggestButton.layer.cornerRadius = 7
-        //let suggestColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
-        //suggestButton.backgroundColor = suggestColor
         suggestButton.layer.shadowOpacity = 0.4
         suggestButton.layer.shadowOffset = CGSize.zero
         suggestButton.layer.shadowRadius = 7
@@ -95,7 +92,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             ConfigureSmallerLayout().attractionsViewLayout(attractionsView: self)
         }
         
-        
         self.attractionsTableView.delegate = self
         self.attractionsTableView.dataSource = self
         print(parkID)
@@ -104,17 +100,15 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         // print ("There are ", feedItems.count, " attactions in park ", parkID)
         dataModel.delegate = self
         
-        
         dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
         ignore = ignoreList.array(forKey: "SavedIgnoreListArray")  as? [Int] ?? [Int]()
-        
-        
+ 
         // Do any additional setup after loading the view, typically from a nib.
     }
     
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
-        
+        savedItems = items
         activityIndicator.stopAnimating()
         for i in 0..<items.count{
             attractionListForTable.append(items[i] as! AttractionsModel)
@@ -131,10 +125,18 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         else {
             if (userAttractionDatabase != nil){
-                var userDataBaseIndex = 0
+                userNumExtinct = 0
+                totalNumExtinct = 0
+                numIgnore = 0
+                userRidesRidden = 0
+                numExtinctSelected = 0
+                countOfRemove = 0
+                userDataBaseIndex = 0
+                
                 let maxUserAttractionCount = userAttractionDatabase.count
                 for i in 0..<attractionListForTable.count{
                     if userDataBaseIndex < maxUserAttractionCount{
+                        
                         if (attractionListForTable[i]).rideID == userAttractionDatabase[userDataBaseIndex].rideID{
                             
                             //The user does have data for this ride
@@ -145,6 +147,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                             attractionListForTable[i].numberOfTimesRidden = userAttractionDatabase[userDataBaseIndex].numberOfTimesRidden
                             attractionListForTable[i].dateLastRidden = userAttractionDatabase[userDataBaseIndex].dateLastRidden
                             attractionListForTable[i].dateFirstRidden = userAttractionDatabase[userDataBaseIndex].dateFirstRidden
+                            
                             if attractionListForTable[i].active == 0 {
                                 userNumExtinct += 1
                             }
@@ -230,6 +233,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        //Configure for iPhone 5 sizes
         if screenSize.width == 320.0{
             return 48
         } else{
@@ -248,31 +252,31 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         cell.delegate = self
         let item: AttractionsModel = attractionListForTable[indexPath.row]
         
-        if ((attractionListForTable[indexPath.row]).isCheck){
-            cell.attractionButton.setImage(#imageLiteral(resourceName: "Plus Attraction"), for: .normal)
-            cell.numberOfRidesLabel.alpha = 1.0
-            cell.rideCountViewLeadingConstraint.constant = 3
-            cell.numberOfRidesLabel.alpha = 1.0
-            cell.rideName?.textColor = UIColor.black
-            cell.numberOfRidesLabel.text = String(item.numberOfTimesRidden)
-            attractionListForTable[indexPath.row].isIgnored = false
-            
-        } else if attractionListForTable[indexPath.row].isIgnored{
-            cell.rideName?.textColor = UIColor.gray
-            cell.attractionButton.setImage(#imageLiteral(resourceName: "Ignore Button"), for: .normal)
-            attractionListForTable[indexPath.row].isIgnored = true
-            cell.rideCountViewLeadingConstraint.constant = -1
-            cell.numberOfRidesLabel.alpha = 0.0
-            cell.numberOfRidesLabel.text = ""
-            
+        if parkData.incrementorEnabled{
+            if ((attractionListForTable[indexPath.row]).isCheck){
+                cell.rideCountViewLeadingConstraint.constant = 3
+                cell.attractionButton.setImage(#imageLiteral(resourceName: "Plus Attraction"), for: .normal)
+                cell.numberOfRidesLabel.alpha = 1.0
+                cell.numberOfRidesLabel.text = String(item.numberOfTimesRidden)
+                configureCellIncrementing(cell: cell, item: item)
+            } else if attractionListForTable[indexPath.row].isIgnored{
+                configureCellIgnore(cell: cell, item: item)
+            } else{
+                configureCellCheck(cell: cell, item: item)
+            }
         } else{
-            cell.attractionButton.setImage(#imageLiteral(resourceName: "Check Button"), for: .normal)
-            cell.rideName?.textColor = UIColor.black
-            cell.numberOfRidesLabel.alpha = 0.0
-            cell.rideCountViewLeadingConstraint.constant = -1
-            attractionListForTable[indexPath.row].isIgnored = false
-            //cell.numberOfRidesLabel.alpha = 0.0
-            cell.numberOfRidesLabel.text = ""
+            if ((attractionListForTable[indexPath.row]).isCheck){
+                cell.rideCountViewLeadingConstraint.constant = -1
+                cell.attractionButton.setImage(#imageLiteral(resourceName: "green check"), for: .normal)
+                cell.numberOfRidesLabel.alpha = 0.0
+                cell.numberOfRidesLabel.text = ""
+                attractionListForTable[indexPath.row].numberOfTimesRidden = 1
+                configureCellIncrementing(cell: cell, item: item)
+            } else if attractionListForTable[indexPath.row].isIgnored{
+                configureCellIgnore(cell: cell, item: item)
+            } else{
+                configureCellCheck(cell: cell, item: item)
+            }
         }
         
         if (attractionListForTable[indexPath.row]).active == 1 {
@@ -293,6 +297,30 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         
         return cell
+    }
+    
+    func configureCellIncrementing(cell: AttractionsTableViewCell, item: AttractionsModel){
+        cell.rideName?.textColor = UIColor.black
+        //attractionListForTable[indexPath.row].isIgnored = false
+    }
+    
+    func configureCellIgnore(cell: AttractionsTableViewCell, item: AttractionsModel){
+        cell.rideName?.textColor = UIColor.gray
+        cell.attractionButton.setImage(#imageLiteral(resourceName: "Ignore Button"), for: .normal)
+        //attractionListForTable[indexPath.row].isIgnored = true
+        cell.rideCountViewLeadingConstraint.constant = -1
+        cell.numberOfRidesLabel.alpha = 0.0
+        cell.numberOfRidesLabel.text = ""
+    }
+    
+    func configureCellCheck(cell: AttractionsTableViewCell, item: AttractionsModel){
+        cell.attractionButton.setImage(#imageLiteral(resourceName: "Check Button"), for: .normal)
+        cell.rideName?.textColor = UIColor.black
+        cell.numberOfRidesLabel.alpha = 0.0
+        cell.rideCountViewLeadingConstraint.constant = -1
+        //attractionListForTable[indexPath.row].isIgnored = false
+        //cell.numberOfRidesLabel.alpha = 0.0
+        cell.numberOfRidesLabel.text = ""
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -390,6 +418,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             return "Parade"
         case 12:
             return "Play Area"
+        case 13:
+            return "Upcharge"
         default:
             return ""
         }
@@ -423,17 +453,19 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.saveUserCheckOffNewRide(parkID: self.parkID, rideID: (self.attractionListForTable[indexPath.row]).rideID);
         
         let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
-        
-        cell.numberOfRidesLabel.text = String(self.attractionListForTable[indexPath.row].numberOfTimesRidden)
-        
 
-        UIView.animate(withDuration: 0.3, animations: ({
-            cell.attractionButton.setImage(#imageLiteral(resourceName: "Plus Attraction"), for: .normal)
-            cell.numberOfRidesLabel.alpha = 1.0
-            cell.rideCountViewLeadingConstraint.constant = 3
-            self.view.layoutIfNeeded()
-
-        }))
+        if parkData.incrementorEnabled{
+            cell.numberOfRidesLabel.text = String(self.attractionListForTable[indexPath.row].numberOfTimesRidden)
+            UIView.animate(withDuration: 0.3, animations: ({
+                cell.attractionButton.setImage(#imageLiteral(resourceName: "Plus Attraction"), for: .normal)
+                cell.numberOfRidesLabel.alpha = 1.0
+                cell.rideCountViewLeadingConstraint.constant = 3
+                self.view.layoutIfNeeded()
+                
+            }))
+        } else{
+            cell.attractionButton.setImage(#imageLiteral(resourceName: "green check"), for: .normal)
+        }
         
         
         self.view.layoutIfNeeded()
@@ -507,18 +539,18 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func positiveIncrementCount(indexPath: IndexPath){
-        let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
-
-        let newIncrement = attractionListForTable[indexPath.row].numberOfTimesRidden + 1
-        saveIncrementRideCount(rideID:  attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement, postive: true)
-        attractionListForTable[indexPath.row].numberOfTimesRidden = newIncrement
-        attractionListForTable[indexPath.row].dateLastRidden = Date()
         
-        UIView.animate(withDuration: 0.5, animations: ({
-            cell.numberOfRidesLabel.text = String(newIncrement)
-        }))
-        
-        
+        if parkData.incrementorEnabled{
+            let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
+            let newIncrement = attractionListForTable[indexPath.row].numberOfTimesRidden + 1
+            saveIncrementRideCount(rideID:  attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement, postive: true)
+            attractionListForTable[indexPath.row].numberOfTimesRidden = newIncrement
+            attractionListForTable[indexPath.row].dateLastRidden = Date()
+            
+            UIView.animate(withDuration: 0.5, animations: ({
+                cell.numberOfRidesLabel.text = String(newIncrement)
+            }))
+        }
         
         if attractionListForTable[indexPath.row].hasScoreCard == 1{
             addScoreToCard(selectedRide: attractionListForTable[indexPath.row])
@@ -729,6 +761,17 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func unwindToAttractionsView(sender: UIStoryboardSegue) {
         print("Back to attractions view")
+        if sender.source is ParksDetailViewController{
+            if parkData.incrementorEnabled{
+               //attractionListForTable = saveIncrementorAttractionsListForTable
+                attractionListForTable.removeAll()
+                userAttractionDatabase.removeAll()
+                updateAttractionFromCoreData()
+                countOfRemove = 0
+                itemsDownloaded(items: savedItems, returnPath: "Gettings attraction data")
+            }
+            attractionsTableView.reloadData()
+        }
         UIView.animate(withDuration: 0.3, animations: ({
             self.darkenLayer.backgroundColor = UIColor.clear
             self.view.layoutIfNeeded()
@@ -743,6 +786,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             
         }))
     }
+
     
     @IBAction func panGestureReconizer(_ sender: UIPanGestureRecognizer) {
         let touchPoint = (sender as AnyObject).location(in: self.view?.window)
@@ -774,6 +818,34 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         print ("tap to leave")
         parksViewController.unwindFromAttractions(parkID: parkID)
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    func updateAttractionFromCoreData(){
+        //Getting coreData Attraction data for the selected park
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let sortDescriptor = NSSortDescriptor(key: "rideID", ascending: true)
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
+        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkData.parkID!)")
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        do {
+            selectedAttractionsList = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
+        }
+        var userAttractions: [UserAttractionProvider] = []
+        for i in 0..<selectedAttractionsList.count{
+            let newAttraction = UserAttractionProvider()
+            newAttraction.dateFirstRidden = selectedAttractionsList[i].value(forKeyPath: "firstRideDate") as! Date
+            newAttraction.dateLastRidden = selectedAttractionsList[i].value(forKeyPath: "lastRideDate") as! Date
+            newAttraction.numberOfTimesRidden = selectedAttractionsList[i].value(forKeyPath: "numberOfTimesRidden") as! Int
+            newAttraction.parkID = selectedAttractionsList[i].value(forKeyPath: "parkID") as! Int
+            newAttraction.rideID = selectedAttractionsList[i].value(forKeyPath: "rideID") as! Int
+            userAttractions.append(newAttraction)
+        }
+        userAttractionDatabase = userAttractions
     }
     /*
      // In a storyboard-based application, you will often want to do a little preparation before navigation

@@ -61,6 +61,8 @@ class ModifyAttractionViewController: UIViewController {
             return "Parade"
         case 12:
             return "Play Area"
+        case 13:
+            return "Upcharge"
         default:
             return ""
         }

@@ -25,6 +25,8 @@ class AttractionsModel: NSObject {
     var dateFirstRidden: Date!
     var dateLastRidden: Date!
     var manufacturer: String!
+     
+    
     override init() {
         
     }
