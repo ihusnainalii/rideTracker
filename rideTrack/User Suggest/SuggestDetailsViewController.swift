@@ -55,8 +55,8 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         manufacturerTextField.delegate = self
         parkNameLabel.text = selectedAttraction.parkName
         nameTextField.text = selectedAttraction.rideName
-        pickerData = ["Roller Coaster", "Water Ride", "Childrens Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
-        
+        pickerData = ["Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
+
         openTextField.text = String(selectedAttraction.YearOpen)
         closedTextField.text = String(selectedAttraction.YearClose)
         manufacturerTextField.text = selectedAttraction.manufacturer
@@ -67,7 +67,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
             extinctSwitch.isOn = true
         }
         scoreCardSwitch.isOn = false
-        typeSwitcher.selectRow((Int(selectedAttraction.type!)!-2), inComponent: 0, animated: true)
+        typeSwitcher.selectRow((Int(selectedAttraction.type!)!-1), inComponent: 0, animated: true)
         //typeSwitcher.selectRow(, inComponent: 0, animated: true)
         // Do any additional setup after loading the view.
         //if iphone 5 class

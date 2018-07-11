@@ -91,7 +91,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         textFieldClose.delegate = self
         self.pickerType.delegate = self
         self.pickerType.dataSource = self
-        pickerData = ["Roller Coaster", "Water Ride", "Childrens Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
+        pickerData = ["Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
         activeSwitch.isOn=false
         textFieldClose.isHidden = true
         YearClosedText.isHidden = true
@@ -167,7 +167,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 //creating the post parameter by concatenating the keys and values from text field
                 
                 
-                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(ride!.stripped)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(manufacturer!.stripped)&notes=\(notes.stripped)"
+                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(ride!)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(manufacturer!)&notes=\(notes)"
                 print (urlPath)
                 Active = 1
                 dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
