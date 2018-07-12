@@ -11,6 +11,7 @@ import UIKit
 class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, DataModelProtocol {
     
 
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var suggestedManufacturer: UILabel!
     @IBOutlet weak var suggestedClose: UILabel!
     @IBOutlet weak var suggestedName: UILabel!
@@ -35,6 +36,8 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
     var suggestedAttraction: ApproveSuggestAttracionModel = ApproveSuggestAttracionModel()
     
     override func viewDidLoad() {
+        nameField.delegate = self
+        manufacturerField.delegate = self
         super.viewDidLoad()
         suggestedName.text=suggestedAttraction.rideName
         let type = convertRideTypeID(rideTypeID: Int(suggestedAttraction.type)!)
@@ -70,6 +73,10 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
             scrollWidth.constant = 320
         }
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //hide keyboard when tapping the anywhere else
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
         // Do any additional setup after loading the view.
     }
     
@@ -202,34 +209,35 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         self.performSegue(withIdentifier: "toApproveSuggestions", sender: self)
     }
     
-    func moveTextField(textField: UITextField, moveDistance: Int, up: Bool) {
-        let moveDuration = 0.3
-        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
-        
-        UIView.beginAnimations("animateTextField", context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(moveDuration)
-        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
-        UIView.commitAnimations()
-    }
+   
     
     func textFieldDidBeginEditing(_ textView: UITextField) {
-        moveTextField(textField: textView, moveDistance: -215, up: true)
         print ("BELOW OPENING")
     }
 
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        moveTextField(textField: textField, moveDistance: -215, up: false)
         self.view.endEditing(true)
         print ("End DONE")
         return true
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
-        moveTextField(textField: textField, moveDistance: -215, up: false)
     }
-    
+    @objc func adjustForKeyboard(notification: Notification) {
+        let userInfo = notification.userInfo!
+        
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == Notification.Name.UIKeyboardWillHide {
+            scrollView.contentInset = UIEdgeInsets.zero
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+        }
+        
+        scrollView.scrollIndicatorInsets = scrollView.contentInset
+    }
     /*
     // MARK: - Navigation
 

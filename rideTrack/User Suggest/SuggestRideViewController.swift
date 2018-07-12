@@ -11,11 +11,14 @@ import Foundation
 
 class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    @IBOutlet weak var scrollView: UIScrollView!
     var parkName = ""
     var parkID = 0
     var rideType = 0
     var userAttractionDatabase: [UserAttractionProvider]!
 
+    @IBOutlet weak var parkNameLabel: UILabel!
+    @IBOutlet weak var mainView: UIStackView!
     @IBOutlet weak var textFieldName: UITextField!
     @IBOutlet weak var textFieldOpen: UITextField!
     @IBOutlet weak var textFieldClose: UITextField!
@@ -86,9 +89,12 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        parkNameLabel.text = parkName
         textFieldName.delegate = self
         textFieldOpen.delegate = self
         textFieldClose.delegate = self
+        notesText.delegate = self
+        
         self.pickerType.delegate = self
         self.pickerType.dataSource = self
         pickerData = ["Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
@@ -103,6 +109,10 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         notesText.layer.borderWidth = 0.5
         notesText.layer.borderColor = borderColor.cgColor
         notesText.layer.cornerRadius = 5.0
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
         // Do any additional setup after loading the view.
     }
     @IBAction func extinctSwitch(_ sender: Any) {
@@ -116,6 +126,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
             YearClosedText.isHidden = true
             print ("OPEN")
         }
+        
     }
     
     @IBAction func buttonSave(_ sender: Any) {
@@ -202,34 +213,13 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func moveTextField(textField: UITextView, moveDistance: Int, up: Bool) {
-        let moveDuration = 0.3
-        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
-        
-        UIView.beginAnimations("animateTextField", context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(moveDuration)
-        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
-        UIView.commitAnimations()
-    }
-
+    
 
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if (textView == notesText){
-            print ("Text field is: ", textView)
-            moveTextField(textField: textView, moveDistance: -215, up: true)
-            print ("BELOW OPENING")
-        }
-        if notesText.text == "Enter notes or citations here" {
-            notesText.text = ""
-        }
+        
     }
     func textViewDidEndEditing(_ textView: UITextView) {
-        if (textView == notesText){
-            print ("Text field is: ", textView)
-            moveTextField(textField: textView, moveDistance: -215, up: false)
-            print ("End OPENING")
-        }
+        
     }
     
     func TextFieldShouldReturn(textField: UITextField) -> Bool {
@@ -237,7 +227,21 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         return true
     }
     
-   
+    @objc func adjustForKeyboard(notification: Notification) {
+        let userInfo = notification.userInfo!
+        
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == Notification.Name.UIKeyboardWillHide {
+            scrollView.contentInset = UIEdgeInsets.zero
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+        }
+        
+        scrollView.scrollIndicatorInsets = scrollView.contentInset
+    }
+    
 }
 
 extension String {

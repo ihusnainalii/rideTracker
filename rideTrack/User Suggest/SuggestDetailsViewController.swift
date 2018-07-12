@@ -41,7 +41,8 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        nameTextField.delegate = self
+        manufacturerTextField.delegate = self
         let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(selectedAttraction.parkID!)"
         let dataModel = DataModel()
         dataModel.delegate = self
@@ -74,6 +75,11 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         if screenSize.width == 320 {
             scrollWidth.constant = 320
         }
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+        
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //hide keyboard when tapping the anywhere else
         
@@ -218,38 +224,35 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         self.performSegue(withIdentifier: "toApproveSuggestions", sender: self)
     }
     
-    func moveTextField(textField: UITextField, moveDistance: Int, up: Bool) {
-        let moveDuration = 0.3
-        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
-        
-        UIView.beginAnimations("animateTextField", context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(moveDuration)
-        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
-        UIView.commitAnimations()
-    }
-    
     
     func textFieldDidBeginEditing(_ textView: UITextField) {
-            moveTextField(textField: textView, moveDistance: -215, up: true)
             print ("BELOW OPENING")
     }
-//    func textFieldDidEndEditing(_ textView: UITextField) {
-//            moveTextField(textField: textView, moveDistance: -215, up: false)
-//            print ("End OPENING")
-//    }
 
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        moveTextField(textField: textField, moveDistance: -215, up: false)
         self.view.endEditing(true)
         print ("End DONE")
         return true
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
-        moveTextField(textField: textField, moveDistance: -215, up: false)
     }
 
+    @objc func adjustForKeyboard(notification: Notification) {
+        let userInfo = notification.userInfo!
+        
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == Notification.Name.UIKeyboardWillHide {
+            scrollView.contentInset = UIEdgeInsets.zero
+
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+        }
+        
+        scrollView.scrollIndicatorInsets = scrollView.contentInset
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

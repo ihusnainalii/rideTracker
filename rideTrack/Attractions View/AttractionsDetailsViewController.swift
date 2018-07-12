@@ -10,7 +10,8 @@ import UIKit
 import CoreData
 
 class AttractionsDetailsViewController: UIViewController {
-    
+   
+    var rememberPasscode = UserDefaults.standard.integer(forKey: "rememberPasscode")
     var typeString = ""
     var selectedRide = AttractionsModel()
     var favorites = [Int]()
@@ -25,6 +26,7 @@ class AttractionsDetailsViewController: UIViewController {
     let greyColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     
     
+    @IBOutlet weak var inspectorButton: UIButton!
     @IBOutlet weak var blankView: UIView!
     @IBOutlet weak var manufacturerStack: UIStackView!
     @IBOutlet weak var firstRideStack: UIStackView!
@@ -56,6 +58,13 @@ class AttractionsDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print ("ride ID: ", self.selectedRide.rideID!)
+        
+        if rememberPasscode == 1 {
+            inspectorButton.isHidden = false
+        }
+        else{
+            inspectorButton.isHidden = true
+        }
         OverlayView.layer.cornerRadius = 10.0
         OverlayView.backgroundColor = UIColor.white
         
@@ -278,12 +287,17 @@ class AttractionsDetailsViewController: UIViewController {
             newVC.selectedRide = selectedRide
         }
         if segue.identifier == "toAttractions"{
-            print ("Comeing back")
+            print ("Coming back")
             let newVC = segue.destination as! AttractionsViewController
             newVC.comeFromDetails = true
             newVC.parkID = selectedRide.parkID
             newVC.titleName = titleName
             newVC.userAttractionDatabase = userAttractionDatabase
+        }
+        if segue.identifier == "toModify"{
+            print("GOing to modify")
+            let newVC = segue.destination as! ExtendedAttractionDetailsViewController
+            newVC.selectedAttraction = selectedRide
         }
     }
     
