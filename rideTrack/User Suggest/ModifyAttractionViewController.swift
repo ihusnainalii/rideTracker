@@ -55,8 +55,8 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         self.rideTypeSwitch.delegate = self
         self.rideTypeSwitch.dataSource = self
         
-        pickerData = ["Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
-        rideTypeSwitch.selectRow(Int(originalAttraction.rideType!)-1, inComponent: 0, animated: true)
+        pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
+        rideTypeSwitch.selectRow(Int(originalAttraction.rideType!), inComponent: 0, animated: true)
         if originalAttraction.active == 1{
             extinctSwitch.isOn = false
         }
@@ -104,6 +104,8 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //rideType = pickerData[row]
         switch pickerData[row] {
+        case "":
+            rideType = -1
         case "Roller Coaster":
             rideType = 1
         case "Water Ride":
@@ -138,6 +140,8 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
     
     func convertRideTypeID(rideTypeID: Int) -> String {
         switch rideTypeID {
+        case -1:
+            return ""
         case 1:
             return "Roller Coaster"
         case 2:

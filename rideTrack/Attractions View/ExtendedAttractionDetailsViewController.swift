@@ -33,8 +33,8 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
         self.rideTypePicker.dataSource = self
         nameField.delegate = self
         manufacturingField.delegate = self
-        pickerData = ["Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
-        rideTypePicker.selectRow(Int(selectedAttraction.rideType!)-1, inComponent: 0, animated: true)
+        pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
+        rideTypePicker.selectRow(Int(selectedAttraction.rideType!), inComponent: 0, animated: true)
         openingField.text = String(selectedAttraction.yearOpen)
         closingField.text = String(selectedAttraction.yearClosed)
         manufacturingField.text = selectedAttraction.manufacturer
@@ -77,6 +77,8 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
     
     func convertRideTypeID(rideTypeID: Int) -> String {
         switch rideTypeID {
+        case -1:
+            return ""
         case 1:
             return "Roller Coaster"
         case 2:
@@ -142,6 +144,8 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //rideType = pickerData[row]
         switch pickerData[row] {
+        case "":
+            rideType = -1
         case "Roller Coaster":
             rideType = 1
         case "Water Ride":

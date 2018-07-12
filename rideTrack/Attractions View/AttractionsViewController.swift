@@ -414,6 +414,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func convertRideTypeID(rideTypeID: Int) -> String {
         switch rideTypeID {
+        case -1:
+            return ""
         case 1:
             return "Roller Coaster"
         case 2:

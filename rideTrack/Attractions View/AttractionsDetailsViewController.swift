@@ -124,7 +124,9 @@ class AttractionsDetailsViewController: UIViewController {
             blankView.isHidden = false
         }
         
-        switch selectedRide.rideType {                      
+        switch selectedRide.rideType {
+        case -1:
+            typeString = " Unknown"
         case 1:
             typeString = "  Roller Coaster"
         case 2:

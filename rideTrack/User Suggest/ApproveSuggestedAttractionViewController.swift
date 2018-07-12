@@ -127,6 +127,8 @@ func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRow
     
     func convertRideTypeID(rideTypeID: Int) -> String {
         switch rideTypeID {
+        case -1:
+            return ""
         case 1:
             return "Roller Coaster"
         case 2:

@@ -56,7 +56,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         manufacturerTextField.delegate = self
         parkNameLabel.text = selectedAttraction.parkName
         nameTextField.text = selectedAttraction.rideName
-        pickerData = ["Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
+        pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
 
         openTextField.text = String(selectedAttraction.YearOpen)
         closedTextField.text = String(selectedAttraction.YearClose)
@@ -68,7 +68,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
             extinctSwitch.isOn = true
         }
         scoreCardSwitch.isOn = false
-        typeSwitcher.selectRow((Int(selectedAttraction.type!)!-1), inComponent: 0, animated: true)
+        typeSwitcher.selectRow((Int(selectedAttraction.type!)!), inComponent: 0, animated: true)
         //typeSwitcher.selectRow(, inComponent: 0, animated: true)
         // Do any additional setup after loading the view.
         //if iphone 5 class
@@ -151,6 +151,8 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //rideType = pickerData[row]
         switch pickerData[row] {
+        case "":
+            rideType = -1
         case "Roller Coaster":
             rideType = 1
         case "Water Ride":

@@ -51,6 +51,8 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //rideType = pickerData[row]
         switch pickerData[row] {
+        case "":
+            rideType = -1
         case "Roller Coaster":
             rideType = 1
         case "Water Ride":
@@ -78,7 +80,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         case "Upcharge":
             rideType = 13
         default:
-            rideType = 1
+            rideType = 0
         }
         print("Ride type is: ",rideType)
     }
@@ -97,7 +99,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         
         self.pickerType.delegate = self
         self.pickerType.dataSource = self
-        pickerData = ["Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
+        pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
         activeSwitch.isOn=false
         textFieldClose.isHidden = true
         YearClosedText.isHidden = true
@@ -134,7 +136,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         dataModel.delegate = self
         print ("This is the type: ", rideType)
         if rideType == 0 {
-            rideType = 1
+            rideType = -1
         }
         //getting values from text fields
         let parknum = parkID
@@ -183,6 +185,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 Active = 1
                 dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
                 let ThankAlertController = UIAlertController(title: "Thank You", message: "Thank you for your submission. We will review it and add it to the database.", preferredStyle: .alert)
+                print ("ride type is: ", self.rideType)
                 let action = UIAlertAction(title: "OK", style: .default) { (action) -> Void in
                     //let ViewController = self.storyboard?.instantiateViewController(withIdentifier: "parksView")
                     self.performSegue(withIdentifier: "unwindToDetailsView", sender: self)
