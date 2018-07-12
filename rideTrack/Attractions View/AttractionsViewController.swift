@@ -28,7 +28,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var darkenLayer: UIView!
     @IBOutlet weak var downBar: UIButton!
-   
+    @IBOutlet weak var notificationView: UIView!
+    @IBOutlet weak var notificationViewBottomConstrant: NSLayoutConstraint!
+    
     let screenSize = UIScreen.main.bounds
     
     var userDataBaseIndex = 0
@@ -83,6 +85,13 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         rectangleView.clipsToBounds = true
         VisualEffectsLayer.layer.cornerRadius = 10.0
         VisualEffectsLayer.clipsToBounds = true
+        
+        notificationView.layer.shadowOffset = CGSize.zero
+        notificationView.layer.shadowRadius = 5
+        notificationView.layer.shadowOpacity = 0.3
+        notificationView.layer.cornerRadius = 10
+        notificationViewBottomConstrant.constant = -64
+        
         
         downBar.setImage(UIImage(named: "Down Bar"), for: .normal)
         
@@ -226,7 +235,18 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             extinctLabel.isHidden = true
         }
         
-        self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore-numExtinctSelected)
+        if (self.attractionListForTable.count - totalNumExtinct-numIgnore-numExtinctSelected) > parkData.totalRides{
+            animateInNotifcationView()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 15) { // change 2 to desired number of seconds
+                // Your code with delay
+                self.animateAwayNotificationView()
+            }
+        }
+        
+        updatingRideCount(parkID: parkID, userCount: userRidesRidden-userNumExtinct, totNum: attractionListForTable.count - totalNumExtinct-numIgnore-numExtinctSelected)
+        
+        
+       
         
         self.attractionsTableView.reloadData()
         
@@ -727,8 +747,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.RidesComplete += "/"
         self.RidesComplete += String(totNum)
         self.NumCompleteLabel.text = self.RidesComplete
-        
-        var percentage = Float(userCount)/Float(totNum)
+        parkData.totalRides = totNum
+        parkData.ridesRidden = userCount
+        let percentage = Float(userCount)/Float(totNum)
         
         self.progressBar.setProgress(Float(percentage), animated: true)
         if percentage == 1 {
@@ -819,6 +840,22 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         parksViewController.unwindFromAttractions(parkID: parkID)
         self.dismiss(animated: true, completion: nil)
     }
+    
+    func animateInNotifcationView(){
+        notificationViewBottomConstrant.constant = -2
+        UIView.animate(withDuration: 0.4, animations: ({
+            self.view.layoutIfNeeded()
+        }))
+    }
+    
+    func animateAwayNotificationView() {
+        notificationViewBottomConstrant.constant = -64
+        UIView.animate(withDuration: 0.4, animations: ({
+            self.view.layoutIfNeeded()
+        }))
+    }
+ 
+    
     
     
     func updateAttractionFromCoreData(){

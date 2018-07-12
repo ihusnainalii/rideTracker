@@ -78,16 +78,17 @@ class SettingsViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toParkList"{
-            print("back from settings")
-            let listVC = segue.destination as! ViewController
-            listVC.showExtinct = showExtinct
-            listVC.simulateLocation = simulateLocation
-
-            listVC.searchRideButtonHeightConstraint.constant = 23
-            listVC.currentLocationViewBottomConstraint.constant = -61
-            listVC.locationManager.requestWhenInUseAuthorization()
-            listVC.locationManager.requestLocation()
-            print("GETTING GPS DATA")
+            //I have moved all this to the unwindToParksList in ViewController
+//            print("back from settings")
+//            let listVC = segue.destination as! ViewController
+//            listVC.showExtinct = showExtinct
+//            listVC.simulateLocation = simulateLocation
+//
+//            listVC.searchRideButtonHeightConstraint.constant = 23
+//            listVC.currentLocationViewBottomConstraint.constant = -61
+//            listVC.locationManager.requestWhenInUseAuthorization()
+//            listVC.locationManager.requestLocation()
+//            print("GETTING GPS DATA")
         }
     }
 }

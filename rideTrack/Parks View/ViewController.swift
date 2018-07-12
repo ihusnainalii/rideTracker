@@ -158,6 +158,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+        
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        self.allParksTableView.contentInset = insets
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -472,6 +475,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             }
             
             allParksList.append(newPark)
+            
+            let insets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+            self.allParksTableView.contentInset = insets
             self.allParksTableView.reloadData()
             self.parksCoreData.saveNewItemToParkList(parkID: newPark.parkID)
             
@@ -596,6 +602,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     @IBAction func unwindToParkList(segue:UIStoryboardSegue) {
         if segue.source is SettingsViewController{
+            print("back from settings")
+            let settingsVC = segue.source as! SettingsViewController
+            showExtinct = settingsVC.showExtinct
+            simulateLocation = settingsVC.simulateLocation
+            
+            searchRideButtonHeightConstraint.constant = 23
+            currentLocationViewBottomConstraint.constant = -61
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestLocation()
+            print("GETTING GPS DATA")
         }
         else if let sourceViewController = segue.source as? ParkSearchViewController, let newPark = sourceViewController.selectedPark{
             addNewParkToList(newPark: newPark)
@@ -744,6 +760,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         self.view.endEditing(true)
         return false
     }
+    
     
     @objc func adjustForKeyboard(notification: Notification) {
         let userInfo = notification.userInfo!

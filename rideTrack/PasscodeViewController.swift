@@ -27,6 +27,7 @@ class PasscodeViewController: UIViewController, UITextFieldDelegate {
         if rememberPasscode == 1 {
             submitButton.isEnabled = true
         }
+        passcodeField.becomeFirstResponder()
         // Do any additional setup after loading the view.
     }
     @IBAction func rememberPasscodeSwitch(_ sender: Any) {
