@@ -54,6 +54,8 @@ class SearchMyParks{
         }))
         parksView.searchParkView.isHidden = false
         parksView.searchParksTextField.resignFirstResponder()
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: parksView.allParksBottomInsetValue, right: 0)
+        parksView.allParksTableView.contentInset = insets
         parksView.allParksTableView.reloadData()
     }
     

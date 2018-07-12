@@ -50,6 +50,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var doneSearchHeightConstrant: NSLayoutConstraint!
     
     var favoitesHeight: CGFloat = 190.0
+    var allParksBottomInsetValue:CGFloat = 20
     
     var selectedPark: ParksModel = ParksModel()
     var segueWithTableViewSelect = true
@@ -159,7 +160,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
         
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
         self.allParksTableView.contentInset = insets
     }
     
@@ -413,7 +414,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         if tableView == self.favoritesTableView {
             favoriteAction.title = "Remove from favorites"
         } else{
-            print("INDEX PATH ", indexPath.row)
             if allParksList[indexPath.row].favorite{
                 favoriteAction.title = "Already a favorite"
             }else{
@@ -476,7 +476,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             
             allParksList.append(newPark)
             
-            let insets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+            let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
             self.allParksTableView.contentInset = insets
             self.allParksTableView.reloadData()
             self.parksCoreData.saveNewItemToParkList(parkID: newPark.parkID)
@@ -679,11 +679,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 //Begin animating the UI with the new current location park
                 self.searchRideButtonHeightConstraint.constant = 50
                 self.currentLocationViewBottomConstraint.constant = -4
-
+                allParksBottomInsetValue = 45
+                let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
+                self.allParksTableView.contentInset = insets
                 UIView.animate(withDuration: 0.6, animations: {
                     self.view.layoutIfNeeded()
                 })
+            } else{
+                allParksBottomInsetValue = 20
+                let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
+                self.allParksTableView.contentInset = insets
             }
+            
         }
     }
     
