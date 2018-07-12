@@ -36,11 +36,38 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         self.searchTextFeild.delegate = self
         self.resultsTableView.delegate = self
         // Do any additional setup after loading the view.
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+    }
+    
+    @objc func adjustForKeyboard(notification: Notification) {
+        let userInfo = notification.userInfo!
+        
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == Notification.Name.UIKeyboardWillHide {
+            resultsTableView.contentInset = UIEdgeInsets.zero
+        } else {
+            resultsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+        }
+        
+        resultsTableView.scrollIndicatorInsets = resultsTableView.contentInset
+        
+//        let selectedRange = resultsTableView.selectedRange
+//        resultsTableView.scrollRangeToVisible(selectedRange)
     }
     
    
     @IBAction func didUpdateText(_ sender: Any) {
         searchedParksList.removeAll()
+        
+        if searchTextFeild.text! == ""{
+            searchedParksList = parkArray
+        }
+        
         for i in 0..<parkArray.count {
             park = parkArray[i] as! ParksModel
             firstEntry = true

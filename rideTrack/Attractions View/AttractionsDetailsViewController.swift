@@ -140,6 +140,8 @@ class AttractionsDetailsViewController: UIViewController {
             typeString = "  Parade"
         case 12:
             typeString = "  Play Area"
+        case 13:
+            typeString = "  Upcharge"
         default:
             typeString = "  Unknown"
         }

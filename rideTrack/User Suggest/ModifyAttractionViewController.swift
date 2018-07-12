@@ -42,6 +42,7 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         suggestedOpen.text = String(suggestedAttraction.YearOpen)
         suggestedClose.text = String(suggestedAttraction.YearClose)
         suggestedNotes.text = suggestedAttraction.notes
+        suggestedManufacturer.text = suggestedAttraction.manufacturer
         
         nameField.text=originalAttraction.name
         openField.text=String(originalAttraction.yearOpen)
@@ -164,7 +165,7 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
     @IBAction func deleteButton(_ sender: Any) {
         let dataModel = DataModel()
         dataModel.delegate = self
-        let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(originalAttraction.rideID!)"
+        let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(suggestedAttraction.id!)"
         print (urlPath)
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         self.performSegue(withIdentifier: "toApproveSuggestions", sender: self)
