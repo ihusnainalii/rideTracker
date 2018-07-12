@@ -1845,11 +1845,6 @@
                             <constraint firstItem="2Ff-tE-lFu" firstAttribute="bottom" secondItem="49z-lz-1Ke" secondAttribute="bottom" id="pYo-Ja-INM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1VQ-lA-yzH"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="ZxP-Ez-Emz"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="NumCompleteLabel" destination="lfq-1a-KsT" id="fjf-8G-MLI"/>
