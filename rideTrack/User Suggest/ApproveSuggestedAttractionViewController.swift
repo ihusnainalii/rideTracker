@@ -54,7 +54,7 @@ class ApproveSuggestedAttractionViewController: UIViewController, UITableViewDat
         let item: ApproveSuggestAttracionModel = listOfSuggestions[indexPath.row]
         let typeConvert = convertRideTypeID(rideTypeID: Int(item.type)!)
         if item.notes == "Enter notes or citations here" {
-            item.notes = "None given"
+            item.notes = "No notes given"
         }
         cell.parkNameLabel!.text = item.parkName
         cell.rideNameLabel!.text = item.rideName

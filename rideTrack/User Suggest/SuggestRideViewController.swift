@@ -181,6 +181,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 
                 
                 let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(ride!)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(manufacturer!)&notes=\(notes)"
+
                 print (urlPath)
                 Active = 1
                 dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")

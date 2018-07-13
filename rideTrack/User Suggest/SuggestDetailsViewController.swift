@@ -94,7 +94,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         exisitingAttractionsTableView.reloadData()
 
         for i in 0..<listOfAttractionsAtPark.count {
-            if listOfAttractionsAtPark[i].name! == selectedAttraction.rideName!{
+            if listOfAttractionsAtPark[i].name!.caseInsensitiveCompare(selectedAttraction.rideName!) == ComparisonResult.orderedSame {
                 let alert = UIAlertController(title: "Duplicate Attraction", message: "This attraction already exists in the database. Would you like to delete the suggestion or update the existing attraction?", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
                    print ("cancel")
@@ -228,7 +228,15 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     
     
     func textFieldDidBeginEditing(_ textView: UITextField) {
-            print ("BELOW OPENING")
+        if openTextField.isEditing {
+            openTextField.text = ""
+        }
+        if closedTextField.isEditing {
+            closedTextField.text = ""
+        }
+        if manufacturerTextField.isEditing {
+            manufacturerTextField.text = ""
+        }
     }
 
 

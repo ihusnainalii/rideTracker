@@ -19,7 +19,17 @@ class DataModel: NSObject, URLSessionDataDelegate {
     
     
     func downloadData(urlPath: String, dataBase: String, returnPath: String) {
-        let url: URL = URL(string: urlPath)!
+        let encoded = urlPath.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)
+        
+//        if let encoded = urlPath.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),
+//            let url = URL(string: encoded)
+//        {
+//            print(url)
+//            print("We are here")
+//        }
+//
+        
+        let url: URL = URL(string: encoded!)! 
         let defaultSessions = Foundation.URLSession(configuration: URLSessionConfiguration.default)
         let task = defaultSessions.dataTask(with: url) { (data, response, error)
             in

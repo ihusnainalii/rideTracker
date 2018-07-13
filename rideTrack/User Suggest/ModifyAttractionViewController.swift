@@ -216,7 +216,15 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
    
     
     func textFieldDidBeginEditing(_ textView: UITextField) {
-        print ("BELOW OPENING")
+        if openField.isEditing {
+            openField.text = ""
+        }
+        if closeField.isEditing {
+            closeField.text = ""
+        }
+        if manufacturerField.isEditing {
+            manufacturerField.text = ""
+        }
     }
 
     
