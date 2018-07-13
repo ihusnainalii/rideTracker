@@ -28,6 +28,9 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     @IBOutlet weak var manufacturerText: UITextField!
     @IBOutlet weak var notesText: UITextView!
     
+    let screenSize = UIScreen.main.bounds
+    @IBOutlet weak var scrollWidth: NSLayoutConstraint!
+    
     var pickerData: [String] = [String]()
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -115,6 +118,10 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+        
+        if screenSize.width == 320 {
+            scrollWidth.constant = 320
+        }
         // Do any additional setup after loading the view.
     }
     @IBAction func extinctSwitch(_ sender: Any) {
@@ -180,7 +187,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 //creating the post parameter by concatenating the keys and values from text field
                 
                 
-                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(ride!)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(manufacturer!)&notes=\(notes)"
+                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(ride!)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(manufacturer!)&notes=\(notes)&modify=0"
 
                 print (urlPath)
                 Active = 1

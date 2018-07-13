@@ -21,13 +21,23 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
     @IBOutlet weak var scoreSwitch: UISwitch!
     @IBOutlet weak var extinctSwitch: UISwitch!
     
+    @IBOutlet weak var scrollViewWidth: NSLayoutConstraint!
+    let screenSize = UIScreen.main.bounds
+
+    var isAdmin = UserDefaults.standard.integer(forKey: "rememberPasscode")
     var rideType = 0
     var pickerData: [String] = [String]()
     var selectedAttraction: AttractionsModel = AttractionsModel()
-    
+    var parkName = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Modifying: ",selectedAttraction.name)
+        if isAdmin == 0 {
+            nameField.isUserInteractionEnabled = false
+        }
+        else {
+            nameField.isUserInteractionEnabled = true
+        }
         nameField.text = selectedAttraction.name
         self.rideTypePicker.delegate = self
         self.rideTypePicker.dataSource = self
@@ -56,6 +66,9 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //hide keyboard when tapping the anywhere else
 
+        if screenSize.width == 320 {
+            scrollViewWidth.constant = 320
+        }
         // Do any additional setup after loading the view.
     }
     
@@ -133,12 +146,29 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
         if rideType == 0 {
             rideType = selectedAttraction.rideType
         }
-        let urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(selectedAttraction.rideID!)&name=\(rideName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(manufacturer)" //uploads to main list
+        var urlPath = ""
+        if isAdmin == 1{
+        urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(selectedAttraction.rideID!)&name=\(rideName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(manufacturer)" //uploads to main list
         print (urlPath)
-        let dataModel = DataModel()
-        dataModel.delegate = self
-        dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
-        self.performSegue(withIdentifier: "backToDetails", sender: self)
+            let dataModel = DataModel()
+            dataModel.delegate = self
+            dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+            self.performSegue(withIdentifier: "backToDetails", sender: self)
+    }
+        else {
+            let alert = UIAlertController(title: "Suggest Modifications to Attraction", message: "Are you sure you want to suggest these modifications to \(rideName)?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {action in                 urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parkID)&ride=\(rideName)&open=\(yearOpen)&close=\(yearClosed)&type=\(self.rideType)&park=\(self.parkName)&active=\(active)&manufacturer=\(manufacturer)&notes=&modify=1"
+                print(urlPath)
+                let dataModel = DataModel()
+                dataModel.delegate = self
+                dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+                self.performSegue(withIdentifier: "backToDetails", sender: self)
+            }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+       
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

@@ -86,6 +86,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     }
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
+ 
         let arrayOfRides = items as! [AttractionsModel]
         for i in 0..<arrayOfRides.count{
         listOfAttractionsAtPark.append(arrayOfRides[i])

@@ -16,6 +16,7 @@ class SuggestTableViewCell: UITableViewCell {
     @IBOutlet weak var closeLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     
+    @IBOutlet weak var modifyLabel: UILabel!
     weak var delegate: SuggestTableViewCellDelegate?
 
     

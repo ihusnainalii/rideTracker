@@ -14,9 +14,6 @@ class AttractionsDetailsViewController: UIViewController {
     var rememberPasscode = UserDefaults.standard.integer(forKey: "rememberPasscode")
     var typeString = ""
     var selectedRide = AttractionsModel()
-    var favorites = [Int]()
-    let favList = UserDefaults.standard
-    var isFavorite = false
     var modifyDate = Date()
     var comeFromDetails = false
     var userAttractionDatabase: [UserAttractionProvider]!
@@ -59,12 +56,12 @@ class AttractionsDetailsViewController: UIViewController {
         super.viewDidLoad()
         print ("ride ID: ", self.selectedRide.rideID!)
         
-        if rememberPasscode == 1 {
-            inspectorButton.isHidden = false
-        }
-        else{
-            inspectorButton.isHidden = true
-        }
+//        if rememberPasscode == 1 {
+//            inspectorButton.isHidden = false
+//        }
+//        else{
+//            inspectorButton.isHidden = true
+//        }
         OverlayView.layer.cornerRadius = 10.0
         OverlayView.backgroundColor = UIColor.white
         
@@ -305,6 +302,8 @@ class AttractionsDetailsViewController: UIViewController {
             print("GOing to modify")
             let newVC = segue.destination as! ExtendedAttractionDetailsViewController
             newVC.selectedAttraction = selectedRide
+            newVC.parkName = titleName
+            
         }
     }
     

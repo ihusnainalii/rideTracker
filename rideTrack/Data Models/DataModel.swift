@@ -120,6 +120,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.manufacturer = jsonElement["Manufacturer"] as? String
                 tempNotes = (jsonElement["Notes"] as? String)!
                 attraction.notes = tempNotes.replacingOccurrences(of: "_", with: " ")
+                attraction.modify = Int(jsonElement["modify"] as! String)
                 dataBaseData.add(attraction)
                 print ("Ride name is: ", attraction.rideName!)
             }

@@ -56,6 +56,12 @@ class ApproveSuggestedAttractionViewController: UIViewController, UITableViewDat
         if item.notes == "Enter notes or citations here" {
             item.notes = "No notes given"
         }
+        if item.modify == 1{
+            cell.modifyLabel.isHidden = false
+        }
+        else {
+            cell.modifyLabel.isHidden = true
+        }
         cell.parkNameLabel!.text = item.parkName
         cell.rideNameLabel!.text = item.rideName
         cell.openLabel!.text = String(item.YearOpen)
