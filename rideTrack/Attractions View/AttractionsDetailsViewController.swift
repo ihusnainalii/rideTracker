@@ -299,10 +299,10 @@ class AttractionsDetailsViewController: UIViewController {
             newVC.userAttractionDatabase = userAttractionDatabase
         }
         if segue.identifier == "toModify"{
-            print("GOing to modify")
             let newVC = segue.destination as! ExtendedAttractionDetailsViewController
             newVC.selectedAttraction = selectedRide
             newVC.parkName = titleName
+            print("Seguaing now: ride name is ", selectedRide.name!)
             
         }
     }

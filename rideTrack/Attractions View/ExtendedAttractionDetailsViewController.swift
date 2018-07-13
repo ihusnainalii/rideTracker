@@ -31,7 +31,7 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
     var parkName = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Modifying: ",selectedAttraction.name)
+        print("Modifying: ",selectedAttraction.name!)
         if isAdmin == 0 {
             nameField.isUserInteractionEnabled = false
         }
