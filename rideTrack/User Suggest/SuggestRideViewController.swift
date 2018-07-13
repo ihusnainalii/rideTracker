@@ -32,11 +32,11 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
-        return true;
+        return true
     }
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
         self.view.endEditing(true)
-        return true;
+        return true
     }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -219,31 +219,36 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     
 
     func textViewDidBeginEditing(_ textView: UITextView) {
-        
+        if notesText.text == "Enter notes or citations here" {
+            notesText.text = ""
+        }
     }
     func textViewDidEndEditing(_ textView: UITextView) {
-        
+        textView.resignFirstResponder()
     }
     
-    func TextFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
+
     @objc func adjustForKeyboard(notification: Notification) {
         let userInfo = notification.userInfo!
-        
+
         let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
-        
+
         if notification.name == Notification.Name.UIKeyboardWillHide {
             scrollView.contentInset = UIEdgeInsets.zero
         } else {
+            print("add bttom")
+
             scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
         }
-        
+
         scrollView.scrollIndicatorInsets = scrollView.contentInset
+
+
     }
+
+    
+    
     
 }
 

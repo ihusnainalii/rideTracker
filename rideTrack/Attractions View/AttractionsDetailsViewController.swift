@@ -38,8 +38,8 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var dateModifyButton: UIButton!
     @IBOutlet weak var CurrentlyOpenLabel: UILabel!
     @IBOutlet weak var rideNameLabel: UILabel!
-    @IBOutlet weak var yearCloseLabel: UITextField!
-    @IBOutlet weak var yearOpenLabel: UITextField!
+    @IBOutlet weak var yearCloseLabel: UILabel!
+    @IBOutlet weak var yearOpenLabel: UILabel!
     @IBOutlet weak var yearCloseText: UILabel!
     @IBOutlet weak var attractiontype: UITextField!
     @IBOutlet weak var dateFirstRiddenLabel: UILabel!
@@ -187,6 +187,11 @@ class AttractionsDetailsViewController: UIViewController {
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
+    @IBAction func didModifyDate(_ sender: Any) {
+        print("modify")
+        dateFirstRiddenLabel.text = dateFormatter(date: modifyDatePicker.date)
+    }
+
     
     @IBAction func pressDownBar(_ sender: Any) {
         UIView.animate(withDuration: 0.2, animations: { //Animate Here

@@ -86,7 +86,7 @@
                                                 <segue destination="R6N-UU-UtL" kind="unwind" identifier="cancel" unwindAction="unwindToParkListWithSegue:" id="Frw-1e-TBO"/>
                                             </connections>
                                         </button>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add new park" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mmo-xI-RsB">
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add new park" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mmo-xI-RsB">
                                             <rect key="frame" x="8" y="36" width="359" height="30"/>
                                             <color key="backgroundColor" red="0.0011725673188915406" green="0.41295153993096445" blue="0.0018193449580243392" alpha="0.43691138698630139" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="textColor"/>
@@ -319,7 +319,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sWj-I5-Xhq">
                                 <rect key="frame" x="7" y="285" width="361" height="329"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search my parks" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ATh-qj-u0A">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search my parks" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ATh-qj-u0A">
                                         <rect key="frame" x="5" y="7" width="351" height="30"/>
                                         <color key="backgroundColor" red="0.86666666670000003" green="0.87058823529999996" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="textColor"/>
@@ -503,12 +503,12 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="Xo4-qp-Arf" firstAttribute="centerY" secondItem="KOS-Dh-fGQ" secondAttribute="centerY" id="02U-Hm-Ubb"/>
-                                    <constraint firstItem="uAN-id-c6t" firstAttribute="centerY" secondItem="KOS-Dh-fGQ" secondAttribute="centerY" constant="-4" id="3ch-Ga-57B"/>
                                     <constraint firstAttribute="height" constant="59" id="5nC-4y-Kov"/>
                                     <constraint firstItem="Xo4-qp-Arf" firstAttribute="leading" secondItem="uAN-id-c6t" secondAttribute="trailing" constant="5" id="9k0-3W-eDN"/>
                                     <constraint firstAttribute="trailing" secondItem="Xo4-qp-Arf" secondAttribute="trailing" constant="8" id="CDj-C7-2z9"/>
                                     <constraint firstItem="uAN-id-c6t" firstAttribute="leading" secondItem="KOS-Dh-fGQ" secondAttribute="leading" constant="8" id="DVt-JB-pzx"/>
+                                    <constraint firstItem="uAN-id-c6t" firstAttribute="top" secondItem="KOS-Dh-fGQ" secondAttribute="top" constant="2.5" id="QWV-Bq-FOr"/>
+                                    <constraint firstItem="Xo4-qp-Arf" firstAttribute="top" secondItem="KOS-Dh-fGQ" secondAttribute="top" constant="13" id="Xf8-zl-FZY"/>
                                 </constraints>
                             </view>
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2018-06-24 at 12.52.26 PM" translatesAutoresizingMaskIntoConstraints="NO" id="pt4-fZ-Fgc">
@@ -577,6 +577,7 @@
                         <outlet property="favoritesTableView" destination="uXX-yk-zP8" id="Bk6-5H-FrE"/>
                         <outlet property="favoritesView" destination="wjJ-uA-bd2" id="hEn-Zv-jns"/>
                         <outlet property="favoritesViewHeightConstrant" destination="CUv-sS-PMP" id="1YN-jh-Li8"/>
+                        <outlet property="locationViewHeight" destination="5nC-4y-Kov" id="iec-T1-EB7"/>
                         <outlet property="myParksLabel" destination="dHc-jO-smP" id="WaQ-Wr-73g"/>
                         <outlet property="navBarHeightConstants" destination="Go3-Ny-0yP" id="2lG-5R-xJT"/>
                         <outlet property="navigationBar" destination="SFN-kt-0Xx" id="8qU-ba-8ej"/>
@@ -1761,9 +1762,9 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go through your list to make sure you have all your rides checked off!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="6P9-dl-lmE">
-                                                            <rect key="frame" x="5" y="23.5" width="365" height="31.5"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 new attraction(s) are now available." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="6P9-dl-lmE">
+                                                            <rect key="frame" x="5" y="31" width="365" height="17"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -1772,7 +1773,7 @@
                                                     <constraints>
                                                         <constraint firstItem="6P9-dl-lmE" firstAttribute="leading" secondItem="38e-4o-Tmr" secondAttribute="leading" constant="5" id="Czv-Uj-lVH"/>
                                                         <constraint firstItem="Q0z-sB-mWe" firstAttribute="top" secondItem="38e-4o-Tmr" secondAttribute="top" constant="4" id="VWf-JE-U5R"/>
-                                                        <constraint firstAttribute="bottom" secondItem="6P9-dl-lmE" secondAttribute="bottom" constant="4" id="n3Z-mQ-YbJ"/>
+                                                        <constraint firstItem="6P9-dl-lmE" firstAttribute="top" secondItem="Q0z-sB-mWe" secondAttribute="bottom" constant="6" id="jp0-mD-wSe"/>
                                                         <constraint firstAttribute="trailing" secondItem="6P9-dl-lmE" secondAttribute="trailing" constant="5" id="pIc-Z6-kn4"/>
                                                         <constraint firstItem="Q0z-sB-mWe" firstAttribute="leading" secondItem="38e-4o-Tmr" secondAttribute="leading" constant="5" id="sL2-Ga-nFU"/>
                                                         <constraint firstAttribute="height" constant="59" id="yqK-t3-CB4"/>
@@ -1860,6 +1861,8 @@
                         <outlet property="extinctText" destination="BWZ-6M-pEa" id="mdI-YO-5DS"/>
                         <outlet property="notificationView" destination="38e-4o-Tmr" id="cTZ-0b-arc"/>
                         <outlet property="notificationViewBottomConstrant" destination="lJp-zQ-hDh" id="l3o-eq-5bH"/>
+                        <outlet property="notificationViewHeight" destination="yqK-t3-CB4" id="SLg-hL-g9E"/>
+                        <outlet property="notificationViewText" destination="6P9-dl-lmE" id="5NQ-zY-iLk"/>
                         <outlet property="parkLabel" destination="uVR-cf-Ne8" id="AeQ-bv-7ml"/>
                         <outlet property="progressBar" destination="rKa-vC-Lf2" id="uwW-Gj-q4m"/>
                         <outlet property="rectangleView" destination="qGY-Pc-WCD" id="81w-5E-zKt"/>
@@ -1996,12 +1999,12 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" text="Year Open" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8gM-qW-ZeU">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Year Open" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IiB-xY-fV2">
                                                 <rect key="frame" x="190" y="0.0" width="165" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                 <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="g5p-XM-kaB" userLabel="Year Close">
@@ -2013,12 +2016,12 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" text="Year Close" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zx5-Gw-G3X">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Year closed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aL9-LZ-6eL">
                                                 <rect key="frame" x="190" y="0.0" width="165" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                 <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currently Open" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCR-Wi-8Su">
@@ -2064,7 +2067,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yFP-y9-2Ds" userLabel="Modify">
                                         <rect key="frame" x="0.0" y="295.5" width="355" height="30"/>
                                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                                        <state key="normal" title="Modify    ">
+                                        <state key="normal" title="Modify First Ride Date  ">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -2096,7 +2099,7 @@
                                 </connections>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KpE-N1-tqN">
-                                <rect key="frame" x="10" y="477" width="355" height="190"/>
+                                <rect key="frame" x="10" y="467" width="355" height="190"/>
                                 <subviews>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="5c2-wM-k3A">
                                         <rect key="frame" x="0.0" y="29" width="355" height="161"/>
@@ -2104,6 +2107,9 @@
                                         <date key="date" timeIntervalSinceReferenceDate="550451425.66794395">
                                             <!--2018-06-11 23:10:25 +0000-->
                                         </date>
+                                        <connections>
+                                            <action selector="didModifyDate:" destination="S7M-68-41E" eventType="primaryActionTriggered" id="WCb-lJ-DpA"/>
+                                        </connections>
                                     </datePicker>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zuT-sM-dYX">
                                         <rect key="frame" x="308" y="0.0" width="34" height="30"/>
@@ -2113,7 +2119,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="190" id="114-MG-Gpz"/>
                                     <constraint firstItem="5c2-wM-k3A" firstAttribute="top" secondItem="KpE-N1-tqN" secondAttribute="top" constant="29" id="JIn-TF-vnQ"/>
@@ -2137,8 +2143,8 @@
                             <constraint firstItem="cJr-Oe-NCN" firstAttribute="trailing" secondItem="4dk-a8-P3E" secondAttribute="trailing" constant="10" id="OXt-Qn-iHl"/>
                             <constraint firstItem="QL7-61-DhJ" firstAttribute="leading" secondItem="cJr-Oe-NCN" secondAttribute="leading" id="R0b-VQ-o3j"/>
                             <constraint firstItem="4dk-a8-P3E" firstAttribute="leading" secondItem="cJr-Oe-NCN" secondAttribute="leading" constant="10" id="S76-lH-Shm"/>
-                            <constraint firstItem="cJr-Oe-NCN" firstAttribute="bottom" secondItem="KpE-N1-tqN" secondAttribute="bottom" id="Wp1-LT-WMC"/>
                             <constraint firstItem="KpE-N1-tqN" firstAttribute="trailing" secondItem="Cxv-Gr-wFA" secondAttribute="trailing" id="gc6-v7-SAy"/>
+                            <constraint firstItem="cJr-Oe-NCN" firstAttribute="bottom" secondItem="KpE-N1-tqN" secondAttribute="bottom" constant="10" id="hjD-oH-j3J"/>
                             <constraint firstItem="QL7-61-DhJ" firstAttribute="top" secondItem="cJr-Oe-NCN" secondAttribute="top" id="mfQ-qd-5c5"/>
                             <constraint firstItem="cJr-Oe-NCN" firstAttribute="trailing" secondItem="QL7-61-DhJ" secondAttribute="trailing" id="oLP-CG-Aop"/>
                         </constraints>
@@ -2164,10 +2170,10 @@
                         <outlet property="rideNameLabel" destination="2jQ-j8-nJm" id="g6o-8Z-bdx"/>
                         <outlet property="scoreCardButton" destination="FIt-oQ-FcD" id="dfM-Ya-8xe"/>
                         <outlet property="view" destination="Bwz-yM-ppu" id="9E1-n2-WCw"/>
-                        <outlet property="yearCloseLabel" destination="zx5-Gw-G3X" id="mRQ-v3-fv1"/>
+                        <outlet property="yearCloseLabel" destination="aL9-LZ-6eL" id="LMa-je-zFQ"/>
                         <outlet property="yearCloseText" destination="GUi-Yi-uzO" id="x2I-Cf-tKs"/>
                         <outlet property="yearClosedStack" destination="g5p-XM-kaB" id="aQF-1j-Dah"/>
-                        <outlet property="yearOpenLabel" destination="8gM-qW-ZeU" id="iCJ-5Q-6aT"/>
+                        <outlet property="yearOpenLabel" destination="IiB-xY-fV2" id="bdz-g1-EUc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dic-VF-lMM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2362,7 +2368,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="olt-hM-pnN" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="F9i-Qb-3lc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3485.5999999999999" y="925.63718140929541"/>
+            <point key="canvasLocation" x="3486" y="934"/>
         </scene>
         <!--Score Card View Controller-->
         <scene sceneID="FTK-h2-0ff">
@@ -2751,7 +2757,7 @@
                                                             <constraint firstAttribute="width" constant="300" id="aCN-gF-Z0w"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="d4P-N9-9bs" id="yPw-f0-Nrn"/>
                                                         </connections>

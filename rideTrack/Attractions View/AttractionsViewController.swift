@@ -10,7 +10,7 @@ import CoreData
 import Foundation
 
 
-class AttractionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, AttractionsTableViewCellDelegate {
+class AttractionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, AttractionsTableViewCellDelegate{
     
     
     @IBOutlet weak var attractionsTableView: UITableView!
@@ -30,6 +30,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var downBar: UIButton!
     @IBOutlet weak var notificationView: UIView!
     @IBOutlet weak var notificationViewBottomConstrant: NSLayoutConstraint!
+    @IBOutlet weak var notificationViewText: UILabel!
+    @IBOutlet weak var notificationViewHeight: NSLayoutConstraint!
+    
+    var generator: UIImpactFeedbackGenerator!
     
     let screenSize = UIScreen.main.bounds
     
@@ -66,6 +70,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var rideName = ""
     var totalNumExtinct = 0
     
+    var is3DTouchAvailable: Bool {
+        return view.traitCollection.forceTouchCapability == .available
+    }
+    
     override func viewDidLoad() {
         print("Show incrementor is \(parkData.incrementorEnabled)")
         super.viewDidLoad()
@@ -92,6 +100,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         notificationView.layer.cornerRadius = 10
         notificationViewBottomConstrant.constant = -64
         
+        if is3DTouchAvailable{
+            generator = UIImpactFeedbackGenerator(style: .light)
+            generator.prepare()
+        }
         
         downBar.setImage(UIImage(named: "Down Bar"), for: .normal)
         
@@ -236,7 +248,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
         if (self.attractionListForTable.count - totalNumExtinct-numIgnore-numExtinctSelected) > parkData.totalRides{
+            let numberOfNewParks = attractionListForTable.count-totalNumExtinct-numIgnore-numExtinctSelected-parkData.totalRides
+            if numberOfNewParks == 1{
+                notificationViewText.text = "1 new attraction is now available."
+            } else{
+                notificationViewText.text = "\(numberOfNewParks) new attractions are now available."
+            }
             animateInNotifcationView()
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 15) { // change 2 to desired number of seconds
                 // Your code with delay
                 self.animateAwayNotificationView()
@@ -454,6 +473,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func attractionCellTapButton(_ sender: AttractionsTableViewCell) {
         print("plus")
+        
         guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
         if !attractionListForTable[indexPath.row].isCheck && !attractionListForTable[indexPath.row].isIgnored{
             addFirstCheckRide(indexPath: indexPath)
@@ -475,7 +495,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.saveUserCheckOffNewRide(parkID: self.parkID, rideID: (self.attractionListForTable[indexPath.row]).rideID);
         
         let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
-
+        generator.impactOccurred()
         if parkData.incrementorEnabled{
             cell.numberOfRidesLabel.text = String(self.attractionListForTable[indexPath.row].numberOfTimesRidden)
             UIView.animate(withDuration: 0.3, animations: ({
@@ -563,6 +583,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     func positiveIncrementCount(indexPath: IndexPath){
         
         if parkData.incrementorEnabled{
+            generator.impactOccurred()
             let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
             let newIncrement = attractionListForTable[indexPath.row].numberOfTimesRidden + 1
             saveIncrementRideCount(rideID:  attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement, postive: true)
@@ -845,6 +866,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func animateInNotifcationView(){
         notificationViewBottomConstrant.constant = -2
+        //Configure for iPhone X
+        if screenSize.height == 812{
+            self.notificationViewHeight.constant = 85
+        }
         UIView.animate(withDuration: 0.4, animations: ({
             self.view.layoutIfNeeded()
         }))
@@ -852,6 +877,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func animateAwayNotificationView() {
         notificationViewBottomConstrant.constant = -64
+        //Configure for iPhone X
+        if screenSize.height == 812{
+            self.notificationViewHeight.constant = 59
+        }
         UIView.animate(withDuration: 0.4, animations: ({
             self.view.layoutIfNeeded()
         }))

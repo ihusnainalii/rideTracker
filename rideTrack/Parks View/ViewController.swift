@@ -48,6 +48,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var allParksBottomConstrant: NSLayoutConstraint!
     @IBOutlet weak var doneSearchWidthConstrant: NSLayoutConstraint!
     @IBOutlet weak var doneSearchHeightConstrant: NSLayoutConstraint!
+    @IBOutlet weak var locationViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var locationViewCenterConstrant: NSLayoutConstraint!
     
     var favoitesHeight: CGFloat = 190.0
     var allParksBottomInsetValue:CGFloat = 20
@@ -678,7 +680,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 self.view.layoutIfNeeded()
                 //Begin animating the UI with the new current location park
                 self.searchRideButtonHeightConstraint.constant = 50
+                
+                
                 self.currentLocationViewBottomConstraint.constant = -4
+                //If iPhone X, make the locationView heigher
+                print (screenSize.height)
+                if screenSize.height == 812{
+                    self.locationViewHeight.constant = 85
+                }
+                
                 allParksBottomInsetValue = 45
                 let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
                 self.allParksTableView.contentInset = insets
@@ -689,6 +699,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 allParksBottomInsetValue = 20
                 let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
                 self.allParksTableView.contentInset = insets
+                //If iPhone X, make the locationView heigher
+                print (screenSize.height)
+                if screenSize.height == 812{
+                    self.locationViewHeight.constant = 59
+                }
             }
             
         }
