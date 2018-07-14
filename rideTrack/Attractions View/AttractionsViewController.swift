@@ -69,6 +69,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var rideID = 0
     var rideName = ""
     var totalNumExtinct = 0
+    var hasHaptic = 0
     
     var is3DTouchAvailable: Bool {
         return view.traitCollection.forceTouchCapability == .available
@@ -77,7 +78,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         print("Show incrementor is \(parkData.incrementorEnabled)")
         super.viewDidLoad()
-        
+        hasHaptic = UIDevice.current.value(forKey: "_feedbackSupportLevel") as! Int
+        print ("has haptic is ", hasHaptic)
         emptyParkInstructionsLabel.alpha = 0.0
         self.darkenLayer.backgroundColor = UIColor.clear
         animateRow = -1
@@ -493,10 +495,16 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.attractionListForTable[indexPath.row].dateFirstRidden = Date()
         self.attractionListForTable[indexPath.row].dateLastRidden = Date()
         self.saveUserCheckOffNewRide(parkID: self.parkID, rideID: (self.attractionListForTable[indexPath.row]).rideID);
-        
         let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
-        generator.impactOccurred()
-        if parkData.incrementorEnabled{
+
+        if (self.hasHaptic == 0) {
+            print ("no feedback")
+        }
+        else {
+            generator.impactOccurred()
+            print ("has feedback")
+        }
+           if parkData.incrementorEnabled{
             cell.numberOfRidesLabel.text = String(self.attractionListForTable[indexPath.row].numberOfTimesRidden)
             UIView.animate(withDuration: 0.3, animations: ({
                 cell.attractionButton.setImage(#imageLiteral(resourceName: "Plus Attraction"), for: .normal)
@@ -583,7 +591,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     func positiveIncrementCount(indexPath: IndexPath){
         
         if parkData.incrementorEnabled{
-            generator.impactOccurred()
+            if (self.hasHaptic == 0) {
+            }
+            else {
+                generator.impactOccurred()
+            }
             let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
             let newIncrement = attractionListForTable[indexPath.row].numberOfTimesRidden + 1
             saveIncrementRideCount(rideID:  attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement, postive: true)
