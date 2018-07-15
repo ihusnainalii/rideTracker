@@ -18,14 +18,17 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
     @IBOutlet weak var suggestedType: UILabel!
     @IBOutlet weak var suggestedNotes: UILabel!
     @IBOutlet weak var suggestedOpen: UILabel!
+    @IBOutlet weak var suggestedExtinct: UILabel!
     
     @IBOutlet weak var originalName: UILabel!
     @IBOutlet weak var originalType: UILabel!
     @IBOutlet weak var originalOpen: UILabel!
     @IBOutlet weak var originalClose: UILabel!
     @IBOutlet weak var originalMan: UILabel!
+    @IBOutlet weak var originalExtinct: UILabel!
     
     
+    @IBOutlet weak var revertButton: UIButton!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var rideTypeSwitch: UIPickerView!
     @IBOutlet weak var openField: UITextField!
@@ -72,17 +75,30 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         
         pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
         rideTypeSwitch.selectRow(Int(suggestedAttraction.type!)!, inComponent: 0, animated: true)
-        if originalAttraction.active == 1{
+        if suggestedAttraction.active == 1{
             extinctSwitch.isOn = false
         }
         else {
             extinctSwitch.isOn = true
         }
-        if originalAttraction.hasScoreCard == 1 {
-            scoreCardSwtich.isOn = true
+        scoreCardSwtich.isOn = false
+//        if suggestedAttraction.score == 1 {
+//            scoreCardSwtich.isOn = true
+//        }
+//        else {
+//            scoreCardSwtich.isOn = false
+//        }
+        if originalAttraction.active == 1 {
+            originalExtinct.text = "No"
         }
         else {
-            scoreCardSwtich.isOn = false
+            originalExtinct.text = "Yes"
+        }
+        if suggestedAttraction.active == 1 {
+            suggestedExtinct.text = "No"
+        }
+        else {
+            suggestedExtinct.text = "Yes"
         }
         if screenSize.width == 320 {
             scrollWidth.constant = 320
@@ -228,7 +244,30 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         self.performSegue(withIdentifier: "toApproveSuggestions", sender: self)
     }
     
-   
+    @IBAction func revertButton(_ sender: Any) {
+        revertButton.isEnabled = false
+
+        nameField.text = originalAttraction.name
+        rideTypeSwitch.selectRow(Int(originalAttraction.rideType!), inComponent: 0, animated: true)
+        openField.text = String(originalAttraction.yearOpen)
+        closeField.text = String(originalAttraction.yearClosed)
+        manufacturerField.text = originalAttraction.manufacturer
+        if originalAttraction.active == 1{
+            extinctSwitch.isOn = false
+        }
+        else {
+            extinctSwitch.isOn = true
+        }
+        if originalAttraction.hasScoreCard == 1 {
+            scoreCardSwtich.isOn = true
+        }
+        else {
+            scoreCardSwtich.isOn = false
+        }
+
+        
+    }
+    
     
     func textFieldDidBeginEditing(_ textView: UITextField) {
         if openField.isEditing {
