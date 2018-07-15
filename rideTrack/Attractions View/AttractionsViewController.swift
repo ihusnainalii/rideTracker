@@ -202,12 +202,21 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                         attractionListForTable[i].isIgnored = false
                     } //setting the rides to be ignored
                     for j in 0..<ignore.count{
+                        if ignore[j] == attractionListForTable[i].rideID && attractionListForTable[i].active == 0 {
+                            print ("was opened/hidden, now extinct")
+                            ignore.remove(at: j)
+                            attractionListForTable[i].isIgnored = false
+                            break
+                        }
+                        
                         if ignore[j] == attractionListForTable[i].rideID{
+                            print ("still here!")
                             attractionListForTable[i].isIgnored = true
                             numIgnore += 1
                             break
                         }
                         else {
+                            print("at the else")
                             attractionListForTable[i].isIgnored = false
                         }
                         
@@ -475,9 +484,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func attractionCellTapButton(_ sender: AttractionsTableViewCell) {
         print("plus")
-        
         guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
-        if !attractionListForTable[indexPath.row].isCheck && !attractionListForTable[indexPath.row].isIgnored{
+        
+        if (attractionListForTable[indexPath.row]).isCheck && !parkData.incrementorEnabled{//if increment is off, tap the check button to uncheck it
+            print ("uncheck here")
+            attractionCellNegativeIncrement(indexPath: indexPath)
+        }
+        
+        else if !attractionListForTable[indexPath.row].isCheck && !attractionListForTable[indexPath.row].isIgnored{
             addFirstCheckRide(indexPath: indexPath)
         } else if attractionListForTable[indexPath.row].isCheck && !attractionListForTable[indexPath.row].isIgnored{
             positiveIncrementCount(indexPath: indexPath)
@@ -489,7 +503,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func addFirstCheckRide(indexPath: IndexPath){
         print ("Seclected Attraction is: ", (self.attractionListForTable[indexPath.row]).rideID)
-        
+    
         (self.attractionListForTable[indexPath.row]).isCheck = true
         self.attractionListForTable[indexPath.row].numberOfTimesRidden = 1
         self.attractionListForTable[indexPath.row].dateFirstRidden = Date()
@@ -498,11 +512,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
 
         if (self.hasHaptic == 0) {
-            print ("no feedback")
         }
         else {
             generator.impactOccurred()
-            print ("has feedback")
         }
            if parkData.incrementorEnabled{
             cell.numberOfRidesLabel.text = String(self.attractionListForTable[indexPath.row].numberOfTimesRidden)

@@ -33,7 +33,6 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var manufacturerLabel: UILabel!
     @IBOutlet weak var manufacturText: UILabel!
     @IBOutlet weak var dateModifyButton: UIButton!
-    @IBOutlet weak var CurrentlyOpenLabel: UILabel!
     @IBOutlet weak var rideNameLabel: UILabel!
     @IBOutlet weak var yearCloseLabel: UILabel!
     @IBOutlet weak var yearOpenLabel: UILabel!
@@ -73,7 +72,7 @@ class AttractionsDetailsViewController: UIViewController {
         //dateModifyButton.layer.cornerRadius = 5.0
       //  userDatesView.backgroundColor = greyColor
         //userDatesView.layer.cornerRadius = 10.0
-        let tempName = "  "+selectedRide.name
+        let tempName = selectedRide.name
         rideNameLabel.text = tempName
         if selectedRide.yearOpen == 0{
             yearOpenLabel.text = "Unknown"
@@ -86,7 +85,6 @@ class AttractionsDetailsViewController: UIViewController {
         }
         else {
             yearCloseLabel.text = String (selectedRide.yearClosed)
-            CurrentlyOpenLabel.isHidden = true
         }
         if selectedRide.isCheck{
             dateFirstRiddenLabel.text = dateFormatter(date: selectedRide.dateFirstRidden)
@@ -123,37 +121,37 @@ class AttractionsDetailsViewController: UIViewController {
         
         switch selectedRide.rideType {
         case -1:
-            typeString = " Unknown"
+            typeString = "Unknown"
         case 1:
-            typeString = "  Roller Coaster"
+            typeString = "Roller Coaster"
         case 2:
-            typeString = "  Water Ride"
+            typeString = "Water Ride"
         case 3:
-            typeString = "  Children's Ride"
+            typeString = "Children's Ride"
         case 4:
-            typeString = "  Flat Ride"
+            typeString = "Flat Ride"
         case 5:
-            typeString = "  Transport Ride"
+            typeString = "Transport Ride"
         case 6:
-            typeString = "  Dark Ride"
+            typeString = "Dark Ride"
         case 7:
-            typeString = "  Explore"
+            typeString = "Explore"
         case 8:
-            typeString = "  Spectacular"
+            typeString = "Spectacular"
         case 9:
-            typeString = "  Show"
+            typeString = "Show"
         case 10:
-            typeString = "  Film"
+            typeString = "Film"
         case 11:
-            typeString = "  Parade"
+            typeString = "Parade"
         case 12:
-            typeString = "  Play Area"
+            typeString = "Play Area"
         case 13:
-            typeString = "  Upcharge"
+            typeString = "Upcharge"
         default:
-            typeString = "  Unknown"
+            typeString = "Unknown"
         }
-        if typeString == "  Unknown"{
+        if typeString == "Unknown"{
             attractiontype.isHidden = true
         }
         attractiontype.text = typeString
@@ -175,11 +173,13 @@ class AttractionsDetailsViewController: UIViewController {
     }
     
     @IBAction func didPressModifyDate(_ sender: Any) {
+        dateModifyButton.isEnabled = false
+        dateModifyButton.isHighlighted = true
         modifyDateView.isHidden = false
         dateModifyButton.isEnabled = false
         modifyDatePicker.setDate(selectedRide.dateFirstRidden, animated: false)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
-            self.detailViewHeight.constant += 140
+            self.detailViewHeight.constant += 160
          //   self.detailsView.frame.origin.y -= 10
             self.view.layoutIfNeeded()
         }, completion: nil)
@@ -197,13 +197,16 @@ class AttractionsDetailsViewController: UIViewController {
     }
     
     @IBAction func didSaveModifyDate(_ sender: Any) {
+        dateModifyButton.isEnabled = true
+        dateModifyButton.isHighlighted = false
+        
         modifyDateView.isHidden = true
         dateModifyButton.isEnabled = true
         dateFirstRiddenLabel.text = dateFormatter(date: modifyDatePicker.date)
         selectedRide.dateFirstRidden = modifyDatePicker.date
         saveModifyFirstRideDate(rideID: selectedRide.rideID, firstRideDate: modifyDatePicker.date)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
-            self.detailViewHeight.constant -= 140
+            self.detailViewHeight.constant -= 160
        //     self.detailsView.frame.origin.y += 10
 
             self.view.layoutIfNeeded()

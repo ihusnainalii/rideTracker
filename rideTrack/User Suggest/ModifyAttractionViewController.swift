@@ -19,6 +19,13 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
     @IBOutlet weak var suggestedNotes: UILabel!
     @IBOutlet weak var suggestedOpen: UILabel!
     
+    @IBOutlet weak var originalName: UILabel!
+    @IBOutlet weak var originalType: UILabel!
+    @IBOutlet weak var originalOpen: UILabel!
+    @IBOutlet weak var originalClose: UILabel!
+    @IBOutlet weak var originalMan: UILabel!
+    
+    
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var rideTypeSwitch: UIPickerView!
     @IBOutlet weak var openField: UITextField!
@@ -47,16 +54,24 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         suggestedNotes.text = suggestedAttraction.notes
         suggestedManufacturer.text = suggestedAttraction.manufacturer
         
-        nameField.text=originalAttraction.name
-        openField.text=String(originalAttraction.yearOpen)
-        closeField.text=String(originalAttraction.yearClosed)
-        manufacturerField.text=originalAttraction.manufacturer
+        nameField.text = suggestedAttraction.rideName
+        openField.text = String(suggestedAttraction.YearOpen)
+        closeField.text = String(suggestedAttraction.YearClose)
+        manufacturerField.text = suggestedAttraction.manufacturer
+        
+        let orgType = convertRideTypeID(rideTypeID: Int(originalAttraction.rideType))
+        originalName.text = originalAttraction.name
+        originalType.text = orgType
+        originalOpen.text = String(originalAttraction.yearOpen)
+        originalClose.text = String(originalAttraction.yearClosed)
+        originalMan.text = originalAttraction.manufacturer
+
         
         self.rideTypeSwitch.delegate = self
         self.rideTypeSwitch.dataSource = self
         
         pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
-        rideTypeSwitch.selectRow(Int(originalAttraction.rideType!), inComponent: 0, animated: true)
+        rideTypeSwitch.selectRow(Int(suggestedAttraction.type!)!, inComponent: 0, animated: true)
         if originalAttraction.active == 1{
             extinctSwitch.isOn = false
         }
