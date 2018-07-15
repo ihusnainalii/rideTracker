@@ -775,6 +775,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             }
         }
         allParksTableView.reloadData()
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
+        self.allParksTableView.contentInset = insets
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
