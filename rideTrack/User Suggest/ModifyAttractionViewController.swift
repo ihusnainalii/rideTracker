@@ -19,6 +19,7 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
     @IBOutlet weak var suggestedNotes: UILabel!
     @IBOutlet weak var suggestedOpen: UILabel!
     @IBOutlet weak var suggestedExtinct: UILabel!
+    @IBOutlet weak var suggestScoreCard: UILabel!
     
     @IBOutlet weak var originalName: UILabel!
     @IBOutlet weak var originalType: UILabel!
@@ -26,6 +27,7 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
     @IBOutlet weak var originalClose: UILabel!
     @IBOutlet weak var originalMan: UILabel!
     @IBOutlet weak var originalExtinct: UILabel!
+    @IBOutlet weak var origianalScoreCard: UILabel!
     
     
     @IBOutlet weak var revertButton: UIButton!
@@ -99,6 +101,24 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         }
         else {
             suggestedExtinct.text = "Yes"
+        }
+        if originalAttraction.hasScoreCard == 1 {
+            origianalScoreCard.text = "yes"
+        }
+        else {
+            origianalScoreCard.text = "No"
+        }
+        if suggestedAttraction.scoreCard == 1 {
+            suggestScoreCard.text = "Yes"
+        }
+        else {
+            suggestScoreCard.text = "No"
+        }
+        if suggestedAttraction.scoreCard == 1{
+            scoreCardSwtich.isOn = true
+        }
+        else {
+            scoreCardSwtich.isOn = false
         }
         if screenSize.width == 320 {
             scrollWidth.constant = 320

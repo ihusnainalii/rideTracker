@@ -67,7 +67,12 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         else {
             extinctSwitch.isOn = true
         }
-        scoreCardSwitch.isOn = false
+        if selectedAttraction.scoreCard == 0{
+            scoreCardSwitch.isOn = false
+        }
+        else {
+            scoreCardSwitch.isOn = true
+        }
         typeSwitcher.selectRow((Int(selectedAttraction.type!)!), inComponent: 0, animated: true)
         //typeSwitcher.selectRow(, inComponent: 0, animated: true)
         // Do any additional setup after loading the view.

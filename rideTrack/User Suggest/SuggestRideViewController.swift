@@ -27,6 +27,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     @IBOutlet weak var YearClosedText: UILabel!
     @IBOutlet weak var manufacturerText: UITextField!
     @IBOutlet weak var notesText: UITextView!
+    @IBOutlet weak var scoreCardSwitch: UISwitch!
     
     let screenSize = UIScreen.main.bounds
     @IBOutlet weak var scrollWidth: NSLayoutConstraint!
@@ -94,6 +95,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        scoreCardSwitch.isOn = false
         parkNameLabel.text = parkName
         textFieldName.delegate = self
         textFieldOpen.delegate = self
@@ -145,7 +147,11 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         if rideType == 0 {
             rideType = -1
         }
+        var scoreCard = 0
         //getting values from text fields
+        if scoreCardSwitch.isOn {
+            scoreCard = 1
+        }
         let parknum = parkID
         let orgRide = textFieldName.text
         let open = textFieldOpen.text
@@ -187,7 +193,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 //creating the post parameter by concatenating the keys and values from text field
                 
                 
-                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(ride!)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(manufacturer!)&notes=\(notes)&modify=0"
+                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(ride!)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(manufacturer!)&notes=\(notes)&modify=0&scoreCard=\(scoreCard)"
 
                 print (urlPath)
                 Active = 1

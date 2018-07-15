@@ -21,12 +21,13 @@ class ApproveSuggestAttracionModel: NSObject {
     var notes: String!
     var id: Int!
     var modify: Int!
+    var scoreCard: Int!
 
 override init() {
     
 }
 
-    init(parkID: Int, rideName: String, YearOpen: Int, YearClose: Int, type: String, parkName: String, active: Int, manufacturer: String, id: Int, notes: String, modify: Int) {
+    init(parkID: Int, rideName: String, YearOpen: Int, YearClose: Int, type: String, parkName: String, active: Int, manufacturer: String, id: Int, notes: String, modify: Int, scoreCard: Int) {
     
     self.parkID = parkID
     self.rideName = rideName
@@ -39,6 +40,7 @@ override init() {
     self.manufacturer = manufacturer
     self.notes = notes
     self.modify = modify
+    self.scoreCard = scoreCard
 }
 override var description: String {
     return "parkID: \(parkID), rideName: \(rideName), Year Open: \(YearOpen), Park name: \(parkName)"        
