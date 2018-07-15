@@ -198,8 +198,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             for i in 0..<arrayOfAllRides.count{
                 if arrayOfAllRides[i].active == 1{
                     totalRideCount += 1
-                    print(arrayOfAllRides[i].name)
-                    print(totalRideCount)
+
                 }
             }
             print(totalRideCount, "updating total ride count label...")
@@ -475,12 +474,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                     self.allParksTableView.alpha = 1.0
                 })
             }
-            
-            allParksList.append(newPark)
+        
+            allParksList.insert(newPark, at: 0)
             
             let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
             self.allParksTableView.contentInset = insets
             self.allParksTableView.reloadData()
+            allParksTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
             self.parksCoreData.saveNewItemToParkList(parkID: newPark.parkID)
             
             //Get total number of rides, need to call database
@@ -648,7 +648,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             //            longitude = -81.5495
             
             //Simulate you are in Magic Kingdom
-            print("Simulate", simulateLocation)
+            //print("Simulate", simulateLocation)
             if simulateLocation == 1{
                 latitude = 28.4161
                 longitude = -81.5811
@@ -700,7 +700,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
                 self.allParksTableView.contentInset = insets
                 //If iPhone X, make the locationView heigher
-                print (screenSize.height)
                 if screenSize.height == 812{
                     self.locationViewHeight.constant = 59
                 }

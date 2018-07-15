@@ -210,13 +210,13 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                         }
                         
                         if ignore[j] == attractionListForTable[i].rideID{
-                            print ("still here!")
+                            //print ("still here!")
                             attractionListForTable[i].isIgnored = true
                             numIgnore += 1
                             break
                         }
                         else {
-                            print("at the else")
+                            //print("at the else")
                             attractionListForTable[i].isIgnored = false
                         }
                         
@@ -488,6 +488,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         if (attractionListForTable[indexPath.row]).isCheck && !parkData.incrementorEnabled{//if increment is off, tap the check button to uncheck it
             print ("uncheck here")
+            if (hasHaptic != 0) {
+                generator.impactOccurred()
+            }
             attractionCellNegativeIncrement(indexPath: indexPath)
         }
         
