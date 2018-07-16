@@ -16,6 +16,8 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     var parkID = 0
     var rideType = 0
     var userAttractionDatabase: [UserAttractionProvider]!
+    var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
+
 
     @IBOutlet weak var parkNameLabel: UILabel!
     @IBOutlet weak var mainView: UIStackView!
@@ -142,6 +144,20 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     
     @IBAction func buttonSave(_ sender: Any) {
         let dataModel = DataModel()
+        if textFieldName.text == "Getting admin access 102" && parkName == "Magic Kingdom"{ //admin access code
+            let adminAlertController = UIAlertController(title: "Congraduations", message: "You have now been given admin access to approve user submissions. You can also quickly modify ride details without approval", preferredStyle: .alert)
+            let becomeAdminAction  = UIAlertAction(title: "Become Admin", style: .default, handler: { (action) -> Void in
+                self.isAdmin = 1
+                UserDefaults.standard.set(self.isAdmin, forKey: "isAdmin")
+            })
+            let removeAdminAction = UIAlertAction(title: "Remove Admin Status", style: .default, handler: { (action) -> Void in
+                self.isAdmin = 0
+                UserDefaults.standard.set(self.isAdmin, forKey: "isAdmin")
+            })
+            adminAlertController.addAction(becomeAdminAction)
+            adminAlertController.addAction(removeAdminAction)
+            self.present(adminAlertController, animated: true, completion: nil)
+        }
         dataModel.delegate = self
         print ("This is the type: ", rideType)
         if rideType == 0 {

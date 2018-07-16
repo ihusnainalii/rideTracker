@@ -660,7 +660,7 @@
                                 <rect key="frame" x="80" y="346" width="215" height="30"/>
                                 <state key="normal" title="Approve Suggested Attractions"/>
                                 <connections>
-                                    <segue destination="luQ-gx-qWW" kind="showDetail" id="LGf-Lq-pFQ"/>
+                                    <segue destination="MXy-Vm-P8R" kind="showDetail" id="s5V-bV-WgC"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Questions or Comments? Email us at" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vP9-qm-kzd">
@@ -706,8 +706,10 @@
                         <viewLayoutGuide key="safeArea" id="zul-pj-D7d"/>
                     </view>
                     <connections>
+                        <outlet property="approveSuggestionsButton" destination="2Id-GT-tVB" id="joX-B9-KAL"/>
                         <outlet property="emailLink" destination="il6-Cv-7cp" id="3Pp-Ib-YUT"/>
                         <outlet property="showExtinctSwitch" destination="eNC-VI-n13" id="IrM-D2-Fh1"/>
+                        <outlet property="simulateLocationLabel" destination="cju-sr-LTz" id="0CH-tr-7Fq"/>
                         <outlet property="simulateLocationSwitch" destination="IQU-RJ-HOO" id="oIz-aw-LUu"/>
                     </connections>
                 </viewController>
@@ -715,84 +717,6 @@
                 <exit id="5gB-Pn-MPZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1016.8" y="1223.8380809595203"/>
-        </scene>
-        <!--Passcode View Controller-->
-        <scene sceneID="bxP-jw-t7g">
-            <objects>
-                <viewController id="luQ-gx-qWW" customClass="PasscodeViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="llV-tq-EM9">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bGK-o5-jeV">
-                                <rect key="frame" x="100" y="131" width="175" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter passcode to access admin features" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LVj-JS-DlS">
-                                <rect key="frame" x="16" y="70" width="343" height="41"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7wZ-ML-8TA">
-                                <rect key="frame" x="325" y="34" width="34" height="30"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <segue destination="DN5-zB-eE3" kind="unwind" unwindAction="unwindToSettingsViewWithSender:" id="ycN-oN-7h0"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zI-qV-TkC">
-                                <rect key="frame" x="163" y="169" width="49" height="30"/>
-                                <state key="normal" title="Submit"/>
-                                <connections>
-                                    <segue destination="MXy-Vm-P8R" kind="showDetail" id="8fc-wn-14x"/>
-                                </connections>
-                            </button>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C9u-P4-of1">
-                                <rect key="frame" x="228" y="229" width="51" height="31"/>
-                                <connections>
-                                    <action selector="rememberPasscodeSwitch:" destination="luQ-gx-qWW" eventType="valueChanged" id="212-9K-vT4"/>
-                                </connections>
-                            </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xu7-wm-haN">
-                                <rect key="frame" x="50" y="229" width="162" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="LVj-JS-DlS" firstAttribute="top" secondItem="ci2-PS-3NH" secondAttribute="top" constant="50" id="66J-CS-vfc"/>
-                            <constraint firstItem="ci2-PS-3NH" firstAttribute="trailing" secondItem="bGK-o5-jeV" secondAttribute="trailing" constant="100" id="7V7-qi-mk6"/>
-                            <constraint firstItem="bGK-o5-jeV" firstAttribute="top" secondItem="LVj-JS-DlS" secondAttribute="bottom" constant="20" id="CrV-HF-Ntd"/>
-                            <constraint firstItem="xu7-wm-haN" firstAttribute="leading" secondItem="ci2-PS-3NH" secondAttribute="leading" constant="50" id="LJz-U2-p98"/>
-                            <constraint firstItem="ci2-PS-3NH" firstAttribute="trailing" secondItem="7wZ-ML-8TA" secondAttribute="trailing" constant="16" id="OoY-xT-qvc"/>
-                            <constraint firstItem="6zI-qV-TkC" firstAttribute="centerX" secondItem="llV-tq-EM9" secondAttribute="centerX" id="RWs-3m-vxG"/>
-                            <constraint firstItem="ci2-PS-3NH" firstAttribute="trailing" secondItem="LVj-JS-DlS" secondAttribute="trailing" constant="16" id="ZqJ-xC-oiM"/>
-                            <constraint firstItem="C9u-P4-of1" firstAttribute="leading" secondItem="xu7-wm-haN" secondAttribute="trailing" constant="16" id="b7N-zQ-VBF"/>
-                            <constraint firstItem="xu7-wm-haN" firstAttribute="top" secondItem="6zI-qV-TkC" secondAttribute="bottom" constant="30" id="csB-8a-5SK"/>
-                            <constraint firstItem="6zI-qV-TkC" firstAttribute="top" secondItem="bGK-o5-jeV" secondAttribute="bottom" constant="8" id="f1x-m5-fpA"/>
-                            <constraint firstItem="C9u-P4-of1" firstAttribute="top" secondItem="bGK-o5-jeV" secondAttribute="bottom" constant="68" id="iWV-KU-0Xk"/>
-                            <constraint firstItem="7wZ-ML-8TA" firstAttribute="top" secondItem="ci2-PS-3NH" secondAttribute="top" constant="14" id="kjq-xt-ZI6"/>
-                            <constraint firstItem="bGK-o5-jeV" firstAttribute="leading" secondItem="ci2-PS-3NH" secondAttribute="leading" constant="100" id="tAU-qV-i9E"/>
-                            <constraint firstItem="LVj-JS-DlS" firstAttribute="leading" secondItem="ci2-PS-3NH" secondAttribute="leading" constant="16" id="urh-OQ-jwG"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="ci2-PS-3NH"/>
-                    </view>
-                    <connections>
-                        <outlet property="passcodeField" destination="bGK-o5-jeV" id="84W-va-h0b"/>
-                        <outlet property="rememberSwitch" destination="C9u-P4-of1" id="30N-Fb-F7C"/>
-                        <outlet property="remembertext" destination="xu7-wm-haN" id="OGb-nn-XsJ"/>
-                        <outlet property="submitButton" destination="6zI-qV-TkC" id="I6E-HQ-5hX"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tdW-Zs-uPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="DN5-zB-eE3" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="1016.8" y="1921.8890554722641"/>
         </scene>
         <!--Approve Suggested Attraction View Controller-->
         <scene sceneID="FgH-5C-l2A">

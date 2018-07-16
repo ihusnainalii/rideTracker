@@ -18,9 +18,13 @@ class SettingsViewController: UIViewController, UITextViewDelegate {
     var simulateLocation = 0
     var resetPressed : Int?
     
+    @IBOutlet weak var simulateLocationLabel: UILabel!
+    @IBOutlet weak var approveSuggestionsButton: UIButton!
     @IBOutlet weak var showExtinctSwitch: UISwitch!
     @IBOutlet weak var simulateLocationSwitch: UISwitch!
     @IBOutlet weak var emailLink: UITextView!
+    var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
+
     
     
     override func viewDidLoad() {
@@ -39,6 +43,16 @@ class SettingsViewController: UIViewController, UITextViewDelegate {
             simulateLocationSwitch.isOn = false
         } else{
             simulateLocationSwitch.isOn = true
+        }
+        if isAdmin == 1 {
+            simulateLocationLabel.isHidden = false
+            simulateLocationSwitch.isHidden = false
+            approveSuggestionsButton.isHidden = false
+        }
+        else {
+            simulateLocationLabel.isHidden = true
+            simulateLocationSwitch.isHidden = true
+            approveSuggestionsButton.isHidden = true
         }
         // Do any additional setup after loading the view.
     }
