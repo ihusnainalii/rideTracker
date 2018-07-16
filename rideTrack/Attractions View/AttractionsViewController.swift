@@ -753,7 +753,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func addScoreToCard(selectedRide: AttractionsModel){
-        let scoreAlert = UIAlertController(title: "Add  new score", message: "Enter your new score for \(selectedRide.name!) to your score card. This score card can be viewed on this attractions details page.", preferredStyle: UIAlertControllerStyle.alert)
+        var title = "How’d You Do?"
+        if selectedRide.rideID == 669 || selectedRide.rideID == 826 || selectedRide.rideID == 1389 || selectedRide.rideID == 1892 || selectedRide.rideID == 2356 || selectedRide.rideID == 3086{
+            title = "How’d you do, Space Ranger?"
+        }
+        if selectedRide.rideID == 523 || selectedRide.rideID == 3236 || selectedRide.rideID == 611{
+            title = "Fine Shoot’n Partner!"
+        }
+        let scoreAlert = UIAlertController(title: title, message: "Enter your new score below and view this attraction’s ScoreCard through its details page", preferredStyle: UIAlertControllerStyle.alert)
         let userInput = UIAlertAction(title: "Add your Score", style: .default) { (alertAction) in
             let textField = scoreAlert.textFields![0] as UITextField
             if textField.text != ""{
@@ -779,6 +786,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
         }
+        
+
+        
         let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (alertAction) in
             print("cancled")
         }

@@ -15,14 +15,13 @@ class SearchMyParks{
     var park = ParksModel()
     
     func animateIntoSearchView(parksView: ViewController){
-        parksView.isSearchingMyParks = true
         parksView.savedMyParksForSearch = parksView.allParksList
         parksView.favoritesViewHeightBeforeAnimating = parksView.favoritesViewHeightConstrant.constant
         parksView.favoritesViewHeightConstrant.constant = 5.0
         parksView.searchParksTextField.text = ""
         let allParksBottomLocation = parksView.allParksView.frame.maxY
         parksView.allParksBottomConstrant.constant = -(parksView.screenSize.height - allParksBottomLocation - 12)
-        
+        parksView.isSearchingMyParks = true
         print(allParksBottomLocation)
         UIView.animate(withDuration: 0.4, animations: ({
             parksView.view.layoutIfNeeded()
@@ -57,29 +56,43 @@ class SearchMyParks{
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: parksView.allParksBottomInsetValue, right: 0)
         parksView.allParksTableView.contentInset = insets
         parksView.allParksTableView.reloadData()
+        
+        if parksView.firstItemsToFavorites{
+            parksView.favoritesViewHeightConstrant.constant = parksView.favoitesHeight
+            UIView.animate(withDuration: 0.6, animations: {
+                parksView.favoritesTableView.alpha = 1.0
+                parksView.view.layoutIfNeeded()
+            })
+        }
+        parksView.firstItemsToFavorites = false
     }
+    
     
     func updateSearchResults(parksView: ViewController){
         if parksView.searchParksTextField.text == ""{
-
             parksView.allParksList = parksView.savedMyParksForSearch
         }
         else{
             parksView.allParksList.removeAll()
+            var searchedString = parksView.searchParksTextField.text!.replacingOccurrences(of: "’", with: "'", options: .literal, range: nil)
+            if searchedString.last == " "{
+                searchedString.removeLast()
+            }
+
             for i in 0..<parksView.savedMyParksForSearch.count {
                 park = parksView.savedMyParksForSearch[i]
                 firstEntry = true
-                if (park.name.lowercased().range(of: parksView.searchParksTextField.text!.lowercased()) != nil){
+                if (park.name.lowercased().range(of: searchedString.lowercased()) != nil){
                     parksView.allParksList.append(park)
                     firstEntry = false
                 }
                 
                 //Not allow you to add duplicates
-                if (park.city.lowercased().range(of: parksView.searchParksTextField.text!.lowercased()) != nil) && firstEntry{
+                if (park.city.lowercased().range(of: searchedString.lowercased()) != nil) && firstEntry{
                     parksView.allParksList.append(park)
                     firstEntry = false
                 }
-                if (park.country.lowercased().range(of: parksView.searchParksTextField.text!.lowercased()) != nil) && firstEntry{
+                if (park.country.lowercased().range(of: searchedString.lowercased()) != nil) && firstEntry{
                     parksView.allParksList.append(park)
                     firstEntry = false
                 }

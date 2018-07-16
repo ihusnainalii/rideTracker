@@ -64,24 +64,29 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     @IBAction func didUpdateText(_ sender: Any) {
         searchedParksList.removeAll()
         
-        if searchTextFeild.text! == ""{
+        var searchedString = searchTextFeild.text!.replacingOccurrences(of: "’", with: "'", options: .literal, range: nil)
+        print(searchedString)
+        if searchedString.last == " "{
+            searchedString.removeLast()
+        }
+        if searchedString == ""{
             searchedParksList = parkArray
         }
         
         for i in 0..<parkArray.count {
-            park = parkArray[i] as! ParksModel
+            park = parkArray[i]
             firstEntry = true
-            if (park.name.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil){
+            if (park.name.lowercased().range(of: searchedString.lowercased()) != nil){
                 searchedParksList.append(park)
                 firstEntry = false
             }
 
             //Not allow you to add duplicates
-            if (park.city.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil) && firstEntry{
+            if (park.city.lowercased().range(of: searchedString.lowercased()) != nil) && firstEntry{
                 searchedParksList.append(park)
                 firstEntry = false
             }
-            if (park.country.lowercased().range(of: searchTextFeild.text!.lowercased()) != nil) && firstEntry{
+            if (park.country.lowercased().range(of: searchedString.lowercased()) != nil) && firstEntry{
                 searchedParksList.append(park)
                 firstEntry = false
             }

@@ -37,7 +37,8 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var yearCloseLabel: UILabel!
     @IBOutlet weak var yearOpenLabel: UILabel!
     @IBOutlet weak var yearCloseText: UILabel!
-    @IBOutlet weak var attractiontype: UITextField!
+    @IBOutlet weak var attractiontype: UILabel!
+    
     @IBOutlet weak var dateFirstRiddenLabel: UILabel!
     @IBOutlet weak var dateLastRiddenLabel: UILabel!
     @IBOutlet weak var modifyDateView: UIView!
