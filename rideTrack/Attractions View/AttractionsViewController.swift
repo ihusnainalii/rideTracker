@@ -37,6 +37,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     let screenSize = UIScreen.main.bounds
     
+
     var userDataBaseIndex = 0
     var titleName = ""
     var parkID = 0
@@ -57,7 +58,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var countOfRemove = 0
     var selectedAttractionsList: [NSManagedObject] = []
     
-    let greenBar = UIColor(red: 29.0/255.0, green: 127.0/255.0, blue: 70.0/255.0, alpha: 1.0)
+    let appGreen = UIColor(red: 29.0/255.0, green: 127.0/255.0, blue: 70.0/255.0, alpha: 1.0)
     let goldBar = UIColor(red: 250/255.0, green: 204/255.0, blue: 73/255.0, alpha: 1.0)
     let lightGreyBar = UIColor(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1.0)
     var userAttractions: [NSManagedObject] = []
@@ -87,7 +88,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         suggestButton.layer.shadowOpacity = 0.4
         suggestButton.layer.shadowOffset = CGSize.zero
         suggestButton.layer.shadowRadius = 7
-        progressBar.progressTintColor = greenBar
+        progressBar.progressTintColor = appGreen
         progressBar.trackTintColor = lightGreyBar
         progressBar.transform = progressBar.transform.scaledBy(x: 1, y: 5)
         
@@ -432,7 +433,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             })
             
             ignoreAction.title = attractionListForTable[indexPath.row].isIgnored ? "Include" : "Exclude"
-            ignoreAction.backgroundColor = attractionListForTable[indexPath.row].isIgnored ? .blue : .gray
+            ignoreAction.backgroundColor = attractionListForTable[indexPath.row].isIgnored ? appGreen : .gray
             let configurations = UISwipeActionsConfiguration(actions: [ignoreAction])
             configurations.performsFirstActionWithFullSwipe = true
             return configurations //UISwipeActionsConfiguration(actions: [ignoreAction])
@@ -816,7 +817,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             progressBar.progressTintColor = goldBar
         }
         else {
-            progressBar.progressTintColor = greenBar
+            progressBar.progressTintColor = appGreen
         }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return

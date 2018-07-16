@@ -129,8 +129,7 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
     
 
     @IBAction func submitButton(_ sender: Any) {
-        let tempName = nameField.text
-        let rideName = (tempName?.replacingOccurrences(of: " ", with: "_"))!
+        let rideName = nameField.text
         let parkID = selectedAttraction.parkID!
         let yearOpen = openingField.text!
         let yearClosed = closingField.text!

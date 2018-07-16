@@ -235,8 +235,7 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
     
     
     @IBAction func submitButton(_ sender: Any) {
-        let tempName = nameField.text
-        let rideName = (tempName?.replacingOccurrences(of: " ", with: "_"))!
+        let rideName = nameField.text
         let parkID = originalAttraction.parkID!
         let yearOpen = openField.text!
         let yearClosed = closeField.text!

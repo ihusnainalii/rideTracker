@@ -153,13 +153,13 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
             scoreCard = 1
         }
         let parknum = parkID
-        let orgRide = textFieldName.text
+        let ride = textFieldName.text
         let open = textFieldOpen.text
         let close = textFieldClose.text
         let type = rideType
-        let orgPark = parkName
-        let orgmanufacturer = manufacturerText.text
-        let orgnotes = notesText.text
+        let park = parkName
+        let manufacturer = manufacturerText.text
+        let tempNotes = notesText.text
         var Active = 1
         
         if (activeSwitch?.isOn)!{
@@ -167,27 +167,22 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
             print ("ACTIVE?: \(Active)")
         }
         
-        if (isStringAnInt(string: open!) == false && open != ""){
-            let ivalidAlertController = UIAlertController(title: "Invalid Year", message: "Please enter a valid opening year, or leave blank if unknown", preferredStyle: .alert)
+        if (textFieldName.text == ""){
+            let ivalidAlertController = UIAlertController(title: "Empty ride name", message: "Please enter the ride name", preferredStyle: .alert)
             ivalidAlertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(ivalidAlertController, animated: true, completion:nil)
         }
-        else if (isStringAnInt(string: close!) == false && close != ""){
-            print ("ERROR, please enter a valid year, or leave blank if unknown")
-            let ivalidAlertController = UIAlertController(title: "Invalid Year", message: "Please enter a valid closing year, or leave blank if unknown", preferredStyle: .alert)
+        else if (rideType == -1){
+            let ivalidAlertController = UIAlertController(title: "Empty ride type", message: "Please enter the ride type", preferredStyle: .alert)
             ivalidAlertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(ivalidAlertController, animated: true, completion:nil)
             
         }
         else {
-            let alertController = UIAlertController(title: "Suggest Attraction", message: "Are you sure you want suggest \(String(describing: orgRide!)) from \(parkName)?", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Suggest Attraction", message: "Are you sure you want suggest \(String(describing: ride!)) from \(parkName)?", preferredStyle: .alert)
             
             // Create OK button
             let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
-                let park = orgPark.replacingOccurrences(of: " ", with: "_")
-                let ride = orgRide?.replacingOccurrences(of: " ", with: "_")
-                let manufacturer = orgmanufacturer?.replacingOccurrences(of: " ", with: "_")
-                let tempNotes = orgnotes?.replacingOccurrences(of: " ", with: "_")
                 let notes = String (tempNotes!.filter { !" \n\t".contains($0) })
                 
                 //creating the post parameter by concatenating the keys and values from text field

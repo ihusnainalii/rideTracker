@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import Foundation
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UITextViewDelegate {
     var usersParkList: NSMutableArray = NSMutableArray()
     var downloadIncrementor = 0
     // var showExtinct : Int?
@@ -20,10 +20,14 @@ class SettingsViewController: UIViewController {
     
     @IBOutlet weak var showExtinctSwitch: UISwitch!
     @IBOutlet weak var simulateLocationSwitch: UISwitch!
+    @IBOutlet weak var emailLink: UITextView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        emailLink.isEditable = false
+        emailLink.dataDetectorTypes = .link
         resetPressed = 0
         if showExtinct == 0{
             showExtinctSwitch.isOn = false

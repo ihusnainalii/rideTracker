@@ -198,8 +198,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     
     
     @IBAction func submitButton(_ sender: Any) {
-        let tempName = nameTextField.text
-        let rideName = (tempName?.replacingOccurrences(of: " ", with: "_"))!
+        let rideName = nameTextField.text
         let parkID = selectedAttraction.parkID!
         let yearOpen = openTextField.text!
         let yearClosed = closedTextField.text!

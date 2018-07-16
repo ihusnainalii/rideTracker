@@ -87,9 +87,8 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 
             }
             if dataBase == "attractions"{
-                var tempName = ""
-                var tempManu = ""
                 let attraction = AttractionsModel()
+                var tempName = ""
                 tempName = jsonElement["Name"] as! String
                 attraction.name = tempName.replacingOccurrences(of: "_", with: " ")
                 attraction.rideID = Int (jsonElement["RideID"] as! String)
@@ -99,14 +98,12 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.yearClosed = Int (jsonElement["YearClosed"] as! String)
                 attraction.active = Int (jsonElement["Active"] as! String)
                 attraction.hasScoreCard = Int (jsonElement["ScoreCard"] as! String)
-                tempManu = jsonElement["Manufacturer"] as! String
-                attraction.manufacturer = tempManu.replacingOccurrences(of: "_", with: " ")
+                attraction.manufacturer = jsonElement["Manufacturer"] as! String
                 attraction.isCheck = false
                 dataBaseData.add(attraction)
             }
             if dataBase == "Suggest" {
                 let attraction = ApproveSuggestAttracionModel()
-                var tempNotes = ""
                 var tempName = ""
                 attraction.parkID = Int (jsonElement["ParkID"] as! String)
                 tempName = (jsonElement["RideName"] as? String)!
@@ -118,8 +115,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.id = Int (jsonElement["id"] as! String)
                 attraction.active = Int (jsonElement["Active"] as! String)
                 attraction.manufacturer = jsonElement["Manufacturer"] as? String
-                tempNotes = (jsonElement["Notes"] as? String)!
-                attraction.notes = tempNotes.replacingOccurrences(of: "_", with: " ")
+                attraction.notes = (jsonElement["Notes"] as? String)!
                 attraction.modify = Int(jsonElement["modify"] as! String)
                 attraction.scoreCard = Int(jsonElement["scoreCard"] as! String)
                 dataBaseData.add(attraction)

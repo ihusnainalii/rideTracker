@@ -39,7 +39,6 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var yearCloseText: UILabel!
     @IBOutlet weak var attractiontype: UILabel!
     
-    @IBOutlet weak var dateFirstRiddenLabel: UILabel!
     @IBOutlet weak var dateLastRiddenLabel: UILabel!
     @IBOutlet weak var modifyDateView: UIView!
     @IBOutlet weak var modifyDatePicker: UIDatePicker!
@@ -88,7 +87,7 @@ class AttractionsDetailsViewController: UIViewController {
             yearCloseLabel.text = String (selectedRide.yearClosed)
         }
         if selectedRide.isCheck{
-            dateFirstRiddenLabel.text = dateFormatter(date: selectedRide.dateFirstRidden)
+            dateModifyButton.setTitle(dateFormatter(date: selectedRide.dateFirstRidden), for: .normal)
             firstRideStack.isHidden = false
             LatestRideStack.isHidden = false
             //Do not show last ride if the user has only ridden the ride once
@@ -187,8 +186,8 @@ class AttractionsDetailsViewController: UIViewController {
     }
     @IBAction func didModifyDate(_ sender: Any) {
         print("modify")
-        dateFirstRiddenLabel.text = dateFormatter(date: modifyDatePicker.date)
-    }
+        dateModifyButton.setTitle(dateFormatter(date: modifyDatePicker.date), for: .normal)
+        }
 
     
     @IBAction func pressDownBar(_ sender: Any) {
@@ -203,7 +202,7 @@ class AttractionsDetailsViewController: UIViewController {
         
         modifyDateView.isHidden = true
         dateModifyButton.isEnabled = true
-        dateFirstRiddenLabel.text = dateFormatter(date: modifyDatePicker.date)
+        dateModifyButton.setTitle(dateFormatter(date: modifyDatePicker.date), for: .normal)
         selectedRide.dateFirstRidden = modifyDatePicker.date
         saveModifyFirstRideDate(rideID: selectedRide.rideID, firstRideDate: modifyDatePicker.date)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
