@@ -199,8 +199,8 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
             
             // Create OK button
             let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
-                let notes = String (tempNotes!.filter { !" \n\t".contains($0) })
-                
+                let orgNotes = tempNotes?.replacingOccurrences(of: " ", with: "_")
+                let notes = String (orgNotes!.filter { !" \n".contains($0) })
                 //creating the post parameter by concatenating the keys and values from text field
                 
                 
