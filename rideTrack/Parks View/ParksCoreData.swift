@@ -146,7 +146,7 @@ class ParkCoreData{
         newPark.setValue(false, forKeyPath: "favorite")
         newPark.setValue(0, forKey: "ridesRidden")
         newPark.setValue(0, forKey: "totalRides")
-        newPark.setValue(true, forKey: "incrementorEnabled")
+        newPark.setValue(false, forKey: "incrementorEnabled")
         do {
             try managedContext.save()
             print("Just added park to ParkList: ",parkID)

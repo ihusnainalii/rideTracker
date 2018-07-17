@@ -243,10 +243,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                         
                         if let incrementorShown = savedParkList[userParkListIncrementor].value(forKey: "incrementorEnabled"){
                             addingPark.incrementorEnabled = incrementorShown as! Bool
+                            print("CORE DATA")
                         } else{
+                            print("NEW")
                             addingPark.incrementorEnabled = false
                         }
                         
+                        print(addingPark.incrementorEnabled)
                         allParksList.append(addingPark)
                         userParkListIncrementor += 1
                         
