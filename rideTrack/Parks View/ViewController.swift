@@ -244,7 +244,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                         if let incrementorShown = savedParkList[userParkListIncrementor].value(forKey: "incrementorEnabled"){
                             addingPark.incrementorEnabled = incrementorShown as! Bool
                         } else{
-                            addingPark.incrementorEnabled = true
+                            addingPark.incrementorEnabled = false
                         }
                         
                         allParksList.append(addingPark)
@@ -502,7 +502,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             newPark.favorite = false
             newPark.totalRides = 0
             newPark.ridesRidden = 0
-            newPark.incrementorEnabled = true
+            newPark.incrementorEnabled = false
             
             //Animate in the all parks table veiw when adding the first park
             if allParksList.count == 0{
