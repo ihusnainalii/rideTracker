@@ -32,7 +32,9 @@ class SearchMyParks{
             parksView.searchParkView.alpha = 0.0
             parksView.addParkButton.alpha = 0.0
         }))
-        parksView.allParksTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
+        if parksView.allParksList.count != 0{
+            parksView.allParksTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
+        }
         parksView.searchParksTextField.becomeFirstResponder()
     }
     
