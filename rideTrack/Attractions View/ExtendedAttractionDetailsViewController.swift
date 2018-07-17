@@ -24,7 +24,7 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
     @IBOutlet weak var scrollViewWidth: NSLayoutConstraint!
     let screenSize = UIScreen.main.bounds
 
-    var isAdmin = UserDefaults.standard.integer(forKey: "rememberPasscode")
+    var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
     var rideType = 0
     var pickerData: [String] = [String]()
     var selectedAttraction: AttractionsModel = AttractionsModel()
@@ -147,7 +147,7 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
         }
         var urlPath = ""
         if isAdmin == 1{
-        urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(selectedAttraction.rideID!)&name=\(rideName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(manufacturer)" //uploads to main list
+        urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(selectedAttraction.rideID!)&name=\(rideName!)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(manufacturer)" //uploads to main list
         print (urlPath)
             let dataModel = DataModel()
             dataModel.delegate = self
@@ -155,8 +155,8 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
             self.performSegue(withIdentifier: "backToDetails", sender: self)
     }
         else {
-            let alert = UIAlertController(title: "Suggest Modifications to Attraction", message: "Are you sure you want to suggest these modifications to \(rideName)?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {action in                 urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parkID)&ride=\(rideName)&open=\(yearOpen)&close=\(yearClosed)&type=\(self.rideType)&park=\(self.parkName)&active=\(active)&manufacturer=\(manufacturer)&notes=&modify=1&scoreCard=\(scoreCard)"
+            let alert = UIAlertController(title: "Suggest Modifications to Attraction", message: "Are you sure you want to suggest these modifications to \(rideName!)?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {action in                 urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parkID)&ride=\(rideName!)&open=\(yearOpen)&close=\(yearClosed)&type=\(self.rideType)&park=\(self.parkName)&active=\(active)&manufacturer=\(manufacturer)&notes=&modify=1&scoreCard=\(scoreCard)"
                 print(urlPath)
                 let dataModel = DataModel()
                 dataModel.delegate = self

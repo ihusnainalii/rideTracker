@@ -52,7 +52,7 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         manufacturerField.delegate = self
         super.viewDidLoad()
         suggestedName.text=suggestedAttraction.rideName
-        let type = convertRideTypeID(rideTypeID: Int(suggestedAttraction.type)!)
+        let type = convertRideTypeID(rideTypeID: Int(suggestedAttraction.type))
         suggestedType.text = type
         suggestedOpen.text = String(suggestedAttraction.YearOpen)
         suggestedClose.text = String(suggestedAttraction.YearClose)
@@ -76,7 +76,7 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         self.rideTypeSwitch.dataSource = self
         
         pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
-        rideTypeSwitch.selectRow(Int(suggestedAttraction.type!)!, inComponent: 0, animated: true)
+        rideTypeSwitch.selectRow(Int(suggestedAttraction.type!), inComponent: 0, animated: true)
         if suggestedAttraction.active == 1{
             extinctSwitch.isOn = false
         }
@@ -250,9 +250,9 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
             scoreCard = 1
         }
         if rideType == 0 {
-            rideType = originalAttraction.rideType
+            rideType = suggestedAttraction.type
         }
-        let urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(originalAttraction.rideID!)&name=\(rideName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(manufacturer)" //uploads to main list
+        let urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(originalAttraction.rideID!)&name=\(rideName!)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(manufacturer)" //uploads to main list
         print (urlPath)
         let dataModel = DataModel()
         dataModel.delegate = self

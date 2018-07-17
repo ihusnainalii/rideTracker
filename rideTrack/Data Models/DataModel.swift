@@ -111,7 +111,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.rideName = tempName.replacingOccurrences(of: "_", with: " ")
                 attraction.YearOpen = Int (jsonElement["YearOpen"] as! String)
                 attraction.YearClose = Int (jsonElement["YearClose"] as! String)
-                attraction.type = jsonElement["Type"] as? String
+                attraction.type = Int (jsonElement["Type"] as! String)
                 attraction.parkName = jsonElement["Park"] as? String
                 attraction.id = Int (jsonElement["id"] as! String)
                 attraction.active = Int (jsonElement["Active"] as! String)

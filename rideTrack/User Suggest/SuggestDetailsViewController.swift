@@ -73,7 +73,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         else {
             scoreCardSwitch.isOn = true
         }
-        typeSwitcher.selectRow((Int(selectedAttraction.type!)!), inComponent: 0, animated: true)
+        typeSwitcher.selectRow((Int(selectedAttraction.type!)), inComponent: 0, animated: true)
         //typeSwitcher.selectRow(, inComponent: 0, animated: true)
         // Do any additional setup after loading the view.
         //if iphone 5 class
@@ -204,7 +204,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         let yearClosed = closedTextField.text!
         var active = 1
         if rideType == 0{
-            rideType = Int(selectedAttraction.type)!
+            rideType = Int(selectedAttraction.type)
         }
         if extinctSwitch.isOn{
              active = 0
@@ -214,7 +214,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         if scoreCardSwitch.isOn {
             scoreCard = 1
         }
-        let urlPath = "http://www.beingpositioned.com/theparksman/uploadToAttractionDB.php?name=\(rideName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(manufacturer)" //uploads to main list
+        let urlPath = "http://www.beingpositioned.com/theparksman/uploadToAttractionDB.php?name=\(rideName!)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(manufacturer)" //uploads to main list
         print (urlPath)
         let dataModel = DataModel()
         dataModel.delegate = self
