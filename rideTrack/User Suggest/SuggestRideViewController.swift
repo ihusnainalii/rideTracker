@@ -23,6 +23,9 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     @IBOutlet weak var sideOfOpen1: UIView!
     @IBOutlet weak var sideOfOpen2: UIView!
     @IBOutlet weak var yearOpenHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var viewHeight: NSLayoutConstraint!
+    
     @IBOutlet weak var typeLabel: UIButton!
     @IBOutlet weak var parkNameLabel: UILabel!
     @IBOutlet weak var textFieldName: UITextField!
@@ -54,12 +57,14 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         textFieldName.delegate = self
         textFieldOpen.delegate = self
         textFieldClose.delegate = self
+        manufacturerText.delegate = self
+        
         notesText.delegate = self
         submitButton.isEnabled = false
         
         pickerType.isHidden = true
         yearOpenHeight.constant = 30
-        
+        viewHeight.constant = 550
         self.pickerType.delegate = self
         self.pickerType.dataSource = self
         pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
@@ -143,6 +148,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
             rideType = 0
         }
         typeLabel.setTitle(pickerData[row], for: .normal)
+        typeLabel.setTitleColor(UIColor.black, for: .normal)
         if textFieldName.text != "" && rideType != 0 {
             submitButton.isEnabled = true
         }
@@ -269,6 +275,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
             self.pickerType.isHidden = false
             self.yearOpenHeight.constant = 150
+            self.viewHeight.constant = 670
             self.view.layoutIfNeeded()
         }, completion: nil)
        
@@ -288,6 +295,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         if yearOpenHeight.constant == 150 {
             UIView.animate(withDuration: 0.3, animations: { //Animate Here
                 self.yearOpenHeight.constant = 30
+                self.viewHeight.constant = 550
                 self.pickerType.isHidden = true
                 self.view.layoutIfNeeded()
             }, completion: nil)
@@ -300,6 +308,14 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
+        if yearOpenHeight.constant == 150 {
+            UIView.animate(withDuration: 0.3, animations: { //Animate Here
+                self.yearOpenHeight.constant = 30
+                self.viewHeight.constant = 550
+                self.pickerType.isHidden = true
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+        }
         if notesText.text == "Notes/Citations" {
             notesText.text = ""
             notesText.textColor = UIColor.black
