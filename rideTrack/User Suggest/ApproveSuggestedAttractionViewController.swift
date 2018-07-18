@@ -53,8 +53,8 @@ class ApproveSuggestedAttractionViewController: UIViewController, UITableViewDat
         let cell = tableView.dequeueReusableCell(withIdentifier: "suggestCell", for: indexPath) as! SuggestTableViewCell
         let item: ApproveSuggestAttracionModel = listOfSuggestions[indexPath.row]
         let typeConvert = convertRideTypeID(rideTypeID: Int(item.type))
-        if item.notes == "Enter notes or citations here" {
-            item.notes = "No notes given"
+        if item.notes == "Notes/Citations" {
+            item.notes = ""
         }
         if item.modify == 1{
             cell.modifyLabel.isHidden = false

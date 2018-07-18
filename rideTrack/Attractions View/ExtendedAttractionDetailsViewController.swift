@@ -43,7 +43,7 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
         self.rideTypePicker.dataSource = self
         nameField.delegate = self
         manufacturingField.delegate = self
-        pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
+        pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
         rideTypePicker.selectRow(Int(selectedAttraction.rideType!), inComponent: 0, animated: true)
         openingField.text = String(selectedAttraction.yearOpen)
         closingField.text = String(selectedAttraction.yearClosed)
@@ -183,7 +183,7 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
             rideType = 3
         case "Flat Ride":
             rideType = 4
-        case "Transportation Ride":
+        case "Transport Ride":
             rideType = 5
         case "Dark Ride":
             rideType = 6

@@ -19,8 +19,12 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
 
 
+    @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var sideOfOpen1: UIView!
+    @IBOutlet weak var sideOfOpen2: UIView!
+    @IBOutlet weak var yearOpenHeight: NSLayoutConstraint!
+    @IBOutlet weak var typeLabel: UIButton!
     @IBOutlet weak var parkNameLabel: UILabel!
-    @IBOutlet weak var mainView: UIStackView!
     @IBOutlet weak var textFieldName: UITextField!
     @IBOutlet weak var textFieldOpen: UITextField!
     @IBOutlet weak var textFieldClose: UITextField!
@@ -34,7 +38,57 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     let screenSize = UIScreen.main.bounds
     @IBOutlet weak var scrollWidth: NSLayoutConstraint!
     
+    let greyColor = UIColor(red: 222/255.0, green: 222/255.0, blue: 222/255.0, alpha: 1.0)
+
     var pickerData: [String] = [String]()
+    
+    
+    func itemsDownloaded(items: NSArray, returnPath: String) {
+        print("items downloads?")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        scoreCardSwitch.isOn = false
+        parkNameLabel.text = parkName
+        textFieldName.delegate = self
+        textFieldOpen.delegate = self
+        textFieldClose.delegate = self
+        notesText.delegate = self
+        submitButton.isEnabled = false
+        
+        pickerType.isHidden = true
+        yearOpenHeight.constant = 30
+        
+        self.pickerType.delegate = self
+        self.pickerType.dataSource = self
+        pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
+        activeSwitch.isOn=false
+        textFieldClose.isEnabled = false
+        YearClosedText.isEnabled = false
+        YearClosedText.backgroundColor = greyColor
+        textFieldClose.backgroundColor = greyColor
+        sideOfOpen1.backgroundColor = greyColor
+        sideOfOpen2.backgroundColor = greyColor
+        
+         self.textFieldClose.keyboardType = UIKeyboardType.numberPad
+        self.textFieldOpen.keyboardType = UIKeyboardType.numberPad
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //hide keyboard when tapping the anywhere else
+        
+         var borderColor : UIColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.0)
+        notesText.layer.borderWidth = 0.5
+        notesText.layer.borderColor = borderColor.cgColor
+        notesText.layer.cornerRadius = 5.0
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+        
+        if screenSize.width == 320 {
+            scrollWidth.constant = 319
+        }
+        // Do any additional setup after loading the view.
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
@@ -67,7 +121,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
             rideType = 3
         case "Flat Ride":
             rideType = 4
-        case "Transportation Ride":
+        case "Transport Ride":
             rideType = 5
         case "Dark Ride":
             rideType = 6
@@ -88,56 +142,32 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         default:
             rideType = 0
         }
+        typeLabel.setTitle(pickerData[row], for: .normal)
+        if textFieldName.text != "" && rideType != 0 {
+            submitButton.isEnabled = true
+        }
         print("Ride type is: ",rideType)
     }
     
-    func itemsDownloaded(items: NSArray, returnPath: String) {
-        print("items downloads?")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        scoreCardSwitch.isOn = false
-        parkNameLabel.text = parkName
-        textFieldName.delegate = self
-        textFieldOpen.delegate = self
-        textFieldClose.delegate = self
-        notesText.delegate = self
-        
-        self.pickerType.delegate = self
-        self.pickerType.dataSource = self
-        pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
-        activeSwitch.isOn=false
-        textFieldClose.isHidden = true
-        YearClosedText.isHidden = true
-         self.textFieldClose.keyboardType = UIKeyboardType.numberPad
-        self.textFieldOpen.keyboardType = UIKeyboardType.numberPad
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //hide keyboard when tapping the anywhere else
-        
-         var borderColor : UIColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.0)
-        notesText.layer.borderWidth = 0.5
-        notesText.layer.borderColor = borderColor.cgColor
-        notesText.layer.cornerRadius = 5.0
-        
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
-        
-        if screenSize.width == 320 {
-            scrollWidth.constant = 320
-        }
-        // Do any additional setup after loading the view.
-    }
     @IBAction func extinctSwitch(_ sender: Any) {
         if (activeSwitch.isOn){
-            textFieldClose.isHidden = false
-            YearClosedText.isHidden = false
+            textFieldClose.isEnabled = true
+            YearClosedText.isEnabled = true
+            YearClosedText.backgroundColor = UIColor.white
+            textFieldClose.backgroundColor = UIColor.white
+            sideOfOpen2.backgroundColor = UIColor.white
+            sideOfOpen1.backgroundColor = UIColor.white
             print ("CLOSED")
         }
         else {
-            textFieldClose.isHidden = true
-            YearClosedText.isHidden = true
+            textFieldClose.isEnabled = false
+            YearClosedText.isEnabled = false
             print ("OPEN")
+            textFieldClose.text = ""
+            YearClosedText.backgroundColor = greyColor
+            textFieldClose.backgroundColor = greyColor
+            sideOfOpen2.backgroundColor = greyColor
+            sideOfOpen1.backgroundColor = greyColor
         }
         
     }
@@ -175,7 +205,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         let type = rideType
         let park = parkName
         let manufacturer = manufacturerText.text
-        let tempNotes = notesText.text
+        var tempNotes = notesText.text
         var Active = 1
         
         if (activeSwitch?.isOn)!{
@@ -199,6 +229,9 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
             
             // Create OK button
             let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
+                if tempNotes == "Notes/Citations"{
+                    tempNotes = ""
+                }
                 let orgNotes = tempNotes?.replacingOccurrences(of: " ", with: "_")
                 let notes = String (orgNotes!.filter { !" \n".contains($0) })
                 //creating the post parameter by concatenating the keys and values from text field
@@ -232,6 +265,14 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         
     }
 
+    @IBAction func typeButton(_ sender: Any) {
+        UIView.animate(withDuration: 0.3, animations: { //Animate Here
+            self.pickerType.isHidden = false
+            self.yearOpenHeight.constant = 150
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+       
+    }
     
     func isStringAnInt(string: String) -> Bool {
         return Int(string) != nil
@@ -243,10 +284,27 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     }
     
 
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if notesText.text == "Enter notes or citations here" {
-            notesText.text = ""
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if yearOpenHeight.constant == 150 {
+            UIView.animate(withDuration: 0.3, animations: { //Animate Here
+                self.yearOpenHeight.constant = 30
+                self.pickerType.isHidden = true
+                self.view.layoutIfNeeded()
+            }, completion: nil)
         }
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textFieldName.text != "" && rideType != 0 {
+            submitButton.isEnabled = true
+        }
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if notesText.text == "Notes/Citations" {
+            notesText.text = ""
+            notesText.textColor = UIColor.black
+        }
+
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         textView.resignFirstResponder()
@@ -262,7 +320,6 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         if notification.name == Notification.Name.UIKeyboardWillHide {
             scrollView.contentInset = UIEdgeInsets.zero
         } else {
-            print("add bttom")
 
             scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
         }

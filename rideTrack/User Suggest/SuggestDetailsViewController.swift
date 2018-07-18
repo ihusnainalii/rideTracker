@@ -56,7 +56,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         manufacturerTextField.delegate = self
         parkNameLabel.text = selectedAttraction.parkName
         nameTextField.text = selectedAttraction.rideName
-        pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
+        pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
 
         openTextField.text = String(selectedAttraction.YearOpen)
         closedTextField.text = String(selectedAttraction.YearClose)
@@ -172,7 +172,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
             rideType = 3
         case "Flat Ride":
             rideType = 4
-        case "Transportation Ride":
+        case "Transport Ride":
             rideType = 5
         case "Dark Ride":
             rideType = 6

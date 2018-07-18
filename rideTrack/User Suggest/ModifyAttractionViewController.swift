@@ -75,7 +75,7 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         self.rideTypeSwitch.delegate = self
         self.rideTypeSwitch.dataSource = self
         
-        pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transportation Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
+        pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
         rideTypeSwitch.selectRow(Int(suggestedAttraction.type!), inComponent: 0, animated: true)
         if suggestedAttraction.active == 1{
             extinctSwitch.isOn = false
@@ -165,7 +165,7 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
             rideType = 3
         case "Flat Ride":
             rideType = 4
-        case "Transportation Ride":
+        case "Transport Ride":
             rideType = 5
         case "Dark Ride":
             rideType = 6
