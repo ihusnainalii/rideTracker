@@ -20,10 +20,11 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
 
 
     @IBOutlet weak var submitButton: UIButton!
-    @IBOutlet weak var sideOfOpen1: UIView!
-    @IBOutlet weak var sideOfOpen2: UIView!
+    
+    @IBOutlet weak var closingStack: UIStackView!
     @IBOutlet weak var yearOpenHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var defunctTop: NSLayoutConstraint!
     @IBOutlet weak var viewHeight: NSLayoutConstraint!
     
     @IBOutlet weak var typeLabel: UIButton!
@@ -69,18 +70,15 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         self.pickerType.dataSource = self
         pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
         activeSwitch.isOn=false
-        textFieldClose.isEnabled = false
-        YearClosedText.isEnabled = false
-        YearClosedText.backgroundColor = greyColor
-        textFieldClose.backgroundColor = greyColor
-        sideOfOpen1.backgroundColor = greyColor
-        sideOfOpen2.backgroundColor = greyColor
+        closingStack.isHidden = true
+        defunctTop.constant = 0
+       
         
          self.textFieldClose.keyboardType = UIKeyboardType.numberPad
         self.textFieldOpen.keyboardType = UIKeyboardType.numberPad
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //hide keyboard when tapping the anywhere else
         
-         var borderColor : UIColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.0)
+        let borderColor : UIColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.0)
         notesText.layer.borderWidth = 0.5
         notesText.layer.borderColor = borderColor.cgColor
         notesText.layer.cornerRadius = 5.0
@@ -157,23 +155,19 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     
     @IBAction func extinctSwitch(_ sender: Any) {
         if (activeSwitch.isOn){
-            textFieldClose.isEnabled = true
-            YearClosedText.isEnabled = true
-            YearClosedText.backgroundColor = UIColor.white
-            textFieldClose.backgroundColor = UIColor.white
-            sideOfOpen2.backgroundColor = UIColor.white
-            sideOfOpen1.backgroundColor = UIColor.white
+            UIView.animate(withDuration: 0.3, animations: { //Animate Here
+                self.closingStack.isHidden = false
+                self.defunctTop.constant = 40
+                self.view.layoutIfNeeded()
+            }, completion: nil)
             print ("CLOSED")
         }
         else {
-            textFieldClose.isEnabled = false
-            YearClosedText.isEnabled = false
-            print ("OPEN")
-            textFieldClose.text = ""
-            YearClosedText.backgroundColor = greyColor
-            textFieldClose.backgroundColor = greyColor
-            sideOfOpen2.backgroundColor = greyColor
-            sideOfOpen1.backgroundColor = greyColor
+            UIView.animate(withDuration: 0.3, animations: { //Animate Here
+                self.closingStack.isHidden = false
+                self.defunctTop.constant = 0
+                self.view.layoutIfNeeded()
+            }, completion: nil)
         }
         
     }

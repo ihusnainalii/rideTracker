@@ -98,14 +98,20 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         }
         listOfAttractionsAtPark.sort { ($0.active, $1.name) > ($1.active, $0.name) }
         exisitingAttractionsTableView.reloadData()
-
-        for i in 0..<listOfAttractionsAtPark.count {
-            if listOfAttractionsAtPark[i].name!.caseInsensitiveCompare(selectedAttraction.rideName!) == ComparisonResult.orderedSame {
-                if selectedAttraction.modify == 1 {
+        if selectedAttraction.modify == 1 {
+            for i in 0..<listOfAttractionsAtPark.count {
+                if listOfAttractionsAtPark[i].rideID == Int(selectedAttraction.parkName)!{
                     self.modifyAttraction = self.listOfAttractionsAtPark[i]
-
                     self.performSegue(withIdentifier: "toModifyVC", sender: self)
                 }
+            }
+        }
+        for i in 0..<listOfAttractionsAtPark.count {
+            if listOfAttractionsAtPark[i].name!.caseInsensitiveCompare(selectedAttraction.rideName!) == ComparisonResult.orderedSame {
+//                if selectedAttraction.modify == 1 {
+//                    self.modifyAttraction = self.listOfAttractionsAtPark[i]
+//                    self.performSegue(withIdentifier: "toModifyVC", sender: self)
+//                }
                 let alert = UIAlertController(title: "Duplicate Attraction", message: "This attraction already exists in the database. Would you like to delete the suggestion or update the existing attraction?", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
                    print ("cancel")
