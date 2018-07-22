@@ -179,10 +179,12 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
             let becomeAdminAction  = UIAlertAction(title: "Become Admin", style: .default, handler: { (action) -> Void in
                 self.isAdmin = 1
                 UserDefaults.standard.set(self.isAdmin, forKey: "isAdmin")
+                self.performSegue(withIdentifier: "unwindToDetailsView", sender: self)
             })
             let removeAdminAction = UIAlertAction(title: "Remove Admin Status", style: .default, handler: { (action) -> Void in
                 self.isAdmin = 0
                 UserDefaults.standard.set(self.isAdmin, forKey: "isAdmin")
+                self.performSegue(withIdentifier: "unwindToDetailsView", sender: self)
             })
             adminAlertController.addAction(becomeAdminAction)
             adminAlertController.addAction(removeAdminAction)
@@ -235,9 +237,10 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 let orgNotes = tempNotes?.replacingOccurrences(of: " ", with: "_")
                 let notes = String (orgNotes!.filter { !" \n".contains($0) })
                 //creating the post parameter by concatenating the keys and values from text field
+                let tempName = ride!.replacingOccurrences(of: "&", with: "!A?")
+                let tempMan = manufacturer!.replacingOccurrences(of: "&", with: "!A?")
                 
-                
-                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(ride!)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(manufacturer!)&notes=\(notes)&modify=0&scoreCard=\(scoreCard)"
+                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(tempName)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(tempMan)&notes=\(notes)&modify=0&scoreCard=\(scoreCard)"
 
                 print (urlPath)
                 Active = 1

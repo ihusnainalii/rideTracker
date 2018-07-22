@@ -182,9 +182,12 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
         if rideType == 0 {
             rideType = selectedAttraction.rideType
         }
+        let tempName = rideName!.replacingOccurrences(of: "&", with: "!A?")
+        let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
+        
         var urlPath = ""
         if isAdmin == 1{
-        urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(selectedAttraction.rideID!)&name=\(rideName!)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(manufacturer)" //uploads to main list
+        urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(selectedAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)" //uploads to main list
         print (urlPath)
             let dataModel = DataModel()
             dataModel.delegate = self
@@ -195,7 +198,7 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
             let tempNotes = notesView.text.replacingOccurrences(of: " ", with: "_")
             let notes = String (tempNotes.filter { !" \n".contains($0) })
             let alert = UIAlertController(title: "Suggest Modifications to Attraction", message: "Are you sure you want to suggest these modifications to \(rideName!)?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {action in                 urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parkID)&ride=\(rideName!)&open=\(yearOpen)&close=\(yearClosed)&type=\(self.rideType)&park=\(self.selectedAttraction.rideID!)&active=\(active)&manufacturer=\(manufacturer)&notes=\(notes)&modify=1&scoreCard=\(scoreCard)" //removed park Name
+            alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {action in                 urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parkID)&ride=\(tempName)&open=\(yearOpen)&close=\(yearClosed)&type=\(self.rideType)&park=\(self.selectedAttraction.rideID!)&active=\(active)&manufacturer=\(tempMan)&notes=\(notes)&modify=1&scoreCard=\(scoreCard)" //removed park Name
                 print(urlPath)
                 let dataModel = DataModel()
                 dataModel.delegate = self

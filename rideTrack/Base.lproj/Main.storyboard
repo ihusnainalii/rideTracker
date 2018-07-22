@@ -2256,7 +2256,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wPY-3T-3bX">
                                 <rect key="frame" x="10" y="25" width="65" height="34"/>
                                 <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
-                                <state key="normal" title="Cancel"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="1" green="0.068983529109999997" blue="7.7064603809999998e-05" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <segue destination="F9i-Qb-3lc" kind="unwind" identifier="backToDetails" unwindAction="unwindToAttractionsViewWithSender:" id="uxv-ky-mnq"/>
                                 </connections>

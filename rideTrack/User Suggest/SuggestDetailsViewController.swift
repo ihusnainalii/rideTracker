@@ -221,7 +221,9 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         if scoreCardSwitch.isOn {
             scoreCard = 1
         }
-        let urlPath = "http://www.beingpositioned.com/theparksman/uploadToAttractionDB.php?name=\(rideName!)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(manufacturer)" //uploads to main list
+        let tempName = rideName!.replacingOccurrences(of: "&", with: "!A?")
+        let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
+        let urlPath = "http://www.beingpositioned.com/theparksman/uploadToAttractionDB.php?name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)" //uploads to main list
         print (urlPath)
         let dataModel = DataModel()
         dataModel.delegate = self

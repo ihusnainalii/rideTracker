@@ -252,7 +252,9 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         if rideType == 0 {
             rideType = suggestedAttraction.type
         }
-        let urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(originalAttraction.rideID!)&name=\(rideName!)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(manufacturer)" //uploads to main list
+        let tempName = rideName!.replacingOccurrences(of: "&", with: "!A?")
+        let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
+        let urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(originalAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)" //uploads to main list
         print (urlPath)
         let dataModel = DataModel()
         dataModel.delegate = self

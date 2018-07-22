@@ -89,7 +89,9 @@ class DataModel: NSObject, URLSessionDataDelegate {
             if dataBase == "attractions"{
                 let attraction = AttractionsModel()
                 var tempName = ""
+                var tempMan = ""
                 tempName = jsonElement["Name"] as! String
+                tempName = tempName.replacingOccurrences(of: "!A?", with: "&")
                 attraction.name = tempName.replacingOccurrences(of: "_", with: " ")
                 attraction.rideID = Int (jsonElement["RideID"] as! String)
                 attraction.parkID = Int (jsonElement["ParkID"] as! String)
@@ -98,24 +100,28 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.yearClosed = Int (jsonElement["YearClosed"] as! String)
                 attraction.active = Int (jsonElement["Active"] as! String)
                 attraction.hasScoreCard = Int (jsonElement["ScoreCard"] as! String)
-                attraction.manufacturer = jsonElement["Manufacturer"] as! String
+                tempMan = jsonElement["Manufacturer"] as! String
+                attraction.manufacturer = tempMan.replacingOccurrences(of: "!A?", with: "&")
                 attraction.isCheck = false
                 dataBaseData.add(attraction)
             }
             if dataBase == "Suggest" {
                 let attraction = ApproveSuggestAttracionModel()
                 var tempName = ""
+                var tempMan = ""
                 var tempNotes = ""
                 attraction.parkID = Int (jsonElement["ParkID"] as! String)
                 tempName = (jsonElement["RideName"] as? String)!
-                attraction.rideName = tempName.replacingOccurrences(of: "_", with: " ")
+                tempName = tempName.replacingOccurrences(of: "_", with: " ")
+                attraction.rideName = tempName.replacingOccurrences(of: "!A?", with: "&")
                 attraction.YearOpen = Int (jsonElement["YearOpen"] as! String)
                 attraction.YearClose = Int (jsonElement["YearClose"] as! String)
                 attraction.type = Int (jsonElement["Type"] as! String)
                 attraction.parkName = jsonElement["Park"] as? String
                 attraction.id = Int (jsonElement["id"] as! String)
                 attraction.active = Int (jsonElement["Active"] as! String)
-                attraction.manufacturer = jsonElement["Manufacturer"] as? String
+                tempMan = (jsonElement["Manufacturer"] as? String)!
+                attraction.manufacturer = tempMan.replacingOccurrences(of: "!A?", with: "&")
                 tempNotes = (jsonElement["Notes"] as? String)!
                 attraction.notes = tempNotes.replacingOccurrences(of: "_", with: " ")
                 attraction.modify = Int(jsonElement["modify"] as! String)
