@@ -27,6 +27,8 @@
 		5FF1ECAA20B526EB00BE1609 /* RideTrack.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */; };
 		5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF1ECAB20B5271800BE1609 /* Main.storyboard */; };
 		5FF1ECB020B5271800BE1609 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */; };
+		5FFCB7FF21055E400054D84D /* ParksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB7FE21055E400054D84D /* ParksList.swift */; };
+		5FFCB80121055E470054D84D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB80021055E470054D84D /* User.swift */; };
 		6FB12F9BEE164667D88AFD5F /* Pods_rideTrackTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C975F034FC767581DC82917 /* Pods_rideTrackTests.framework */; };
 		970852B5CB3635699B203963 /* Pods_rideTrack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74AF014AE1A2E4F64D38F220 /* Pods_rideTrack.framework */; };
 		982E097620F54957007F2D02 /* ModifyAttractionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E097520F54957007F2D02 /* ModifyAttractionViewController.swift */; };
@@ -94,6 +96,8 @@
 		5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RideTrack.xcdatamodel; sourceTree = "<group>"; };
 		5FF1ECAC20B5271800BE1609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5FF1ECAE20B5271800BE1609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5FFCB7FE21055E400054D84D /* ParksList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParksList.swift; sourceTree = "<group>"; };
+		5FFCB80021055E470054D84D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		71040B45749ED9A81A3BBDE1 /* Pods-rideTrack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrack.release.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrack/Pods-rideTrack.release.xcconfig"; sourceTree = "<group>"; };
 		73201F7E0249E66F5FF46F43 /* Pods-rideTrack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrack.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrack/Pods-rideTrack.debug.xcconfig"; sourceTree = "<group>"; };
 		74AF014AE1A2E4F64D38F220 /* Pods_rideTrack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rideTrack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -170,6 +174,7 @@
 		5F16C52620BCF34500E525EF /* Data Models */ = {
 			isa = PBXGroup;
 			children = (
+				5FFCB80221055E4D0054D84D /* Firebase Models */,
 				98AD7F6520A91A5A00540AB3 /* ParksModel.swift */,
 				98AD7F6420A91A5A00540AB3 /* AttractionsModel.swift */,
 				98AD7F6C20A91A5B00540AB3 /* DataModel.swift */,
@@ -222,6 +227,16 @@
 				5FF0BBBD20CF639100213DF8 /* ScoreCardTableViewCell.swift */,
 			);
 			path = "Score Card";
+			sourceTree = "<group>";
+		};
+		5FFCB80221055E4D0054D84D /* Firebase Models */ = {
+			isa = PBXGroup;
+			children = (
+				5FFCB7FE21055E400054D84D /* ParksList.swift */,
+				5FFCB80021055E470054D84D /* User.swift */,
+			);
+			name = "Firebase Models";
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		982F068C20EBC2FA00B08474 /* User Suggest */ = {
@@ -544,6 +559,7 @@
 				5FE9F81720DDCF040012B98C /* AllParksTableViewCell.swift in Sources */,
 				98AD7F7120A91A5C00540AB3 /* SuggestRideViewController.swift in Sources */,
 				5F16C51D20BB92FC00E525EF /* AttractionsTableViewCell.swift in Sources */,
+				5FFCB80121055E470054D84D /* User.swift in Sources */,
 				5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */,
 				5FF0BBBB20CF62C300213DF8 /* ScoreCardViewController.swift in Sources */,
 				5FF0BBBE20CF639100213DF8 /* ScoreCardTableViewCell.swift in Sources */,
@@ -564,6 +580,7 @@
 				5F202C5B20E6E8AF00FFE408 /* NeverClearView.swift in Sources */,
 				5F16C52520BCE89200E525EF /* SearchTableViewCell.swift in Sources */,
 				98C28A9D20EBD90900C7229E /* ApproveSuggestAttracionModel.swift in Sources */,
+				5FFCB7FF21055E400054D84D /* ParksList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
