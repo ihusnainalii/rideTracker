@@ -541,8 +541,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         //Check if it is in user's favorites list, if so delete it
         for i in 0..<favoiteParkList.count{
             if favoiteParkList[i].parkID == parkID{
-                favoiteParkList.remove(at: i)
-                favoritesTableView.deleteRows(at: [IndexPath(row: i, section: 0)], with: .left)
+                //favoiteParkList.remove(at: i)
+                //favoritesTableView.deleteRows(at: [IndexPath(row: i, section: 0)], with: .left)
+                let favoriteParkItem = self.favoiteParkList[i]
+                favoriteParkItem.ref?.removeValue()
                 break
             }
         }
