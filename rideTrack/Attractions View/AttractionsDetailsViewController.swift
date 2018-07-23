@@ -16,7 +16,7 @@ class AttractionsDetailsViewController: UIViewController {
     var selectedRide = AttractionsModel()
     var modifyDate = Date()
     var comeFromDetails = false
-    var userAttractionDatabase: [UserAttractionProvider]!
+    var userAttractionDatabase: [AttractionList]!
     var titleName = ""
 
     

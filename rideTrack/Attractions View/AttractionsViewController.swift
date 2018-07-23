@@ -48,7 +48,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var showExtinct = 0
     var isIgnored = false
     //From the datamigration tool:
-    var userAttractionDatabase: [UserAttractionProvider]!
+    var userAttractionDatabase: [AttractionList]!
     var ignore = [Int]()
     let ignoreList = UserDefaults.standard
     var numIgnore = 0
@@ -133,6 +133,26 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         ignore = ignoreList.array(forKey: "SavedIgnoreListArray")  as? [Int] ?? [Int]()
  
         // Do any additional setup after loading the view, typically from a nib.
+        
+        Auth.auth().addStateDidChangeListener { auth, user in
+            guard let user = user else { return }
+            self.user = User(authData: user)
+        }
+        let userID = Auth.auth().currentUser
+        let id = userID?.uid
+        self.attractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkData.parkID) ")
+        
+        attractionListRef.observe(.value, with: { snapshot in
+            var newAttractions: [AttractionList] = []
+            for child in snapshot.children {
+                if let snapshot = child as? DataSnapshot,
+                    let attractionItem = AttractionList(snapshot: snapshot) {
+                    newAttractions.append(attractionItem)
+                }
+            }
+            self.userAttractionDatabase = newAttractions
+            //self.attractionsTableView.reloadData()
+        })
     }
     
     
@@ -174,8 +194,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                             userRidesRidden += 1
                             
                             attractionListForTable[i].numberOfTimesRidden = userAttractionDatabase[userDataBaseIndex].numberOfTimesRidden
-                            attractionListForTable[i].dateLastRidden = userAttractionDatabase[userDataBaseIndex].dateLastRidden
-                            attractionListForTable[i].dateFirstRidden = userAttractionDatabase[userDataBaseIndex].dateFirstRidden
+                            attractionListForTable[i].dateLastRidden = userAttractionDatabase[userDataBaseIndex].lastRideDate
+                            attractionListForTable[i].dateFirstRidden = userAttractionDatabase[userDataBaseIndex].firstRideDate
                             
                             if attractionListForTable[i].active == 0 {
                                 userNumExtinct += 1
@@ -933,30 +953,31 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     func updateAttractionFromCoreData(){
+        print("UPDATE ATTRACTIONS FROM CORE DATA RAN. Currenly, nothing happens here. What is the point?")
         //Getting coreData Attraction data for the selected park
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let sortDescriptor = NSSortDescriptor(key: "rideID", ascending: true)
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
-        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkData.parkID!)")
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        do {
-            selectedAttractionsList = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
-        }
-        var userAttractions: [UserAttractionProvider] = []
-        for i in 0..<selectedAttractionsList.count{
-            let newAttraction = UserAttractionProvider()
-            newAttraction.dateFirstRidden = selectedAttractionsList[i].value(forKeyPath: "firstRideDate") as! Date
-            newAttraction.dateLastRidden = selectedAttractionsList[i].value(forKeyPath: "lastRideDate") as! Date
-            newAttraction.numberOfTimesRidden = selectedAttractionsList[i].value(forKeyPath: "numberOfTimesRidden") as! Int
-            newAttraction.parkID = selectedAttractionsList[i].value(forKeyPath: "parkID") as! Int
-            newAttraction.rideID = selectedAttractionsList[i].value(forKeyPath: "rideID") as! Int
-            userAttractions.append(newAttraction)
-        }
-        userAttractionDatabase = userAttractions
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        let sortDescriptor = NSSortDescriptor(key: "rideID", ascending: true)
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
+//        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkData.parkID!)")
+//        fetchRequest.sortDescriptors = [sortDescriptor]
+//        do {
+//            selectedAttractionsList = try managedContext.fetch(fetchRequest)
+//        } catch let error as NSError {
+//            print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
+//        }
+//        var userAttractions: [AttractionList] = []
+//        for i in 0..<selectedAttractionsList.count{
+//            let newAttraction = AttractionList(rideID: <#T##Int#>, numberOfTimesRidden: <#T##Int#>, firstRideDate: <#T##Date#>, lastRideDate: <#T##Date#>)
+//            newAttraction.dateFirstRidden = selectedAttractionsList[i].value(forKeyPath: "firstRideDate") as! Date
+//            newAttraction.dateLastRidden = selectedAttractionsList[i].value(forKeyPath: "lastRideDate") as! Date
+//            newAttraction.numberOfTimesRidden = selectedAttractionsList[i].value(forKeyPath: "numberOfTimesRidden") as! Int
+//            newAttraction.parkID = selectedAttractionsList[i].value(forKeyPath: "parkID") as! Int
+//            newAttraction.rideID = selectedAttractionsList[i].value(forKeyPath: "rideID") as! Int
+//            userAttractions.append(newAttraction)
+//        }
+//        userAttractionDatabase = userAttractions
     }
     /*
      // In a storyboard-based application, you will often want to do a little preparation before navigation

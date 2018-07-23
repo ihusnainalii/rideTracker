@@ -614,30 +614,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 }
             }
             
-            //Getting coreData Attraction data for the selected park
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                return }
-            let managedContext = appDelegate.persistentContainer.viewContext
-            let sortDescriptor = NSSortDescriptor(key: "rideID", ascending: true)
-            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
-            fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(selectedPark.parkID!)")
-            fetchRequest.sortDescriptors = [sortDescriptor]
-            do {
-                selectedAttractionsList = try managedContext.fetch(fetchRequest)
-            } catch let error as NSError {
-                print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
-            }
-            var userAttractions: [UserAttractionProvider] = []
-            for i in 0..<selectedAttractionsList.count{
-                let newAttraction = UserAttractionProvider()
-                newAttraction.dateFirstRidden = selectedAttractionsList[i].value(forKeyPath: "firstRideDate") as! Date
-                newAttraction.dateLastRidden = selectedAttractionsList[i].value(forKeyPath: "lastRideDate") as! Date
-                newAttraction.numberOfTimesRidden = selectedAttractionsList[i].value(forKeyPath: "numberOfTimesRidden") as! Int
-                newAttraction.parkID = selectedAttractionsList[i].value(forKeyPath: "parkID") as! Int
-                newAttraction.rideID = selectedAttractionsList[i].value(forKeyPath: "rideID") as! Int
-                userAttractions.append(newAttraction)
-            }
-            attractionVC.userAttractionDatabase = userAttractions
+//            //Getting coreData Attraction data for the selected park
+//            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//                return }
+//            let managedContext = appDelegate.persistentContainer.viewContext
+//            let sortDescriptor = NSSortDescriptor(key: "rideID", ascending: true)
+//            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
+//            fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(selectedPark.parkID!)")
+//            fetchRequest.sortDescriptors = [sortDescriptor]
+//            do {
+//                selectedAttractionsList = try managedContext.fetch(fetchRequest)
+//            } catch let error as NSError {
+//                print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
+//            }
+//            var userAttractions: [UserAttractionProvider] = []
+//            for i in 0..<selectedAttractionsList.count{
+//                let newAttraction = UserAttractionProvider()
+//                newAttraction.dateFirstRidden = selectedAttractionsList[i].value(forKeyPath: "firstRideDate") as! Date
+//                newAttraction.dateLastRidden = selectedAttractionsList[i].value(forKeyPath: "lastRideDate") as! Date
+//                newAttraction.numberOfTimesRidden = selectedAttractionsList[i].value(forKeyPath: "numberOfTimesRidden") as! Int
+//                newAttraction.parkID = selectedAttractionsList[i].value(forKeyPath: "parkID") as! Int
+//                newAttraction.rideID = selectedAttractionsList[i].value(forKeyPath: "rideID") as! Int
+//                userAttractions.append(newAttraction)
+//            }
+//            attractionVC.userAttractionDatabase = userAttractions
             
             if isSearchingMyParks{
                 SearchMyParks().animateOutOfParkSearch(parksView: self)
