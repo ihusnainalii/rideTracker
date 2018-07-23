@@ -43,6 +43,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var titleName = ""
     var parkID = 0
     var attractionListForTable = [AttractionsModel]()
+    var favoiteParkList = [ParksList]()
     var savedItems: NSArray!
     var parkData: ParksModel!
     var showExtinct = 0
@@ -153,6 +154,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.userAttractionDatabase = newAttractions
             //self.attractionsTableView.reloadData()
         })
+        attractionListRef.removeAllObservers()
     }
     
     
@@ -590,9 +592,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         if attractionListForTable[indexPath.row].numberOfTimesRidden == 1{
             //User is unchecking the ride from their list
-            deleteRideCheck(rideID: attractionListForTable[indexPath.row].rideID)
+            
+            let userAttractionDatabaseIndex = getUserAttractionDatabaseIndex(rideID: attractionListForTable[indexPath.row].rideID)
+            let attractionItem = userAttractionDatabase[userAttractionDatabaseIndex]
+            attractionItem.ref?.removeValue()
+            
             attractionListForTable[indexPath.row].numberOfTimesRidden = 0
             attractionListForTable[indexPath.row].isCheck = false
+            
             
             self.animateRow = indexPath.row    //"Animate here")
             //self.attractionsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
@@ -666,82 +673,22 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         // Dispose of any resources that can be recreated.
     }
     
+
     
-//    func saveUserCheckOffNewRide(parkID: Int, rideID: Int) {
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return
-//        }
-//
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//
-//        let entity = NSEntityDescription.entity(forEntityName: "RideTrack",
-//                                                in: managedContext)!
-//
-//        let newPark = NSManagedObject(entity: entity,
-//                                      insertInto: managedContext)
-//
-//        newPark.setValue(parkID, forKeyPath: "parkID")
-//        newPark.setValue(rideID, forKeyPath: "rideID")
-//        newPark.setValue(1, forKey: "numberOfTimesRidden")
-//        newPark.setValue(Date(), forKey: "firstRideDate")
-//        newPark.setValue(Date(), forKey: "lastRideDate")
-//        print("Just saved Attraction: ", rideID)
-//        do {
-//            try managedContext.save()
-//            userAttractions.append(newPark)
-//        } catch let error as NSError {
-//            print("Could not save. \(error), \(error.userInfo)")
-//        }
-//    }
-    
-    func deleteRideCheck(rideID: Int) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
-        fetchRequest.predicate = NSPredicate(format: "rideID = %@", "\(rideID)")
-        do
-        {
-            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
-            
-            for entity in fetchedResults! {
-                
-                managedContext.delete(entity)
-                try! managedContext.save()
-                print("Deleted ride \(rideID)")
-            }
-        }
-        catch _ {
-            print("Could not delete")
-            
-        }
-        
-    }
     
     func saveIncrementRideCount(rideID: Int, incrementTo: Int, postive: Bool){
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
-        fetchRequest.predicate = NSPredicate(format: "rideID = %@", "\(rideID)")
-        do
-        {
-            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
-            
-            
-            for entity in fetchedResults! {
-                entity.setValue(incrementTo, forKey: "numberOfTimesRidden")
-                if postive{
-                    entity.setValue(Date(), forKey: "lastRideDate")
-                }
-                try! managedContext.save()
-                print("Increment ride \(rideID) to \(incrementTo)")
-            }
-        }
-        catch _ {
-            print("Could not increment")
+        let attractionIndex = getUserAttractionDatabaseIndex(rideID: rideID)
+        let attractionItem = userAttractionDatabase[attractionIndex]
+        
+        if postive{
+            attractionItem.ref?.updateChildValues([
+                "numberOfTimesRidden": incrementTo,
+                "lastRideDate": Date().timeIntervalSince1970
+                ])
+        } else{
+            attractionItem.ref?.updateChildValues([
+                "numberOfTimesRidden": incrementTo
+                ])
         }
         
     }
@@ -752,6 +699,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         if segue.identifier == "toParkInfo"{
             let infoVC = segue.destination as! ParksDetailViewController
             infoVC.parksData = parkData
+            infoVC.favoiteParkList = favoiteParkList
             
         }
         if segue.identifier == "ToDetails"{
@@ -849,26 +797,26 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         else {
             progressBar.progressTintColor = appGreen
         }
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
-        do
-        {
-            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
-            
-            for entity in fetchedResults! {
-                print("updating total ride count")
-                entity.setValue(userCount, forKey: "ridesRidden")
-                entity.setValue(totNum, forKey: "totalRides")
-                try! managedContext.save()
-            }
-        } catch _ {
-            print("Could not save favorite")
-        }
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return
+//        }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
+//        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
+//        do
+//        {
+//            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
+//
+//            for entity in fetchedResults! {
+//                print("updating total ride count")
+//                entity.setValue(userCount, forKey: "ridesRidden")
+//                entity.setValue(totNum, forKey: "totalRides")
+//                try! managedContext.save()
+//            }
+//        } catch _ {
+//            print("Could not save favorite")
+//        }
     }
     
     @IBAction func unwindToAttractionsView(sender: UIStoryboardSegue) {
@@ -954,11 +902,24 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }))
     }
  
+    func getUserAttractionDatabaseIndex(rideID: Int) -> Int {
+        var foundID = 0
+        var i = 0
+        repeat {
+            if userAttractionDatabase[i].rideID == rideID{
+                foundID = i
+                break
+            }
+            i += 1
+        } while i < userAttractionDatabase.count
+        return foundID
+    }
     
     
     
     func updateAttractionFromCoreData(){
         print("UPDATE ATTRACTIONS FROM CORE DATA RAN. Currenly, nothing happens here. What is the point?")
+        
         //Getting coreData Attraction data for the selected park
 //        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
 //            return }
