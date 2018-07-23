@@ -642,7 +642,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             if isSearchingMyParks{
                 SearchMyParks().animateOutOfParkSearch(parksView: self)
             }
-            print("count: ", userAttractions.count)
+            //print("count: ", userAttractions.count)
         }
         
         if segue.identifier == "toSearch"{

@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 import Foundation
+import Firebase
 
 
 class AttractionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, AttractionsTableViewCellDelegate{
@@ -71,6 +72,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var rideName = ""
     var totalNumExtinct = 0
     var hasHaptic = 0
+    
+    var attractionListRef: DatabaseReference!
+    var user: User!
     
     var is3DTouchAvailable: Bool {
         return view.traitCollection.forceTouchCapability == .available
