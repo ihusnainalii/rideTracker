@@ -95,25 +95,25 @@ class ParksDetailViewController: UIViewController {
     }
     
     
-    func saveIncrementorChange(incrementorEnabled: Bool){
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parksData.parkID!)")
-        do {
-            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
-            
-            for entity in fetchedResults! {
-                print("Setting incrementor enabled to \(incrementorEnabled)")
-                entity.setValue(incrementorEnabled, forKey: "incrementorEnabled")
-                try! managedContext.save()
-            }
-        }
-        catch _ {
-            print("Could not save favorite")
-        }
-    }
+//    func saveIncrementorChange(incrementorEnabled: Bool){
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
+//        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parksData.parkID!)")
+//        do {
+//            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
+//            
+//            for entity in fetchedResults! {
+//                print("Setting incrementor enabled to \(incrementorEnabled)")
+//                entity.setValue(incrementorEnabled, forKey: "incrementorEnabled")
+//                try! managedContext.save()
+//            }
+//        }
+//        catch _ {
+//            print("Could not save favorite")
+//        }
+//    }
     
     func findIndexFavoritesList(parkID: Int) -> Int{
         var favoritesIndex = -1

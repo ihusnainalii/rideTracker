@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Firebase
 
 class AttractionsDetailsViewController: UIViewController {
    
@@ -17,7 +18,10 @@ class AttractionsDetailsViewController: UIViewController {
     var modifyDate = Date()
     var comeFromDetails = false
     var userAttractionDatabase: [AttractionList]!
+    var favoiteParkList: [ParksList]!
     var titleName = ""
+    var attractionsListRef: DatabaseReference!
+    var user: User!
 
     
     let greyColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
@@ -53,6 +57,15 @@ class AttractionsDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Auth.auth().addStateDidChangeListener { auth, user in
+            guard let user = user else { return }
+            self.user = User(authData: user)
+        }
+        let userID = Auth.auth().currentUser
+        let id = userID?.uid
+        self.attractionsListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(String(selectedRide.parkID))/\(String(selectedRide.rideID))")
+        
         print ("ride ID: ", self.selectedRide.rideID!)
         
 //        if rememberPasscode == 1 {
@@ -214,26 +227,30 @@ class AttractionsDetailsViewController: UIViewController {
     }
     
     func saveModifyFirstRideDate(rideID: Int, firstRideDate: Date){
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
-        fetchRequest.predicate = NSPredicate(format: "rideID = %@", "\(rideID)")
-        do {
-            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
-            for entity in fetchedResults! {
-                entity.setValue(firstRideDate, forKey: "firstRideDate")
-                try! managedContext.save()
-                print("Changing first ride date for ride ID \(rideID) to \(firstRideDate)")
-            }
-        }
-        catch _ {
-            print("Could not increment")
+
+        attractionsListRef.updateChildValues([
+            "firstRideDate": firstRideDate.timeIntervalSince1970
+            ])
         }
         
-    }
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return
+//        }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
+//        fetchRequest.predicate = NSPredicate(format: "rideID = %@", "\(rideID)")
+//        do {
+//            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
+//            for entity in fetchedResults! {
+//                entity.setValue(firstRideDate, forKey: "firstRideDate")
+//                try! managedContext.save()
+//                print("Changing first ride date for ride ID \(rideID) to \(firstRideDate)")
+//            }
+//        }
+//        catch _ {
+//            print("Could not increment")
+//        }
+        
     
     func dateFormatter(date: Date) -> String {
         //let date = Date(timeIntervalSince1970: Double (timeToFormat))
@@ -308,6 +325,17 @@ class AttractionsDetailsViewController: UIViewController {
             print("Seguaing now: ride name is ", selectedRide.name!)
             
         }
+    }
+    
+    func findIndexFavoritesList(parkID: Int) -> Int{
+        var favoritesIndex = -1
+        for i in 0..<favoiteParkList.count{
+            if favoiteParkList[i].parkID == parkID{
+                favoritesIndex = i
+                break
+            }
+        }
+        return favoritesIndex
     }
     
     @IBAction func unwindToDetailsView(sender: UIStoryboardSegue) {

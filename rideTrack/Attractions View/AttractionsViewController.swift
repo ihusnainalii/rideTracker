@@ -143,7 +143,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         let userID = Auth.auth().currentUser
         let id = userID?.uid
-        attractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkData.parkID!) ")
+        attractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkData.parkID!)")
         parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)/\(String(parkData.parkID))")
         favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)/\(String(parkData.parkID))")
         
@@ -718,6 +718,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             detailsVC.userAttractionDatabase = userAttractionDatabase
             comeFromDetails = true
             detailsVC.titleName = titleName
+            detailsVC.favoiteParkList = favoiteParkList
             UIView.animate(withDuration: 0.3, animations: ({
                 self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0.4)
                 self.view.layoutIfNeeded()

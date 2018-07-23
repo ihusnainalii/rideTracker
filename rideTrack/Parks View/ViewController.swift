@@ -97,11 +97,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         searchParksTextField.delegate = self
         
-        let urlPath = "http://www.beingpositioned.com/theparksman/parksdbservice.php"
-        let dataModel = DataModel()
-        dataModel.delegate = self
-        dataModel.downloadData(urlPath: urlPath, dataBase: "parks", returnPath: "allParks")
-        
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
@@ -120,6 +115,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         parksListRef.observe(.value, with: { snapshot in
             var newParks: [ParksList] = []
+            print("new parks ")
             for child in snapshot.children {
                 if let snapshot = child as? DataSnapshot,
                     let parkItem = ParksList(snapshot: snapshot) {
@@ -129,7 +125,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             self.allParksList = newParks
             self.allParksTableView.reloadData()
         })
-        
         favoritesListRef.observe(.value, with: { snapshot in
             var newParks: [ParksList] = []
             for child in snapshot.children {
@@ -141,6 +136,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             self.favoiteParkList = newParks
             self.favoritesTableView.reloadData()
         })
+        
+        let urlPath = "http://www.beingpositioned.com/theparksman/parksdbservice.php"
+        let dataModel = DataModel()
+        dataModel.delegate = self
+        dataModel.downloadData(urlPath: urlPath, dataBase: "parks", returnPath: "allParks")
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -198,9 +199,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             //Gets all the parks from the database, sets up the favoritesList and allMyParksList
         else{
             arrayOfAllParks = items as! [ParksModel]
-            var userParkListIncrementor = 0
-            var allParksIncrementor = 0
-            
+//            var userParkListIncrementor = 0
+//            var allParksIncrementor = 0
+//
 //            if savedParkList.count != 0{
 //                //Like a do while loop- loop until just before the saved park incrementor goes out of index
 //                repeat {
@@ -233,11 +234,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             
             var allParksViewTableAlpha: CGFloat = 1.0
             var favoritesTableAlpha: CGFloat = 1.0
-            
+            print(favoiteParkList.count)
             if favoiteParkList.count == 0{
                 favoritesViewHeightConstrant.constant = 70
                 favoritesTableAlpha = 0.0
             }
+            print(allParksList.count)
             if allParksList.count == 0{
                 allParksViewTableAlpha = 0.0
             }
