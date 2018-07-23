@@ -836,8 +836,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 attractionListForTable.removeAll()
                 userAttractionDatabase.removeAll()
                 updateAttractionFromCoreData()
-                countOfRemove = 0
-                itemsDownloaded(items: savedItems, returnPath: "Gettings attraction data")
             }
             attractionsTableView.reloadData()
         }
@@ -927,7 +925,29 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     func updateAttractionFromCoreData(){
-        print("UPDATE ATTRACTIONS FROM CORE DATA RAN. Currenly, nothing happens here. What is the point?")
+
+//        let userID = Auth.auth().currentUser
+//        let id = userID?.uid
+//        let updateAttractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkData.parkID!)")
+
+        attractionListRef.observeSingleEvent(of: .value, with: { snapshot in
+            print("OBSERVING UPDATE ATTRACTIONS AFTER SEGUING FROM PARK INFO. This should not run any other time")
+            var attractions: [AttractionList] = []
+            for child in snapshot.children {
+                if let snapshot = child as? DataSnapshot,
+                    let attractionItem = AttractionList(snapshot: snapshot) {
+                    attractions.append(attractionItem)
+                }
+            }
+            self.userAttractionDatabase = attractions
+            self.countOfRemove = 0
+            self.itemsDownloaded(items: self.savedItems, returnPath: "Gettings attraction data")
+        })
+        //updateAttractionListRef.removeAllObservers()
+        
+       
+        
+        //attractionListRef.observeSingleEvent(of: ., with: <#T##(DataSnapshot) -> Void#>)
         
         //Getting coreData Attraction data for the selected park
 //        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
