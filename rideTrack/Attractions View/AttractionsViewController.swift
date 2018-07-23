@@ -109,7 +109,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
         downBar.setImage(UIImage(named: "Down Bar"), for: .normal)
-        
+        titleName = parkData.name
         parkLabel.text = titleName
         
         if screenSize.width == 320.0{
@@ -118,6 +118,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         self.attractionsTableView.delegate = self
         self.attractionsTableView.dataSource = self
+        parkID = parkData.parkID
         print(parkID)
         let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(parkID)"
         let dataModel = DataModel()

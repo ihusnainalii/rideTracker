@@ -593,13 +593,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let arrayOfAllParksIndex = getParkModelINdexFromAllParks(parkID: selectedPark.parkID)
             
             print ("The park is ", selectedPark.name)
-            attractionVC.titleName = arrayOfAllParks[arrayOfAllParksIndex].name
-            attractionVC.parkID = arrayOfAllParks[arrayOfAllParksIndex].parkID
             attractionVC.showExtinct = showExtinct
             attractionVC.parksViewController = self
             attractionVC.parkData = arrayOfAllParks[arrayOfAllParksIndex]
             attractionVC.parkData.totalRides = selectedPark.totalRides
             attractionVC.parkData.incrementorEnabled = selectedPark.incrementorEnabled
+            
+            //If the name of the park has changed, update the name in Parks-list
+            if arrayOfAllParks[arrayOfAllParksIndex].name != selectedPark.name{
+                let parkItem = allParksList[findIndexInAllParksList(parkID: selectedPark.parkID)]
+                parkItem.ref?.updateChildValues([
+                    "name": arrayOfAllParks[arrayOfAllParksIndex].name
+                    ])
+                let favoriteIndex = findIndexFavoritesList(parkID: selectedPark.parkID)
+                if favoriteIndex != -1{
+                    let parkItem = favoiteParkList[favoriteIndex]
+                    parkItem.ref?.updateChildValues([
+                        "name": arrayOfAllParks[arrayOfAllParksIndex].name
+                        ])
+                }
+            }
             
             //Getting coreData Attraction data for the selected park
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
