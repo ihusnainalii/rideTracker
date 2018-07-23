@@ -539,14 +539,17 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     func enterAttractionTally(_ sender: AttractionsTableViewCell) {
         print ("HERE on LONG")
         var newIncrement = 1
-        if (self.hasHaptic == 0) {
-        }
-        else {
-            generator.impactOccurred()
-        }
     guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
     let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
-        if parkData.incrementorEnabled && attractionListForTable[indexPath.row].isCheck { //&& Int(cell.numberOfRidesLabel.text!)! != 0
+        cell.rideCellSquare.isUserInteractionEnabled = false
+        if parkData.incrementorEnabled && attractionListForTable[indexPath.row].isCheck {
+            if (self.hasHaptic == 0) {
+                print("no imapct")
+            }
+            else {
+                generator.impactOccurred()
+                print ("impact")
+            }
             let enterTallyAlert = UIAlertController(title: "Attraction Tally", message: "Please enter the number of times you have been on the attraction", preferredStyle: UIAlertControllerStyle.alert)
             let userInput = UIAlertAction(title: "Enter", style: .default) { (alertAction) in
                 let textField = enterTallyAlert.textFields![0] as UITextField
@@ -562,10 +565,13 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 self.attractionListForTable[indexPath.row].numberOfTimesRidden = newIncrement
                 self.attractionListForTable[indexPath.row].dateLastRidden = Date()
                 self.saveIncrementRideCount(rideID: self.attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement, postive: true)
+                cell.rideCellSquare.isUserInteractionEnabled = true
+
             }
             
             let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (alertAction) in
                 print("cancled")
+                cell.rideCellSquare.isUserInteractionEnabled = true
             }
             enterTallyAlert.addTextField { (textField) in
                 textField.placeholder = "\(cell.numberOfRidesLabel.text!)"
