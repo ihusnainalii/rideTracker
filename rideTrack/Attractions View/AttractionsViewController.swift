@@ -75,6 +75,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var hasHaptic = 0
     
     var attractionListRef: DatabaseReference!
+    var parksListRef: DatabaseReference!
+    var favoriteListRef: DatabaseReference!
     var user: User!
     
     var is3DTouchAvailable: Bool {
@@ -141,7 +143,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         let userID = Auth.auth().currentUser
         let id = userID?.uid
-        self.attractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkData.parkID!) ")
+        attractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkData.parkID!) ")
+        parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)/\(String(parkData.parkID))")
+        favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)/\(String(parkData.parkID))")
         
         attractionListRef.observe(.value, with: { snapshot in
             var newAttractions: [AttractionList] = []
@@ -154,7 +158,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.userAttractionDatabase = newAttractions
             //self.attractionsTableView.reloadData()
         })
-        attractionListRef.removeAllObservers()
     }
     
     
@@ -198,6 +201,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                             attractionListForTable[i].numberOfTimesRidden = userAttractionDatabase[userDataBaseIndex].numberOfTimesRidden
                             attractionListForTable[i].dateLastRidden = Date(timeIntervalSince1970: userAttractionDatabase[userDataBaseIndex].lastRideDate)
                             attractionListForTable[i].dateFirstRidden = Date(timeIntervalSince1970: userAttractionDatabase[userDataBaseIndex].firstRideDate)
+                            attractionListForTable[i].isIgnored = false
                             
                             if attractionListForTable[i].active == 0 {
                                 userNumExtinct += 1
@@ -797,26 +801,30 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         else {
             progressBar.progressTintColor = appGreen
         }
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return
-//        }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-//        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
-//        do
-//        {
-//            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
-//
-//            for entity in fetchedResults! {
-//                print("updating total ride count")
-//                entity.setValue(userCount, forKey: "ridesRidden")
-//                entity.setValue(totNum, forKey: "totalRides")
-//                try! managedContext.save()
-//            }
-//        } catch _ {
-//            print("Could not save favorite")
-//        }
+        
+        parksListRef.updateChildValues([
+            "ridesRidden": userCount,
+            "totalRides": totNum
+            ])
+        let favoriteIndex = findIndexFavoritesList(parkID: parkData.parkID)
+        if favoriteIndex != -1{
+            favoriteListRef.updateChildValues([
+                "ridesRidden": userCount,
+                "totalRides": totNum
+                ])
+        }
+
+    }
+    
+    func findIndexFavoritesList(parkID: Int) -> Int{
+        var favoritesIndex = -1
+        for i in 0..<favoiteParkList.count{
+            if favoiteParkList[i].parkID == parkID{
+                favoritesIndex = i
+                break
+            }
+        }
+        return favoritesIndex
     }
     
     @IBAction func unwindToAttractionsView(sender: UIStoryboardSegue) {

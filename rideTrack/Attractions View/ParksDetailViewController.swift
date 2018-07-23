@@ -41,8 +41,8 @@ class ParksDetailViewController: UIViewController {
         }
         let userID = Auth.auth().currentUser
         let id = userID?.uid
-        self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!) /\(parksData.name.lowercased())")
-        self.favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!) /\(parksData.name.lowercased())")
+        self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)/\(String(parksData.parkID))")
+        self.favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)/\(String(parksData.parkID))")
         configueLayout()
         incrementorSwitch.isOn = parksData.incrementorEnabled
         initialLocation = CLLocation(latitude: parksData.latitude, longitude: parksData.longitude)

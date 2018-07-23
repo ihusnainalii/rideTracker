@@ -115,8 +115,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         let userID = Auth.auth().currentUser
         let id = userID?.uid
-        self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!) ")
-        self.favoritesListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!) ")
+        self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)")
+        self.favoritesListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)")
         
         parksListRef.observe(.value, with: { snapshot in
             var newParks: [ParksList] = []
@@ -384,7 +384,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                         ])
                     
                     parkItem.favorite = true
-                    let newParkRef = self.favoritesListRef.child(parkItem.name.lowercased())
+                    let newParkRef = self.favoritesListRef.child(String(parkItem.parkID))
                     newParkRef.setValue(parkItem.toAnyObject())
                     
                     
@@ -510,7 +510,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             }
             
             let newParkModel = ParksList(parkID: newPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: newPark.name, location: newPark.city)
-            let newParkRef = self.parksListRef.child(newParkModel.name.lowercased())
+            let newParkRef = self.parksListRef.child(String(newParkModel.parkID))
             newParkRef.setValue(newParkModel.toAnyObject())
             
             
@@ -837,35 +837,35 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func unwindFromAttractions(parkID: Int) {
-        segueWithTableViewSelect = true
-        print("unwinding")
-        //Get ParkList data from CoreData
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
-        var updatedPark:[NSManagedObject] = []
-        do {
-            updatedPark = try managedContext.fetch(fetchRequest)
-            
-        } catch let error as NSError {
-            print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
-        }
-        
-        let allParksIndex = findIndexInAllParksList(parkID: parkID)
-        allParksList[allParksIndex].totalRides = updatedPark[0].value(forKey: "totalRides") as! Int
-        allParksList[allParksIndex].ridesRidden = updatedPark[0].value(forKey: "ridesRidden") as! Int
-        
-        if favoiteParkList.count != 0{
-            let favoritesIndex = findIndexFavoritesList(parkID: parkID)
-            if favoritesIndex != -1{
-                favoiteParkList[favoritesIndex].totalRides = updatedPark[0].value(forKey: "totalRides") as! Int
-                favoiteParkList[favoritesIndex].ridesRidden = updatedPark[0].value(forKey: "ridesRidden") as! Int
-                favoritesTableView.reloadData()
-            }
-        }
-        allParksTableView.reloadData()
+//        segueWithTableViewSelect = true
+//        print("unwinding")
+//        //Get ParkList data from CoreData
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
+//        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
+//        var updatedPark:[NSManagedObject] = []
+//        do {
+//            updatedPark = try managedContext.fetch(fetchRequest)
+//            
+//        } catch let error as NSError {
+//            print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
+//        }
+//        
+//        let allParksIndex = findIndexInAllParksList(parkID: parkID)
+//        allParksList[allParksIndex].totalRides = updatedPark[0].value(forKey: "totalRides") as! Int
+//        allParksList[allParksIndex].ridesRidden = updatedPark[0].value(forKey: "ridesRidden") as! Int
+//        
+//        if favoiteParkList.count != 0{
+//            let favoritesIndex = findIndexFavoritesList(parkID: parkID)
+//            if favoritesIndex != -1{
+//                favoiteParkList[favoritesIndex].totalRides = updatedPark[0].value(forKey: "totalRides") as! Int
+//                favoiteParkList[favoritesIndex].ridesRidden = updatedPark[0].value(forKey: "ridesRidden") as! Int
+//                favoritesTableView.reloadData()
+//            }
+//        }
+//        allParksTableView.reloadData()
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
         self.allParksTableView.contentInset = insets
     }
