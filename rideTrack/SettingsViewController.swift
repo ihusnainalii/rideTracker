@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Foundation
+import Firebase
 
 class SettingsViewController: UIViewController, UITextViewDelegate {
     var usersParkList: NSMutableArray = NSMutableArray()
@@ -76,6 +77,16 @@ class SettingsViewController: UIViewController, UITextViewDelegate {
         UserDefaults.standard.set(showExtinct, forKey: "showExtinct")
         
     }
+    
+    @IBAction func didTapLogout(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+            self.performSegue(withIdentifier: "SignOut", sender: nil)
+        } catch (let error) {
+            print("Auth sign out failed: \(error)")
+        }
+    }
+    
     
     @IBAction func simulateLocation(_ sender: Any) {
         if simulateLocationSwitch.isOn{

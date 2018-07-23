@@ -13,6 +13,9 @@
 		5F202C5B20E6E8AF00FFE408 /* NeverClearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F202C5A20E6E8AF00FFE408 /* NeverClearView.swift */; };
 		5F202C5D20EB257700FFE408 /* ParksDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F202C5C20EB257700FFE408 /* ParksDetailViewController.swift */; };
 		5F21419620F18087009A2E3A /* SearchMyParksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F21419520F18087009A2E3A /* SearchMyParksView.swift */; };
+		5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */; };
+		5F2EEC4F210510150036B47A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4E210510150036B47A /* SignUpViewController.swift */; };
+		5F2EEC52210510920036B47A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F2EEC51210510920036B47A /* GoogleService-Info.plist */; };
 		5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */; };
 		5FE9F81020DB45030012B98C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FE9F80F20DB45030012B98C /* Media.xcassets */; };
 		5FE9F81320DCA43C0012B98C /* ParksCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE9F81220DCA43C0012B98C /* ParksCoreData.swift */; };
@@ -24,6 +27,11 @@
 		5FF1ECAA20B526EB00BE1609 /* RideTrack.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */; };
 		5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF1ECAB20B5271800BE1609 /* Main.storyboard */; };
 		5FF1ECB020B5271800BE1609 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */; };
+		5FFCB7FF21055E400054D84D /* ParksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB7FE21055E400054D84D /* ParksList.swift */; };
+		5FFCB80121055E470054D84D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB80021055E470054D84D /* User.swift */; };
+		5FFCB804210579C80054D84D /* AttractionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB803210579C80054D84D /* AttractionList.swift */; };
+		6FB12F9BEE164667D88AFD5F /* Pods_rideTrackTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C975F034FC767581DC82917 /* Pods_rideTrackTests.framework */; };
+		970852B5CB3635699B203963 /* Pods_rideTrack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74AF014AE1A2E4F64D38F220 /* Pods_rideTrack.framework */; };
 		982E097620F54957007F2D02 /* ModifyAttractionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E097520F54957007F2D02 /* ModifyAttractionViewController.swift */; };
 		982E097820F6830E007F2D02 /* ExtendedAttractionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E097720F6830E007F2D02 /* ExtendedAttractionDetailsViewController.swift */; };
 		9845395720BC8D8C00C0E36C /* AttractionsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */; };
@@ -43,6 +51,7 @@
 		98C28A9D20EBD90900C7229E /* ApproveSuggestAttracionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9C20EBD90900C7229E /* ApproveSuggestAttracionModel.swift */; };
 		98C28A9F20EBE9CE00C7229E /* SuggestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9E20EBE9CE00C7229E /* SuggestTableViewCell.swift */; };
 		98F24F5120EFE35200A42C7E /* SuggestDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F24F5020EFE35200A42C7E /* SuggestDetailsViewController.swift */; };
+		EB8E6CDC0F010159ED51FEBA /* Pods_rideTrackUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38CB8C5BC7E57C3A95D3B13E /* Pods_rideTrackUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,12 +72,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F4757C7E634E47B2E18B7EC /* Pods-rideTrackTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrackTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrackTests/Pods-rideTrackTests.debug.xcconfig"; sourceTree = "<group>"; };
+		38CB8C5BC7E57C3A95D3B13E /* Pods_rideTrackUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rideTrackUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D091F282E1A5F5248806391 /* Pods-rideTrackUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrackUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrackUITests/Pods-rideTrackUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		4DAB9B110C20DF7D6DF9644A /* Pods-rideTrackTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrackTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrackTests/Pods-rideTrackTests.release.xcconfig"; sourceTree = "<group>"; };
 		5F16C51C20BB92FC00E525EF /* AttractionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionsTableViewCell.swift; sourceTree = "<group>"; };
 		5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		5F16C52820BCF3F700E525EF /* ParkListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkListData.swift; sourceTree = "<group>"; };
 		5F202C5A20E6E8AF00FFE408 /* NeverClearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeverClearView.swift; sourceTree = "<group>"; };
 		5F202C5C20EB257700FFE408 /* ParksDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksDetailViewController.swift; sourceTree = "<group>"; };
 		5F21419520F18087009A2E3A /* SearchMyParksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMyParksView.swift; sourceTree = "<group>"; };
+		5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		5F2EEC4E210510150036B47A /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		5F2EEC51210510920036B47A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5F2EEC53210512E70036B47A /* rideTrack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = rideTrack.entitlements; sourceTree = "<group>"; };
 		5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSmallerLayout.swift; sourceTree = "<group>"; };
 		5FE9F80F20DB45030012B98C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		5FE9F81220DCA43C0012B98C /* ParksCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksCoreData.swift; sourceTree = "<group>"; };
@@ -80,6 +97,13 @@
 		5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RideTrack.xcdatamodel; sourceTree = "<group>"; };
 		5FF1ECAC20B5271800BE1609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5FF1ECAE20B5271800BE1609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5FFCB7FE21055E400054D84D /* ParksList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParksList.swift; sourceTree = "<group>"; };
+		5FFCB80021055E470054D84D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		5FFCB803210579C80054D84D /* AttractionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionList.swift; sourceTree = "<group>"; };
+		71040B45749ED9A81A3BBDE1 /* Pods-rideTrack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrack.release.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrack/Pods-rideTrack.release.xcconfig"; sourceTree = "<group>"; };
+		73201F7E0249E66F5FF46F43 /* Pods-rideTrack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrack.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrack/Pods-rideTrack.debug.xcconfig"; sourceTree = "<group>"; };
+		74AF014AE1A2E4F64D38F220 /* Pods_rideTrack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rideTrack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C975F034FC767581DC82917 /* Pods_rideTrackTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rideTrackTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		982E097520F54957007F2D02 /* ModifyAttractionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyAttractionViewController.swift; sourceTree = "<group>"; };
 		982E097720F6830E007F2D02 /* ExtendedAttractionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedAttractionDetailsViewController.swift; sourceTree = "<group>"; };
 		9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionsDetailsViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +129,7 @@
 		98C28A9C20EBD90900C7229E /* ApproveSuggestAttracionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveSuggestAttracionModel.swift; sourceTree = "<group>"; };
 		98C28A9E20EBE9CE00C7229E /* SuggestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestTableViewCell.swift; sourceTree = "<group>"; };
 		98F24F5020EFE35200A42C7E /* SuggestDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDetailsViewController.swift; sourceTree = "<group>"; };
+		D66DDB4C83B8C9D8FC29FECE /* Pods-rideTrackUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrackUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrackUITests/Pods-rideTrackUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				970852B5CB3635699B203963 /* Pods_rideTrack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FB12F9BEE164667D88AFD5F /* Pods_rideTrackTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,15 +153,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB8E6CDC0F010159ED51FEBA /* Pods_rideTrackUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		51DA615C42B441E7142FEC76 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				73201F7E0249E66F5FF46F43 /* Pods-rideTrack.debug.xcconfig */,
+				71040B45749ED9A81A3BBDE1 /* Pods-rideTrack.release.xcconfig */,
+				1F4757C7E634E47B2E18B7EC /* Pods-rideTrackTests.debug.xcconfig */,
+				4DAB9B110C20DF7D6DF9644A /* Pods-rideTrackTests.release.xcconfig */,
+				3D091F282E1A5F5248806391 /* Pods-rideTrackUITests.debug.xcconfig */,
+				D66DDB4C83B8C9D8FC29FECE /* Pods-rideTrackUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		5F16C52620BCF34500E525EF /* Data Models */ = {
 			isa = PBXGroup;
 			children = (
+				5FFCB80221055E4D0054D84D /* Firebase Models */,
 				98AD7F6520A91A5A00540AB3 /* ParksModel.swift */,
 				98AD7F6420A91A5A00540AB3 /* AttractionsModel.swift */,
 				98AD7F6C20A91A5B00540AB3 /* DataModel.swift */,
@@ -156,6 +198,15 @@
 				5F202C5C20EB257700FFE408 /* ParksDetailViewController.swift */,
 			);
 			path = "Attractions View";
+			sourceTree = "<group>";
+		};
+		5F2EEC502105101B0036B47A /* Login view */ = {
+			isa = PBXGroup;
+			children = (
+				5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */,
+				5F2EEC4E210510150036B47A /* SignUpViewController.swift */,
+			);
+			path = "Login view";
 			sourceTree = "<group>";
 		};
 		5FE9F81120DCA3E10012B98C /* Parks View */ = {
@@ -180,6 +231,17 @@
 			path = "Score Card";
 			sourceTree = "<group>";
 		};
+		5FFCB80221055E4D0054D84D /* Firebase Models */ = {
+			isa = PBXGroup;
+			children = (
+				5FFCB7FE21055E400054D84D /* ParksList.swift */,
+				5FFCB80021055E470054D84D /* User.swift */,
+				5FFCB803210579C80054D84D /* AttractionList.swift */,
+			);
+			name = "Firebase Models";
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		982F068C20EBC2FA00B08474 /* User Suggest */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +262,8 @@
 				98AD7F3420A91A2D00540AB3 /* rideTrackTests */,
 				98AD7F3F20A91A2D00540AB3 /* rideTrackUITests */,
 				98AD7F1B20A91A2B00540AB3 /* Products */,
+				51DA615C42B441E7142FEC76 /* Pods */,
+				C05EB19EC3EA196214046B98 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -216,10 +280,13 @@
 		98AD7F1C20A91A2B00540AB3 /* rideTrack */ = {
 			isa = PBXGroup;
 			children = (
+				5F2EEC53210512E70036B47A /* rideTrack.entitlements */,
 				5F16C52620BCF34500E525EF /* Data Models */,
 				5F16C52720BCF38200E525EF /* Attractions View */,
 				5FE9F81120DCA3E10012B98C /* Parks View */,
 				982F068C20EBC2FA00B08474 /* User Suggest */,
+				5F2EEC502105101B0036B47A /* Login view */,
+				98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */,
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
@@ -227,9 +294,9 @@
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
+				5F2EEC51210510920036B47A /* GoogleService-Info.plist */,
 				98AD7F6E20A91A5C00540AB3 /* Info.plist */,
 				5FE9F80F20DB45030012B98C /* Media.xcassets */,
-				98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */,
 			);
 			path = rideTrack;
 			sourceTree = "<group>";
@@ -252,6 +319,16 @@
 			path = rideTrackUITests;
 			sourceTree = "<group>";
 		};
+		C05EB19EC3EA196214046B98 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				74AF014AE1A2E4F64D38F220 /* Pods_rideTrack.framework */,
+				7C975F034FC767581DC82917 /* Pods_rideTrackTests.framework */,
+				38CB8C5BC7E57C3A95D3B13E /* Pods_rideTrackUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -259,9 +336,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 98AD7F4520A91A2D00540AB3 /* Build configuration list for PBXNativeTarget "rideTrack" */;
 			buildPhases = (
+				73BA40BB02E8F9D0A63C0A18 /* [CP] Check Pods Manifest.lock */,
 				98AD7F1620A91A2B00540AB3 /* Sources */,
 				98AD7F1720A91A2B00540AB3 /* Frameworks */,
 				98AD7F1820A91A2B00540AB3 /* Resources */,
+				D7DB34C95BAE01027B36643D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -276,6 +355,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 98AD7F4820A91A2D00540AB3 /* Build configuration list for PBXNativeTarget "rideTrackTests" */;
 			buildPhases = (
+				E378A7DC6CA46F6F25B2BCED /* [CP] Check Pods Manifest.lock */,
 				98AD7F2D20A91A2D00540AB3 /* Sources */,
 				98AD7F2E20A91A2D00540AB3 /* Frameworks */,
 				98AD7F2F20A91A2D00540AB3 /* Resources */,
@@ -294,6 +374,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 98AD7F4B20A91A2D00540AB3 /* Build configuration list for PBXNativeTarget "rideTrackUITests" */;
 			buildPhases = (
+				0E89240AFC7A6A0E42402BD6 /* [CP] Check Pods Manifest.lock */,
 				98AD7F3820A91A2D00540AB3 /* Sources */,
 				98AD7F3920A91A2D00540AB3 /* Frameworks */,
 				98AD7F3A20A91A2D00540AB3 /* Resources */,
@@ -320,6 +401,11 @@
 				TargetAttributes = {
 					98AD7F1920A91A2B00540AB3 = {
 						CreatedOnToolsVersion = 9.3;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					98AD7F3020A91A2D00540AB3 = {
 						CreatedOnToolsVersion = 9.3;
@@ -356,6 +442,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F2EEC52210510920036B47A /* GoogleService-Info.plist in Resources */,
 				5FF1ECB020B5271800BE1609 /* LaunchScreen.storyboard in Resources */,
 				5FE9F81020DB45030012B98C /* Media.xcassets in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
@@ -378,11 +465,91 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0E89240AFC7A6A0E42402BD6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-rideTrackUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		73BA40BB02E8F9D0A63C0A18 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-rideTrack-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D7DB34C95BAE01027B36643D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-rideTrack/Pods-rideTrack-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-rideTrack/Pods-rideTrack-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E378A7DC6CA46F6F25B2BCED /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-rideTrackTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		98AD7F1620A91A2B00540AB3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F2EEC4F210510150036B47A /* SignUpViewController.swift in Sources */,
 				98C28A9F20EBE9CE00C7229E /* SuggestTableViewCell.swift in Sources */,
 				98AD7F7320A91A5C00540AB3 /* ParkSearchViewController.swift in Sources */,
 				9845395720BC8D8C00C0E36C /* AttractionsDetailsViewController.swift in Sources */,
@@ -394,7 +561,10 @@
 				5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */,
 				5FE9F81720DDCF040012B98C /* AllParksTableViewCell.swift in Sources */,
 				98AD7F7120A91A5C00540AB3 /* SuggestRideViewController.swift in Sources */,
+				5FFCB804210579C80054D84D /* AttractionList.swift in Sources */,
 				5F16C51D20BB92FC00E525EF /* AttractionsTableViewCell.swift in Sources */,
+				5FFCB80121055E470054D84D /* User.swift in Sources */,
+				5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */,
 				5FF0BBBB20CF62C300213DF8 /* ScoreCardViewController.swift in Sources */,
 				5FF0BBBE20CF639100213DF8 /* ScoreCardTableViewCell.swift in Sources */,
 				5F202C5D20EB257700FFE408 /* ParksDetailViewController.swift in Sources */,
@@ -414,6 +584,7 @@
 				5F202C5B20E6E8AF00FFE408 /* NeverClearView.swift in Sources */,
 				5F16C52520BCE89200E525EF /* SearchTableViewCell.swift in Sources */,
 				98C28A9D20EBD90900C7229E /* ApproveSuggestAttracionModel.swift in Sources */,
+				5FFCB7FF21055E400054D84D /* ParksList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,8 +755,10 @@
 		};
 		98AD7F4620A91A2D00540AB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73201F7E0249E66F5FF46F43 /* Pods-rideTrack.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = rideTrack/rideTrack.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 28L3G462YX;
 				INFOPLIST_FILE = rideTrack/Info.plist;
@@ -603,8 +776,10 @@
 		};
 		98AD7F4720A91A2D00540AB3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71040B45749ED9A81A3BBDE1 /* Pods-rideTrack.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = rideTrack/rideTrack.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 28L3G462YX;
 				INFOPLIST_FILE = rideTrack/Info.plist;
@@ -622,6 +797,7 @@
 		};
 		98AD7F4920A91A2D00540AB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F4757C7E634E47B2E18B7EC /* Pods-rideTrackTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -643,6 +819,7 @@
 		};
 		98AD7F4A20A91A2D00540AB3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DAB9B110C20DF7D6DF9644A /* Pods-rideTrackTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -664,6 +841,7 @@
 		};
 		98AD7F4C20A91A2D00540AB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D091F282E1A5F5248806391 /* Pods-rideTrackUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -684,6 +862,7 @@
 		};
 		98AD7F4D20A91A2D00540AB3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D66DDB4C83B8C9D8FC29FECE /* Pods-rideTrackUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

@@ -12,7 +12,7 @@ import UIKit
 class SearchMyParks{
     
     var firstEntry = true
-    var park = ParksModel()
+    var park: ParksList!
     
     func animateIntoSearchView(parksView: ViewController){
         parksView.savedMyParksForSearch = parksView.allParksList
@@ -90,11 +90,7 @@ class SearchMyParks{
                 }
                 
                 //Not allow you to add duplicates
-                if (park.city.lowercased().range(of: searchedString.lowercased()) != nil) && firstEntry{
-                    parksView.allParksList.append(park)
-                    firstEntry = false
-                }
-                if (park.country.lowercased().range(of: searchedString.lowercased()) != nil) && firstEntry{
+                if (park.location.lowercased().range(of: searchedString.lowercased()) != nil) && firstEntry{
                     parksView.allParksList.append(park)
                     firstEntry = false
                 }

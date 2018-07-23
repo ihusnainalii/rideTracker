@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import Foundation
 import CoreLocation
+import Firebase
 
 
 class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, NSFetchedResultsControllerDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate{
@@ -54,16 +55,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var favoitesHeight: CGFloat = 190.0
     var allParksBottomInsetValue:CGFloat = 20
     
-    var selectedPark: ParksModel = ParksModel()
+    var selectedPark: ParksList!
     var segueWithTableViewSelect = true
     
-    var favoiteParkList = [ParksModel]()
-    var allParksList = [ParksModel]()
+    var favoiteParkList = [ParksList]()
+    var allParksList = [ParksList]()
     var selectedAttractionsList: [NSManagedObject] = []
     var savedParkList: [NSManagedObject] = []
     var arrayOfAllParks = [ParksModel]()
     
-    var savedMyParksForSearch = [ParksModel]()
+    var savedMyParksForSearch = [ParksList]()
     var isSearchingMyParks = false
     var firstItemsToFavorites = false
     
@@ -71,84 +72,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var simulateLocation = UserDefaults.standard.integer(forKey: "simulateLocation")
     
     var locationManager: CLLocationManager = CLLocationManager()
-    var closestPark = ParksModel()
+    var closestPark: ParksModel!
     let parksCoreData = ParkCoreData()
     let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     let favoritesGreen = UIColor(red: 40/255.0, green: 119/255.0, blue: 72/255.0, alpha: 1.0)
     
     var favoritesViewHeightBeforeAnimating: CGFloat!
     
+    var parksListRef: DatabaseReference!
+    var favoritesListRef: DatabaseReference!
+    var user: User!
+    
     override func viewDidLoad() {
-        
-        print(screenSize.width)
-        
-        //If iPhone 5s
-        if screenSize.width == 320.0{
-            ConfigureSmallerLayout().configureParksView(parksView: self)
-        }
-        
-        
-        print(favoitesHeight)
-        
-        
-        //Initialize current location UI
-        currentLocationView.layer.shadowOffset = CGSize.zero
-        currentLocationView.layer.shadowRadius = 5
-        currentLocationView.layer.shadowOpacity = 0.3
-        currentLocationView.layer.cornerRadius = 10
-        currentLocationViewBottomConstraint.constant = -61
-        
-        let dissmissLocationView = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
-        dissmissLocationView.minimumPressDuration = 1.0
-        dissmissLocationView.delaysTouchesBegan = true
-        dissmissLocationView.delegate = self
-        self.currentLocationView.addGestureRecognizer(dissmissLocationView)
-        
-        viewAttractionLocationButton.backgroundColor = settingsColor
-        viewAttractionLocationButton.layer.cornerRadius = 7
-        viewAttractionLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        
-        
-        settingsButton.backgroundColor = settingsColor
-        settingsButton.layer.cornerRadius = 7
-        settingsButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        
-        doneSearchButton.backgroundColor = settingsColor
-        doneSearchButton.layer.cornerRadius = 7
-        doneSearchButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        
-        
-        navigationBar.layer.shadowOpacity = 0.5
-        navigationBar.layer.shadowOffset = CGSize.zero
-        navigationBar.layer.shadowRadius = 12
-        
-        favoritesView.layer.cornerRadius = 7
-        favoritesTableView.layer.cornerRadius = 7
-        
-        allParksView.layer.cornerRadius = 7
-        allParksTableView.layer.cornerRadius = 7
-        
-        addParkButton.layer.shadowOpacity = 0.5
-        addParkButton.layer.shadowOffset = CGSize.zero
-        addParkButton.layer.shadowRadius = 12
-        
-        searchParkView.layer.cornerRadius = 7
-        searchMyParksButton.layer.cornerRadius = 7
-        searchMyParksButton.layer.borderWidth = 0.3
-        searchMyParksButton.layer.borderColor = UIColor.gray.cgColor
-        
-        searchParksTextField.alpha = 0.0
-        
-        let gradient = CAGradientLayer()
-        gradient.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
-        let lightGreen = UIColor(red: 38.0/255.0, green: 214.0/255.0, blue: 32.0/255.0, alpha: 1.0).cgColor
-        let darkGreen = UIColor(red: 47.0/255.0, green: 104.0/255.0, blue: 40.0/255.0, alpha: 1.0).cgColor
-        gradient.colors = [lightGreen, darkGreen]
-        gradient.startPoint = CGPoint(x: 1, y: 0)
-        gradient.endPoint = CGPoint(x: 0, y: 1)
-        
-        backgroundView.layer.addSublayer(gradient)
-        
+        configureViewDidLoad()
         super.viewDidLoad()
         
         favoritesTableView.isUserInteractionEnabled = true
@@ -161,35 +97,69 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         searchParksTextField.delegate = self
         
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
+        self.allParksTableView.contentInset = insets
+        
+        Auth.auth().addStateDidChangeListener { auth, user in
+            guard let user = user else { return }
+            self.user = User(authData: user)
+        }
+        let userID = Auth.auth().currentUser
+        let id = userID?.uid
+        self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)")
+        self.favoritesListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)")
+        
+        parksListRef.observe(.value, with: { snapshot in
+            var newParks: [ParksList] = []
+            print("new parks ")
+            for child in snapshot.children {
+                if let snapshot = child as? DataSnapshot,
+                    let parkItem = ParksList(snapshot: snapshot) {
+                    newParks.append(parkItem)
+                }
+            }
+            self.allParksList = newParks
+            self.allParksTableView.reloadData()
+        })
+        favoritesListRef.observe(.value, with: { snapshot in
+            var newParks: [ParksList] = []
+            for child in snapshot.children {
+                if let snapshot = child as? DataSnapshot,
+                    let parkItem = ParksList(snapshot: snapshot) {
+                    newParks.append(parkItem)
+                }
+            }
+            self.favoiteParkList = newParks
+            self.favoritesTableView.reloadData()
+        })
+        
         let urlPath = "http://www.beingpositioned.com/theparksman/parksdbservice.php"
         let dataModel = DataModel()
         dataModel.delegate = self
         dataModel.downloadData(urlPath: urlPath, dataBase: "parks", returnPath: "allParks")
         
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
-        
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
-        self.allParksTableView.contentInset = insets
     }
     
     override func viewWillAppear(_ animated: Bool) {
         segueWithTableViewSelect = true
         super.viewWillAppear(animated)
         
-        //Get ParkList data from CoreData
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let sortDescriptor = NSSortDescriptor(key: "parkID", ascending: true)
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        do {
-            savedParkList = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
-        }
+//        //Get ParkList data from CoreData
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        let sortDescriptor = NSSortDescriptor(key: "parkID", ascending: true)
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
+//        fetchRequest.sortDescriptors = [sortDescriptor]
+//        do {
+//            savedParkList = try managedContext.fetch(fetchRequest)
+//        } catch let error as NSError {
+//            print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
+//        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -212,15 +182,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             print(totalRideCount, "updating total ride count label...")
             
             if arrayOfAllRides.count != 0{
-                parksCoreData.updatingTotalRideCount(parkID: arrayOfAllRides[0].parkID, totalRideCount: totalRideCount)
+                //parksCoreData.updatingTotalRideCount(parkID: arrayOfAllRides[0].parkID, totalRideCount: totalRideCount)
                 for i in 0..<allParksList.count{
                     if allParksList[i].parkID == arrayOfAllRides[0].parkID{
-                        allParksList[i].totalRides = totalRideCount
+                        let parkItem = allParksList[i]
+                        parkItem.ref?.updateChildValues([
+                            "totalRides": totalRideCount
+                            ])
                         break
                     }
                 }
-                allParksTableView.reloadData()
-                favoritesTableView.reloadData()
             }
             
         }
@@ -228,46 +199,47 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             //Gets all the parks from the database, sets up the favoritesList and allMyParksList
         else{
             arrayOfAllParks = items as! [ParksModel]
-            var userParkListIncrementor = 0
-            var allParksIncrementor = 0
-            
-            if savedParkList.count != 0{
-                //Like a do while loop- loop until just before the saved park incrementor goes out of index
-                repeat {
-                    //Check if the rideID in allParks matches that of savedParkList
-                    if arrayOfAllParks[allParksIncrementor].parkID == savedParkList[userParkListIncrementor].value(forKey: "parkID") as! Int{
-                        let addingPark = arrayOfAllParks[allParksIncrementor]
-                        addingPark.favorite = savedParkList[userParkListIncrementor].value(forKey: "favorite") as! Bool
-                        addingPark.totalRides = savedParkList[userParkListIncrementor].value(forKey: "totalRides") as! Int
-                        addingPark.ridesRidden = savedParkList[userParkListIncrementor].value(forKey: "ridesRidden") as! Int
-                        
-                        if let incrementorShown = savedParkList[userParkListIncrementor].value(forKey: "incrementorEnabled"){
-                            addingPark.incrementorEnabled = incrementorShown as! Bool
-                            print("CORE DATA")
-                        } else{
-                            print("NEW")
-                            addingPark.incrementorEnabled = false
-                        }
-                        
-                        print(addingPark.incrementorEnabled)
-                        allParksList.append(addingPark)
-                        userParkListIncrementor += 1
-                        
-                        if addingPark.favorite{
-                            favoiteParkList.append(addingPark)
-                        }
-                    }
-                    allParksIncrementor += 1
-                } while userParkListIncrementor < savedParkList.count
-            }
+//            var userParkListIncrementor = 0
+//            var allParksIncrementor = 0
+//
+//            if savedParkList.count != 0{
+//                //Like a do while loop- loop until just before the saved park incrementor goes out of index
+//                repeat {
+//                    //Check if the rideID in allParks matches that of savedParkList
+//                    if arrayOfAllParks[allParksIncrementor].parkID == savedParkList[userParkListIncrementor].value(forKey: "parkID") as! Int{
+//                        let addingPark = arrayOfAllParks[allParksIncrementor]
+//                        addingPark.favorite = savedParkList[userParkListIncrementor].value(forKey: "favorite") as! Bool
+//                        addingPark.totalRides = savedParkList[userParkListIncrementor].value(forKey: "totalRides") as! Int
+//                        addingPark.ridesRidden = savedParkList[userParkListIncrementor].value(forKey: "ridesRidden") as! Int
+//
+//                        if let incrementorShown = savedParkList[userParkListIncrementor].value(forKey: "incrementorEnabled"){
+//                            addingPark.incrementorEnabled = incrementorShown as! Bool
+//                            print("CORE DATA")
+//                        } else{
+//                            print("NEW")
+//                            addingPark.incrementorEnabled = false
+//                        }
+//
+//                        print(addingPark.incrementorEnabled)
+//                        //allParksList.append(addingPark)
+//                        userParkListIncrementor += 1
+//
+//                        if addingPark.favorite{
+//                            //favoiteParkList.append(addingPark)
+//                        }
+//                    }
+//                    allParksIncrementor += 1
+//                } while userParkListIncrementor < savedParkList.count
+//            }
             
             var allParksViewTableAlpha: CGFloat = 1.0
             var favoritesTableAlpha: CGFloat = 1.0
-            
+            print(favoiteParkList.count)
             if favoiteParkList.count == 0{
                 favoritesViewHeightConstrant.constant = 70
                 favoritesTableAlpha = 0.0
             }
+            print(allParksList.count)
             if allParksList.count == 0{
                 allParksViewTableAlpha = 0.0
             }
@@ -279,11 +251,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             
             favoritesViewHeightBeforeAnimating = favoritesViewHeightConstrant.constant
             
-            allParksList.sort { $0.name < $1.name }
-            favoiteParkList.sort { $0.name < $1.name }
+            //allParksList.sort { $0.name < $1.name }
+            //favoiteParkList.sort { $0.name < $1.name }
             
-            favoritesTableView.reloadData()
-            allParksTableView.reloadData()
+            //favoritesTableView.reloadData()
+            //allParksTableView.reloadData()
             
             
             locationManager.delegate = self
@@ -312,7 +284,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let cell = tableView.dequeueReusableCell(withIdentifier: "favoriteCell", for: indexPath) as! FavoritesTableViewCell
             let parkData = favoiteParkList[indexPath.row]
             cell.parkNameLabel.text = parkData.name
-            cell.locationLabel.text = parkData.city
+            cell.locationLabel.text = parkData.location
             cell.fractionLabel.text = "\(parkData.ridesRidden!)/\(parkData.totalRides!)"
             
             if screenSize.width == 320.0{
@@ -342,7 +314,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let cell = tableView.dequeueReusableCell(withIdentifier: "allCell", for: indexPath) as! AllParksTableViewCell
             let parkData = allParksList[indexPath.row]
             cell.parkNameLabel.text = parkData.name
-            cell.locationLabel.text = parkData.city
+            cell.locationLabel.text = parkData.location
             cell.fractionLabel.text = "\(parkData.ridesRidden!)/\(parkData.totalRides!)"
             
             if screenSize.width == 320.0{
@@ -377,8 +349,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         let favoriteAction = UIContextualAction(style: .normal, title:  "Favorites", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             if tableView == self.favoritesTableView {
                 let index = self.findIndexInAllParksList(parkID: self.favoiteParkList[indexPath.row].parkID)
-                self.allParksList[index].favorite = false
-                self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[index], add: false)
+                //self.allParksList[index].favorite = false
+                //self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[index], add: false)
+                
+                let parkItem = self.allParksList[index]
+                parkItem.ref?.updateChildValues([
+                    "favorite": false
+                    ])
+                
+                let favoriteParkItem = self.favoiteParkList[indexPath.row]
+                favoriteParkItem.ref?.removeValue()
+                
                 self.favoiteParkList.remove(at: indexPath.row)
                 
                 //Animate away favorites view to dissappear if the last park is being removed from the list
@@ -396,8 +377,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             } else{
                 //Only add if it isn't already a favorite
                 if !self.allParksList[indexPath.row].favorite{
-                    self.allParksList[indexPath.row].favorite = true
-                    self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[indexPath.row], add: true)
+                    //self.allParksList[indexPath.row].favorite = true
+                    //self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[indexPath.row], add: true)
+                    
+                    var parkItem = self.allParksList[indexPath.row]
+                    parkItem.ref?.updateChildValues([
+                        "favorite": true
+                        ])
+                    
+                    parkItem.favorite = true
+                    let newParkRef = self.favoritesListRef.child(String(parkItem.parkID))
+                    newParkRef.setValue(parkItem.toAnyObject())
+                    
                     
                     //Animate the favorites view to appear if the first park is being added to the list
                     if self.favoiteParkList.count == 0{
@@ -464,7 +455,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         let removeFromFavorites = UIContextualAction(style: .normal, title:  "removeFavorites", handler: { (ac:UIContextualAction, view:UIView, success:@escaping (Bool) -> Void) in
             let index = self.findIndexInAllParksList(parkID: self.favoiteParkList[indexPath.row].parkID)
             self.allParksList[index].favorite = false
-            self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[index], add: false)
+            //self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[index], add: false)
+            let favoriteParkItem = self.favoiteParkList[indexPath.row]
+            favoriteParkItem.ref?.removeValue()
+            let parkItem = self.allParksList[index]
+            parkItem.ref?.updateChildValues([
+                "favorite": false
+                ])
             self.favoiteParkList.remove(at: indexPath.row)
             
             //Animate away favorites view to dissappear if the last park is being removed from the list
@@ -514,13 +511,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 })
             }
             
-            allParksList.insert(newPark, at: 0)
+            let newParkModel = ParksList(parkID: newPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: newPark.name, location: newPark.city)
+            let newParkRef = self.parksListRef.child(String(newParkModel.parkID))
+            newParkRef.setValue(newParkModel.toAnyObject())
+            
+            
+            //allParksList.insert(newPark, at: 0)
             
             let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
             self.allParksTableView.contentInset = insets
             self.allParksTableView.reloadData()
-            allParksTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
-            self.parksCoreData.saveNewItemToParkList(parkID: newPark.parkID)
+            //self.parksCoreData.saveNewItemToParkList(parkID: newPark.parkID)
             
             //Get total number of rides, need to call database
             let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(newPark.parkID!)"
@@ -537,22 +538,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func removeParkFromList(parkID: Int, indexPath: Int) {
         //Deletes from both RideTrack and ParkList entities
-        parksCoreData.deletePark(parkID: parkID)
-        
+        //parksCoreData.deletePark(parkID: parkID)
+        print("Make sure the data from Attractions-List-Model gets deleted again ")
         //Check if it is in user's favorites list, if so delete it
         for i in 0..<favoiteParkList.count{
             if favoiteParkList[i].parkID == parkID{
-                favoiteParkList.remove(at: i)
-                favoritesTableView.deleteRows(at: [IndexPath(row: i, section: 0)], with: .left)
+                //favoiteParkList.remove(at: i)
+                //favoritesTableView.deleteRows(at: [IndexPath(row: i, section: 0)], with: .left)
+                let favoriteParkItem = self.favoiteParkList[i]
+                favoriteParkItem.ref?.removeValue()
                 break
             }
         }
-        
+        let parkItem = allParksList[indexPath]
+        parkItem.ref?.removeValue()
         allParksList.remove(at: indexPath)
         
         print("Animate delete")
         
-        allParksTableView.reloadData()
         favoritesTableView.reloadData()
         
         //Animate away favorites view to dissappear if the last park is being removed from the list
@@ -589,42 +592,60 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 selectedPark = favoiteParkList[selectedIndex]
             }
             
+            let arrayOfAllParksIndex = getParkModelINdexFromAllParks(parkID: selectedPark.parkID)
+            
             print ("The park is ", selectedPark.name)
-            attractionVC.titleName = selectedPark.name
-            attractionVC.parkID = selectedPark.parkID
             attractionVC.showExtinct = showExtinct
             attractionVC.parksViewController = self
-            attractionVC.parkData = selectedPark
+            attractionVC.parkData = arrayOfAllParks[arrayOfAllParksIndex]
+            attractionVC.parkData.totalRides = selectedPark.totalRides
+            attractionVC.parkData.incrementorEnabled = selectedPark.incrementorEnabled
+            attractionVC.favoiteParkList = favoiteParkList
             
-            //Getting coreData Attraction data for the selected park
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                return }
-            let managedContext = appDelegate.persistentContainer.viewContext
-            let sortDescriptor = NSSortDescriptor(key: "rideID", ascending: true)
-            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
-            fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(selectedPark.parkID!)")
-            fetchRequest.sortDescriptors = [sortDescriptor]
-            do {
-                selectedAttractionsList = try managedContext.fetch(fetchRequest)
-            } catch let error as NSError {
-                print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
+            //If the name of the park has changed, update the name in Parks-list
+            if arrayOfAllParks[arrayOfAllParksIndex].name != selectedPark.name{
+                let parkItem = allParksList[findIndexInAllParksList(parkID: selectedPark.parkID)]
+                parkItem.ref?.updateChildValues([
+                    "name": arrayOfAllParks[arrayOfAllParksIndex].name
+                    ])
+                let favoriteIndex = findIndexFavoritesList(parkID: selectedPark.parkID)
+                if favoriteIndex != -1{
+                    let parkItem = favoiteParkList[favoriteIndex]
+                    parkItem.ref?.updateChildValues([
+                        "name": arrayOfAllParks[arrayOfAllParksIndex].name
+                        ])
+                }
             }
-            var userAttractions: [UserAttractionProvider] = []
-            for i in 0..<selectedAttractionsList.count{
-                let newAttraction = UserAttractionProvider()
-                newAttraction.dateFirstRidden = selectedAttractionsList[i].value(forKeyPath: "firstRideDate") as! Date
-                newAttraction.dateLastRidden = selectedAttractionsList[i].value(forKeyPath: "lastRideDate") as! Date
-                newAttraction.numberOfTimesRidden = selectedAttractionsList[i].value(forKeyPath: "numberOfTimesRidden") as! Int
-                newAttraction.parkID = selectedAttractionsList[i].value(forKeyPath: "parkID") as! Int
-                newAttraction.rideID = selectedAttractionsList[i].value(forKeyPath: "rideID") as! Int
-                userAttractions.append(newAttraction)
-            }
-            attractionVC.userAttractionDatabase = userAttractions
+            
+//            //Getting coreData Attraction data for the selected park
+//            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//                return }
+//            let managedContext = appDelegate.persistentContainer.viewContext
+//            let sortDescriptor = NSSortDescriptor(key: "rideID", ascending: true)
+//            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
+//            fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(selectedPark.parkID!)")
+//            fetchRequest.sortDescriptors = [sortDescriptor]
+//            do {
+//                selectedAttractionsList = try managedContext.fetch(fetchRequest)
+//            } catch let error as NSError {
+//                print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
+//            }
+//            var userAttractions: [UserAttractionProvider] = []
+//            for i in 0..<selectedAttractionsList.count{
+//                let newAttraction = UserAttractionProvider()
+//                newAttraction.dateFirstRidden = selectedAttractionsList[i].value(forKeyPath: "firstRideDate") as! Date
+//                newAttraction.dateLastRidden = selectedAttractionsList[i].value(forKeyPath: "lastRideDate") as! Date
+//                newAttraction.numberOfTimesRidden = selectedAttractionsList[i].value(forKeyPath: "numberOfTimesRidden") as! Int
+//                newAttraction.parkID = selectedAttractionsList[i].value(forKeyPath: "parkID") as! Int
+//                newAttraction.rideID = selectedAttractionsList[i].value(forKeyPath: "rideID") as! Int
+//                userAttractions.append(newAttraction)
+//            }
+//            attractionVC.userAttractionDatabase = userAttractions
             
             if isSearchingMyParks{
                 SearchMyParks().animateOutOfParkSearch(parksView: self)
             }
-            print("count: ", userAttractions.count)
+            //print("count: ", userAttractions.count)
         }
         
         if segue.identifier == "toSearch"{
@@ -639,6 +660,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
     }
     
+    func getParkModelINdexFromAllParks(parkID: Int) -> Int{
+        var i = 0
+        var foundID = 0
+        repeat {
+            if arrayOfAllParks[i].parkID == parkID{
+                foundID = i
+                break
+            }
+            i += 1
+        } while i < arrayOfAllParks.count
+        return foundID
+    }
     
     
     @IBAction func unwindToParkList(segue:UIStoryboardSegue) {
@@ -774,7 +807,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         
         segueWithTableViewSelect = false
-        selectedPark = closestPark
+        selectedPark = ParksList(parkID: closestPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: closestPark.name, location: closestPark.city)
         performSegue(withIdentifier: "toAttractionsAll", sender: nil)
     }
     
@@ -806,35 +839,35 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func unwindFromAttractions(parkID: Int) {
-        segueWithTableViewSelect = true
-        print("unwinding")
-        //Get ParkList data from CoreData
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
-        var updatedPark:[NSManagedObject] = []
-        do {
-            updatedPark = try managedContext.fetch(fetchRequest)
-            
-        } catch let error as NSError {
-            print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
-        }
-        
-        let allParksIndex = findIndexInAllParksList(parkID: parkID)
-        allParksList[allParksIndex].totalRides = updatedPark[0].value(forKey: "totalRides") as! Int
-        allParksList[allParksIndex].ridesRidden = updatedPark[0].value(forKey: "ridesRidden") as! Int
-        
-        if favoiteParkList.count != 0{
-            let favoritesIndex = findIndexFavoritesList(parkID: parkID)
-            if favoritesIndex != -1{
-                favoiteParkList[favoritesIndex].totalRides = updatedPark[0].value(forKey: "totalRides") as! Int
-                favoiteParkList[favoritesIndex].ridesRidden = updatedPark[0].value(forKey: "ridesRidden") as! Int
-                favoritesTableView.reloadData()
-            }
-        }
-        allParksTableView.reloadData()
+//        segueWithTableViewSelect = true
+//        print("unwinding")
+//        //Get ParkList data from CoreData
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
+//        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
+//        var updatedPark:[NSManagedObject] = []
+//        do {
+//            updatedPark = try managedContext.fetch(fetchRequest)
+//            
+//        } catch let error as NSError {
+//            print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
+//        }
+//        
+//        let allParksIndex = findIndexInAllParksList(parkID: parkID)
+//        allParksList[allParksIndex].totalRides = updatedPark[0].value(forKey: "totalRides") as! Int
+//        allParksList[allParksIndex].ridesRidden = updatedPark[0].value(forKey: "ridesRidden") as! Int
+//        
+//        if favoiteParkList.count != 0{
+//            let favoritesIndex = findIndexFavoritesList(parkID: parkID)
+//            if favoritesIndex != -1{
+//                favoiteParkList[favoritesIndex].totalRides = updatedPark[0].value(forKey: "totalRides") as! Int
+//                favoiteParkList[favoritesIndex].ridesRidden = updatedPark[0].value(forKey: "ridesRidden") as! Int
+//                favoritesTableView.reloadData()
+//            }
+//        }
+//        allParksTableView.reloadData()
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
         self.allParksTableView.contentInset = insets
     }
@@ -858,6 +891,74 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         
         allParksTableView.scrollIndicatorInsets = allParksTableView.contentInset
+    }
+    
+    func configureViewDidLoad(){
+        //If iPhone 5s
+        if screenSize.width == 320.0{
+            ConfigureSmallerLayout().configureParksView(parksView: self)
+        }
+        
+        
+        
+        
+        //Initialize current location UI
+        currentLocationView.layer.shadowOffset = CGSize.zero
+        currentLocationView.layer.shadowRadius = 5
+        currentLocationView.layer.shadowOpacity = 0.3
+        currentLocationView.layer.cornerRadius = 10
+        currentLocationViewBottomConstraint.constant = -61
+        
+        let dissmissLocationView = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        dissmissLocationView.minimumPressDuration = 1.0
+        dissmissLocationView.delaysTouchesBegan = true
+        dissmissLocationView.delegate = self
+        self.currentLocationView.addGestureRecognizer(dissmissLocationView)
+        
+        viewAttractionLocationButton.backgroundColor = settingsColor
+        viewAttractionLocationButton.layer.cornerRadius = 7
+        viewAttractionLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        
+        
+        settingsButton.backgroundColor = settingsColor
+        settingsButton.layer.cornerRadius = 7
+        settingsButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        
+        doneSearchButton.backgroundColor = settingsColor
+        doneSearchButton.layer.cornerRadius = 7
+        doneSearchButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        
+        
+        navigationBar.layer.shadowOpacity = 0.5
+        navigationBar.layer.shadowOffset = CGSize.zero
+        navigationBar.layer.shadowRadius = 12
+        
+        favoritesView.layer.cornerRadius = 7
+        favoritesTableView.layer.cornerRadius = 7
+        
+        allParksView.layer.cornerRadius = 7
+        allParksTableView.layer.cornerRadius = 7
+        
+        addParkButton.layer.shadowOpacity = 0.5
+        addParkButton.layer.shadowOffset = CGSize.zero
+        addParkButton.layer.shadowRadius = 12
+        
+        searchParkView.layer.cornerRadius = 7
+        searchMyParksButton.layer.cornerRadius = 7
+        searchMyParksButton.layer.borderWidth = 0.3
+        searchMyParksButton.layer.borderColor = UIColor.gray.cgColor
+        
+        searchParksTextField.alpha = 0.0
+        
+        let gradient = CAGradientLayer()
+        gradient.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
+        let lightGreen = UIColor(red: 38.0/255.0, green: 214.0/255.0, blue: 32.0/255.0, alpha: 1.0).cgColor
+        let darkGreen = UIColor(red: 47.0/255.0, green: 104.0/255.0, blue: 40.0/255.0, alpha: 1.0).cgColor
+        gradient.colors = [lightGreen, darkGreen]
+        gradient.startPoint = CGPoint(x: 1, y: 0)
+        gradient.endPoint = CGPoint(x: 0, y: 1)
+        
+        backgroundView.layer.addSublayer(gradient)
     }
     
     func findIndexFavoritesList(parkID: Int) -> Int{

@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreData
+import Firebase
 
 class ParksDetailViewController: UIViewController {
 
@@ -26,9 +27,22 @@ class ParksDetailViewController: UIViewController {
     var initialLocation: CLLocation!
     let regionRadius: CLLocationDistance = 1000
     var parksData: ParksModel!
+    var favoiteParkList = [ParksList]()
+    
+    var parksListRef: DatabaseReference!
+    var favoriteListRef: DatabaseReference!
+    var user: User!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        Auth.auth().addStateDidChangeListener { auth, user in
+            guard let user = user else { return }
+            self.user = User(authData: user)
+        }
+        let userID = Auth.auth().currentUser
+        let id = userID?.uid
+        self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)/\(String(parksData.parkID))")
+        self.favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)/\(String(parksData.parkID))")
         configueLayout()
         incrementorSwitch.isOn = parksData.incrementorEnabled
         initialLocation = CLLocation(latitude: parksData.latitude, longitude: parksData.longitude)
@@ -60,7 +74,15 @@ class ParksDetailViewController: UIViewController {
     }
     @IBAction func didToggleIncrementorSwitch(_ sender: Any) {
         parksData.incrementorEnabled = incrementorSwitch.isOn
-        saveIncrementorChange(incrementorEnabled: incrementorSwitch.isOn)
+        parksListRef.updateChildValues([
+            "incrementorEnabled": incrementorSwitch.isOn
+            ])
+        let favoriteIndex = findIndexFavoritesList(parkID: parksData.parkID)
+        if favoriteIndex != -1{
+            favoriteListRef.updateChildValues([
+                "incrementorEnabled": incrementorSwitch.isOn
+                ])
+        }
     }
     
     func centerMapOnLocation(location: CLLocation) {
@@ -73,24 +95,35 @@ class ParksDetailViewController: UIViewController {
     }
     
     
-    func saveIncrementorChange(incrementorEnabled: Bool){
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parksData.parkID!)")
-        do {
-            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
-            
-            for entity in fetchedResults! {
-                print("Setting incrementor enabled to \(incrementorEnabled)")
-                entity.setValue(incrementorEnabled, forKey: "incrementorEnabled")
-                try! managedContext.save()
+//    func saveIncrementorChange(incrementorEnabled: Bool){
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
+//        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parksData.parkID!)")
+//        do {
+//            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
+//            
+//            for entity in fetchedResults! {
+//                print("Setting incrementor enabled to \(incrementorEnabled)")
+//                entity.setValue(incrementorEnabled, forKey: "incrementorEnabled")
+//                try! managedContext.save()
+//            }
+//        }
+//        catch _ {
+//            print("Could not save favorite")
+//        }
+//    }
+    
+    func findIndexFavoritesList(parkID: Int) -> Int{
+        var favoritesIndex = -1
+        for i in 0..<favoiteParkList.count{
+            if favoiteParkList[i].parkID == parkID{
+                favoritesIndex = i
+                break
             }
         }
-        catch _ {
-            print("Could not save favorite")
-        }
+        return favoritesIndex
     }
     
     // MARK: - Navigation
