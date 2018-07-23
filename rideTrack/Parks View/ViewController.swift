@@ -906,7 +906,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         
         
-        
         //Initialize current location UI
         currentLocationView.layer.shadowOffset = CGSize.zero
         currentLocationView.layer.shadowRadius = 5

@@ -46,12 +46,22 @@ class AttractionsTableViewCell: UITableViewCell {
         rideCellSquare.layer.shadowOffset = CGSize.zero
         rideCellSquare.layer.shadowRadius = 9
         rideCellSquare.layer.shadowColor = UIColor.black.cgColor
-        
+        let tap = UITapGestureRecognizer.init(target: self, action: #selector(tapAction))
+        rideCellSquare.addGestureRecognizer(tap)
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        rideCellSquare.addGestureRecognizer(longPress)
        // rideCounterCellWidth.constant = 50
 
         // Initialization code
     }
-
+    @objc func tapAction() {
+        delegate?.attractionCellTapButton(self)
+    }
+    
+    @objc func handleLongPress() {
+        print ("Long pressing!")
+        delegate?.enterAttractionTally(self)
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
@@ -61,6 +71,7 @@ class AttractionsTableViewCell: UITableViewCell {
 
 protocol AttractionsTableViewCellDelegate : class {
     func attractionCellTapButton(_ sender: AttractionsTableViewCell)
+    func enterAttractionTally(_ sender: AttractionsTableViewCell)
    // func attractionCellNegativeIncrement(_ sender: AttractionsTableViewCell)
 
    // func ignoreAction(_sender: AttractionsViewController)
