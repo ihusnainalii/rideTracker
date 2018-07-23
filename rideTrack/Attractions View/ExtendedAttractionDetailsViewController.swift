@@ -81,6 +81,9 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
         if selectedAttraction.yearClosed == 0 {
             closingField.text = ""
         }
+        if selectedAttraction.yearOpen == 0{
+            openingField.text = ""
+        }
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
@@ -189,9 +192,33 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
         if isAdmin == 1{
         urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(selectedAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)" //uploads to main list
         print (urlPath)
+            
+            var changes = "MODIFY: "
+            if selectedAttraction.name != nameField.text {
+                changes += "ride name changed from \(selectedAttraction.name!) to \(nameField.text!) at \(parkName) "
+            }
+            else  {
+                changes += "\(rideName!) at \(parkName) "
+            }
+            if selectedAttraction.rideType != rideType {
+                changes += "type changed from \(selectedAttraction.rideType!) to \(rideType) "
+            }
+            if selectedAttraction.yearOpen != Int(yearOpen) && selectedAttraction.yearOpen != 0{
+                changes += "opening year changed from \(selectedAttraction.yearOpen!) to \(yearOpen) "
+            }
+            if selectedAttraction.yearClosed != Int(yearClosed) && selectedAttraction.yearClosed != 0{
+                changes += "closing year changed from \(selectedAttraction.yearClosed!) to \(yearClosed) "
+            }
+            if selectedAttraction.manufacturer != manufacturingField.text {
+                changes += "manufacturer changed from \(selectedAttraction.manufacturer!) to \(manufacturingField.text!) "
+            }
+            
+            let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\("username")&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
+            
             let dataModel = DataModel()
             dataModel.delegate = self
             dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+            dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
             self.performSegue(withIdentifier: "backToDetails", sender: self)
     }
         else {

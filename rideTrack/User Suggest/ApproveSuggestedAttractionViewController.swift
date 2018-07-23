@@ -119,8 +119,12 @@ func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRow
             dataModel.delegate = self
             let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(self.listOfSuggestions[indexPath.row].id!)"
             print (urlPath)
+            
+            let changes = "NEW RIDE: \(self.listOfSuggestions[indexPath.row].rideName!) opened in \(self.listOfSuggestions[indexPath.row].YearOpen!) and is type \(self.listOfSuggestions[indexPath.row].type!)"
+            
+            let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\("username")&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log
             dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
-
+            dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
             self.listOfSuggestions.remove(at: indexPath.row)
             success(true)
             self.ApproveAttractionTableView.reloadData()

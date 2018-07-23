@@ -224,6 +224,8 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         let tempName = rideName!.replacingOccurrences(of: "&", with: "!A?")
         let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
         let urlPath = "http://www.beingpositioned.com/theparksman/uploadToAttractionDB.php?name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)" //uploads to main list
+        let changes = "NEW RIDE: \(rideName!) at \(parkNameLabel.text!) opened in \(yearOpen) and is type \(rideType)"
+        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\("username")&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
         print (urlPath)
         let dataModel = DataModel()
         dataModel.delegate = self
@@ -231,6 +233,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         let urlPath2 = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(selectedAttraction.id!)" //deletes from suggested list
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         dataModel.downloadData(urlPath: urlPath2, dataBase: "upload", returnPath: "upload")
+        dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
         self.performSegue(withIdentifier: "toApproveSuggestions", sender: self)
     }
     
@@ -241,7 +244,11 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         print ("The ID is ", selectedAttraction.id)
         let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(selectedAttraction.id!)"
         print (urlPath)
+        let changes = "NEW RIDE: \(nameTextField.text!) at \(parkNameLabel.text) opened in \(openTextField.text!) and is type \(rideType)"
+        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\("username")&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log
+
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+        dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
         self.performSegue(withIdentifier: "toApproveSuggestions", sender: self)
     }
     

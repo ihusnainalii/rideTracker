@@ -228,8 +228,12 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         let dataModel = DataModel()
         dataModel.delegate = self
         let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(suggestedAttraction.id!)"
+        
+        var changes = getChangedDetails()
+        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\("username")&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log
         print (urlPath)
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+        dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
         self.performSegue(withIdentifier: "toApproveSuggestions", sender: self)
     }
     
@@ -256,12 +260,16 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
         let urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(originalAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)" //uploads to main list
         print (urlPath)
+        var changes = getChangedDetails()
+        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\("username")&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log
+
         let dataModel = DataModel()
         dataModel.delegate = self
         let urlPath2 = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(suggestedAttraction.id!)" //deletes from suggested list
         print(urlPath2)
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         dataModel.downloadData(urlPath: urlPath2, dataBase: "upload", returnPath: "upload")
+        dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
         self.performSegue(withIdentifier: "toApproveSuggestions", sender: self)
     }
     
@@ -288,7 +296,29 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
 
         
     }
-    
+    func getChangedDetails() ->String {
+        var changes = "MODIFY: "
+        if originalAttraction.name != nameField.text {
+            changes += "ride name changed from \(originalAttraction.name!) to \(nameField.text!) at \(suggestedAttraction.parkName) "
+        }
+        else {
+            changes += "\(suggestedAttraction.rideName!) at \(suggestedAttraction.parkName!) "
+        }
+        if originalAttraction.rideType != rideType {
+            changes += "type changed from \(originalAttraction.rideType!) to \(rideType) "
+        }
+        if originalAttraction.yearOpen != Int(openField.text!) {
+            changes += "opening year changed from \(originalAttraction.yearOpen!) to \(openField.text!) "
+        }
+        if originalAttraction.yearClosed != Int(closeField.text!)!{
+            changes += "closing year changed from \(originalAttraction.yearClosed!) to \(closeField.text!) "
+        }
+        if originalAttraction.manufacturer != manufacturerField.text {
+            changes += "manufacturer changed from \(originalAttraction.manufacturer!) to \(manufacturerField.text!) "
+        }
+        return changes
+        
+    }
     
     func textFieldDidBeginEditing(_ textView: UITextField) {
         if openField.isEditing {
