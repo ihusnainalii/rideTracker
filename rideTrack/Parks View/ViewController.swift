@@ -73,7 +73,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     var locationManager: CLLocationManager = CLLocationManager()
     var closestPark: ParksModel!
-    let parksCoreData = ParkCoreData()
+    //let parksCoreData = ParkCoreData()
     let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     let favoritesGreen = UIColor(red: 40/255.0, green: 119/255.0, blue: 72/255.0, alpha: 1.0)
     
@@ -553,6 +553,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         let parkItem = allParksList[indexPath]
         parkItem.ref?.removeValue()
         allParksList.remove(at: indexPath)
+        
+        let userID = Auth.auth().currentUser
+        let id = userID?.uid
+        let attractionsListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkID)")
+        attractionsListRef.removeValue()
         
         print("Animate delete")
         
