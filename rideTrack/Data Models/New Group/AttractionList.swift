@@ -18,12 +18,12 @@ struct AttractionList {
     
     var rideID: Int!
     var numberOfTimesRidden: Int!
-    var firstRideDate: Date!
-    var lastRideDate: Date!
+    var firstRideDate: Double!
+    var lastRideDate: Double!
     
     
     
-    init(rideID: Int, numberOfTimesRidden: Int, firstRideDate: Date, lastRideDate: Date, key: String = "") {
+    init(rideID: Int, numberOfTimesRidden: Int, firstRideDate: Double, lastRideDate: Double, key: String = "") {
         self.ref = nil
         self.key = key
 
@@ -38,8 +38,8 @@ struct AttractionList {
             let value = snapshot.value as? [String: AnyObject],
             let rideID = value["rideID"] as? Int,
             let numberOfTimesRidden = value["numberOfTimesRidden"] as? Int,
-            let firstRideDate = value["firstRideDate"] as? Date,
-            let lastRideDate = value["lastRideDate"] as? Date else {
+            let firstRideDate = value["firstRideDate"] as? Double,
+            let lastRideDate = value["lastRideDate"] as? Double else {
                 return nil
         }
         

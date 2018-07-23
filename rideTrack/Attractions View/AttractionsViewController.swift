@@ -140,7 +140,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         let userID = Auth.auth().currentUser
         let id = userID?.uid
-        self.attractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkData.parkID) ")
+        self.attractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkData.parkID!) ")
         
         attractionListRef.observe(.value, with: { snapshot in
             var newAttractions: [AttractionList] = []
@@ -194,8 +194,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                             userRidesRidden += 1
                             
                             attractionListForTable[i].numberOfTimesRidden = userAttractionDatabase[userDataBaseIndex].numberOfTimesRidden
-                            attractionListForTable[i].dateLastRidden = userAttractionDatabase[userDataBaseIndex].lastRideDate
-                            attractionListForTable[i].dateFirstRidden = userAttractionDatabase[userDataBaseIndex].firstRideDate
+                            attractionListForTable[i].dateLastRidden = Date(timeIntervalSince1970: userAttractionDatabase[userDataBaseIndex].lastRideDate)
+                            attractionListForTable[i].dateFirstRidden = Date(timeIntervalSince1970: userAttractionDatabase[userDataBaseIndex].firstRideDate)
                             
                             if attractionListForTable[i].active == 0 {
                                 userNumExtinct += 1
@@ -537,7 +537,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.attractionListForTable[indexPath.row].numberOfTimesRidden = 1
         self.attractionListForTable[indexPath.row].dateFirstRidden = Date()
         self.attractionListForTable[indexPath.row].dateLastRidden = Date()
-        self.saveUserCheckOffNewRide(parkID: self.parkID, rideID: (self.attractionListForTable[indexPath.row]).rideID);
+        
+        let newRideID = attractionListForTable[indexPath.row].rideID
+        let newCheck = AttractionList(rideID: newRideID!, numberOfTimesRidden: 1, firstRideDate: Date().timeIntervalSince1970, lastRideDate: Date().timeIntervalSince1970)
+        let newAttractionRef = self.attractionListRef.child(String(newRideID!))
+        newAttractionRef.setValue(newCheck.toAnyObject())
+        
         let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
 
         if (self.hasHaptic == 0) {
@@ -662,32 +667,32 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     
-    func saveUserCheckOffNewRide(parkID: Int, rideID: Int) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let entity = NSEntityDescription.entity(forEntityName: "RideTrack",
-                                                in: managedContext)!
-        
-        let newPark = NSManagedObject(entity: entity,
-                                      insertInto: managedContext)
-        
-        newPark.setValue(parkID, forKeyPath: "parkID")
-        newPark.setValue(rideID, forKeyPath: "rideID")
-        newPark.setValue(1, forKey: "numberOfTimesRidden")
-        newPark.setValue(Date(), forKey: "firstRideDate")
-        newPark.setValue(Date(), forKey: "lastRideDate")
-        print("Just saved Attraction: ", rideID)
-        do {
-            try managedContext.save()
-            userAttractions.append(newPark)
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
-        }
-    }
+//    func saveUserCheckOffNewRide(parkID: Int, rideID: Int) {
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return
+//        }
+//
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//
+//        let entity = NSEntityDescription.entity(forEntityName: "RideTrack",
+//                                                in: managedContext)!
+//
+//        let newPark = NSManagedObject(entity: entity,
+//                                      insertInto: managedContext)
+//
+//        newPark.setValue(parkID, forKeyPath: "parkID")
+//        newPark.setValue(rideID, forKeyPath: "rideID")
+//        newPark.setValue(1, forKey: "numberOfTimesRidden")
+//        newPark.setValue(Date(), forKey: "firstRideDate")
+//        newPark.setValue(Date(), forKey: "lastRideDate")
+//        print("Just saved Attraction: ", rideID)
+//        do {
+//            try managedContext.save()
+//            userAttractions.append(newPark)
+//        } catch let error as NSError {
+//            print("Could not save. \(error), \(error.userInfo)")
+//        }
+//    }
     
     func deleteRideCheck(rideID: Int) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
