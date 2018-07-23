@@ -172,12 +172,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 parksCoreData.updatingTotalRideCount(parkID: arrayOfAllRides[0].parkID, totalRideCount: totalRideCount)
                 for i in 0..<allParksList.count{
                     if allParksList[i].parkID == arrayOfAllRides[0].parkID{
-                        allParksList[i].totalRides = totalRideCount
+                        let parkItem = allParksList[i]
+                        parkItem.ref?.updateChildValues([
+                            "totalRides": totalRideCount
+                            ])
                         break
                     }
                 }
-                allParksTableView.reloadData()
-                favoritesTableView.reloadData()
             }
             
         }
@@ -334,8 +335,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         let favoriteAction = UIContextualAction(style: .normal, title:  "Favorites", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             if tableView == self.favoritesTableView {
                 let index = self.findIndexInAllParksList(parkID: self.favoiteParkList[indexPath.row].parkID)
-                self.allParksList[index].favorite = false
+                //self.allParksList[index].favorite = false
                 //self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[index], add: false)
+                
+                let parkItem = self.allParksList[index]
+                parkItem.ref?.updateChildValues([
+                    "favorite": false
+                    ])
+                
                 self.favoiteParkList.remove(at: indexPath.row)
                 
                 //Animate away favorites view to dissappear if the last park is being removed from the list
@@ -353,8 +360,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             } else{
                 //Only add if it isn't already a favorite
                 if !self.allParksList[indexPath.row].favorite{
-                    self.allParksList[indexPath.row].favorite = true
+                    //self.allParksList[indexPath.row].favorite = true
                     //self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[indexPath.row], add: true)
+                    let parkItem = self.allParksList[indexPath.row]
+                    parkItem.ref?.updateChildValues([
+                        "favorite": true
+                        ])
+                    
                     
                     //Animate the favorites view to appear if the first park is being added to the list
                     if self.favoiteParkList.count == 0{
