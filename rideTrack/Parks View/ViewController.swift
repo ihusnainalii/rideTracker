@@ -181,7 +181,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             print(totalRideCount, "updating total ride count label...")
             
             if arrayOfAllRides.count != 0{
-                parksCoreData.updatingTotalRideCount(parkID: arrayOfAllRides[0].parkID, totalRideCount: totalRideCount)
+                //parksCoreData.updatingTotalRideCount(parkID: arrayOfAllRides[0].parkID, totalRideCount: totalRideCount)
                 for i in 0..<allParksList.count{
                     if allParksList[i].parkID == arrayOfAllRides[0].parkID{
                         let parkItem = allParksList[i]
@@ -519,7 +519,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
             self.allParksTableView.contentInset = insets
             self.allParksTableView.reloadData()
-            self.parksCoreData.saveNewItemToParkList(parkID: newPark.parkID)
+            //self.parksCoreData.saveNewItemToParkList(parkID: newPark.parkID)
             
             //Get total number of rides, need to call database
             let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(newPark.parkID!)"
@@ -590,12 +590,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 selectedPark = favoiteParkList[selectedIndex]
             }
             
+            let arrayOfAllParksIndex = getParkModelINdexFromAllParks(parkID: selectedPark.parkID)
+            
             print ("The park is ", selectedPark.name)
-            attractionVC.titleName = selectedPark.name
-            attractionVC.parkID = selectedPark.parkID
+            attractionVC.titleName = arrayOfAllParks[arrayOfAllParksIndex].name
+            attractionVC.parkID = arrayOfAllParks[arrayOfAllParksIndex].parkID
             attractionVC.showExtinct = showExtinct
             attractionVC.parksViewController = self
-            //attractionVC.parkData = selectedPark
+            attractionVC.parkData = arrayOfAllParks[arrayOfAllParksIndex]
+            attractionVC.parkData.totalRides = selectedPark.totalRides
+            attractionVC.parkData.incrementorEnabled = selectedPark.incrementorEnabled
             
             //Getting coreData Attraction data for the selected park
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -640,6 +644,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
     }
     
+    func getParkModelINdexFromAllParks(parkID: Int) -> Int{
+        var i = 0
+        var foundID = 0
+        repeat {
+            if arrayOfAllParks[i].parkID == parkID{
+                foundID = i
+                break
+            }
+            i += 1
+        } while i < arrayOfAllParks.count
+        return foundID
+    }
     
     
     @IBAction func unwindToParkList(segue:UIStoryboardSegue) {
