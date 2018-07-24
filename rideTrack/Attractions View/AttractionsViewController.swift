@@ -38,7 +38,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var popupGenerator: UIImpactFeedbackGenerator!
     
     let screenSize = UIScreen.main.bounds
-    
+    var segueWithTableViewSelect = false
 
     var userDataBaseIndex = 0
     var titleName = ""
@@ -294,7 +294,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             extinctLabel.isHidden = true
         }
         
-        if (self.attractionListForTable.count - totalNumExtinct-numIgnore-numExtinctSelected) > parkData.totalRides{
+        if (self.attractionListForTable.count - totalNumExtinct-numIgnore-numExtinctSelected) > parkData.totalRides && segueWithTableViewSelect{
             let numberOfNewParks = attractionListForTable.count-totalNumExtinct-numIgnore-numExtinctSelected-parkData.totalRides
             if numberOfNewParks == 1{
                 notificationViewText.text = "1 new attraction is now available."

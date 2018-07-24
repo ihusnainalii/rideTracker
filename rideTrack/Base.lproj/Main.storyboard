@@ -87,7 +87,7 @@
                                                 <segue destination="R6N-UU-UtL" kind="unwind" identifier="cancel" unwindAction="unwindToParkListWithSegue:" id="Frw-1e-TBO"/>
                                             </connections>
                                         </button>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add new park" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mmo-xI-RsB">
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search by park name, city, state, or country" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mmo-xI-RsB">
                                             <rect key="frame" x="8" y="36" width="359" height="30"/>
                                             <color key="backgroundColor" red="0.0011725673188915406" green="0.41295153993096445" blue="0.0018193449580243392" alpha="0.43691138698630139" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="textColor"/>

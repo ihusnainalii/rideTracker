@@ -614,10 +614,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             print ("The park is ", selectedPark.name)
             attractionVC.showExtinct = showExtinct
             attractionVC.parksViewController = self
+            attractionVC.segueWithTableViewSelect = segueWithTableViewSelect
             attractionVC.parkData = arrayOfAllParks[arrayOfAllParksIndex]
             attractionVC.parkData.totalRides = selectedPark.totalRides
             attractionVC.parkData.incrementorEnabled = selectedPark.incrementorEnabled
             attractionVC.favoiteParkList = favoiteParkList
+            
             
             //If the name of the park has changed, update the name in Parks-list
             if arrayOfAllParks[arrayOfAllParksIndex].name != selectedPark.name{

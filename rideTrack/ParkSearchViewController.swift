@@ -115,7 +115,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchedParkCell", for: indexPath) as! SearchTableViewCell
         let item: ParksModel = searchedParksList[indexPath.row]
         cell.parkNameLabel.text = item.name
-        cell.parkLocationLabel.text = item.city
+        cell.parkLocationLabel.text = "\(item.city!), \(item.country!)"
         return cell
     }
     
