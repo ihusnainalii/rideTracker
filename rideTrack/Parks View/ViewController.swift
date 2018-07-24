@@ -857,7 +857,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func unwindFromAttractions(parkID: Int) {
-//        segueWithTableViewSelect = true
+        segueWithTableViewSelect = true
 //        print("unwinding")
 //        //Get ParkList data from CoreData
 //        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {

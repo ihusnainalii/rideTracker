@@ -63,6 +63,10 @@ class AttractionsTableViewCell: UITableViewCell {
         if gestureRecognizer.state == UIGestureRecognizerState.began{
             delegate?.enterAttractionTally(self)
         }
+        if gestureRecognizer.state == UIGestureRecognizerState.ended{
+            delegate?.endLongPress(self)
+
+        }
         
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -75,6 +79,7 @@ class AttractionsTableViewCell: UITableViewCell {
 protocol AttractionsTableViewCellDelegate : class {
     func attractionCellTapButton(_ sender: AttractionsTableViewCell)
     func enterAttractionTally(_ sender: AttractionsTableViewCell)
+    func endLongPress(_ sender: AttractionsTableViewCell)
    // func attractionCellNegativeIncrement(_ sender: AttractionsTableViewCell)
 
    // func ignoreAction(_sender: AttractionsViewController)

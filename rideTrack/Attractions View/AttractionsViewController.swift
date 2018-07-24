@@ -565,12 +565,20 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                     cell.attractionButton.setImage(#imageLiteral(resourceName: "Plus Attraction"), for: .normal)
                     newIncrement = Int(textField.text!)!
                 }
+               
+                
              
                 self.attractionListForTable[indexPath.row].numberOfTimesRidden = newIncrement
                 self.attractionListForTable[indexPath.row].dateLastRidden = Date()
                 self.saveIncrementRideCount(rideID: self.attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement, postive: true)
                 cell.rideCellSquare.isUserInteractionEnabled = true
-
+                
+                if textField.text != ""{
+                    if Int(textField.text!)! == 0{
+                        self.removeAttractionFromList(indexPath: indexPath)
+                    }
+                }
+                
             }
             
             let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (alertAction) in
@@ -586,6 +594,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.present(enterTallyAlert, animated: true, completion:nil)
 
         }
+    }
+    
+    func endLongPress(_ sender: AttractionsTableViewCell){
+        guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
+        let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
+        cell.rideCellSquare.isUserInteractionEnabled = true
     }
     
     
@@ -648,46 +662,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     func attractionCellNegativeIncrement (indexPath: IndexPath) {
         
         if attractionListForTable[indexPath.row].numberOfTimesRidden == 1{
-            //User is unchecking the ride from their list
-            
-            let userAttractionDatabaseIndex = getUserAttractionDatabaseIndex(rideID: attractionListForTable[indexPath.row].rideID)
-            let attractionItem = userAttractionDatabase[userAttractionDatabaseIndex]
-            attractionItem.ref?.removeValue()
-            
-            attractionListForTable[indexPath.row].numberOfTimesRidden = 0
-            attractionListForTable[indexPath.row].isCheck = false
-            
-            
-            self.animateRow = indexPath.row    //"Animate here")
-            //self.attractionsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
-            
-            
-            
-            if (attractionListForTable[indexPath.row]).active == 0 {
-                userNumExtinct -= 1
-            }
-            userRidesRidden -= 1
-            //UPDATE RIDES BEEN ON
-            
-            self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore-self.numExtinctSelected)
-            
-            self.extinctComplete = String (self.userNumExtinct)
-            //  self.extinctComplete += "/"
-            //  self.extinctComplete += String (self.totalNumExtinct)
-            self.extinctText.text = self.extinctComplete
-            
-            
-            //Update tableview cell
-            let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
-            cell.rideCountViewLeadingConstraint.constant = -1
-            UIView.animate(withDuration: 0.5, animations: ({
-                cell.attractionButton.setImage(#imageLiteral(resourceName: "Check Button"), for: .normal)
-                cell.numberOfRidesLabel.alpha = 0.0
-                cell.numberOfRidesLabel.text = ""
-                
-                self.view.layoutIfNeeded()
-            }))
-    
+           removeAttractionFromList(indexPath: indexPath)
         }
         else{
             let newIncrement = attractionListForTable[indexPath.row].numberOfTimesRidden - 1
@@ -696,6 +671,48 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
             cell.numberOfRidesLabel.text = String(newIncrement)
         }
+    }
+    
+    func removeAttractionFromList(indexPath: IndexPath){
+        //User is unchecking the ride from their list
+        
+        let userAttractionDatabaseIndex = getUserAttractionDatabaseIndex(rideID: attractionListForTable[indexPath.row].rideID)
+        let attractionItem = userAttractionDatabase[userAttractionDatabaseIndex]
+        attractionItem.ref?.removeValue()
+        
+        attractionListForTable[indexPath.row].numberOfTimesRidden = 0
+        attractionListForTable[indexPath.row].isCheck = false
+        
+        
+        self.animateRow = indexPath.row    //"Animate here")
+        //self.attractionsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+        
+        
+        
+        if (attractionListForTable[indexPath.row]).active == 0 {
+            userNumExtinct -= 1
+        }
+        userRidesRidden -= 1
+        //UPDATE RIDES BEEN ON
+        
+        self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore-self.numExtinctSelected)
+        
+        self.extinctComplete = String (self.userNumExtinct)
+        //  self.extinctComplete += "/"
+        //  self.extinctComplete += String (self.totalNumExtinct)
+        self.extinctText.text = self.extinctComplete
+        
+        
+        //Update tableview cell
+        let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
+        cell.rideCountViewLeadingConstraint.constant = -1
+        UIView.animate(withDuration: 0.5, animations: ({
+            cell.attractionButton.setImage(#imageLiteral(resourceName: "Check Button"), for: .normal)
+            cell.numberOfRidesLabel.alpha = 0.0
+            cell.numberOfRidesLabel.text = ""
+            
+            self.view.layoutIfNeeded()
+        }))
     }
     
     func positiveIncrementCount(indexPath: IndexPath){
