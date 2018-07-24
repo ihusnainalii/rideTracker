@@ -156,6 +156,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
             self.userAttractionDatabase = newAttractions
+
             //self.attractionsTableView.reloadData()
         })
     }
@@ -532,6 +533,54 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             positiveIncrementCount(indexPath: indexPath)
         } else{
             print("Can't change it when ignored")
+        }
+    }
+    
+    func enterAttractionTally(_ sender: AttractionsTableViewCell) {
+        print ("HERE on LONG")
+        var newIncrement = 1
+    guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
+    let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
+        cell.rideCellSquare.isUserInteractionEnabled = false
+        if parkData.incrementorEnabled && attractionListForTable[indexPath.row].isCheck {
+            if (self.hasHaptic == 0) {
+                print("no imapct")
+            }
+            else {
+                generator.impactOccurred()
+                print ("impact")
+            }
+            let enterTallyAlert = UIAlertController(title: "Attraction Tally", message: "Please enter the number of times you have been on the attraction", preferredStyle: UIAlertControllerStyle.alert)
+            let userInput = UIAlertAction(title: "Enter", style: .default) { (alertAction) in
+                let textField = enterTallyAlert.textFields![0] as UITextField
+    
+                if textField.text != ""{
+                    cell.numberOfRidesLabel.text = textField.text
+                    cell.rideCellSquare.alpha = 1
+                    cell.rideCountViewLeadingConstraint.constant = 3
+                    cell.attractionButton.setImage(#imageLiteral(resourceName: "Plus Attraction"), for: .normal)
+                    newIncrement = Int(textField.text!)!
+                }
+             
+                self.attractionListForTable[indexPath.row].numberOfTimesRidden = newIncrement
+                self.attractionListForTable[indexPath.row].dateLastRidden = Date()
+                self.saveIncrementRideCount(rideID: self.attractionListForTable[indexPath.row].rideID, incrementTo: newIncrement, postive: true)
+                cell.rideCellSquare.isUserInteractionEnabled = true
+
+            }
+            
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (alertAction) in
+                print("cancled")
+                cell.rideCellSquare.isUserInteractionEnabled = true
+            }
+            enterTallyAlert.addTextField { (textField) in
+                textField.placeholder = "\(cell.numberOfRidesLabel.text!)"
+                textField.keyboardType = UIKeyboardType.numberPad
+            }
+            enterTallyAlert.addAction(userInput)
+            enterTallyAlert.addAction(cancel)
+            self.present(enterTallyAlert, animated: true, completion:nil)
+
         }
     }
     
