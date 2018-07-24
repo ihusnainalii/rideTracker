@@ -300,10 +300,10 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
     func getChangedDetails() ->String {
         var changes = "MODIFY: "
         if originalAttraction.name != nameField.text {
-            changes += "ride name changed from \(originalAttraction.name!) to \(nameField.text!) at \(suggestedAttraction.parkName) "
+            changes += "ride name changed from \(originalAttraction.name!) to \(nameField.text!) at park ID \(suggestedAttraction.parkID!) "
         }
         else {
-            changes += "\(suggestedAttraction.rideName!) at \(suggestedAttraction.parkName!) "
+            changes += "\(suggestedAttraction.rideName!) at park ID \(suggestedAttraction.parkID!) "
         }
         if originalAttraction.rideType != rideType {
             changes += "type changed from \(originalAttraction.rideType!) to \(rideType) "
