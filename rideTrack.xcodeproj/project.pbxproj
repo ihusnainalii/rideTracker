@@ -29,6 +29,7 @@
 		5FFCB7FF21055E400054D84D /* ParksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB7FE21055E400054D84D /* ParksList.swift */; };
 		5FFCB80121055E470054D84D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB80021055E470054D84D /* User.swift */; };
 		5FFCB804210579C80054D84D /* AttractionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB803210579C80054D84D /* AttractionList.swift */; };
+		5FFCB8062106783E0054D84D /* MigrateToFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB8052106783E0054D84D /* MigrateToFirebase.swift */; };
 		6FB12F9BEE164667D88AFD5F /* Pods_rideTrackTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C975F034FC767581DC82917 /* Pods_rideTrackTests.framework */; };
 		970852B5CB3635699B203963 /* Pods_rideTrack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74AF014AE1A2E4F64D38F220 /* Pods_rideTrack.framework */; };
 		982E097620F54957007F2D02 /* ModifyAttractionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E097520F54957007F2D02 /* ModifyAttractionViewController.swift */; };
@@ -99,6 +100,7 @@
 		5FFCB7FE21055E400054D84D /* ParksList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParksList.swift; sourceTree = "<group>"; };
 		5FFCB80021055E470054D84D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5FFCB803210579C80054D84D /* AttractionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionList.swift; sourceTree = "<group>"; };
+		5FFCB8052106783E0054D84D /* MigrateToFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrateToFirebase.swift; sourceTree = "<group>"; };
 		71040B45749ED9A81A3BBDE1 /* Pods-rideTrack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrack.release.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrack/Pods-rideTrack.release.xcconfig"; sourceTree = "<group>"; };
 		73201F7E0249E66F5FF46F43 /* Pods-rideTrack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrack.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrack/Pods-rideTrack.debug.xcconfig"; sourceTree = "<group>"; };
 		74AF014AE1A2E4F64D38F220 /* Pods_rideTrack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rideTrack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,6 +220,7 @@
 				5FE9F81620DDCF040012B98C /* AllParksTableViewCell.swift */,
 				5F202C5A20E6E8AF00FFE408 /* NeverClearView.swift */,
 				5F21419520F18087009A2E3A /* SearchMyParksView.swift */,
+				5FFCB8052106783E0054D84D /* MigrateToFirebase.swift */,
 			);
 			path = "Parks View";
 			sourceTree = "<group>";
@@ -569,6 +572,7 @@
 				5FF0BBBE20CF639100213DF8 /* ScoreCardTableViewCell.swift in Sources */,
 				5F202C5D20EB257700FFE408 /* ParksDetailViewController.swift in Sources */,
 				98AD7F7220A91A5C00540AB3 /* UserAttraction.swift in Sources */,
+				5FFCB8062106783E0054D84D /* MigrateToFirebase.swift in Sources */,
 				98C28A9B20EBD81E00C7229E /* ApproveSuggestedAttractionViewController.swift in Sources */,
 				5FF0BBC020CF652700213DF8 /* ScoreCardModel.swift in Sources */,
 				98AD7F7420A91A5C00540AB3 /* AttractionsViewController.swift in Sources */,

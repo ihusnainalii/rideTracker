@@ -85,6 +85,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     override func viewDidLoad() {
         configureViewDidLoad()
+        
+        
         super.viewDidLoad()
         
         favoritesTableView.isUserInteractionEnabled = true
@@ -115,15 +117,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         parksListRef.observe(.value, with: { snapshot in
             var newParks: [ParksList] = []
-            print("new parks ")
             for child in snapshot.children {
                 if let snapshot = child as? DataSnapshot,
                     let parkItem = ParksList(snapshot: snapshot) {
                     newParks.append(parkItem)
                 }
             }
+            print("Gettings all-parks-list")
             self.allParksList = newParks
             self.allParksTableView.reloadData()
+            self.configureAllParksView()
         })
         favoritesListRef.observe(.value, with: { snapshot in
             var newParks: [ParksList] = []
@@ -133,8 +136,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                     newParks.append(parkItem)
                 }
             }
+            print("Getting favorite-parks-list")
             self.favoiteParkList = newParks
             self.favoritesTableView.reloadData()
+            self.configureFavoritesView()
         })
         
         let urlPath = "http://www.beingpositioned.com/theparksman/parksdbservice.php"
@@ -231,23 +236,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
 //                    allParksIncrementor += 1
 //                } while userParkListIncrementor < savedParkList.count
 //            }
-            
-            var allParksViewTableAlpha: CGFloat = 1.0
-            var favoritesTableAlpha: CGFloat = 1.0
-            print(favoiteParkList.count)
-            if favoiteParkList.count == 0{
-                favoritesViewHeightConstrant.constant = 70
-                favoritesTableAlpha = 0.0
-            }
-            print(allParksList.count)
-            if allParksList.count == 0{
-                allParksViewTableAlpha = 0.0
-            }
-            UIView.animate(withDuration: 0.6, animations: {
-                self.favoritesTableView.alpha = favoritesTableAlpha
-                self.allParksTableView.alpha = allParksViewTableAlpha
-                self.view.layoutIfNeeded()
-            })
+        
             
             favoritesViewHeightBeforeAnimating = favoritesViewHeightConstrant.constant
             
@@ -263,7 +252,32 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
             locationManager.requestLocation()
             print("GETTING GPS DATA")
+            MigrateToFireBase().migrate(arrayOfAllParks: arrayOfAllParks)
         }
+    }
+    func configureFavoritesView(){
+        print("Configuring favorites view")
+        var favoritesTableAlpha: CGFloat = 1.0
+        if favoiteParkList.count == 0{
+            favoritesViewHeightConstrant.constant = 70
+            favoritesTableAlpha = 0.0
+        }
+        UIView.animate(withDuration: 0.6, animations: {
+            self.favoritesTableView.alpha = favoritesTableAlpha
+        })
+        self.view.layoutIfNeeded()
+    }
+    
+    func configureAllParksView(){
+        print("Configuring all parks view")
+        var allParksViewTableAlpha: CGFloat = 1.0
+        if allParksList.count == 0{
+            allParksViewTableAlpha = 0.0
+        }
+        UIView.animate(withDuration: 0.6, animations: {
+            self.allParksTableView.alpha = allParksViewTableAlpha
+        })
+        self.view.layoutIfNeeded()
     }
     
     
@@ -297,7 +311,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             if total != 0{
                 //Plus 4 becasue the
                 progressToShow = CGFloat(Double(cell.progressViewBackgroundWidth.constant) * (rides/total))
-                print(cell.progressViewBackgroundWidth.constant)
                 if rides/total == 1{
                     cell.progressView.backgroundColor = UIColor(red: 250/255.0, green: 204/255.0, blue: 73/255.0, alpha: 1.0)
                 } else{
@@ -440,7 +453,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let deleteAlertController = UIAlertController(title: "Delete \(self.allParksList[indexPath.row].name!)", message: "This action will permanently delete your progress for \(self.allParksList[indexPath.row].name!)", preferredStyle: .alert)
             let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) -> Void in
                 success(true)
-                print(self.allParksList[indexPath.row].parkID)
                 self.removeParkFromList(parkID: self.allParksList[indexPath.row].parkID, indexPath: indexPath.row)
                 
             }
