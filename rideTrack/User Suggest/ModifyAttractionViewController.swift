@@ -41,7 +41,9 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
     
     @IBOutlet weak var scrollWidth: NSLayoutConstraint!
     let screenSize = UIScreen.main.bounds
-
+    
+    var scoreCard = 0
+    var active = 1
     var rideType = 0
     var pickerData: [String] = [String]()
     var originalAttraction: AttractionsModel = AttractionsModel()
@@ -229,7 +231,7 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         dataModel.delegate = self
         let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(suggestedAttraction.id!)"
         
-        var changes = getChangedDetails()
+        let changes = getChangedDetails()
         let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\("username")&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log
         print (urlPath)
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
@@ -249,7 +251,6 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
             active = 0
         }
         let manufacturer = manufacturerField.text!
-        var scoreCard = 0
         if scoreCardSwtich.isOn {
             scoreCard = 1
         }
@@ -260,8 +261,8 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
         let urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(originalAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)" //uploads to main list
         print (urlPath)
-        var changes = getChangedDetails()
-        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\("username")&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log
+        let changes = getChangedDetails()
+        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\("username")&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
 
         let dataModel = DataModel()
         dataModel.delegate = self
@@ -313,8 +314,24 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         if originalAttraction.yearClosed != Int(closeField.text!)!{
             changes += "closing year changed from \(originalAttraction.yearClosed!) to \(closeField.text!) "
         }
+        if originalAttraction.active != active {
+            if active == 0{
+                changes += "changed to defunct "
+            }
+            else {
+                changes += "changed to open "
+            }
+        }
         if originalAttraction.manufacturer != manufacturerField.text {
             changes += "manufacturer changed from \(originalAttraction.manufacturer!) to \(manufacturerField.text!) "
+        }
+        if originalAttraction.hasScoreCard != scoreCard {
+            if scoreCard == 0 {
+                changes += "scoreCard turned off"
+            }
+            else {
+                changes += "scoreCard turned on"
+            }
         }
         return changes
         

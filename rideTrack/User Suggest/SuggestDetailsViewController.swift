@@ -244,7 +244,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         print ("The ID is ", selectedAttraction.id)
         let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(selectedAttraction.id!)"
         print (urlPath)
-        let changes = "NEW RIDE: \(nameTextField.text!) at \(parkNameLabel.text) opened in \(openTextField.text!) and is type \(rideType)"
+        let changes = "NEW RIDE: \(nameTextField.text!) at \(parkNameLabel.text!) opened in \(openTextField.text!) and is type \(rideType)"
         let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\("username")&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log
 
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")

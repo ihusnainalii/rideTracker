@@ -209,10 +209,25 @@ class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDat
             if selectedAttraction.yearClosed != Int(yearClosed) && selectedAttraction.yearClosed != 0{
                 changes += "closing year changed from \(selectedAttraction.yearClosed!) to \(yearClosed) "
             }
+            if selectedAttraction.active != active {
+                if active == 0{
+                changes += "changed to defunct"
+                }
+                else {
+                changes += "changed to open"
+                }
+            }
             if selectedAttraction.manufacturer != manufacturingField.text {
                 changes += "manufacturer changed from \(selectedAttraction.manufacturer!) to \(manufacturingField.text!) "
             }
-            
+            if selectedAttraction.hasScoreCard != scoreCard {
+                if scoreCard == 0 {
+                    changes += "scoreCard turned off"
+                }
+                else {
+                    changes += "scoreCard turned on"
+                }
+            }
             let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\("username")&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
             
             let dataModel = DataModel()
