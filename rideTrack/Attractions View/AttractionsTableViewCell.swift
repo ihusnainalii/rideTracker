@@ -58,9 +58,12 @@ class AttractionsTableViewCell: UITableViewCell {
         delegate?.attractionCellTapButton(self)
     }
     
-    @objc func handleLongPress() {
-        print ("Long pressing!")
-        delegate?.enterAttractionTally(self)
+    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        
+        if gestureRecognizer.state == UIGestureRecognizerState.began{
+            delegate?.enterAttractionTally(self)
+        }
+        
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

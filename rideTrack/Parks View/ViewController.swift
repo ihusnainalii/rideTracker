@@ -833,6 +833,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         print("Location error: \(error)")
     }
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        
         if gestureRecognizer.state != UIGestureRecognizerState.ended {
             searchRideButtonHeightConstraint.constant = 23
             currentLocationViewBottomConstraint.constant = -61

@@ -35,6 +35,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var notificationViewHeight: NSLayoutConstraint!
     
     var generator: UIImpactFeedbackGenerator!
+    var popupGenerator: UIImpactFeedbackGenerator!
     
     let screenSize = UIScreen.main.bounds
     
@@ -111,7 +112,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         notificationViewBottomConstrant.constant = -64
         
         if is3DTouchAvailable{
+            popupGenerator = UIImpactFeedbackGenerator(style: .heavy)
             generator = UIImpactFeedbackGenerator(style: .light)
+            popupGenerator.prepare()
             generator.prepare()
         }
         
@@ -536,24 +539,25 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    
     func enterAttractionTally(_ sender: AttractionsTableViewCell) {
         print ("HERE on LONG")
         var newIncrement = 1
-    guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
-    let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
+        guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
+        let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
         cell.rideCellSquare.isUserInteractionEnabled = false
         if parkData.incrementorEnabled && attractionListForTable[indexPath.row].isCheck {
             if (self.hasHaptic == 0) {
                 print("no imapct")
             }
             else {
-                generator.impactOccurred()
+                popupGenerator.impactOccurred()
                 print ("impact")
             }
             let enterTallyAlert = UIAlertController(title: "Attraction Tally", message: "Please enter the number of times you have been on the attraction", preferredStyle: UIAlertControllerStyle.alert)
             let userInput = UIAlertAction(title: "Enter", style: .default) { (alertAction) in
                 let textField = enterTallyAlert.textFields![0] as UITextField
-    
+                
                 if textField.text != ""{
                     cell.numberOfRidesLabel.text = textField.text
                     cell.rideCellSquare.alpha = 1
