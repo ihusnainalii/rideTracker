@@ -51,7 +51,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var doneSearchHeightConstrant: NSLayoutConstraint!
     @IBOutlet weak var locationViewHeight: NSLayoutConstraint!
     @IBOutlet weak var locationViewCenterConstrant: NSLayoutConstraint!
-    
+
+    var darkenBackground=UIView()
     var favoitesHeight: CGFloat = 190.0
     var allParksBottomInsetValue:CGFloat = 20
     
@@ -660,7 +661,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
 //                userAttractions.append(newAttraction)
 //            }
 //            attractionVC.userAttractionDatabase = userAttractions
-            
+            UIView.animate(withDuration: 0.2, animations: {
+                self.darkenBackground.alpha =  0.20
+            })
             if isSearchingMyParks{
                 SearchMyParks().animateOutOfParkSearch(parksView: self)
             }
@@ -670,6 +673,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         if segue.identifier == "toSearch"{
             let searchVC = segue.destination as! ParkSearchViewController
             searchVC.parkArray = arrayOfAllParks
+            searchVC.parksVC = self
+            UIView.animate(withDuration: 0.2, animations: {
+                self.darkenBackground.alpha =  0.20
+            })
             
         }
         if segue.identifier == "toSettings"{
@@ -708,6 +715,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         else if let sourceViewController = segue.source as? ParkSearchViewController, let newPark = sourceViewController.selectedPark{
             addNewParkToList(newPark: newPark)
+            print("unwinding")
+            UIView.animate(withDuration: 0.2, animations: {
+                self.darkenBackground.alpha = 0.0
+            })
             
         }
         else if segue.source is AttractionsViewController{
@@ -860,36 +871,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func unwindFromAttractions(parkID: Int) {
         segueWithTableViewSelect = true
-//        print("unwinding")
-//        //Get ParkList data from CoreData
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-//        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkID)")
-//        var updatedPark:[NSManagedObject] = []
-//        do {
-//            updatedPark = try managedContext.fetch(fetchRequest)
-//            
-//        } catch let error as NSError {
-//            print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
-//        }
-//        
-//        let allParksIndex = findIndexInAllParksList(parkID: parkID)
-//        allParksList[allParksIndex].totalRides = updatedPark[0].value(forKey: "totalRides") as! Int
-//        allParksList[allParksIndex].ridesRidden = updatedPark[0].value(forKey: "ridesRidden") as! Int
-//        
-//        if favoiteParkList.count != 0{
-//            let favoritesIndex = findIndexFavoritesList(parkID: parkID)
-//            if favoritesIndex != -1{
-//                favoiteParkList[favoritesIndex].totalRides = updatedPark[0].value(forKey: "totalRides") as! Int
-//                favoiteParkList[favoritesIndex].ridesRidden = updatedPark[0].value(forKey: "ridesRidden") as! Int
-//                favoritesTableView.reloadData()
-//            }
-//        }
-//        allParksTableView.reloadData()
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
         self.allParksTableView.contentInset = insets
+        UIView.animate(withDuration: 0.2, animations: {
+            self.darkenBackground.alpha =  0
+        })
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -978,6 +964,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         gradient.endPoint = CGPoint(x: 0, y: 1)
         
         backgroundView.layer.addSublayer(gradient)
+        
+        darkenBackground=UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height))
+        darkenBackground.backgroundColor = UIColor.black
+        darkenBackground.alpha = 0.0
+        darkenBackground.isUserInteractionEnabled = true
+        self.view.addSubview(darkenBackground)
+
     }
     
     func findIndexFavoritesList(parkID: Int) -> Int{
@@ -1001,5 +994,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         return allParksIndex
     }
+
 }
 

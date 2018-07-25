@@ -15,6 +15,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     var park = ParksModel()
     var firstEntry = true
     var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
+    var parksVC: ViewController!
     
     //A list of parks searched for, to display in results table
     var searchedParksList: [ParksModel]!
@@ -132,6 +133,9 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         
         if (segue.identifier == "cancel") {
             print("CANCEL")
+            UIView.animate(withDuration: 0.2, animations: {
+                self.parksVC.darkenBackground.alpha = 0.0
+            })
             selectedPark = nil
             searchTextFeild.resignFirstResponder()
         }
@@ -155,6 +159,9 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
             if touchPoint.y - initialToucnPoint.y > 200 {
                 self.dismiss(animated: true, completion: nil)
                 self.searchTextFeild.resignFirstResponder()
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.parksVC.darkenBackground.alpha = 0.0
+                })
             } else {
                 UIView.animate(withDuration: 0.3, animations: {
                     self.downButton.setImage(UIImage(named: "Down Bar"), for: .normal)

@@ -24,7 +24,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var VisualEffectsLayer: UIVisualEffectView!
     @IBOutlet weak var rideCountLabel: UILabel!
-    @IBOutlet weak var extinctCountLabel: UILabel!
     @IBOutlet weak var emptyParkInstructionsLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var darkenLayer: UIView!
@@ -39,6 +38,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     let screenSize = UIScreen.main.bounds
     var segueWithTableViewSelect = false
+    let insets = UIEdgeInsets(top: 0, left: 0, bottom: 5, right: 0)
 
     var userDataBaseIndex = 0
     var titleName = ""
@@ -61,7 +61,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var countOfRemove = 0
     var selectedAttractionsList: [NSManagedObject] = []
     
-    let appGreen = UIColor(red: 29.0/255.0, green: 127.0/255.0, blue: 70.0/255.0, alpha: 1.0)
+    //let appGreen = UIColor(red: 29.0/255.0, green: 127.0/255.0, blue: 70.0/255.0, alpha: 1.0)
+    let darkGreen = UIColor(red: 40/255.0, green: 119/255.0, blue: 72/255.0, alpha: 1.0)
+    let appGreen = UIColor(red: 74.0/255.0, green: 166.0/255.0, blue: 65.0/255.0, alpha: 1.0)
     let goldBar = UIColor(red: 250/255.0, green: 204/255.0, blue: 73/255.0, alpha: 1.0)
     let lightGreyBar = UIColor(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1.0)
     var userAttractions: [NSManagedObject] = []
@@ -162,10 +164,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
 
             //self.attractionsTableView.reloadData()
         })
+        self.attractionsTableView.contentInset = insets
     }
     
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
+        var allAttractionsAreDefunt = true
         savedItems = items
         activityIndicator.stopAnimating()
         for i in 0..<items.count{
@@ -209,6 +213,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                             
                             if attractionListForTable[i].active == 0 {
                                 userNumExtinct += 1
+                            } else{
+                                allAttractionsAreDefunt = false
                             }
                             userDataBaseIndex += 1
                         }
@@ -261,6 +267,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }
         //Hide EXTINCT ATTRACTIONS
+        print(allAttractionsAreDefunt)
+        //This would work to show defunct attractions for closed parks, but the progress bar gets messed up and treats all attractions as current attractions
+        //Uncomment out the if statement to see how it would work
+//        if allAttractionsAreDefunt{
+//            showExtinct = 1
+//        }
         if(showExtinct == 0){
             for i in 0..<attractionListForTable.count{ //sizeOfList
                 if ((attractionListForTable[i - countOfRemove]).active == 0 && showExtinct == 0 && (attractionListForTable[i - countOfRemove]).isCheck == false){
@@ -293,6 +305,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             extinctText.isHidden = true
             extinctLabel.isHidden = true
         }
+        
+        rideCountLabel.isHidden  = false
+        NumCompleteLabel.isHidden = false
+        
         
         if (self.attractionListForTable.count - totalNumExtinct-numIgnore-numExtinctSelected) > parkData.totalRides && segueWithTableViewSelect{
             let numberOfNewParks = attractionListForTable.count-totalNumExtinct-numIgnore-numExtinctSelected-parkData.totalRides
@@ -468,7 +484,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             })
             
             ignoreAction.title = attractionListForTable[indexPath.row].isIgnored ? "Include" : "Exclude"
-            ignoreAction.backgroundColor = attractionListForTable[indexPath.row].isIgnored ? appGreen : .gray
+            ignoreAction.backgroundColor = attractionListForTable[indexPath.row].isIgnored ? darkGreen : .gray
             let configurations = UISwipeActionsConfiguration(actions: [ignoreAction])
             configurations.performsFirstActionWithFullSwipe = true
             return configurations //UISwipeActionsConfiguration(actions: [ignoreAction])
@@ -900,6 +916,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func unwindToAttractionsView(sender: UIStoryboardSegue) {
         print("Back to attractions view")
+        self.attractionsTableView.contentInset = insets
+
         if sender.source is ParksDetailViewController{
             if parkData.incrementorEnabled{
                //attractionListForTable = saveIncrementorAttractionsListForTable
