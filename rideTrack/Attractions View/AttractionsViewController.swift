@@ -11,9 +11,14 @@ import Foundation
 import Firebase
 
 
-class AttractionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, AttractionsTableViewCellDelegate{
+class AttractionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, DataModelProtocol, AttractionsTableViewCellDelegate{
     
     
+    @IBOutlet weak var filterView: UIView!
+    @IBOutlet weak var leaveFilterButton: UIButton!
+    
+    
+    @IBOutlet weak var filterTableView: UITableView!
     @IBOutlet weak var attractionsTableView: UITableView!
     @IBOutlet weak var parkLabel: UILabel!
     @IBOutlet weak var NumCompleteLabel: UILabel!
@@ -84,6 +89,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var parksListRef: DatabaseReference!
     var favoriteListRef: DatabaseReference!
     var user: User!
+    var rideTypesforFilter = ["Roller Coaster", "Water Ride", "Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
     
     let searchController = UISearchController(searchResultsController: nil)
     var is3DTouchAvailable: Bool {
@@ -134,6 +140,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         self.attractionsTableView.delegate = self
         self.attractionsTableView.dataSource = self
+        
+        self.filterTableView.delegate = self
+        self.filterTableView.dataSource = self
         parkID = parkData.parkID
         print(parkID)
         let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(parkID)"
@@ -176,13 +185,16 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
 //        searchController.searchBar.placeholder = "Search Attractions"
         
        // searchController = UISearchController(searchResultsController: nil)
-        
+        searchController.searchBar.delegate = self
+        searchController.delegate = self
         searchController.searchResultsUpdater = self
-        searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.searchBarStyle = UISearchBarStyle.prominent
         searchController.searchBar.sizeToFit()
-        searchController.searchBar.showsScopeBar = false
+        searchController.searchBar.showsScopeBar = true
+        //self.navigationItem.searchController = searchController
+        searchController.hidesNavigationBarDuringPresentation = false
+        
         self.attractionsTableView.tableHeaderView = searchController.searchBar
        //insets = UIEdgeInsets(top: -4.5, left: 0, bottom: 5.5, right: 0) //-searchController.searchBar.frame.height
         self.attractionsTableView.contentInset = insets
@@ -190,11 +202,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
        // self.attractionsTableView.contentOffset = CGPointMake(0, CGRect.height(searchController.searchBar.frame))
         //definesPresentationContext = true cgRec.
         
-        searchController.searchBar.scopeButtonTitles = ["All", "Roller Coaster", "Water Ride", "Other"]
-        searchController.searchBar.delegate = self
+       // searchController.searchBar.scopeButtonTitles = ["All", "Roller Coaster", "Water Ride", "Other"]
+        
     }
     
-    
+   
     func itemsDownloaded(items: NSArray, returnPath: String) {
         var allAttractionsAreDefunt = true
         savedItems = items
@@ -374,13 +386,19 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
   
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == self.attractionsTableView {
         if isFiltering() {
             return filteredAttractions.count
         }
         return attractionListForTable.count
+        }
+        else {
+            return rideTypesforFilter.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if tableView == self.attractionsTableView {
         let cell = tableView.dequeueReusableCell(withIdentifier: "rideCell", for: indexPath) as! AttractionsTableViewCell
         cell.delegate = self
         let item: AttractionsModel
@@ -437,6 +455,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         
         return cell
+        }
+        else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath) as! FilterTableViewCell
+            cell.rideTypeLabel.text = rideTypesforFilter[indexPath.row]
+            return cell
+        }
     }
     
     func configureCellIncrementing(cell: AttractionsTableViewCell, item: AttractionsModel){
@@ -464,6 +488,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if tableView == self.attractionsTableView {
         if (attractionListForTable[indexPath.row]).numberOfTimesRidden != 0{
             let minusAction = UIContextualAction(style: .normal, title: "Minus", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
                 print ("Subtracting")
@@ -482,9 +507,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         else {
             return UISwipeActionsConfiguration.init()
         }
+        }
+        else {
+            return nil
+        }
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if tableView == self.attractionsTableView {
         if (attractionListForTable[indexPath.row]).active == 1 && attractionListForTable[indexPath.row].isCheck == false {
             let ignoreAction = UIContextualAction(style: .normal, title: "Ignore", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
                 print("ignore button tapped on ride")
@@ -529,6 +559,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         else {
             return UISwipeActionsConfiguration.init()
+        }
+        }
+        else {
+            return nil
         }
     }
     
@@ -662,24 +696,31 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-        print("Searching!")
         filteredAttractions = attractionListForTable.filter({(attractionListForTable : AttractionsModel) -> Bool in
-            let doesMatchCatagory = (scope == "All") || (String(convertRideTypeID(rideTypeID: attractionListForTable.rideType)) == scope)
-            if (scope == "Other"){
-                print("go to setup search by keyword")
-            }
-            if searchBarIsEmpty() {
-                return doesMatchCatagory
-            }
-            else {
-                return doesMatchCatagory && attractionListForTable.name.lowercased().contains(searchText.lowercased())
-            }
+           // let doesMatchCatagory = (scope == "All") || (String(convertRideTypeID(rideTypeID: attractionListForTable.rideType)) == scope)
+
+//            if searchBarIsEmpty() {
+//                return doesMatchCatagory
+//            }
+           // else {
+                return attractionListForTable.name.lowercased().contains(searchText.lowercased())  //&& doesMatchCatagory
+          //  }
         })
         attractionsTableView.reloadData()
     }
     func isFiltering() -> Bool {
         let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
         return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        filterView.isHidden = false
+    }
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+    }
+    
+    @IBAction func LeaveFilterButton(_ sender: Any) {
+        filterView.isHidden = true
     }
     
     func addFirstCheckRide(indexPath: IndexPath){
@@ -1145,19 +1186,9 @@ extension AttractionsViewController: UISearchResultsUpdating {
     // MARK: - UISearchResultsUpdating Delegate
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
-        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
-        print ("scope bar is \(searchBar.showsScopeBar)")
-//        if !searchBar.showsScopeBar {
-//           // let scopeInsets = UIEdgeInsets(top: -5, left: 0, bottom: 5.5, right: 0)
-//            topOfTableView.constant -= 30
-//            //attractionsTableView.contentInset = scopeInsets
-//            print("OPEN!")
-//        }
-//        else {
-//            topOfTableView.constant += 30
-//        }
+        let scope = "ALL"
+
         filterContentForSearchText(searchController.searchBar.text!, scope: scope)
-        print("At extension")
     }
 }
 extension AttractionsViewController: UISearchBarDelegate {
