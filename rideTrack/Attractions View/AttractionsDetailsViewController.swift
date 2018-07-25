@@ -36,14 +36,14 @@ class AttractionsDetailsViewController: UIViewController {
     
     @IBOutlet weak var manufacturerLabel: UILabel!
     @IBOutlet weak var manufacturText: UILabel!
-    @IBOutlet weak var dateModifyButton: UIButton!
+    @IBOutlet weak var FirstdateModifyButton: UIButton!
+    @IBOutlet weak var LatestDateModifyButton: UIButton!
     @IBOutlet weak var rideNameLabel: UILabel!
     @IBOutlet weak var yearCloseLabel: UILabel!
     @IBOutlet weak var yearOpenLabel: UILabel!
     @IBOutlet weak var yearCloseText: UILabel!
     @IBOutlet weak var attractiontype: UILabel!
     
-    @IBOutlet weak var dateLastRiddenLabel: UILabel!
     @IBOutlet weak var modifyDateView: UIView!
     @IBOutlet weak var modifyDatePicker: UIDatePicker!
     @IBOutlet weak var scoreCardButton: UIButton!
@@ -100,19 +100,19 @@ class AttractionsDetailsViewController: UIViewController {
             yearCloseLabel.text = String (selectedRide.yearClosed)
         }
         if selectedRide.isCheck{
-            dateModifyButton.setTitle(dateFormatter(date: selectedRide.dateFirstRidden), for: .normal)
+            FirstdateModifyButton.setTitle(dateFormatter(date: selectedRide.dateFirstRidden), for: .normal)
             firstRideStack.isHidden = false
             LatestRideStack.isHidden = false
             //Do not show last ride if the user has only ridden the ride once
             if selectedRide.numberOfTimesRidden > 1{
-                dateLastRiddenLabel.text = dateFormatter(date: selectedRide.dateLastRidden)
+                LatestDateModifyButton.setTitle(dateFormatter(date: selectedRide.dateLastRidden), for: .normal)
             }
             else{
                 LatestRideStack.isHidden = true
             }
         }
         else{
-            dateModifyButton.isHidden = true
+            FirstdateModifyButton.isHidden = true
             firstRideStack.isHidden = true
             LatestRideStack.isHidden = true
             //userDatesView.isHidden = true
@@ -186,20 +186,39 @@ class AttractionsDetailsViewController: UIViewController {
     }
     
     @IBAction func didPressModifyDate(_ sender: Any) {
-        dateModifyButton.isEnabled = false
-        dateModifyButton.isHighlighted = true
+        FirstdateModifyButton.isEnabled = false
+        LatestDateModifyButton.isUserInteractionEnabled = false
+        FirstdateModifyButton.isHighlighted = true
         modifyDateView.isHidden = false
-        dateModifyButton.isEnabled = false
         modifyDatePicker.setDate(selectedRide.dateFirstRidden, animated: false)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
-            self.detailViewHeight.constant += 160
+            self.detailViewHeight.constant += 170
          //   self.detailsView.frame.origin.y -= 10
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
+    
+    @IBAction func modifyLatestRideDate(_ sender: Any) {
+        LatestDateModifyButton.isEnabled = false
+        FirstdateModifyButton.isUserInteractionEnabled = false
+        LatestDateModifyButton.isHighlighted = true
+        modifyDateView.isHidden = false
+        modifyDatePicker.setDate(selectedRide.dateLastRidden, animated: false)
+        UIView.animate(withDuration: 0.3, animations: { //Animate Here
+            self.detailViewHeight.constant += 170
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+        
+    }
+    
     @IBAction func didModifyDate(_ sender: Any) {
         print("modify")
-        dateModifyButton.setTitle(dateFormatter(date: modifyDatePicker.date), for: .normal)
+        if LatestDateModifyButton.isEnabled {
+        FirstdateModifyButton.setTitle(dateFormatter(date: modifyDatePicker.date), for: .normal)
+        }
+        else {
+            LatestDateModifyButton.setTitle(dateFormatter(date: modifyDatePicker.date), for: .normal)
+        }
         }
 
     
@@ -210,27 +229,44 @@ class AttractionsDetailsViewController: UIViewController {
     }
     
     @IBAction func didSaveModifyDate(_ sender: Any) {
-        dateModifyButton.isEnabled = true
-        dateModifyButton.isHighlighted = false
-        
+        FirstdateModifyButton.isUserInteractionEnabled = true
+        LatestDateModifyButton.isUserInteractionEnabled = true
+        if LatestDateModifyButton.isEnabled {
+            FirstdateModifyButton.isEnabled = true
+        FirstdateModifyButton.isHighlighted = false
         modifyDateView.isHidden = true
-        dateModifyButton.isEnabled = true
-        dateModifyButton.setTitle(dateFormatter(date: modifyDatePicker.date), for: .normal)
+        FirstdateModifyButton.setTitle(dateFormatter(date: modifyDatePicker.date), for: .normal)
         selectedRide.dateFirstRidden = modifyDatePicker.date
-        saveModifyFirstRideDate(rideID: selectedRide.rideID, firstRideDate: modifyDatePicker.date)
-        UIView.animate(withDuration: 0.3, animations: { //Animate Here
-            self.detailViewHeight.constant -= 160
-       //     self.detailsView.frame.origin.y += 10
+            saveModifyRideDate(firstRide: true, rideID: selectedRide.rideID, RideDate: modifyDatePicker.date)
+            UIView.animate(withDuration: 0.3, animations: { //Animate Here
+                self.detailViewHeight.constant -= 170
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+        }
+        else {
+            LatestDateModifyButton.isEnabled = true
+            LatestDateModifyButton.isHighlighted = false
+            modifyDateView.isHidden = true
+            LatestDateModifyButton.setTitle(dateFormatter(date: modifyDatePicker.date), for: .normal)
+            selectedRide.dateLastRidden = modifyDatePicker.date
+            saveModifyRideDate(firstRide: false, rideID: selectedRide.rideID, RideDate: modifyDatePicker.date)
+            UIView.animate(withDuration: 0.3, animations: { //Animate Here
+                self.detailViewHeight.constant -= 170
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+        }
 
-            self.view.layoutIfNeeded()
-        }, completion: nil)
     }
     
-    func saveModifyFirstRideDate(rideID: Int, firstRideDate: Date){
-
+    func saveModifyRideDate(firstRide: Bool, rideID: Int, RideDate: Date){
+        if firstRide {
         attractionsListRef.updateChildValues([
-            "firstRideDate": firstRideDate.timeIntervalSince1970
+            "firstRideDate": RideDate.timeIntervalSince1970
             ])
+        }
+        else {
+            attractionsListRef.updateChildValues(["lastRideDate": RideDate.timeIntervalSince1970])
+        }
         }
         
 //        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
