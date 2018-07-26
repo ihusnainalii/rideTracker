@@ -309,13 +309,13 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         print("All attractions are defunct: \(allAttractionsAreDefunt)")
         //This would work to show defunct attractions for closed parks, but the progress bar gets messed up and treats all attractions as current attractions
         //Uncomment out the if statement to see how it would work
-        if allAttractionsAreDefunt{
-            print("ALL ATTRACTION IN THIS PARK ARE DEFUNCT")
-            showExtinct = 1
-            print(totalNumExtinct)
-            totalNumExtinct = attractionListForTable.count
-            
-        }
+//        if allAttractionsAreDefunt{
+//            print("ALL ATTRACTION IN THIS PARK ARE DEFUNCT")
+//            showExtinct = 1
+//            print(totalNumExtinct)
+//            totalNumExtinct = attractionListForTable.count
+//            
+//        }
         if(showExtinct == 0){
             for i in 0..<attractionListForTable.count{ //sizeOfList
                 if ((attractionListForTable[i - countOfRemove]).active == 0 && showExtinct == 0 && (attractionListForTable[i - countOfRemove]).isCheck == false){
