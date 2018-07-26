@@ -85,10 +85,13 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var totalNumExtinct = 0
     var hasHaptic = 0
     var filteredAttractions = [AttractionsModel]()
+    
     var attractionListRef: DatabaseReference!
     var parksListRef: DatabaseReference!
     var favoriteListRef: DatabaseReference!
+    var scoreCardRef: DatabaseReference!
     var user: User!
+    
     var rideTypesforFilter = ["Roller Coaster", "Water Ride", "Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -167,8 +170,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)/\(String(parkData.parkID))")
         favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)/\(String(parkData.parkID))")
         ignoreListRef = Database.database().reference(withPath: "ignore-list/\(id!)/\(String(parkData.parkID))")
+
         
-        //Want to sort by name
         attractionListRef.observe(.value, with: { snapshot in
             var newAttractions: [AttractionList] = []
             for child in snapshot.children {
@@ -971,8 +974,8 @@ print ("selected Index is \(selectedIndex!)")
             print("Back to parks list")
             let parkVC = segue.destination as! ViewController
             parkVC.unwindFromAttractions(parkID: parkID)
-            
         }
+    
         
     }
     
@@ -991,23 +994,33 @@ print ("selected Index is \(selectedIndex!)")
                 
                 let newScore = Int(textField.text!)!
                 //Saving score to ScoreCard entity in CoreData
-                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                    return
-                }
-                let managedContext = appDelegate.persistentContainer.viewContext
-                let entity = NSEntityDescription.entity(forEntityName: "ScoreCard", in: managedContext)!
-                let newScoreCard = NSManagedObject(entity: entity, insertInto: managedContext)
+                let userID = Auth.auth().currentUser
+                let id = userID?.uid
+                self.scoreCardRef = Database.database().reference(withPath: "score-card-list/\(id!)/\(String(self.parkData.parkID))/\(String(selectedRide.rideID))")
+
                 
-                newScoreCard.setValue(newScore, forKey: "score")
-                newScoreCard.setValue(selectedRide.rideID, forKeyPath: "rideID")
-                newScoreCard.setValue(Date(), forKeyPath: "date")
+                let newScoreCard = ScoreCardList(score: newScore, rideID: selectedRide.rideID, date: Date().timeIntervalSince1970)
+                let newScoreRef = self.scoreCardRef.child(String(Int(newScoreCard.date)))
+                newScoreRef.setValue(newScoreCard.toAnyObject())
                 
-                do {
-                    try managedContext.save()
-                    print("Saved score")
-                } catch let error as NSError {
-                    print("Could not save. \(error), \(error.userInfo)")
-                }
+//
+//                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//                    return
+//                }
+//                let managedContext = appDelegate.persistentContainer.viewContext
+//                let entity = NSEntityDescription.entity(forEntityName: "ScoreCard", in: managedContext)!
+//                let newScoreCard = NSManagedObject(entity: entity, insertInto: managedContext)
+//
+//                newScoreCard.setValue(newScore, forKey: "score")
+//                newScoreCard.setValue(selectedRide.rideID, forKeyPath: "rideID")
+//                newScoreCard.setValue(Date(), forKeyPath: "date")
+//
+//                do {
+//                    try managedContext.save()
+//                    print("Saved score")
+//                } catch let error as NSError {
+//                    print("Could not save. \(error), \(error.userInfo)")
+//                }
             }
         }
         
