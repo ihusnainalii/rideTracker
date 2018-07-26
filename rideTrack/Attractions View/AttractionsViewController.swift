@@ -294,12 +294,16 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }
         //Hide EXTINCT ATTRACTIONS
-        print(allAttractionsAreDefunt)
+        print("All attractions are defunct: \(allAttractionsAreDefunt)")
         //This would work to show defunct attractions for closed parks, but the progress bar gets messed up and treats all attractions as current attractions
         //Uncomment out the if statement to see how it would work
-//        if allAttractionsAreDefunt{
-//            showExtinct = 1
-//        }
+        if allAttractionsAreDefunt{
+            print("ALL ATTRACTION IN THIS PARK ARE DEFUNCT")
+            showExtinct = 1
+            print(totalNumExtinct)
+            totalNumExtinct = attractionListForTable.count
+            
+        }
         if(showExtinct == 0){
             for i in 0..<attractionListForTable.count{ //sizeOfList
                 if ((attractionListForTable[i - countOfRemove]).active == 0 && showExtinct == 0 && (attractionListForTable[i - countOfRemove]).isCheck == false){
@@ -1101,36 +1105,6 @@ print ("selected Index is \(selectedIndex!)")
             self.countOfRemove = 0
             self.itemsDownloaded(items: self.savedItems, returnPath: "Gettings attraction data")
         })
-        //updateAttractionListRef.removeAllObservers()
-        
-       
-        
-        //attractionListRef.observeSingleEvent(of: ., with: <#T##(DataSnapshot) -> Void#>)
-        
-        //Getting coreData Attraction data for the selected park
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        let sortDescriptor = NSSortDescriptor(key: "rideID", ascending: true)
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
-//        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parkData.parkID!)")
-//        fetchRequest.sortDescriptors = [sortDescriptor]
-//        do {
-//            selectedAttractionsList = try managedContext.fetch(fetchRequest)
-//        } catch let error as NSError {
-//            print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
-//        }
-//        var userAttractions: [AttractionList] = []
-//        for i in 0..<selectedAttractionsList.count{
-//            let newAttraction = AttractionList(rideID: <#T##Int#>, numberOfTimesRidden: <#T##Int#>, firstRideDate: <#T##Date#>, lastRideDate: <#T##Date#>)
-//            newAttraction.dateFirstRidden = selectedAttractionsList[i].value(forKeyPath: "firstRideDate") as! Date
-//            newAttraction.dateLastRidden = selectedAttractionsList[i].value(forKeyPath: "lastRideDate") as! Date
-//            newAttraction.numberOfTimesRidden = selectedAttractionsList[i].value(forKeyPath: "numberOfTimesRidden") as! Int
-//            newAttraction.parkID = selectedAttractionsList[i].value(forKeyPath: "parkID") as! Int
-//            newAttraction.rideID = selectedAttractionsList[i].value(forKeyPath: "rideID") as! Int
-//            userAttractions.append(newAttraction)
-//        }
-//        userAttractionDatabase = userAttractions
     }
     /*
      // In a storyboard-based application, you will often want to do a little preparation before navigation

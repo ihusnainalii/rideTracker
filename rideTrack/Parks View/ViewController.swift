@@ -116,7 +116,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)")
         self.favoritesListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)")
         
-        parksListRef.observe(.value, with: { snapshot in
+        parksListRef.queryOrdered(byChild: "name").observe(.value, with: { snapshot in
             var newParks: [ParksList] = []
             for child in snapshot.children {
                 if let snapshot = child as? DataSnapshot,
@@ -129,7 +129,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             self.allParksTableView.reloadData()
             self.configureAllParksView()
         })
-        favoritesListRef.observe(.value, with: { snapshot in
+        favoritesListRef.queryOrdered(byChild: "name").observe(.value, with: { snapshot in
             var newParks: [ParksList] = []
             for child in snapshot.children {
                 if let snapshot = child as? DataSnapshot,
@@ -153,19 +153,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     override func viewWillAppear(_ animated: Bool) {
         segueWithTableViewSelect = true
         super.viewWillAppear(animated)
-        
-//        //Get ParkList data from CoreData
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        let sortDescriptor = NSSortDescriptor(key: "parkID", ascending: true)
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-//        fetchRequest.sortDescriptors = [sortDescriptor]
-//        do {
-//            savedParkList = try managedContext.fetch(fetchRequest)
-//        } catch let error as NSError {
-//            print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
-//        }
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -205,48 +193,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             //Gets all the parks from the database, sets up the favoritesList and allMyParksList
         else{
             arrayOfAllParks = items as! [ParksModel]
-//            var userParkListIncrementor = 0
-//            var allParksIncrementor = 0
-//
-//            if savedParkList.count != 0{
-//                //Like a do while loop- loop until just before the saved park incrementor goes out of index
-//                repeat {
-//                    //Check if the rideID in allParks matches that of savedParkList
-//                    if arrayOfAllParks[allParksIncrementor].parkID == savedParkList[userParkListIncrementor].value(forKey: "parkID") as! Int{
-//                        let addingPark = arrayOfAllParks[allParksIncrementor]
-//                        addingPark.favorite = savedParkList[userParkListIncrementor].value(forKey: "favorite") as! Bool
-//                        addingPark.totalRides = savedParkList[userParkListIncrementor].value(forKey: "totalRides") as! Int
-//                        addingPark.ridesRidden = savedParkList[userParkListIncrementor].value(forKey: "ridesRidden") as! Int
-//
-//                        if let incrementorShown = savedParkList[userParkListIncrementor].value(forKey: "incrementorEnabled"){
-//                            addingPark.incrementorEnabled = incrementorShown as! Bool
-//                            print("CORE DATA")
-//                        } else{
-//                            print("NEW")
-//                            addingPark.incrementorEnabled = false
-//                        }
-//
-//                        print(addingPark.incrementorEnabled)
-//                        //allParksList.append(addingPark)
-//                        userParkListIncrementor += 1
-//
-//                        if addingPark.favorite{
-//                            //favoiteParkList.append(addingPark)
-//                        }
-//                    }
-//                    allParksIncrementor += 1
-//                } while userParkListIncrementor < savedParkList.count
-//            }
-        
             
             favoritesViewHeightBeforeAnimating = favoritesViewHeightConstrant.constant
-            
-            //allParksList.sort { $0.name < $1.name }
-            //favoiteParkList.sort { $0.name < $1.name }
-            
-            //favoritesTableView.reloadData()
-            //allParksTableView.reloadData()
-            
+
             
             locationManager.delegate = self
             locationManager.requestWhenInUseAuthorization()
@@ -637,30 +586,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 }
             }
             
-//            //Getting coreData Attraction data for the selected park
-//            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//                return }
-//            let managedContext = appDelegate.persistentContainer.viewContext
-//            let sortDescriptor = NSSortDescriptor(key: "rideID", ascending: true)
-//            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "RideTrack")
-//            fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(selectedPark.parkID!)")
-//            fetchRequest.sortDescriptors = [sortDescriptor]
-//            do {
-//                selectedAttractionsList = try managedContext.fetch(fetchRequest)
-//            } catch let error as NSError {
-//                print("Could not fetch saved ParkList. \(error), \(error.userInfo)")
-//            }
-//            var userAttractions: [UserAttractionProvider] = []
-//            for i in 0..<selectedAttractionsList.count{
-//                let newAttraction = UserAttractionProvider()
-//                newAttraction.dateFirstRidden = selectedAttractionsList[i].value(forKeyPath: "firstRideDate") as! Date
-//                newAttraction.dateLastRidden = selectedAttractionsList[i].value(forKeyPath: "lastRideDate") as! Date
-//                newAttraction.numberOfTimesRidden = selectedAttractionsList[i].value(forKeyPath: "numberOfTimesRidden") as! Int
-//                newAttraction.parkID = selectedAttractionsList[i].value(forKeyPath: "parkID") as! Int
-//                newAttraction.rideID = selectedAttractionsList[i].value(forKeyPath: "rideID") as! Int
-//                userAttractions.append(newAttraction)
-//            }
-//            attractionVC.userAttractionDatabase = userAttractions
+
             UIView.animate(withDuration: 0.2, animations: {
                 self.darkenBackground.alpha =  0.20
             })
@@ -744,13 +670,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             var latitude = location.coordinate.latitude
             var longitude = location.coordinate.longitude
             var oneMileParks = [ParksModel]()
-            
-            //Simulate you are at Epcot
-            //            latitude = 28.3667
-            //            longitude = -81.5495
-            
-            //Simulate you are in Magic Kingdom
-            //print("Simulate", simulateLocation)
+
             if simulateLocation == 1{
                 latitude = 28.4161
                 longitude = -81.5811

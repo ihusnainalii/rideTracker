@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class SearchMyParks{
     
@@ -36,6 +37,7 @@ class SearchMyParks{
             parksView.allParksTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
         }
         parksView.searchParksTextField.becomeFirstResponder()
+        parksView.parksListRef.removeAllObservers()
     }
     
     func animateOutOfParkSearch(parksView: ViewController){
@@ -66,6 +68,21 @@ class SearchMyParks{
                 parksView.view.layoutIfNeeded()
             })
         }
+        
+        parksView.parksListRef.queryOrdered(byChild: "name").observe(.value, with: { snapshot in
+            var newParks: [ParksList] = []
+            for child in snapshot.children {
+                if let snapshot = child as? DataSnapshot,
+                    let parkItem = ParksList(snapshot: snapshot) {
+                    newParks.append(parkItem)
+                }
+            }
+            print("Gettings all-parks-list")
+            parksView.allParksList = newParks
+            parksView.allParksTableView.reloadData()
+            parksView.configureAllParksView()
+        })
+        
         parksView.firstItemsToFavorites = false
     }
     
