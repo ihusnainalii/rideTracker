@@ -87,7 +87,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var parksListRef: DatabaseReference!
     var favoriteListRef: DatabaseReference!
     var user: User!
-    var typeFilter = ["ALL"]
+    var rideTypesforFilter = ["Roller Coaster", "Water Ride", "Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
     
     let searchController = UISearchController(searchResultsController: nil)
     var is3DTouchAvailable: Bool {
