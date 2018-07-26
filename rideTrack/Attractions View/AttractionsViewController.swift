@@ -59,8 +59,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var isIgnored = false
     //From the datamigration tool:
     var userAttractionDatabase: [AttractionList]!
-    var ignore = [Int]()
-    let ignoreList = UserDefaults.standard
+    var ignore = [IgnoreList]()
+    //let ignoreList = UserDefaults.standard
     var numIgnore = 0
     var comeFromDetails = false
     var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
@@ -95,6 +95,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var is3DTouchAvailable: Bool {
         return view.traitCollection.forceTouchCapability == .available
     }
+    
+    var ignoreListRef: DatabaseReference!
     
     override func viewDidLoad() {
         print("Show incrementor is \(parkData.incrementorEnabled)")
@@ -151,7 +153,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         dataModel.delegate = self
         
         dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
-        ignore = ignoreList.array(forKey: "SavedIgnoreListArray")  as? [Int] ?? [Int]()
+        //ignore = ignoreList.array(forKey: "SavedIgnoreListArray")  as? [Int] ?? [Int]()
  
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -164,7 +166,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         attractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkData.parkID!)")
         parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)/\(String(parkData.parkID))")
         favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)/\(String(parkData.parkID))")
+        ignoreListRef = Database.database().reference(withPath: "ignore-list/\(id!)/\(String(parkData.parkID))")
         
+        //Want to sort by name
         attractionListRef.observe(.value, with: { snapshot in
             var newAttractions: [AttractionList] = []
             for child in snapshot.children {
@@ -176,6 +180,18 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.userAttractionDatabase = newAttractions
 
             //self.attractionsTableView.reloadData()
+        })
+        
+        ignoreListRef.observe(.value, with: { snapshot in
+            var newIgnores: [IgnoreList] = []
+            for child in snapshot.children {
+                if let snapshot = child as? DataSnapshot,
+                    let ignoreItem = IgnoreList(snapshot: snapshot) {
+                    newIgnores.append(ignoreItem)
+                }
+            }
+            print("new ignore at ride ID: \(self.ignore.count)")
+            self.ignore = newIgnores
         })
         // Setup the Search Controller
         
@@ -283,14 +299,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                         attractionListForTable[i].isIgnored = false
                     } //setting the rides to be ignored
                     for j in 0..<ignore.count{
-                        if ignore[j] == attractionListForTable[i].rideID && attractionListForTable[i].active == 0 {
+                        if ignore[j].rideID == attractionListForTable[i].rideID && attractionListForTable[i].active == 0 {
                             print ("was opened/hidden, now extinct")
                             ignore.remove(at: j)
                             attractionListForTable[i].isIgnored = false
                             break
                         }
                         
-                        if ignore[j] == attractionListForTable[i].rideID{
+                        if ignore[j].rideID == attractionListForTable[i].rideID{
                             //print ("still here!")
                             attractionListForTable[i].isIgnored = true
                             numIgnore += 1
@@ -525,7 +541,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
 
                 if self.attractionListForTable[indexPath.row].isIgnored == false {
-                    self.ignore.append(self.attractionListForTable[indexPath.row].rideID!)
+                    
+                    //self.ignore.append(self.attractionListForTable[indexPath.row].rideID!)
+                    
+                    let newIgnore = IgnoreList(rideID: self.attractionListForTable[indexPath.row].rideID!)
+                    let newIgnoreRef = self.ignoreListRef.child(String(newIgnore.rideID))
+                    newIgnoreRef.setValue(newIgnore.toAnyObject())
+                    
+                    
                     print("Ignoring ", self.attractionListForTable[indexPath.row].name!)
                     self.attractionListForTable[indexPath.row].isIgnored = true
                     self.numIgnore += 1
@@ -534,20 +557,24 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                     cell.attractionButton.setImage(#imageLiteral(resourceName: "Ignore Button"), for: .normal)
                 }
                 else {
-                    for i in 0..<(self.ignore.count) {
-                        if self.ignore[i] == self.attractionListForTable[indexPath.row].rideID{
-                            self.ignore.remove(at: i)
-                            break
-                        }
-                    }
+                    let ignoreIdex = self.findIndexOfIgnore(rideID: self.attractionListForTable[indexPath.row].rideID)
+                    let ignoreItem = self.ignore[ignoreIdex]
+                    ignoreItem.ref?.removeValue()
+//                    for i in 0..<(self.ignore.count) {
+//                        if self.ignore[i].rideID == self.attractionListForTable[indexPath.row].rideID{
+//                            self.ignore.remove(at: i)
+//                            break
+//                        }
+//                    }
                     print ("Unignoring ", self.attractionListForTable[indexPath.row].name!)
                     self.attractionListForTable[indexPath.row].isIgnored = false
                     self.numIgnore -= 1
                     
+                    
                     cell.attractionButton.setImage(#imageLiteral(resourceName: "Check Button"), for: .normal)
                     cell.rideName?.textColor = UIColor.black
                 }
-                self.ignoreList.set(self.ignore, forKey: "SavedIgnoreListArray")
+                //self.ignoreList.set(self.ignore, forKey: "SavedIgnoreListArray")
                 
                 self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore-self.numExtinctSelected)
                 success(true)
@@ -568,6 +595,18 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         else {
             return nil
         }
+    }
+    
+    func findIndexOfIgnore(rideID: Int) -> Int{
+        var index = -1
+        print(ignore.count)
+        for i in 0..<ignore.count{
+            print("Ignore ID: \(ignore[i].rideID)")
+            if ignore[i].rideID == rideID{
+                index = i
+            }
+        }
+        return index
     }
     
     func convertRideTypeID(rideTypeID: Int) -> String {
