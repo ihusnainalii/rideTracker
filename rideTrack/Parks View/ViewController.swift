@@ -120,7 +120,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             var newParks: [ParksList] = []
             for child in snapshot.children {
                 if let snapshot = child as? DataSnapshot,
+                    
                     let parkItem = ParksList(snapshot: snapshot) {
+                    
                     newParks.append(parkItem)
                 }
             }

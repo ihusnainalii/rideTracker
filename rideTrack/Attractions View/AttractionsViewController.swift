@@ -57,8 +57,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var isIgnored = false
     //From the datamigration tool:
     var userAttractionDatabase: [AttractionList]!
-    var ignore = [Int]()
-    let ignoreList = UserDefaults.standard
+    var ignore = [IgnoreList]()
+    //let ignoreList = UserDefaults.standard
     var numIgnore = 0
     var comeFromDetails = false
     var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
@@ -83,16 +83,21 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var totalNumExtinct = 0
     var hasHaptic = 0
     var filteredAttractions = [AttractionsModel]()
+    
     var attractionListRef: DatabaseReference!
     var parksListRef: DatabaseReference!
     var favoriteListRef: DatabaseReference!
+    var scoreCardRef: DatabaseReference!
     var user: User!
+    
     var rideTypesforFilter = ["Roller Coaster", "Water Ride", "Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
     
     let searchController = UISearchController(searchResultsController: nil)
     var is3DTouchAvailable: Bool {
         return view.traitCollection.forceTouchCapability == .available
     }
+    
+    var ignoreListRef: DatabaseReference!
     
     override func viewDidLoad() {
         print("Show incrementor is \(parkData.incrementorEnabled)")
@@ -147,7 +152,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         dataModel.delegate = self
         
         dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
-        ignore = ignoreList.array(forKey: "SavedIgnoreListArray")  as? [Int] ?? [Int]()
+        //ignore = ignoreList.array(forKey: "SavedIgnoreListArray")  as? [Int] ?? [Int]()
  
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -160,6 +165,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         attractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkData.parkID!)")
         parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)/\(String(parkData.parkID))")
         favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)/\(String(parkData.parkID))")
+        ignoreListRef = Database.database().reference(withPath: "ignore-list/\(id!)/\(String(parkData.parkID))")
+
         
         attractionListRef.observe(.value, with: { snapshot in
             var newAttractions: [AttractionList] = []
@@ -172,6 +179,18 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.userAttractionDatabase = newAttractions
 
             //self.attractionsTableView.reloadData()
+        })
+        
+        ignoreListRef.observe(.value, with: { snapshot in
+            var newIgnores: [IgnoreList] = []
+            for child in snapshot.children {
+                if let snapshot = child as? DataSnapshot,
+                    let ignoreItem = IgnoreList(snapshot: snapshot) {
+                    newIgnores.append(ignoreItem)
+                }
+            }
+            print("new ignore at ride ID: \(self.ignore.count)")
+            self.ignore = newIgnores
         })
         // Setup the Search Controller
         searchController.searchBar.delegate = self
@@ -272,14 +291,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                         attractionListForTable[i].isIgnored = false
                     } //setting the rides to be ignored
                     for j in 0..<ignore.count{
-                        if ignore[j] == attractionListForTable[i].rideID && attractionListForTable[i].active == 0 {
+                        if ignore[j].rideID == attractionListForTable[i].rideID && attractionListForTable[i].active == 0 {
                             print ("was opened/hidden, now extinct")
                             ignore.remove(at: j)
                             attractionListForTable[i].isIgnored = false
                             break
                         }
                         
-                        if ignore[j] == attractionListForTable[i].rideID{
+                        if ignore[j].rideID == attractionListForTable[i].rideID{
                             //print ("still here!")
                             attractionListForTable[i].isIgnored = true
                             numIgnore += 1
@@ -497,7 +516,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
 
                 if self.attractionListForTable[indexPath.row].isIgnored == false {
-                    self.ignore.append(self.attractionListForTable[indexPath.row].rideID!)
+                    
+                    //self.ignore.append(self.attractionListForTable[indexPath.row].rideID!)
+                    
+                    let newIgnore = IgnoreList(rideID: self.attractionListForTable[indexPath.row].rideID!)
+                    let newIgnoreRef = self.ignoreListRef.child(String(newIgnore.rideID))
+                    newIgnoreRef.setValue(newIgnore.toAnyObject())
+                    
+                    
                     print("Ignoring ", self.attractionListForTable[indexPath.row].name!)
                     self.attractionListForTable[indexPath.row].isIgnored = true
                     self.numIgnore += 1
@@ -506,20 +532,24 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                     cell.attractionButton.setImage(#imageLiteral(resourceName: "Ignore Button"), for: .normal)
                 }
                 else {
-                    for i in 0..<(self.ignore.count) {
-                        if self.ignore[i] == self.attractionListForTable[indexPath.row].rideID{
-                            self.ignore.remove(at: i)
-                            break
-                        }
-                    }
+                    let ignoreIdex = self.findIndexOfIgnore(rideID: self.attractionListForTable[indexPath.row].rideID)
+                    let ignoreItem = self.ignore[ignoreIdex]
+                    ignoreItem.ref?.removeValue()
+//                    for i in 0..<(self.ignore.count) {
+//                        if self.ignore[i].rideID == self.attractionListForTable[indexPath.row].rideID{
+//                            self.ignore.remove(at: i)
+//                            break
+//                        }
+//                    }
                     print ("Unignoring ", self.attractionListForTable[indexPath.row].name!)
                     self.attractionListForTable[indexPath.row].isIgnored = false
                     self.numIgnore -= 1
                     
+                    
                     cell.attractionButton.setImage(#imageLiteral(resourceName: "Check Button"), for: .normal)
                     cell.rideName?.textColor = UIColor.black
                 }
-                self.ignoreList.set(self.ignore, forKey: "SavedIgnoreListArray")
+                //self.ignoreList.set(self.ignore, forKey: "SavedIgnoreListArray")
                 
                 self.updatingRideCount(parkID: self.parkID, userCount: self.userRidesRidden-self.userNumExtinct, totNum: self.attractionListForTable.count - self.totalNumExtinct-self.numIgnore-self.numExtinctSelected)
                 success(true)
@@ -540,6 +570,18 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         else {
             return nil
         }
+    }
+    
+    func findIndexOfIgnore(rideID: Int) -> Int{
+        var index = -1
+        print(ignore.count)
+        for i in 0..<ignore.count{
+            print("Ignore ID: \(ignore[i].rideID)")
+            if ignore[i].rideID == rideID{
+                index = i
+            }
+        }
+        return index
     }
     
     func convertRideTypeID(rideTypeID: Int) -> String {
@@ -955,8 +997,8 @@ print ("selected Index is \(selectedIndex!)")
             print("Back to parks list")
             let parkVC = segue.destination as! ViewController
             parkVC.unwindFromAttractions(parkID: parkID)
-            
         }
+    
         
     }
     
@@ -975,23 +1017,33 @@ print ("selected Index is \(selectedIndex!)")
                 
                 let newScore = Int(textField.text!)!
                 //Saving score to ScoreCard entity in CoreData
-                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                    return
-                }
-                let managedContext = appDelegate.persistentContainer.viewContext
-                let entity = NSEntityDescription.entity(forEntityName: "ScoreCard", in: managedContext)!
-                let newScoreCard = NSManagedObject(entity: entity, insertInto: managedContext)
+                let userID = Auth.auth().currentUser
+                let id = userID?.uid
+                self.scoreCardRef = Database.database().reference(withPath: "score-card-list/\(id!)/\(String(self.parkData.parkID))/\(String(selectedRide.rideID))")
+
                 
-                newScoreCard.setValue(newScore, forKey: "score")
-                newScoreCard.setValue(selectedRide.rideID, forKeyPath: "rideID")
-                newScoreCard.setValue(Date(), forKeyPath: "date")
+                let newScoreCard = ScoreCardList(score: newScore, rideID: selectedRide.rideID, date: Date().timeIntervalSince1970)
+                let newScoreRef = self.scoreCardRef.child(String(Int(newScoreCard.date)))
+                newScoreRef.setValue(newScoreCard.toAnyObject())
                 
-                do {
-                    try managedContext.save()
-                    print("Saved score")
-                } catch let error as NSError {
-                    print("Could not save. \(error), \(error.userInfo)")
-                }
+//
+//                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//                    return
+//                }
+//                let managedContext = appDelegate.persistentContainer.viewContext
+//                let entity = NSEntityDescription.entity(forEntityName: "ScoreCard", in: managedContext)!
+//                let newScoreCard = NSManagedObject(entity: entity, insertInto: managedContext)
+//
+//                newScoreCard.setValue(newScore, forKey: "score")
+//                newScoreCard.setValue(selectedRide.rideID, forKeyPath: "rideID")
+//                newScoreCard.setValue(Date(), forKeyPath: "date")
+//
+//                do {
+//                    try managedContext.save()
+//                    print("Saved score")
+//                } catch let error as NSError {
+//                    print("Could not save. \(error), \(error.userInfo)")
+//                }
             }
         }
         
