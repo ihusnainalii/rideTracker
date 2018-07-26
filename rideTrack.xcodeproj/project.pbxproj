@@ -38,6 +38,7 @@
 		987028F420B7897E00DC3B73 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987028F320B7897E00DC3B73 /* SettingsViewController.swift */; };
 		98A6A55121069FE700102620 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 98A6A55021069FE700102620 /* GoogleService-Info.plist */; };
 		98A9A8552109207E00B3C36E /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A9A8542109207E00B3C36E /* FilterTableViewCell.swift */; };
+		98A9A857210A28E600B3C36E /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A9A856210A28E600B3C36E /* FilterViewController.swift */; };
 		98AD7F3620A91A2D00540AB3 /* rideTrackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F3520A91A2D00540AB3 /* rideTrackTests.swift */; };
 		98AD7F4120A91A2D00540AB3 /* rideTrackUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F4020A91A2D00540AB3 /* rideTrackUITests.swift */; };
 		98AD7F6F20A91A5C00540AB3 /* AttractionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F6420A91A5A00540AB3 /* AttractionsModel.swift */; };
@@ -112,6 +113,7 @@
 		987028F320B7897E00DC3B73 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		98A6A55021069FE700102620 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		98A9A8542109207E00B3C36E /* FilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
+		98A9A856210A28E600B3C36E /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		98AD7F1A20A91A2B00540AB3 /* rideTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rideTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98AD7F3120A91A2D00540AB3 /* rideTrackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rideTrackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98AD7F3520A91A2D00540AB3 /* rideTrackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rideTrackTests.swift; sourceTree = "<group>"; };
@@ -198,7 +200,7 @@
 				982E097720F6830E007F2D02 /* ExtendedAttractionDetailsViewController.swift */,
 				9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */,
 				5F16C51C20BB92FC00E525EF /* AttractionsTableViewCell.swift */,
-				98A9A8542109207E00B3C36E /* FilterTableViewCell.swift */,
+				98A9A858210A28EE00B3C36E /* FilterView */,
 				5FF0BBBC20CF637700213DF8 /* Score Card */,
 				5F202C5C20EB257700FFE408 /* ParksDetailViewController.swift */,
 			);
@@ -259,6 +261,15 @@
 				982E097520F54957007F2D02 /* ModifyAttractionViewController.swift */,
 			);
 			path = "User Suggest";
+			sourceTree = "<group>";
+		};
+		98A9A858210A28EE00B3C36E /* FilterView */ = {
+			isa = PBXGroup;
+			children = (
+				98A9A856210A28E600B3C36E /* FilterViewController.swift */,
+				98A9A8542109207E00B3C36E /* FilterTableViewCell.swift */,
+			);
+			path = FilterView;
 			sourceTree = "<group>";
 		};
 		98AD7F1120A91A2B00540AB3 = {
@@ -588,6 +599,7 @@
 				5FF1ECAA20B526EB00BE1609 /* RideTrack.xcdatamodel in Sources */,
 				98AD7F7620A91A5C00540AB3 /* DataModel.swift in Sources */,
 				5FE9F81320DCA43C0012B98C /* ParksCoreData.swift in Sources */,
+				98A9A857210A28E600B3C36E /* FilterViewController.swift in Sources */,
 				98F24F5120EFE35200A42C7E /* SuggestDetailsViewController.swift in Sources */,
 				5F202C5B20E6E8AF00FFE408 /* NeverClearView.swift in Sources */,
 				5F16C52520BCE89200E525EF /* SearchTableViewCell.swift in Sources */,

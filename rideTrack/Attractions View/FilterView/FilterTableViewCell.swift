@@ -9,11 +9,14 @@
 import UIKit
 
 class FilterTableViewCell: UITableViewCell {
+    @IBOutlet weak var selectButton: UIImageView!
     @IBOutlet weak var rideTypeLabel: UILabel!
-    @IBOutlet weak var checkButton: UIButton!
     
+    weak var delegate: FilterTableViewCellDelegate?
+
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         // Initialization code
     }
     
@@ -22,5 +25,9 @@ class FilterTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+
+}
+protocol FilterTableViewCellDelegate: class {
 
 }
