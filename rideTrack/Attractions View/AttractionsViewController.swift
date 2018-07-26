@@ -69,7 +69,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     //let appGreen = UIColor(red: 29.0/255.0, green: 127.0/255.0, blue: 70.0/255.0, alpha: 1.0)
     let darkGreen = UIColor(red: 40/255.0, green: 119/255.0, blue: 72/255.0, alpha: 1.0)
-    let appGreen = UIColor(red: 74.0/255.0, green: 166.0/255.0, blue: 65.0/255.0, alpha: 1.0)
+    let appGreen = UIColor(red: 68.0/255.0, green: 146.0/255.0, blue: 63.0/255.0, alpha: 1.0)
     let goldBar = UIColor(red: 250/255.0, green: 204/255.0, blue: 73/255.0, alpha: 1.0)
     let lightGreyBar = UIColor(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1.0)
     var userAttractions: [NSManagedObject] = []
@@ -90,7 +90,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var scoreCardRef: DatabaseReference!
     var user: User!
     
-    var rideTypesforFilter = ["Roller Coaster", "Water Ride", "Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
+    var typeFilter = ["ALL"]
     
     let searchController = UISearchController(searchResultsController: nil)
     var is3DTouchAvailable: Bool {
@@ -200,7 +200,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         searchController.searchBar.searchBarStyle = UISearchBarStyle.prominent
         searchController.searchBar.sizeToFit()
         searchController.searchBar.showsScopeBar = true
-        //self.navigationItem.searchController = searchController
         searchController.hidesNavigationBarDuringPresentation = false
         
         self.attractionsTableView.tableHeaderView = searchController.searchBar
@@ -214,7 +213,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
-   
     func itemsDownloaded(items: NSArray, returnPath: String) {
         var allAttractionsAreDefunt = true
         savedItems = items
@@ -558,7 +556,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             })
             
             ignoreAction.title = attractionListForTable[indexPath.row].isIgnored ? "Include" : "Exclude"
-            ignoreAction.backgroundColor = attractionListForTable[indexPath.row].isIgnored ? darkGreen : .gray
+            ignoreAction.backgroundColor = attractionListForTable[indexPath.row].isIgnored ? appGreen : .gray
             let configurations = UISwipeActionsConfiguration(actions: [ignoreAction])
             configurations.performsFirstActionWithFullSwipe = true
             return configurations //UISwipeActionsConfiguration(actions: [ignoreAction])
@@ -725,31 +723,46 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
         cell.rideCellSquare.isUserInteractionEnabled = true
     }
-    //search functions
+   // search functions
     func searchBarIsEmpty() -> Bool {
         // Returns true if the text is empty or nil
         return searchController.searchBar.text?.isEmpty ?? true
+//        if (searchController.searchBar.text?.isEmpty)! {
+//        }
+//        return false
     }
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         filteredAttractions = attractionListForTable.filter({(attractionListForTable : AttractionsModel) -> Bool in
-            let doesMatchCatagory = (scope == "All") || (String(convertRideTypeID(rideTypeID: attractionListForTable.rideType)) == scope)
+            var doesMatchCatagory = false //= (scope == "All")
+            for i in 0..<typeFilter.count {
+                doesMatchCatagory = doesMatchCatagory || (String(convertRideTypeID(rideTypeID: attractionListForTable.rideType)) == typeFilter[i])
+            }
+            
             if scope == "ALL"{
                 return attractionListForTable.name.lowercased().contains(searchText.lowercased())
             }
-//            if searchBarIsEmpty() {
-//                return doesMatchCatagory
-//            }
+            else if searchBarIsEmpty() {
+                return doesMatchCatagory
+            }
           else {
                 return attractionListForTable.name.lowercased().contains(searchText.lowercased()) && doesMatchCatagory
             }
         })
+       // print("reload")
         attractionsTableView.reloadData()
     }
     
     func isFiltering() -> Bool {
         let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
-        return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
+        //print("Filtering")
+        if typeFilter[0] == "ALL" {
+            return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
+        }
+        else  {
+            return searchController.isActive && (true || searchBarScopeIsFiltering) //!searchBarIsEmpty()
+
+        }
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -1108,7 +1121,13 @@ print ("selected Index is \(selectedIndex!)")
         print("Back to attractions view")
         self.attractionsTableView.contentInset = insets
         if sender.source is FilterViewController {
+            //searchController.definesPresentationContext = true
+            //searchController.searchBar.becomeFirstResponder()
             searchController.isActive = true
+            DispatchQueue.main.async {
+                self.searchController.isActive = true
+            }
+
         }
         if sender.source is ParksDetailViewController{
             if parkData.incrementorEnabled{
@@ -1237,9 +1256,8 @@ extension AttractionsViewController: UISearchResultsUpdating {
     // MARK: - UISearchResultsUpdating Delegate
     func updateSearchResults(for searchController: UISearchController) {
        // let searchBar = searchController.searchBar
-        print ("Type is now down here: \(typeFilter)")
         let scope = self.typeFilter[0]
-
+        
         filterContentForSearchText(searchController.searchBar.text!, scope: scope)
     }
 }
@@ -1247,6 +1265,5 @@ extension AttractionsViewController: UISearchBarDelegate {
     // MARK: - UISearchBar Delegata
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
-        print ("At delegate")
     }
 }
