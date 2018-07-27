@@ -69,7 +69,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var isSearchingMyParks = false
     var firstItemsToFavorites = false
     
-    var showExtinct = UserDefaults.standard.integer(forKey: "showExtinct")
     var simulateLocation = UserDefaults.standard.integer(forKey: "simulateLocation")
     
     var locationManager: CLLocationManager = CLLocationManager()
@@ -475,7 +474,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 })
             }
             
-            let newParkModel = ParksList(parkID: newPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: newPark.name, location: newPark.city)
+            let newParkModel = ParksList(parkID: newPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: newPark.name, location: newPark.city, showDefunct: false)
             let newParkRef = self.parksListRef.child(String(newParkModel.parkID))
             newParkRef.setValue(newParkModel.toAnyObject())
             
@@ -564,7 +563,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let arrayOfAllParksIndex = getParkModelINdexFromAllParks(parkID: selectedPark.parkID)
             
             print ("The park is ", selectedPark.name)
-            attractionVC.showExtinct = showExtinct
+            attractionVC.showExtinct = selectedPark.showDefunct
             attractionVC.parksViewController = self
             attractionVC.segueWithTableViewSelect = segueWithTableViewSelect
             attractionVC.parkData = arrayOfAllParks[arrayOfAllParksIndex]
@@ -609,7 +608,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         if segue.identifier == "toSettings"{
             let settingVC = segue.destination as! SettingsViewController
-            settingVC.showExtinct = showExtinct
             settingVC.simulateLocation = simulateLocation
         }
     }
@@ -632,7 +630,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         if segue.source is SettingsViewController{
             print("back from settings")
             let settingsVC = segue.source as! SettingsViewController
-            showExtinct = settingsVC.showExtinct
             simulateLocation = settingsVC.simulateLocation
             
             searchRideButtonHeightConstraint.constant = 23
@@ -759,7 +756,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         
         segueWithTableViewSelect = false
-        selectedPark = ParksList(parkID: closestPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: closestPark.name, location: closestPark.city)
+        selectedPark = ParksList(parkID: closestPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: closestPark.name, location: closestPark.city, showDefunct: false)
         performSegue(withIdentifier: "toAttractionsAll", sender: nil)
     }
     

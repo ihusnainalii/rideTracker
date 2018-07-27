@@ -23,9 +23,10 @@ struct ParksList {
     var ridesRidden: Int!
     var totalRides: Int!
     var incrementorEnabled: Bool!
+    var showDefunct: Bool!
     
     
-    init(parkID: Int, favorite: Bool, ridesRidden: Int, totalRides: Int, incrementorEnabled: Bool, name: String, location: String, key: String = "") {
+    init(parkID: Int, favorite: Bool, ridesRidden: Int, totalRides: Int, incrementorEnabled: Bool, name: String, location: String, showDefunct: Bool, key: String = "") {
         self.ref = nil
         self.key = key
         self.parkID = parkID
@@ -35,6 +36,7 @@ struct ParksList {
         self.incrementorEnabled = incrementorEnabled
         self.name = name
         self.location = location
+        self.showDefunct = showDefunct
     }
     
     init?(snapshot: DataSnapshot) {
@@ -49,6 +51,10 @@ struct ParksList {
             let favorite = value["favorite"] as? Bool else {
                 return nil
         }
+        var showDefunct = false
+        if let showDefunctCheck = value["showDefunct"] as? Bool{
+            showDefunct = showDefunctCheck
+        }
         
         self.ref = snapshot.ref
         self.key = snapshot.key
@@ -59,6 +65,7 @@ struct ParksList {
         self.incrementorEnabled = incrementorEnabled
         self.name = name
         self.location = location
+        self.showDefunct = showDefunct
     }
     
     func toAnyObject() -> Any {
@@ -69,6 +76,7 @@ struct ParksList {
             "totalRides": totalRides,
             "name": name,
             "location": location,
+            "showDefunct": showDefunct,
             "incrementorEnabled": incrementorEnabled
             
         ]

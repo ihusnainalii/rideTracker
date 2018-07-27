@@ -23,11 +23,13 @@ class ParksDetailViewController: UIViewController {
     @IBOutlet weak var previousNamesStack: UIStackView!
     @IBOutlet weak var yearOpenStack: UIStackView!
     @IBOutlet weak var incrementorSwitch: UISwitch!
+    @IBOutlet weak var defunctSwitch: UISwitch!
     
     var initialLocation: CLLocation!
     let regionRadius: CLLocationDistance = 1000
     var parksData: ParksModel!
     var favoiteParkList = [ParksList]()
+    var showDefunct = false
     
     var parksListRef: DatabaseReference!
     var favoriteListRef: DatabaseReference!
@@ -45,6 +47,7 @@ class ParksDetailViewController: UIViewController {
         self.favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)/\(String(parksData.parkID))")
         configueLayout()
         incrementorSwitch.isOn = parksData.incrementorEnabled
+        defunctSwitch.isOn = showDefunct
         initialLocation = CLLocation(latitude: parksData.latitude, longitude: parksData.longitude)
         centerMapOnLocation(location: initialLocation)
         // Do any additional setup after loading the view.
@@ -84,6 +87,19 @@ class ParksDetailViewController: UIViewController {
                 ])
         }
     }
+    @IBAction func didToggleDefunctSwitch(_ sender: Any) {
+        showDefunct = defunctSwitch.isOn
+        print("SHOW DEFUNCT: \(showDefunct )")
+        parksListRef.updateChildValues([
+            "showDefunct": showDefunct
+            ])
+        let favoriteIndex = findIndexFavoritesList(parkID: parksData.parkID)
+        if favoriteIndex != -1{
+            favoriteListRef.updateChildValues([
+                "showDefunct": showDefunct
+                ])
+        }
+    }
     
     func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
@@ -94,27 +110,7 @@ class ParksDetailViewController: UIViewController {
         print("Back to details view")
     }
     
-    
-//    func saveIncrementorChange(incrementorEnabled: Bool){
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ParkList")
-//        fetchRequest.predicate = NSPredicate(format: "parkID = %@", "\(parksData.parkID!)")
-//        do {
-//            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
-//            
-//            for entity in fetchedResults! {
-//                print("Setting incrementor enabled to \(incrementorEnabled)")
-//                entity.setValue(incrementorEnabled, forKey: "incrementorEnabled")
-//                try! managedContext.save()
-//            }
-//        }
-//        catch _ {
-//            print("Could not save favorite")
-//        }
-//    }
-    
+
     func findIndexFavoritesList(parkID: Int) -> Int{
         var favoritesIndex = -1
         for i in 0..<favoiteParkList.count{

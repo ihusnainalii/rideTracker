@@ -53,7 +53,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var favoiteParkList = [ParksList]()
     var savedItems: NSArray!
     var parkData: ParksModel!
-    var showExtinct = 0
+    var showExtinct = false
     var isIgnored = false
     //From the datamigration tool:
     var userAttractionDatabase: [AttractionList]!
@@ -279,7 +279,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                         attractionListForTable[i].numberOfTimesRidden = 0
                     }
                     
-                    if attractionListForTable[i].active == 0 && showExtinct == 1 {
+                    if attractionListForTable[i].active == 0 && showExtinct{
                         totalNumExtinct += 1
                     }
                     
@@ -325,9 +325,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
 //            totalNumExtinct = attractionListForTable.count
 //            
 //        }
-        if(showExtinct == 0){
+        if(!showExtinct){
             for i in 0..<attractionListForTable.count{ //sizeOfList
-                if ((attractionListForTable[i - countOfRemove]).active == 0 && showExtinct == 0 && (attractionListForTable[i - countOfRemove]).isCheck == false){
+                if ((attractionListForTable[i - countOfRemove]).active == 0 && !showExtinct && (attractionListForTable[i - countOfRemove]).isCheck == false){
                     //attractionListForTable.removeObject(at: i - countOfRemove)
                     attractionListForTable.remove(at: i-countOfRemove)
                     countOfRemove = countOfRemove+1
@@ -345,7 +345,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             attractionListForTable.sort { ($0.active, $1.name) > ($1.active, $0.name) }
         }
         
-        if showExtinct == 1 || userNumExtinct >= 1 {
+        if showExtinct || userNumExtinct >= 1 {
             extinctText.isHidden = false
             extinctLabel.isHidden = false
             extinctComplete = String (userNumExtinct)
@@ -974,6 +974,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             let infoVC = segue.destination as! ParksDetailViewController
             infoVC.parksData = parkData
             infoVC.favoiteParkList = favoiteParkList
+            infoVC.showDefunct = showExtinct
+
         }
         if segue.identifier == "toFilter" {
             print ("here?")
@@ -1137,12 +1139,18 @@ print ("selected Index is \(selectedIndex!)")
 
         }
         if sender.source is ParksDetailViewController{
+            let parkDetailsVC = sender.source as! ParksDetailViewController
+            showExtinct = parkDetailsVC.showDefunct
+            print("SHOW EXTINCT: \(showExtinct)")
             if parkData.incrementorEnabled{
                //attractionListForTable = saveIncrementorAttractionsListForTable
-                attractionListForTable.removeAll()
-                userAttractionDatabase.removeAll()
-                updateAttractionFromCoreData()
+//                attractionListForTable.removeAll()
+//                userAttractionDatabase.removeAll()
+//                updateAttraction()
             }
+            attractionListForTable.removeAll()
+            userAttractionDatabase.removeAll()
+            updateAttraction()
             attractionsTableView.reloadData()
         }
         UIView.animate(withDuration: 0.3, animations: ({
@@ -1231,11 +1239,10 @@ print ("selected Index is \(selectedIndex!)")
     
     
     
-    func updateAttractionFromCoreData(){
+    func updateAttraction(){
 
 //        let userID = Auth.auth().currentUser
 //        let id = userID?.uid
-//        let updateAttractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkData.parkID!)")
 
         attractionListRef.observeSingleEvent(of: .value, with: { snapshot in
             print("OBSERVING UPDATE ATTRACTIONS AFTER SEGUING FROM PARK INFO. This should not run any other time")

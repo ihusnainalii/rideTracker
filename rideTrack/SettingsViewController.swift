@@ -15,13 +15,11 @@ class SettingsViewController: UIViewController, UITextViewDelegate {
     var usersParkList: NSMutableArray = NSMutableArray()
     var downloadIncrementor = 0
     // var showExtinct : Int?
-    var showExtinct = 0
     var simulateLocation = 0
     var resetPressed : Int?
     
     @IBOutlet weak var simulateLocationLabel: UILabel!
     @IBOutlet weak var approveSuggestionsButton: UIButton!
-    @IBOutlet weak var showExtinctSwitch: UISwitch!
     @IBOutlet weak var simulateLocationSwitch: UISwitch!
     @IBOutlet weak var emailLink: UITextView!
     var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
@@ -34,11 +32,7 @@ class SettingsViewController: UIViewController, UITextViewDelegate {
         emailLink.isEditable = false
         emailLink.dataDetectorTypes = .link
         resetPressed = 0
-        if showExtinct == 0{
-            showExtinctSwitch.isOn = false
-        } else{
-            showExtinctSwitch.isOn = true
-        }
+        
         
         if simulateLocation == 0{
             simulateLocationSwitch.isOn = false
@@ -64,19 +58,6 @@ class SettingsViewController: UIViewController, UITextViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
-    @IBAction func showExtinct(_ sender: Any) {
-        if (showExtinctSwitch.isOn){
-            showExtinct = 1
-            print("Showing extinct rides")
-        }
-        else{
-            showExtinct = 0
-            print("Hiding extinct rides")
-        }
-        UserDefaults.standard.set(showExtinct, forKey: "showExtinct")
-        
-    }
     
     @IBAction func didTapLogout(_ sender: Any) {
         do {
