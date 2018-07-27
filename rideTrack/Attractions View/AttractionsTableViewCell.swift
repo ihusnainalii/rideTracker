@@ -15,6 +15,7 @@ class AttractionsTableViewCell: UITableViewCell {
     @IBOutlet weak var attractionButton: UIButton!
     @IBOutlet weak var rideCellSquare: UIView!
     @IBOutlet weak var rideCountViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var extendedTappableCheckView: UIView!
     
     
     // @IBOutlet weak var addRideButton: UIImageView!
@@ -45,14 +46,18 @@ class AttractionsTableViewCell: UITableViewCell {
         rideCellSquare.layer.shadowOffset = CGSize.zero
         rideCellSquare.layer.shadowRadius = 9
         rideCellSquare.layer.shadowColor = UIColor.black.cgColor
+        
         let tap = UITapGestureRecognizer.init(target: self, action: #selector(tapAction))
-        rideCellSquare.addGestureRecognizer(tap)
+        extendedTappableCheckView.addGestureRecognizer(tap)
+        
+       // rideCellSquare.addGestureRecognizer(tap)
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         rideCellSquare.addGestureRecognizer(longPress)
         // rideCounterCellWidth.constant = 50
         // Initialization code
     }
     @objc func tapAction() {
+        print("TAPPING NOW")
         delegate?.attractionCellTapButton(self)
     }
     

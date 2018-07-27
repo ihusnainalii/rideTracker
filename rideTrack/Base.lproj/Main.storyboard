@@ -1793,19 +1793,34 @@
                                                                             </mask>
                                                                         </variation>
                                                                     </stackView>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fAw-YT-eFC" customClass="NeverClearView" customModule="rideTrack" customModuleProvider="target">
+                                                                        <rect key="frame" x="300" y="0.0" width="75" height="53.5"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <accessibility key="accessibilityConfiguration">
+                                                                            <accessibilityTraits key="traits" button="YES"/>
+                                                                            <bool key="isElement" value="YES"/>
+                                                                        </accessibility>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="75" id="ebU-Sm-rOv"/>
+                                                                        </constraints>
+                                                                    </view>
                                                                 </subviews>
                                                                 <constraints>
                                                                     <constraint firstItem="jZi-L2-hpH" firstAttribute="leading" secondItem="Wdf-yN-tTB" secondAttribute="leading" constant="5" id="E31-sx-kmj"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="fAw-YT-eFC" secondAttribute="trailing" id="EXy-gW-Rd9"/>
                                                                     <constraint firstItem="rvz-C6-4do" firstAttribute="leading" secondItem="jZi-L2-hpH" secondAttribute="trailing" constant="7" id="Fl6-mB-bUT"/>
                                                                     <constraint firstAttribute="bottom" secondItem="jZi-L2-hpH" secondAttribute="bottom" constant="5" id="O15-iz-Idb"/>
                                                                     <constraint firstItem="rvz-C6-4do" firstAttribute="top" secondItem="Wdf-yN-tTB" secondAttribute="top" constant="5" id="OIM-jx-gWc"/>
                                                                     <constraint firstAttribute="bottom" secondItem="rvz-C6-4do" secondAttribute="bottom" constant="5" id="XHy-NM-QPD"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="fAw-YT-eFC" secondAttribute="bottom" id="aI0-p9-aMq"/>
                                                                     <constraint firstItem="jZi-L2-hpH" firstAttribute="top" secondItem="Wdf-yN-tTB" secondAttribute="top" constant="5" id="kOk-af-xbm"/>
+                                                                    <constraint firstItem="fAw-YT-eFC" firstAttribute="top" secondItem="Wdf-yN-tTB" secondAttribute="top" id="qna-EN-LDi"/>
                                                                     <constraint firstAttribute="trailing" secondItem="rvz-C6-4do" secondAttribute="trailing" constant="5" id="yKz-s6-EWR"/>
                                                                 </constraints>
                                                             </tableViewCellContentView>
                                                             <connections>
                                                                 <outlet property="attractionButton" destination="7hY-Fv-Y20" id="may-YR-Fj5"/>
+                                                                <outlet property="extendedTappableCheckView" destination="fAw-YT-eFC" id="y9G-Dq-IxN"/>
                                                                 <outlet property="numberOfRidesLabel" destination="1s7-jz-3Dh" id="A3h-Eq-dLF"/>
                                                                 <outlet property="rideCellSquare" destination="rvz-C6-4do" id="O7p-is-i7b"/>
                                                                 <outlet property="rideCountViewLeadingConstraint" destination="raV-bg-iKm" id="Xxw-Za-fL7"/>
@@ -1872,6 +1887,7 @@
                                                 <constraint firstItem="cFg-8l-Dke" firstAttribute="top" secondItem="rKa-vC-Lf2" secondAttribute="bottom" constant="7" id="Izt-Nr-dzo"/>
                                                 <constraint firstAttribute="trailing" secondItem="rKa-vC-Lf2" secondAttribute="trailing" id="KYb-5i-BXg"/>
                                                 <constraint firstItem="VFt-15-utf" firstAttribute="top" secondItem="uVR-cf-Ne8" secondAttribute="bottom" constant="3" id="KkY-bv-dlV"/>
+                                                <constraint firstAttribute="top" secondItem="QUX-K1-VXu" secondAttribute="bottom" constant="-191" id="LYl-Cn-bQk"/>
                                                 <constraint firstItem="rKa-vC-Lf2" firstAttribute="top" secondItem="Ww5-cA-KWO" secondAttribute="bottom" id="Mnw-jG-VhD"/>
                                                 <constraint firstAttribute="trailing" secondItem="BWZ-6M-pEa" secondAttribute="trailing" constant="10" id="Pix-Bv-kgM"/>
                                                 <constraint firstAttribute="trailing" secondItem="Ww5-cA-KWO" secondAttribute="trailing" id="Pk2-Yx-332"/>

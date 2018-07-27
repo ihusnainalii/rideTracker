@@ -126,6 +126,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         notificationView.layer.cornerRadius = 10
         notificationViewBottomConstrant.constant = -64
         
+        
+
+        
         if is3DTouchAvailable{
             popupGenerator = UIImpactFeedbackGenerator(style: .heavy)
             generator = UIImpactFeedbackGenerator(style: .light)
@@ -197,7 +200,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.searchBarStyle = UISearchBarStyle.prominent
+        searchController.searchBar.searchBarStyle = UISearchBarStyle.minimal
         searchController.searchBar.sizeToFit()
         searchController.searchBar.showsScopeBar = true
         searchController.hidesNavigationBarDuringPresentation = false
@@ -668,6 +671,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
         let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
         cell.rideCellSquare.isUserInteractionEnabled = false
+        cell.extendedTappableCheckView.isUserInteractionEnabled = false
         if parkData.incrementorEnabled && CurrtableViewList[indexPath.row].isCheck {
             if (self.hasHaptic == 0) {
                 print("no imapct")
@@ -694,6 +698,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 CurrtableViewList[indexPath.row].dateLastRidden = Date()
                 self.saveIncrementRideCount(rideID: CurrtableViewList[indexPath.row].rideID, incrementTo: newIncrement, postive: true)
                 cell.rideCellSquare.isUserInteractionEnabled = true
+                cell.extendedTappableCheckView.isUserInteractionEnabled = true
                 
                 if textField.text != ""{
                     if Int(textField.text!)! == 0{
@@ -706,6 +711,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (alertAction) in
                 print("cancled")
                 cell.rideCellSquare.isUserInteractionEnabled = true
+                cell.extendedTappableCheckView.isUserInteractionEnabled = true
             }
             enterTallyAlert.addTextField { (textField) in
                 textField.placeholder = "\(cell.numberOfRidesLabel.text!)"
@@ -722,6 +728,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
         let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
         cell.rideCellSquare.isUserInteractionEnabled = true
+        cell.extendedTappableCheckView.isUserInteractionEnabled = true
     }
    // search functions
     func searchBarIsEmpty() -> Bool {
@@ -1185,6 +1192,7 @@ print ("selected Index is \(selectedIndex!)")
         parksViewController.unwindFromAttractions(parkID: parkID)
         self.dismiss(animated: true, completion: nil)
     }
+
     
     func animateInNotifcationView(){
         notificationViewBottomConstrant.constant = -2
