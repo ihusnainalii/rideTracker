@@ -136,6 +136,8 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
             UIView.animate(withDuration: 0.2, animations: {
                 self.parksVC.darkenBackground.alpha = 0.0
             })
+            let insets = UIEdgeInsets(top: 0, left: 0, bottom: parksVC.allParksBottomInsetValue, right: 0)
+            parksVC.allParksTableView.contentInset = insets
             selectedPark = nil
             searchTextFeild.resignFirstResponder()
         }
