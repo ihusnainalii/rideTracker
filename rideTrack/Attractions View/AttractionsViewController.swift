@@ -36,8 +36,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var notificationViewText: UILabel!
     @IBOutlet weak var notificationViewHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var seachBar: UISearchBar!
     @IBOutlet weak var filterButton: UIButton!
+    
+    @IBOutlet var toolBarView: UIView!
     
     var generator: UIImpactFeedbackGenerator!
     var popupGenerator: UIImpactFeedbackGenerator!
@@ -46,6 +49,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var segueWithTableViewSelect = false
     var insets = UIEdgeInsets(top: -4.5, left: 0, bottom: 5.5, right: 0) //-4.5
 
+    @IBOutlet weak var typesFiltered: UILabel!
     var userDataBaseIndex = 0
     var titleName = ""
     var parkID = 0
@@ -206,13 +210,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         searchController.hidesNavigationBarDuringPresentation = false
         
         self.attractionsTableView.tableHeaderView = searchController.searchBar
-       //insets = UIEdgeInsets(top: -4.5, left: 0, bottom: 5.5, right: 0) //-searchController.searchBar.frame.height
         self.attractionsTableView.contentInset = insets
-
-       // self.attractionsTableView.contentOffset = CGPointMake(0, CGRect.height(searchController.searchBar.frame))
-        //definesPresentationContext = true cgRec.
-        
-       // searchController.searchBar.scopeButtonTitles = ["All", "Roller Coaster", "Water Ride", "Other"]
+        searchController.searchBar.inputAccessoryView = toolBarView
+       // searchController.inputAccessoryView = toolBarView
         
     }
     
@@ -773,10 +773,21 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        filterButton.isHidden = false
+        topView.isUserInteractionEnabled = false
+        typesFiltered.text = ""
+        if typeFilter.count == 1 {
+            self.typesFiltered.text! += "Showing all Attractions"
+        }
+        var j = 0
+        if typeFilter[0] == "ALL" {
+            j = 1
+        }
+        for i in j..<typeFilter.count {
+            self.typesFiltered.text! += "\(typeFilter[i])  "
+        }
     }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        filterButton.isHidden = true
+        topView.isUserInteractionEnabled = true
     }
     
    

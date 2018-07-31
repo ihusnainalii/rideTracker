@@ -10,7 +10,7 @@ import UIKit
 
 class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FilterTableViewCellDelegate {
 
-    var rideTypesforFilter = ["Roller Coaster", "Water Ride", "Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
+    var rideTypesforFilter = ["Roller Coaster", "Water Ride", "Children's Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
     var typeFilter = [String]()
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var filterTableView: UITableView!
