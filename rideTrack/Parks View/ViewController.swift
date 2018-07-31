@@ -824,6 +824,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             ConfigureSmallerLayout().configureParksView(parksView: self)
         }
         
+        //If iPhone X
+        if screenSize.height == 812{
+            navBarHeightConstants.constant = 80
+        }
         
         
         //Initialize current location UI
@@ -845,11 +849,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         
         settingsButton.backgroundColor = settingsColor
-        settingsButton.layer.cornerRadius = 7
+        settingsButton.layer.cornerRadius = 5
         settingsButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
         doneSearchButton.backgroundColor = settingsColor
-        doneSearchButton.layer.cornerRadius = 7
+        doneSearchButton.layer.cornerRadius = 5
         doneSearchButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
         
