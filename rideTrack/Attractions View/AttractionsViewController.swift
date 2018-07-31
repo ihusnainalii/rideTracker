@@ -9,7 +9,7 @@ import UIKit
 import CoreData
 import Foundation
 import Firebase
-
+import FirebaseDatabase
 
 class AttractionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, DataModelProtocol, AttractionsTableViewCellDelegate{
     
@@ -39,6 +39,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var seachBar: UISearchBar!
     @IBOutlet weak var filterButton: UIButton!
+    @IBOutlet weak var clearButton: UIButton!
     
     @IBOutlet var toolBarView: UIView!
     
@@ -51,6 +52,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
 
     @IBOutlet weak var typesFiltered: UILabel!
+    
+    
     var userDataBaseIndex = 0
     var titleName = ""
     var parkID = 0
@@ -106,6 +109,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var ignoreListRef: DatabaseReference!
     
     override func viewDidLoad() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+        
         print("Show incrementor is \(parkData.incrementorEnabled)")
         super.viewDidLoad()
         hasHaptic = UIDevice.current.value(forKey: "_feedbackSupportLevel") as! Int
@@ -132,6 +139,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         notificationView.layer.cornerRadius = 10
         notificationViewBottomConstrant.constant = -64
         
+        filterButton.layer.cornerRadius = 7
+        clearButton.layer.cornerRadius = 7
         
 
         
@@ -157,7 +166,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         self.attractionsTableView.delegate = self
         self.attractionsTableView.dataSource = self
-        
         parkID = parkData.parkID
         print(parkID)
         let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(parkID)"
@@ -213,7 +221,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.searchBarStyle = UISearchBarStyle.minimal
         searchController.searchBar.sizeToFit()
-        searchController.searchBar.showsScopeBar = true
+       // searchController.searchBar.showsScopeBar = true
         searchController.hidesNavigationBarDuringPresentation = false
         
         self.attractionsTableView.tableHeaderView = searchController.searchBar
@@ -222,6 +230,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
        // searchController.inputAccessoryView = toolBarView
         
     }
+
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
         savedItems = items
@@ -499,8 +508,15 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        var CurrtableView: [AttractionsModel]
+        if isFiltering() {
+            CurrtableView = filteredAttractions
+        }
+        else {
+            CurrtableView = attractionListForTable
+        }
         if tableView == self.attractionsTableView {
-        if (attractionListForTable[indexPath.row]).numberOfTimesRidden != 0{
+        if (CurrtableView[indexPath.row]).numberOfTimesRidden != 0{
             let minusAction = UIContextualAction(style: .normal, title: "Minus", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
                 print ("Subtracting")
                 success(true)
@@ -525,30 +541,37 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        var CurrtableView: [AttractionsModel]
+        if isFiltering() {
+            CurrtableView = filteredAttractions
+        }
+        else {
+            CurrtableView = attractionListForTable
+        }
         if tableView == self.attractionsTableView {
-        if (attractionListForTable[indexPath.row]).active == 1 && attractionListForTable[indexPath.row].isCheck == false {
+        if (CurrtableView[indexPath.row]).active == 1 && CurrtableView[indexPath.row].isCheck == false {
             let ignoreAction = UIContextualAction(style: .normal, title: "Ignore", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
                 print("ignore button tapped on ride")
                 let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
 
-                if self.attractionListForTable[indexPath.row].isIgnored == false {
+                if CurrtableView[indexPath.row].isIgnored == false {
                     
                     //self.ignore.append(self.attractionListForTable[indexPath.row].rideID!)
                     
-                    let newIgnore = IgnoreList(rideID: self.attractionListForTable[indexPath.row].rideID!)
+                    let newIgnore = IgnoreList(rideID: CurrtableView[indexPath.row].rideID!)
                     let newIgnoreRef = self.ignoreListRef.child(String(newIgnore.rideID))
                     newIgnoreRef.setValue(newIgnore.toAnyObject())
                     
                     
-                    print("Ignoring ", self.attractionListForTable[indexPath.row].name!)
-                    self.attractionListForTable[indexPath.row].isIgnored = true
+                    print("Ignoring ", CurrtableView[indexPath.row].name!)
+                    CurrtableView[indexPath.row].isIgnored = true
                     self.numIgnore += 1
                     
                     cell.rideName?.textColor = UIColor.gray
                     cell.attractionButton.setImage(#imageLiteral(resourceName: "Ignore Button"), for: .normal)
                 }
                 else {
-                    let ignoreIdex = self.findIndexOfIgnore(rideID: self.attractionListForTable[indexPath.row].rideID)
+                    let ignoreIdex = self.findIndexOfIgnore(rideID: CurrtableView[indexPath.row].rideID)
                     let ignoreItem = self.ignore[ignoreIdex]
                     ignoreItem.ref?.removeValue()
 //                    for i in 0..<(self.ignore.count) {
@@ -557,8 +580,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
 //                            break
 //                        }
 //                    }
-                    print ("Unignoring ", self.attractionListForTable[indexPath.row].name!)
-                    self.attractionListForTable[indexPath.row].isIgnored = false
+                    print ("Unignoring ", CurrtableView[indexPath.row].name!)
+                    CurrtableView[indexPath.row].isIgnored = false
                     self.numIgnore -= 1
                     
                     
@@ -573,8 +596,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 
             })
             
-            ignoreAction.title = attractionListForTable[indexPath.row].isIgnored ? "Include" : "Exclude"
-            ignoreAction.backgroundColor = attractionListForTable[indexPath.row].isIgnored ? appGreen : .gray
+            ignoreAction.title = CurrtableView[indexPath.row].isIgnored ? "Include" : "Exclude"
+            ignoreAction.backgroundColor = CurrtableView[indexPath.row].isIgnored ? appGreen : .gray
             let configurations = UISwipeActionsConfiguration(actions: [ignoreAction])
             configurations.performsFirstActionWithFullSwipe = true
             return configurations //UISwipeActionsConfiguration(actions: [ignoreAction])
@@ -789,8 +812,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         topView.isUserInteractionEnabled = false
+        suggestButton.isUserInteractionEnabled = false
         typesFiltered.text = ""
-        if typeFilter.count == 1 {
+        if typeFilter.count == 1 && typeFilter[0] == "ALL"{
             self.typesFiltered.text! += "Showing all Attractions"
         }
         var j = 0
@@ -798,14 +822,55 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             j = 1
         }
         for i in j..<typeFilter.count {
-            self.typesFiltered.text! += "\(typeFilter[i])  "
+            self.typesFiltered.text! += "\(typeFilter[i])   "
         }
     }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         topView.isUserInteractionEnabled = true
+        suggestButton.isUserInteractionEnabled = true
+        UIView.animate(withDuration: 0.3, animations: ({
+            self.searchController.searchBar.backgroundColor = UIColor.white.withAlphaComponent(0.0)
+            self.view.layoutIfNeeded()
+            
+        }))
     }
     
    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if searchController.isActive{
+            UIView.animate(withDuration: 0.3, animations: ({
+                self.searchController.searchBar.backgroundColor = UIColor.white.withAlphaComponent(0.9)
+                self.view.layoutIfNeeded()
+                
+            }))
+        }
+    }
+    
+    @IBAction func clearFilterButton(_ sender: Any) {
+        typeFilter.removeAll()
+        typeFilter.append("ALL")
+        searchController.isActive = true
+        DispatchQueue.main.async {
+            self.searchController.isActive = true
+        }
+        typesFiltered.text = "Showing all Attractions"
+    }
+    
+    @objc func adjustForKeyboard(notification: Notification) {
+        let userInfo = notification.userInfo!
+        
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == Notification.Name.UIKeyboardWillHide {
+            attractionsTableView.contentInset = UIEdgeInsets.zero
+        } else {
+            
+            attractionsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+        }
+        
+        attractionsTableView.scrollIndicatorInsets = attractionsTableView.contentInset
+    }
     
     func addFirstCheckRide(indexPath: IndexPath){
         var CurrtableViewList: [AttractionsModel]
@@ -1004,14 +1069,19 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
 
         }
         if segue.identifier == "toFilter" {
-            print ("here?")
+            print("Going to filter")
+            self.attractionsTableView.setContentOffset(.zero, animated: false)
             searchController.isActive = false
             let newVC = segue.destination as! FilterViewController
             newVC.typeFilter = typeFilter
-            UIView.animate(withDuration: 0.3, animations: ({
+            UIView.animate(withDuration: 0.5, animations: ({
                 self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0.25)
                 self.view.layoutIfNeeded()
             }))
+            //self.attractionsTableView.tableHeaderView = searchController.searchBar
+            topView.isUserInteractionEnabled = false
+            suggestButton.isUserInteractionEnabled = false
+            
         }
         if segue.identifier == "ToDetails"{
             let detailsVC = segue.destination as! AttractionsDetailsViewController
@@ -1073,25 +1143,7 @@ print ("selected Index is \(selectedIndex!)")
                 let newScoreCard = ScoreCardList(score: newScore, rideID: selectedRide.rideID, date: Date().timeIntervalSince1970)
                 let newScoreRef = self.scoreCardRef.child(String(Int(newScoreCard.date)))
                 newScoreRef.setValue(newScoreCard.toAnyObject())
-                
-//
-//                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//                    return
-//                }
-//                let managedContext = appDelegate.persistentContainer.viewContext
-//                let entity = NSEntityDescription.entity(forEntityName: "ScoreCard", in: managedContext)!
-//                let newScoreCard = NSManagedObject(entity: entity, insertInto: managedContext)
-//
-//                newScoreCard.setValue(newScore, forKey: "score")
-//                newScoreCard.setValue(selectedRide.rideID, forKeyPath: "rideID")
-//                newScoreCard.setValue(Date(), forKeyPath: "date")
-//
-//                do {
-//                    try managedContext.save()
-//                    print("Saved score")
-//                } catch let error as NSError {
-//                    print("Could not save. \(error), \(error.userInfo)")
-//                }
+        
             }
         }
         
@@ -1154,26 +1206,32 @@ print ("selected Index is \(selectedIndex!)")
     
     @IBAction func unwindToAttractionsView(sender: UIStoryboardSegue) {
         print("Back to attractions view")
-        self.attractionsTableView.contentInset = insets
         if sender.source is FilterViewController {
-            //searchController.definesPresentationContext = true
-            //searchController.searchBar.becomeFirstResponder()
             searchController.isActive = true
+            typesFiltered.text = ""
+            if typeFilter.count == 1 && typeFilter[0] == "ALL"{
+                self.typesFiltered.text! += "Showing all Attractions"
+            }
+            var j = 0
+            if typeFilter[0] == "ALL" {
+                j = 1
+            }
+            for i in j..<typeFilter.count {
+                self.typesFiltered.text! += "\(typeFilter[i])   "
+            }
+            //let filterinsets = UIEdgeInsets(top: -4.5, left: 0, bottom: 5.5, right: 0)
+            self.attractionsTableView.contentInset = insets
+
             DispatchQueue.main.async {
                 self.searchController.isActive = true
             }
-
+            self.attractionsTableView.tableHeaderView = searchController.searchBar
+           searchController.searchBar.becomeFirstResponder()
         }
         if sender.source is ParksDetailViewController{
             let parkDetailsVC = sender.source as! ParksDetailViewController
             showExtinct = parkDetailsVC.showDefunct
             print("SHOW EXTINCT: \(showExtinct)")
-            if parkData.incrementorEnabled{
-               //attractionListForTable = saveIncrementorAttractionsListForTable
-//                attractionListForTable.removeAll()
-//                userAttractionDatabase.removeAll()
-//                updateAttraction()
-            }
             attractionListForTable.removeAll()
             userAttractionDatabase.removeAll()
             updateAttraction()
@@ -1284,13 +1342,7 @@ print ("selected Index is \(selectedIndex!)")
             self.itemsDownloaded(items: self.savedItems, returnPath: "Gettings attraction data")
         })
     }
-    /*
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+
     
 }
 extension AttractionsViewController: UISearchResultsUpdating {
