@@ -47,7 +47,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     let screenSize = UIScreen.main.bounds
     var segueWithTableViewSelect = false
-    var insets = UIEdgeInsets(top: -4.5, left: 0, bottom: 5.5, right: 0) //-4.5
+    var insets = UIEdgeInsets(top: -4.5, left: 0, bottom: 5.5, right: 0)
+    
 
     @IBOutlet weak var typesFiltered: UILabel!
     var userDataBaseIndex = 0
@@ -70,6 +71,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var animateRow = -1
     var countOfRemove = 0
     var selectedAttractionsList: [NSManagedObject] = []
+    var totalExtinctCount = 0
     
     //let appGreen = UIColor(red: 29.0/255.0, green: 127.0/255.0, blue: 70.0/255.0, alpha: 1.0)
     let darkGreen = UIColor(red: 40/255.0, green: 119/255.0, blue: 72/255.0, alpha: 1.0)
@@ -148,6 +150,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             ConfigureSmallerLayout().attractionsViewLayout(attractionsView: self)
         }
         
+        if screenSize.height == 812.0{
+            insets = UIEdgeInsets(top: -4.5, left: 0, bottom: 0, right: 0)
+        }
+        
+        
         self.attractionsTableView.delegate = self
         self.attractionsTableView.dataSource = self
         
@@ -217,7 +224,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
-        var allAttractionsAreDefunt = true
         savedItems = items
         activityIndicator.stopAnimating()
         for i in 0..<items.count{
@@ -242,6 +248,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 numExtinctSelected = 0
                 countOfRemove = 0
                 userDataBaseIndex = 0
+                totalExtinctCount = 0
                 
                 let maxUserAttractionCount = userAttractionDatabase.count
                 for i in 0..<attractionListForTable.count{
@@ -261,8 +268,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                             
                             if attractionListForTable[i].active == 0 {
                                 userNumExtinct += 1
-                            } else{
-                                allAttractionsAreDefunt = false
                             }
                             userDataBaseIndex += 1
                         }
@@ -281,6 +286,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                     
                     if attractionListForTable[i].active == 0 && showExtinct{
                         totalNumExtinct += 1
+                    }
+                    
+                    if attractionListForTable[i].active == 0{
+                        totalExtinctCount += 1
                     }
                     
                     if attractionListForTable[i].numberOfTimesRidden == nil{
@@ -315,7 +324,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }
         //Hide EXTINCT ATTRACTIONS
-        print("All attractions are defunct: \(allAttractionsAreDefunt)")
         //This would work to show defunct attractions for closed parks, but the progress bar gets messed up and treats all attractions as current attractions
         //Uncomment out the if statement to see how it would work
 //        if allAttractionsAreDefunt{
@@ -325,6 +333,13 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
 //            totalNumExtinct = attractionListForTable.count
 //            
 //        }
+
+        if totalExtinctCount == attractionListForTable.count{
+            print("All EXTINCT!")
+            showExtinct = true
+            totalNumExtinct = attractionListForTable.count
+        }
+        
         if(!showExtinct){
             for i in 0..<attractionListForTable.count{ //sizeOfList
                 if ((attractionListForTable[i - countOfRemove]).active == 0 && !showExtinct && (attractionListForTable[i - countOfRemove]).isCheck == false){
