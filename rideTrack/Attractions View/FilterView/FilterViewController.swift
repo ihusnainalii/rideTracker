@@ -12,11 +12,24 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     var rideTypesforFilter = ["Roller Coaster", "Water Ride", "Children's Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
     var typeFilter = [String]()
+    var hasHaptic = 0
+    var generator: UIImpactFeedbackGenerator!
+    var popupGenerator: UIImpactFeedbackGenerator!
+    var is3DTouchAvailable: Bool {
+        return view.traitCollection.forceTouchCapability == .available
+    }
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var filterTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if is3DTouchAvailable{
+            popupGenerator = UIImpactFeedbackGenerator(style: .heavy)
+            generator = UIImpactFeedbackGenerator(style: .light)
+            popupGenerator.prepare()
+            generator.prepare()
+        }
+        hasHaptic = UIDevice.current.value(forKey: "_feedbackSupportLevel") as! Int
         filterView.layer.cornerRadius = 10.0
         filterView.backgroundColor = UIColor.white
         self.filterTableView.delegate = self
@@ -56,6 +69,9 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (hasHaptic != 0) {
+            generator.impactOccurred()
+        }
         let cell = tableView.cellForRow(at: indexPath) as! FilterTableViewCell
         var checked = false
        // let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath) as! FilterTableViewCell

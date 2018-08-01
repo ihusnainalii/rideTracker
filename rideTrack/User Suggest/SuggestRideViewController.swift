@@ -338,8 +338,6 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         }
 
         scrollView.scrollIndicatorInsets = scrollView.contentInset
-
-
     }
 
     
