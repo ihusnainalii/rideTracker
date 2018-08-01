@@ -13,6 +13,7 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var loadingView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,11 @@ class LoginViewController: UIViewController {
                 self.performSegue(withIdentifier: "SignInFromLogin", sender: nil)
                 self.emailField.text = nil
                 self.passwordField.text = nil
+            }
+            else{
+                print("No login")
+                self.loadingView.isHidden = true
+                
             }
         }
     }

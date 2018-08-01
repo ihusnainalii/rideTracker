@@ -3652,20 +3652,41 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hVC-ux-q1P">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app icon" translatesAutoresizingMaskIntoConstraints="NO" id="LSm-kf-29e">
+                                        <rect key="frame" x="127.5" y="130" width="120" height="120"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="120" id="6Vc-NY-8dh"/>
+                                            <constraint firstAttribute="width" constant="120" id="Vbu-EM-JRJ"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="LSm-kf-29e" firstAttribute="top" secondItem="hVC-ux-q1P" secondAttribute="top" constant="130" id="CnO-gF-YcE"/>
+                                    <constraint firstItem="LSm-kf-29e" firstAttribute="centerX" secondItem="hVC-ux-q1P" secondAttribute="centerX" id="TLD-U6-Ov9"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="qmg-TI-6g8" firstAttribute="centerX" secondItem="t0n-zv-zAJ" secondAttribute="centerX" id="9zu-Gy-3LG"/>
                             <constraint firstItem="RCz-De-DYU" firstAttribute="centerX" secondItem="t0n-zv-zAJ" secondAttribute="centerX" id="L4N-7A-NCG"/>
+                            <constraint firstItem="D6U-y4-pZM" firstAttribute="top" secondItem="hVC-ux-q1P" secondAttribute="bottom" id="Pzi-N9-WbB"/>
+                            <constraint firstItem="hVC-ux-q1P" firstAttribute="top" secondItem="t0n-zv-zAJ" secondAttribute="top" id="aPh-P0-sV9"/>
                             <constraint firstItem="paF-TX-daj" firstAttribute="centerX" secondItem="t0n-zv-zAJ" secondAttribute="centerX" id="bVW-DR-9Kq"/>
                             <constraint firstItem="RCz-De-DYU" firstAttribute="top" secondItem="paF-TX-daj" secondAttribute="bottom" constant="20" id="bXB-gL-2mp"/>
                             <constraint firstItem="YoQ-B2-PWG" firstAttribute="top" secondItem="qmg-TI-6g8" secondAttribute="bottom" constant="20" id="bdi-cn-f5f"/>
                             <constraint firstItem="osj-nj-c2P" firstAttribute="centerX" secondItem="t0n-zv-zAJ" secondAttribute="centerX" id="cgc-Qo-IJ7"/>
+                            <constraint firstItem="hVC-ux-q1P" firstAttribute="trailing" secondItem="ZSi-T0-Y8G" secondAttribute="trailing" id="cuX-oF-re2"/>
                             <constraint firstItem="YoQ-B2-PWG" firstAttribute="width" secondItem="qmg-TI-6g8" secondAttribute="width" id="dbB-3p-sMk"/>
                             <constraint firstItem="osj-nj-c2P" firstAttribute="top" secondItem="t0n-zv-zAJ" secondAttribute="top" constant="120" id="exB-FI-1ss"/>
                             <constraint firstItem="osj-nj-c2P" firstAttribute="width" secondItem="t0n-zv-zAJ" secondAttribute="width" multiplier="0.6" id="iG2-vs-Lsj"/>
                             <constraint firstItem="paF-TX-daj" firstAttribute="top" secondItem="YoQ-B2-PWG" secondAttribute="bottom" constant="20" id="jT5-no-5uM"/>
                             <constraint firstItem="YoQ-B2-PWG" firstAttribute="centerX" secondItem="t0n-zv-zAJ" secondAttribute="centerX" id="lf4-Mn-CXW"/>
+                            <constraint firstItem="hVC-ux-q1P" firstAttribute="leading" secondItem="ZSi-T0-Y8G" secondAttribute="leading" id="uau-Aa-2Oq"/>
                             <constraint firstItem="qmg-TI-6g8" firstAttribute="width" secondItem="osj-nj-c2P" secondAttribute="width" id="uso-V4-Lgc"/>
                             <constraint firstItem="qmg-TI-6g8" firstAttribute="top" secondItem="osj-nj-c2P" secondAttribute="bottom" constant="20" id="xDl-yD-Kvk"/>
                         </constraints>
@@ -3673,13 +3694,14 @@
                     </view>
                     <connections>
                         <outlet property="emailField" destination="osj-nj-c2P" id="Gar-mP-kiw"/>
+                        <outlet property="loadingView" destination="hVC-ux-q1P" id="9Q0-6u-uzM"/>
                         <outlet property="passwordField" destination="qmg-TI-6g8" id="CaM-zc-MmF"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="SignInFromLogin" id="upE-qw-jCU"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="SignInFromLogin" modalTransitionStyle="crossDissolve" id="upE-qw-jCU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J9u-TA-82l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="258" y="-734"/>
+            <point key="canvasLocation" x="256.80000000000001" y="-734.48275862068976"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="18Q-Xb-nzs">
@@ -3767,10 +3789,11 @@
         <image name="Plus Attraction" width="100" height="100"/>
         <image name="Plus button" width="150" height="150"/>
         <image name="Screen Shot 2018-06-24 at 12.52.26 PM" width="670" height="1196"/>
+        <image name="app icon" width="1024" height="1024"/>
         <image name="compose icon" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="fvO-Lv-ILn"/>
-        <segue reference="19H-TV-wTl"/>
+        <segue reference="upE-qw-jCU"/>
     </inferredMetricsTieBreakers>
 </document>
