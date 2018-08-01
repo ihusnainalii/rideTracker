@@ -51,10 +51,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var doneSearchHeightConstrant: NSLayoutConstraint!
     @IBOutlet weak var locationViewHeight: NSLayoutConstraint!
     @IBOutlet weak var locationViewCenterConstrant: NSLayoutConstraint!
-
+    @IBOutlet weak var tapExpandFavoritesView: UIButton!
+    @IBOutlet weak var tapExpandAllParksView: UIButton!
+    @IBOutlet weak var favoritesInstructions: UILabel!
+    @IBOutlet weak var allParksInstructions: UILabel!
+    @IBOutlet weak var favoritesExpandButton: UIImageView!
+    @IBOutlet weak var allParksExpandButton: UIImageView!
+    
     var darkenBackground=UIView()
     var favoitesHeight: CGFloat = 190.0
+    var favoritesHeightMax: CGFloat = 190.0
     var allParksBottomInsetValue:CGFloat = 20
+    
+    var favoritesIsExpanded = false
+    var allParksIsExpanded = false
+    var allParksIsVisible = true
+    var favoritesViewIsVisible = true
     
     var selectedPark: ParksList!
     var segueWithTableViewSelect = true
@@ -67,17 +79,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     var savedMyParksForSearch = [ParksList]()
     var isSearchingMyParks = false
-    var firstItemsToFavorites = false
+    var firstItemsToFavorites = true
     
     var simulateLocation = UserDefaults.standard.integer(forKey: "simulateLocation")
     
     var locationManager: CLLocationManager = CLLocationManager()
     var closestPark: ParksModel!
-    //let parksCoreData = ParkCoreData()
     let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     let favoritesGreen = UIColor(red: 40/255.0, green: 119/255.0, blue: 72/255.0, alpha: 1.0)
     
     var favoritesViewHeightBeforeAnimating: CGFloat!
+    let expandParksView = ExpandParksView()
+    let searchMyParks = SearchMyParks()
     
     var parksListRef: DatabaseReference!
     var favoritesListRef: DatabaseReference!
@@ -85,7 +98,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     override func viewDidLoad() {
         configureViewDidLoad()
-        
+        if screenSize.height == 812{
+            expandParksView.setFavoriteExpandHeight(variable: 227)
+        }
         
         super.viewDidLoad()
         
@@ -207,28 +222,50 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
     }
     func configureFavoritesView(){
-        print("Configuring favorites view")
-        var favoritesTableAlpha: CGFloat = 1.0
-        if favoiteParkList.count == 0{
-            favoritesViewHeightConstrant.constant = 70
-            favoritesTableAlpha = 0.0
+        if favoritesViewIsVisible{
+            print("Configuring favorites view")
+            var favoritesTableAlpha: CGFloat = 1.0
+            if favoritesViewIsVisible && !isSearchingMyParks{
+                if !favoritesIsExpanded{
+                    favoritesExpandButton.transform = CGAffineTransform(rotationAngle: -90 * CGFloat(3.14159/180))
+                    if favoiteParkList.count == 0{
+                        favoitesHeight = 70
+                        favoritesViewHeightConstrant.constant = favoitesHeight
+                        favoritesTableAlpha = 0.0
+                    }
+                    else{
+                        favoitesHeight = favoritesHeightMax
+                        favoritesViewHeightConstrant.constant = favoitesHeight
+                        favoritesTableAlpha = 1.0
+                    }
+                }else{
+                    favoritesExpandButton.transform = CGAffineTransform(rotationAngle: 0 * CGFloat(3.14159/180))
+                }
+            }
+            UIView.animate(withDuration: 0.6, animations: {
+                self.favoritesTableView.alpha = favoritesTableAlpha
+            })
+            self.view.layoutIfNeeded()
         }
-        UIView.animate(withDuration: 0.6, animations: {
-            self.favoritesTableView.alpha = favoritesTableAlpha
-        })
-        self.view.layoutIfNeeded()
     }
     
     func configureAllParksView(){
-        print("Configuring all parks view")
-        var allParksViewTableAlpha: CGFloat = 1.0
-        if allParksList.count == 0{
-            allParksViewTableAlpha = 0.0
+        if allParksIsVisible{
+            print("Configuring all parks view")
+            var allParksViewTableAlpha: CGFloat = 1.0
+            if allParksList.count == 0{
+                allParksViewTableAlpha = 0.0
+            }
+            if allParksIsExpanded{
+                allParksExpandButton.transform = CGAffineTransform(rotationAngle: 0 * CGFloat(3.14159/180))
+            } else{
+                allParksExpandButton.transform = CGAffineTransform(rotationAngle: -90 * CGFloat(3.14159/180))
+            }
+            UIView.animate(withDuration: 0.6, animations: {
+                self.allParksTableView.alpha = allParksViewTableAlpha
+            })
+            self.view.layoutIfNeeded()
         }
-        UIView.animate(withDuration: 0.6, animations: {
-            self.allParksTableView.alpha = allParksViewTableAlpha
-        })
-        self.view.layoutIfNeeded()
     }
     
     
@@ -327,13 +364,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 self.favoiteParkList.remove(at: indexPath.row)
                 
                 //Animate away favorites view to dissappear if the last park is being removed from the list
-                if self.favoiteParkList.count == 0{
-                    //Need to get this value to work for all devices
-                    self.favoritesViewHeightConstrant.constant = 70
+                self.favoitesHeight = 70
+                if self.allParksIsVisible{
+                    print("All parks View is Visible NOW")
+                    var favoritesViewAlpha:CGFloat = 1.0
+                    if self.favoiteParkList.count == 0{
+                        self.favoitesHeight = 70
+                        favoritesViewAlpha = 0.0
+                    } else{
+                        self.favoitesHeight = self.favoritesHeightMax
+                    }
+                    self.favoritesViewHeightConstrant.constant = self.favoitesHeight
                     UIView.animate(withDuration: 0.6, animations: {
-                        self.favoritesTableView.alpha = 0.0
+                        self.favoritesTableView.alpha = favoritesViewAlpha
                         self.view.layoutIfNeeded()
                     })
+                    
                 }
                 
                 
@@ -350,23 +396,29 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                         ])
                     
                     parkItem.favorite = true
+                    self.allParksList[indexPath.row].favorite = true
                     let newParkRef = self.favoritesListRef.child(String(parkItem.parkID))
                     newParkRef.setValue(parkItem.toAnyObject())
                     
-                    
+                
                     //Animate the favorites view to appear if the first park is being added to the list
                     if self.favoiteParkList.count == 0{
                         
                         print("PARK SEARCH \(self.isSearchingMyParks)")
                         if !self.isSearchingMyParks{
-                            self.favoritesViewHeightConstrant.constant = self.favoitesHeight
-                            UIView.animate(withDuration: 0.6, animations: {
-                                self.favoritesTableView.alpha = 1.0
-                                self.view.layoutIfNeeded()
-                            })
+                            if self.favoritesViewIsVisible{
+                                print("Favorites is visible")
+                                self.favoitesHeight = self.favoritesHeightMax
+                                self.favoritesViewHeightConstrant.constant = self.favoitesHeight
+                                UIView.animate(withDuration: 0.6, animations: {
+                                    self.favoritesTableView.alpha = 1.0
+                                    self.view.layoutIfNeeded()
+                                })
+                            } else{
+                                self.favoitesHeight = self.favoritesHeightMax
+                            }
                         } else{
-                            print("First items added to favorites list")
-                            self.firstItemsToFavorites = true
+                            self.view.layoutIfNeeded()
                         }
                     }
                     
@@ -427,15 +479,38 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 ])
             self.favoiteParkList.remove(at: indexPath.row)
             
-            //Animate away favorites view to dissappear if the last park is being removed from the list
-            if self.favoiteParkList.count == 0{
-                //Need to get this value to work for all devices
-                self.favoritesViewHeightConstrant.constant = 70
+//            //Animate away favorites view to dissappear if the last park is being removed from the list
+//            if self.favoritesViewIsVisible{
+//                if self.favoiteParkList.count == 0{
+//                    //Need to get this value to work for all devices
+//                    self.favoitesHeight = 70
+//                    self.favoritesViewHeightConstrant.constant = self.favoitesHeight
+//                    UIView.animate(withDuration: 0.6, animations: {
+//                        self.favoritesTableView.alpha = 0.0
+//                        self.view.layoutIfNeeded()
+//                    })
+//                }
+//            }
+            
+            self.favoitesHeight = 70
+            if self.allParksIsVisible{
+                print("All parks View is Visible NOW")
+                var favoritesViewAlpha:CGFloat = 1.0
+                if self.favoiteParkList.count == 0{
+                    self.favoitesHeight = 70
+                    favoritesViewAlpha = 0.0
+                } else{
+                    self.favoitesHeight = self.favoritesHeightMax
+                }
+                self.favoritesViewHeightConstrant.constant = self.favoitesHeight
                 UIView.animate(withDuration: 0.6, animations: {
-                    self.favoritesTableView.alpha = 0.0
+                    self.favoritesTableView.alpha = favoritesViewAlpha
                     self.view.layoutIfNeeded()
                 })
+                
             }
+            
+            
             self.favoritesTableView.deleteRows(at: [indexPath], with: .left)
             success(true)
         })
@@ -530,12 +605,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         var allParksViewTableAlpha: CGFloat = 1.0
         var favoritesTableAlpha: CGFloat = 1.0
         
-        if favoiteParkList.count == 0{
-            favoritesViewHeightConstrant.constant = 70
-            favoritesTableAlpha = 0.0
+        if favoritesViewIsVisible{
+            if favoiteParkList.count == 0{
+                favoitesHeight = 70
+                favoritesViewHeightConstrant.constant = favoitesHeight
+                favoritesTableAlpha = 0.0
+            }
         }
-        if allParksList.count == 0{
-            allParksViewTableAlpha = 0.0
+        if allParksIsVisible{
+            if allParksList.count == 0{
+                allParksViewTableAlpha = 0.0
+            }
         }
         UIView.animate(withDuration: 0.6, animations: {
             self.favoritesTableView.alpha = favoritesTableAlpha
@@ -592,7 +672,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 self.darkenBackground.alpha =  0.20
             })
             if isSearchingMyParks{
-                SearchMyParks().animateOutOfParkSearch(parksView: self)
+                searchMyParks.animateOutOfParkSearch(parksView: self)
             }
             //print("count: ", userAttractions.count)
         }
@@ -731,17 +811,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     @IBAction func didTapSearchMyParks(_ sender: Any) {
         print("searching my parks")
-        SearchMyParks().animateIntoSearchView(parksView: self)
+        searchMyParks.animateIntoSearchView(parksView: self)
     }
     
     
     @IBAction func didTapDownSearchParks(_ sender: Any) {
         print("Done searching my parks")
-        SearchMyParks().animateOutOfParkSearch(parksView: self)
+        searchMyParks.animateOutOfParkSearch(parksView: self)
     }
     
     @IBAction func didChangeMySearchText(_ sender: Any) {
-        SearchMyParks().updateSearchResults(parksView: self)
+        searchMyParks.updateSearchResults(parksView: self)
     }
     
     
@@ -893,7 +973,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         darkenBackground.alpha = 0.0
         darkenBackground.isUserInteractionEnabled = true
         self.view.addSubview(darkenBackground)
-
+    }
+    
+    @IBAction func didTapExpandAllParks(_ sender: Any) {
+        print(allParksIsExpanded)
+        if !allParksIsExpanded{
+            print("Expanding")
+            expandParksView.expandOutAllParks(parksView: self)
+        } else{
+            print("Reseting")
+            expandParksView.resetToDefault(parksView: self)
+        }
+    }
+    
+    @IBAction func didTapExpandFavorites(_ sender: Any) {
+        if !favoritesIsExpanded{
+            print("Expanding")
+            expandParksView.expandFavoritesView(parksView: self)
+        } else{
+            print("reseting")
+            expandParksView.resetToDefault(parksView: self)
+        }
     }
     
     func findIndexFavoritesList(parkID: Int) -> Int{

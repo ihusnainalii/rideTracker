@@ -35,7 +35,8 @@ class ConfigureSmallerLayout{
     }
     
     func configureParksView(parksView: ViewController){
-        parksView.favoitesHeight = 140.0
+        parksView.favoritesHeightMax = 140.0
+        parksView.expandParksView.setFavoriteExpandHeight(variable: 163)
         parksView.favoritesViewHeightConstrant.constant = 140.0
         parksView.addParkHeightConstrant.constant = 55
         parksView.navBarHeightConstants.constant = 55

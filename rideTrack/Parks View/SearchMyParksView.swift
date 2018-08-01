@@ -14,8 +14,15 @@ class SearchMyParks{
     
     var firstEntry = true
     var park: ParksList!
+    var allParksTableViewAlpha = 1.0
+    var favoritesTableViewAlpha = 1.0
     
     func animateIntoSearchView(parksView: ViewController){
+        allParksTableViewAlpha = Double(parksView.allParksTableView.alpha)
+        favoritesTableViewAlpha = Double(parksView.favoritesTableView.alpha)
+        
+        parksView.allParksExpandButton.isHidden = true
+        parksView.tapExpandAllParksView.isEnabled = false
         parksView.savedMyParksForSearch = parksView.allParksList
         parksView.favoritesViewHeightBeforeAnimating = parksView.favoritesViewHeightConstrant.constant
         parksView.favoritesViewHeightConstrant.constant = 5.0
@@ -32,6 +39,7 @@ class SearchMyParks{
             parksView.settingsButton.alpha = 0.0
             parksView.searchParkView.alpha = 0.0
             parksView.addParkButton.alpha = 0.0
+            parksView.allParksTableView.alpha = 1.0
         }))
         if parksView.allParksList.count != 0{
             parksView.allParksTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
@@ -42,8 +50,12 @@ class SearchMyParks{
     
     func animateOutOfParkSearch(parksView: ViewController){
         print("animating out of park search")
+        print("PRINTING OUT INSTRUCTION ALPHA \(parksView.favoritesInstructions.alpha)")
+        parksView.allParksExpandButton.isHidden = false
+        parksView.tapExpandAllParksView.isEnabled = true
         parksView.isSearchingMyParks = false
         parksView.favoritesViewHeightConstrant.constant = parksView.favoritesViewHeightBeforeAnimating
+        parksView.favoitesHeight = parksView.favoritesViewHeightBeforeAnimating
         parksView.allParksBottomConstrant.constant = 5
         parksView.allParksList = parksView.savedMyParksForSearch
         UIView.animate(withDuration: 0.4, animations: ({
@@ -54,6 +66,8 @@ class SearchMyParks{
             parksView.settingsButton.alpha = 1.0
             parksView.searchParkView.alpha = 1.0
             parksView.addParkButton.alpha = 1.0
+            parksView.allParksTableView.alpha = CGFloat(self.allParksTableViewAlpha)
+            parksView.favoritesTableView.alpha = CGFloat(self.favoritesTableViewAlpha)
         }))
         parksView.searchParkView.isHidden = false
         parksView.searchParksTextField.resignFirstResponder()
@@ -61,13 +75,13 @@ class SearchMyParks{
         parksView.allParksTableView.contentInset = insets
         parksView.allParksTableView.reloadData()
         
-        if parksView.firstItemsToFavorites{
-            parksView.favoritesViewHeightConstrant.constant = parksView.favoitesHeight
-            UIView.animate(withDuration: 0.6, animations: {
-                parksView.favoritesTableView.alpha = 1.0
-                parksView.view.layoutIfNeeded()
-            })
-        }
+//        if parksView.firstItemsToFavorites{
+//            parksView.favoritesViewHeightConstrant.constant = parksView.favoitesHeight
+//            UIView.animate(withDuration: 0.6, animations: {
+//                parksView.favoritesTableView.alpha = CGFloat(self.favoritesTableViewAlpha)
+//                parksView.view.layoutIfNeeded()
+//            })
+//        }
         
         parksView.parksListRef.queryOrdered(byChild: "name").observe(.value, with: { snapshot in
             var newParks: [ParksList] = []

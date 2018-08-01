@@ -302,19 +302,38 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Down Bar" translatesAutoresizingMaskIntoConstraints="NO" id="XMO-aI-aAi">
+                                        <rect key="frame" x="137" y="7" width="23" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="23" id="Iki-l7-ggk"/>
+                                            <constraint firstAttribute="height" constant="30" id="mUb-01-wEr"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2B4-cg-KZE">
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="39"/>
+                                        <connections>
+                                            <action selector="didTapExpandFavorites:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Rdu-cm-ApK"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="uXX-yk-zP8" firstAttribute="top" secondItem="Bm2-ed-wDI" secondAttribute="bottom" id="1cf-A1-eNP"/>
+                                    <constraint firstItem="2B4-cg-KZE" firstAttribute="top" secondItem="wjJ-uA-bd2" secondAttribute="top" id="9EY-7G-FCg"/>
                                     <constraint firstItem="uXX-yk-zP8" firstAttribute="leading" secondItem="wjJ-uA-bd2" secondAttribute="leading" constant="8" id="BjC-cT-uT9"/>
                                     <constraint firstAttribute="height" constant="190" id="CUv-sS-PMP"/>
                                     <constraint firstAttribute="bottom" secondItem="DEz-zI-i4C" secondAttribute="bottom" constant="8" id="G3o-co-x3d"/>
                                     <constraint firstAttribute="trailing" secondItem="DEz-zI-i4C" secondAttribute="trailing" constant="7" id="JDt-c3-XZf"/>
+                                    <constraint firstItem="uXX-yk-zP8" firstAttribute="top" secondItem="2B4-cg-KZE" secondAttribute="bottom" id="Ltv-34-jco"/>
                                     <constraint firstAttribute="bottom" secondItem="uXX-yk-zP8" secondAttribute="bottom" id="P7s-BH-YOF"/>
                                     <constraint firstAttribute="trailing" secondItem="uXX-yk-zP8" secondAttribute="trailing" id="SD8-c2-qOF"/>
                                     <constraint firstItem="DEz-zI-i4C" firstAttribute="leading" secondItem="wjJ-uA-bd2" secondAttribute="leading" constant="7" id="WoV-bK-n8r"/>
                                     <constraint firstItem="Bm2-ed-wDI" firstAttribute="leading" secondItem="wjJ-uA-bd2" secondAttribute="leading" constant="5" id="XW9-Ki-L7W"/>
+                                    <constraint firstItem="XMO-aI-aAi" firstAttribute="top" secondItem="Bm2-ed-wDI" secondAttribute="bottom" constant="-32" id="fHg-Ui-PWf"/>
+                                    <constraint firstItem="2B4-cg-KZE" firstAttribute="leading" secondItem="wjJ-uA-bd2" secondAttribute="leading" id="gNV-4g-aSd"/>
+                                    <constraint firstAttribute="trailing" secondItem="2B4-cg-KZE" secondAttribute="trailing" id="lWS-Vw-eC8"/>
                                     <constraint firstItem="Bm2-ed-wDI" firstAttribute="top" secondItem="wjJ-uA-bd2" secondAttribute="top" constant="4" id="mvw-Xd-9sG"/>
+                                    <constraint firstItem="XMO-aI-aAi" firstAttribute="leading" secondItem="Bm2-ed-wDI" secondAttribute="trailing" constant="7.5" id="xzK-TT-cZF"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sWj-I5-Xhq">
@@ -422,21 +441,40 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Down Bar" translatesAutoresizingMaskIntoConstraints="NO" id="6Sn-Af-gIn">
+                                        <rect key="frame" x="136" y="9" width="23" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="23" id="Wu8-bP-dhD"/>
+                                            <constraint firstAttribute="height" constant="30" id="yHH-Sb-KRR"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OAQ-kG-Doy">
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="50"/>
+                                        <connections>
+                                            <action selector="didTapExpandAllParks:" destination="BYZ-38-t0r" eventType="touchUpInside" id="316-f7-XcC"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="ATh-qj-u0A" firstAttribute="top" secondItem="sWj-I5-Xhq" secondAttribute="top" constant="7" id="2Jw-s6-C7Q"/>
                                     <constraint firstItem="ATh-qj-u0A" firstAttribute="centerX" secondItem="sWj-I5-Xhq" secondAttribute="centerX" id="8mH-nH-amJ"/>
+                                    <constraint firstItem="OAQ-kG-Doy" firstAttribute="top" secondItem="sWj-I5-Xhq" secondAttribute="top" id="B98-9l-3OT"/>
                                     <constraint firstItem="dHc-jO-smP" firstAttribute="leading" secondItem="sWj-I5-Xhq" secondAttribute="leading" constant="5" id="BP5-j7-EAL"/>
+                                    <constraint firstItem="OAQ-kG-Doy" firstAttribute="leading" secondItem="sWj-I5-Xhq" secondAttribute="leading" id="Bnp-XR-j2H"/>
+                                    <constraint firstAttribute="trailing" secondItem="OAQ-kG-Doy" secondAttribute="trailing" id="C0H-RG-9fg"/>
                                     <constraint firstAttribute="trailing" secondItem="T2A-XL-wHa" secondAttribute="trailing" constant="5" id="FpV-9K-tDm"/>
                                     <constraint firstItem="VXB-kA-HSX" firstAttribute="leading" secondItem="sWj-I5-Xhq" secondAttribute="leading" constant="7" id="HCE-fJ-7eJ"/>
+                                    <constraint firstItem="T2A-XL-wHa" firstAttribute="top" secondItem="OAQ-kG-Doy" secondAttribute="bottom" id="LHo-UD-LZR"/>
                                     <constraint firstAttribute="bottom" secondItem="VXB-kA-HSX" secondAttribute="bottom" id="OeG-WS-gIM"/>
                                     <constraint firstItem="T2A-XL-wHa" firstAttribute="top" secondItem="dHc-jO-smP" secondAttribute="bottom" constant="8" id="OyT-0h-ah4"/>
                                     <constraint firstItem="dHc-jO-smP" firstAttribute="top" secondItem="sWj-I5-Xhq" secondAttribute="top" constant="7" id="Sa2-HO-M6J"/>
+                                    <constraint firstItem="6Sn-Af-gIn" firstAttribute="leading" secondItem="dHc-jO-smP" secondAttribute="trailing" constant="7.5" id="UKe-X1-UiE"/>
                                     <constraint firstItem="VXB-kA-HSX" firstAttribute="top" secondItem="dHc-jO-smP" secondAttribute="bottom" constant="3" id="aJn-DN-7cB"/>
                                     <constraint firstItem="T2A-XL-wHa" firstAttribute="leading" secondItem="sWj-I5-Xhq" secondAttribute="leading" constant="5" id="eQR-rP-GJ6"/>
                                     <constraint firstAttribute="trailing" secondItem="VXB-kA-HSX" secondAttribute="trailing" id="fVa-JJ-ffk"/>
                                     <constraint firstAttribute="trailing" secondItem="ATh-qj-u0A" secondAttribute="trailing" constant="5" id="rVH-XN-lSV"/>
+                                    <constraint firstItem="dHc-jO-smP" firstAttribute="top" secondItem="6Sn-Af-gIn" secondAttribute="bottom" constant="-32" id="tCa-NR-XVN"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hBl-RG-inl">
@@ -565,6 +603,8 @@
                         <outlet property="addParkButton" destination="0nb-Xl-qwe" id="XDt-lM-vDx"/>
                         <outlet property="addParkHeightConstrant" destination="M2k-M9-T6B" id="X9b-S8-ITw"/>
                         <outlet property="allParksBottomConstrant" destination="V2k-q4-Gp0" id="okG-1k-lxe"/>
+                        <outlet property="allParksExpandButton" destination="6Sn-Af-gIn" id="eyR-1P-bXF"/>
+                        <outlet property="allParksInstructions" destination="T2A-XL-wHa" id="2Xm-Bs-meA"/>
                         <outlet property="allParksTableView" destination="VXB-kA-HSX" id="BwI-f7-C0h"/>
                         <outlet property="allParksView" destination="sWj-I5-Xhq" id="3ib-cF-ceC"/>
                         <outlet property="backgroundView" destination="8bC-Xf-vdC" id="3rY-lT-PWf"/>
@@ -575,6 +615,8 @@
                         <outlet property="doneSearchButton" destination="Ggp-Ep-vO0" id="fYY-6o-gRt"/>
                         <outlet property="doneSearchHeightConstrant" destination="ZCo-vJ-gDS" id="YAg-Dh-qCU"/>
                         <outlet property="doneSearchWidthConstrant" destination="SW8-PH-V20" id="JhX-OA-Enw"/>
+                        <outlet property="favoritesExpandButton" destination="XMO-aI-aAi" id="5uj-ce-afz"/>
+                        <outlet property="favoritesInstructions" destination="DEz-zI-i4C" id="62X-n3-7fd"/>
                         <outlet property="favoritesLabel" destination="Bm2-ed-wDI" id="8IR-9r-Sqm"/>
                         <outlet property="favoritesTableView" destination="uXX-yk-zP8" id="Bk6-5H-FrE"/>
                         <outlet property="favoritesView" destination="wjJ-uA-bd2" id="hEn-Zv-jns"/>
@@ -591,13 +633,15 @@
                         <outlet property="settingsButton" destination="BzP-aD-VQn" id="OoY-nL-HsQ"/>
                         <outlet property="settingsButtonHeightConstrant" destination="f7C-5b-yQN" id="rfm-i2-Syw"/>
                         <outlet property="settingsButtonWidthConstrant" destination="iGy-eD-pdJ" id="aO4-iM-PT0"/>
+                        <outlet property="tapExpandAllParksView" destination="OAQ-kG-Doy" id="qPl-N2-abr"/>
+                        <outlet property="tapExpandFavoritesView" destination="2B4-cg-KZE" id="Ci9-OB-3YX"/>
                         <outlet property="viewAttractionLocationButton" destination="Xo4-qp-Arf" id="amb-bk-zPh"/>
                         <segue destination="u3h-iL-PsR" kind="unwind" unwindAction="unwindToParkListWithSegue:" id="8wY-gf-6iw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1017" y="225"/>
+            <point key="canvasLocation" x="1016.8" y="224.4377811094453"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="Ev0-Hl-FU5">
