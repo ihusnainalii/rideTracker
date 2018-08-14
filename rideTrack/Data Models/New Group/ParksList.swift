@@ -78,7 +78,6 @@ struct ParksList {
             "location": location,
             "showDefunct": showDefunct,
             "incrementorEnabled": incrementorEnabled
-            
         ]
     }
 }

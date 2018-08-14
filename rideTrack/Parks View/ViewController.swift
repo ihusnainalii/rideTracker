@@ -692,9 +692,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             })
             
         }
-        if segue.identifier == "toSettings"{
-            let settingVC = segue.destination as! SettingsViewController
-            settingVC.simulateLocation = simulateLocation
+        if segue.identifier == "toStats"{
+            let statsVC = segue.destination as! StatsViewController
+            statsVC.simulateLocation = simulateLocation
+            statsVC.allParksList = allParksList
+            statsVC.arrayOfAllParks = arrayOfAllParks
         }
     }
     
@@ -734,8 +736,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         else if segue.source is AttractionsViewController{
             print("DO NOT USE THIS, IT WILL NOT UPDATE THE FRACTIONS. INSTEAD CALL THE UNWIND METHOD")
-            
-            
         }
     }
     

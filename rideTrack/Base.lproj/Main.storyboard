@@ -176,11 +176,11 @@
                                             <constraint firstAttribute="width" constant="80" id="iGy-eD-pdJ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
-                                        <state key="normal" title="Profile">
+                                        <state key="normal" title="Stats">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
                                         <connections>
-                                            <segue destination="yIe-5s-JbS" kind="presentation" identifier="toSettings" id="tww-mb-VEw"/>
+                                            <segue destination="m4s-2l-tfW" kind="show" identifier="toStats" id="mTh-4c-AyQ"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LogRide" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="RKG-r3-1wv">
@@ -643,6 +643,67 @@
             </objects>
             <point key="canvasLocation" x="1016.8" y="224.4377811094453"/>
         </scene>
+        <!--Stats View Controller-->
+        <scene sceneID="XnM-ic-W9M">
+            <objects>
+                <viewController id="m4s-2l-tfW" customClass="StatsViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KCb-Ua-kvK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghx-NS-Bpn">
+                                <rect key="frame" x="16" y="20" width="40" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGB-J2-iWt">
+                                <rect key="frame" x="308" y="44" width="57" height="30"/>
+                                <state key="normal" title="Settings"/>
+                                <connections>
+                                    <segue destination="yIe-5s-JbS" kind="show" identifier="toSettings" id="3Wd-F3-zYz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rye-EN-vGS">
+                                <rect key="frame" x="318" y="11" width="37" height="30"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <segue destination="8aV-3V-gP9" kind="unwind" unwindAction="unwindToParkListWithSegue:" id="vvW-jB-H3X"/>
+                                </connections>
+                            </button>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="yCW-8f-Ugn">
+                                <rect key="frame" x="16" y="440" width="343" height="207"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="207" id="YMM-xs-bbQ"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="m4s-2l-tfW" id="q68-wo-5Hh"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="A22-lE-vZT" firstAttribute="trailing" secondItem="nGB-J2-iWt" secondAttribute="trailing" constant="10" id="Gbl-WD-dXS"/>
+                            <constraint firstItem="rye-EN-vGS" firstAttribute="top" secondItem="KCb-Ua-kvK" secondAttribute="top" constant="11" id="OdU-gI-Rek"/>
+                            <constraint firstItem="A22-lE-vZT" firstAttribute="trailing" secondItem="rye-EN-vGS" secondAttribute="trailing" constant="20" id="Oz2-lk-8n6"/>
+                            <constraint firstItem="yCW-8f-Ugn" firstAttribute="leading" secondItem="A22-lE-vZT" secondAttribute="leading" constant="16" id="YbE-kp-LVq"/>
+                            <constraint firstItem="ghx-NS-Bpn" firstAttribute="top" secondItem="A22-lE-vZT" secondAttribute="top" id="eEY-SU-LSI"/>
+                            <constraint firstItem="ghx-NS-Bpn" firstAttribute="leading" secondItem="A22-lE-vZT" secondAttribute="leading" constant="16" id="hzU-SN-NFn"/>
+                            <constraint firstItem="nGB-J2-iWt" firstAttribute="top" secondItem="rye-EN-vGS" secondAttribute="bottom" constant="3" id="lNP-BA-rLZ"/>
+                            <constraint firstItem="A22-lE-vZT" firstAttribute="bottom" secondItem="yCW-8f-Ugn" secondAttribute="bottom" constant="20" id="uzi-td-qBO"/>
+                            <constraint firstItem="A22-lE-vZT" firstAttribute="trailing" secondItem="yCW-8f-Ugn" secondAttribute="trailing" constant="16" id="xej-8R-6u5"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="A22-lE-vZT"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="yCW-8f-Ugn" id="fXb-QS-Aba"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s1w-TZ-GUS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="8aV-3V-gP9" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="324" y="1333.5832083958021"/>
+        </scene>
         <!--Settings View Controller-->
         <scene sceneID="Ev0-Hl-FU5">
             <objects>
@@ -756,7 +817,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OdQ-q0-JAg" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="5gB-Pn-MPZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1016.8" y="1223.8380809595203"/>
+            <point key="canvasLocation" x="1017" y="1334"/>
         </scene>
         <!--Approve Suggested Attraction View Controller-->
         <scene sceneID="FgH-5C-l2A">
