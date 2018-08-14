@@ -117,6 +117,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         super.viewDidLoad()
         hasHaptic = UIDevice.current.value(forKey: "_feedbackSupportLevel") as! Int
         print ("has haptic is ", hasHaptic)
+        suggestButton.isUserInteractionEnabled = false
         emptyParkInstructionsLabel.alpha = 0.0
         self.darkenLayer.backgroundColor = UIColor.clear
         animateRow = -1
@@ -221,6 +222,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.searchBarStyle = UISearchBarStyle.minimal
         searchController.searchBar.sizeToFit()
+        searchController.searchBar.enablesReturnKeyAutomatically = false
        // searchController.searchBar.showsScopeBar = true
         searchController.hidesNavigationBarDuringPresentation = false
         
@@ -234,6 +236,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
         savedItems = items
+        suggestButton.isUserInteractionEnabled = true
         activityIndicator.stopAnimating()
         for i in 0..<items.count{
             attractionListForTable.append(items[i] as! AttractionsModel)

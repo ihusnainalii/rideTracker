@@ -32,11 +32,7 @@ class AttractionsTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        //        minusIncrementButton.layer.borderColor = UIColor(red: 69/255, green: 121/255, blue: 251/255, alpha: 1).cgColor
-        //        minusIncrementButton.layer.borderWidth = 1
-        //        minusIncrementButton.layer.cornerRadius = 7
-        
-        
+
         
         rideCellSquare.layer.backgroundColor = UIColor.white.cgColor
         rideCellSquare.layer.cornerRadius = 10.0
@@ -52,7 +48,8 @@ class AttractionsTableViewCell: UITableViewCell {
         
        // rideCellSquare.addGestureRecognizer(tap)
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
-        rideCellSquare.addGestureRecognizer(longPress)
+        extendedTappableCheckView.addGestureRecognizer(longPress)
+       // rideCellSquare.addGestureRecognizer(longPress)
         // rideCounterCellWidth.constant = 50
         // Initialization code
     }

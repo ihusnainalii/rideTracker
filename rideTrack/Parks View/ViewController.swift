@@ -104,16 +104,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         super.viewDidLoad()
         
-        favoritesTableView.isUserInteractionEnabled = true
+        favoritesTableView.isUserInteractionEnabled = false
         favoritesTableView.delegate = self
         favoritesTableView.dataSource = self
         
-        allParksTableView.isUserInteractionEnabled = true
+        allParksTableView.isUserInteractionEnabled = false
         allParksTableView.delegate = self
         allParksTableView.dataSource = self
         
         searchParksTextField.delegate = self
         
+        settingsButton.isUserInteractionEnabled = false
+
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
@@ -164,6 +166,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         dataModel.delegate = self
         dataModel.downloadData(urlPath: urlPath, dataBase: "parks", returnPath: "allParks")
         
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -178,6 +181,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
+        allParksTableView.isUserInteractionEnabled = true //only taps the talbeview cell once items have downloaded
+        favoritesTableView.isUserInteractionEnabled = true
+        settingsButton.isUserInteractionEnabled = true
         activityIndictor.stopAnimating()
         //Returns the number of total rides in the park, for the fraction view
         if returnPath == "countNumberOfRides"{
