@@ -8,20 +8,82 @@
 
 import UIKit
 import MapKit
+import Firebase
 
 class StatsViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var parkCountLabel: UILabel!
+    @IBOutlet weak var attractionCountLabel: UILabel!
+    @IBOutlet weak var parkCompleteCountLabel: UILabel!
+    @IBOutlet weak var activeAttractionCountLabel: UILabel!
+    @IBOutlet weak var defunctAttractionCountLabel: UILabel!
+    @IBOutlet weak var experiencesCountLabel: UILabel!
+    @IBOutlet weak var countriesCountLabel: UILabel!
+    @IBOutlet weak var rollerCoasterCountLabel: UILabel!
+    @IBOutlet weak var darkRideCountLabel: UILabel!
+    @IBOutlet weak var waterRideCountLabel: UILabel!
+    @IBOutlet weak var flatRideCountLabel: UILabel!
+    @IBOutlet weak var showCountLabel: UILabel!
+    @IBOutlet weak var filmCountLabel: UILabel!
     
+    @IBOutlet weak var spectacularCountLabel: UILabel!
     var allParksList = [ParksList]()
     var arrayOfAllParks = [ParksModel]()
     var simulateLocation: Int!
     
+    var statsListRef: DatabaseReference!
+    var user: User!
+    var statsFilter = "lifeTime"
+    var stats: Stats!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Auth.auth().addStateDidChangeListener { auth, user in
+            guard let user = user else { return }
+            self.user = User(authData: user)
+        }
+        let userID = Auth.auth().currentUser
+        let id = userID?.uid
+        
+        self.statsListRef = Database.database().reference(withPath: "stats-list/\(id!)/\(statsFilter)")
+        
+        statsListRef.observe(.value, with: { snapshot in
+            var newStat: [Stats] = []
+            for child in snapshot.children {
+                if let snapshot = child as? DataSnapshot,
+                    let statItem = Stats(snapshot: snapshot) {
+                    newStat.append(statItem)
+                }
+            }
+            print("Gettings stats-list")
+            self.stats = newStat[0]
+        })
+        
+        
+        
         //mapView.delegate = self
         updateMap()
+        //updateStatLabels()
         // Do any additional setup after loading the view.
+    }
+    
+    func updateStatLabels(){
+        parkCountLabel.text = String(stats.parks)
+        attractionCountLabel.text = String(stats.attractions)
+        parkCompleteCountLabel.text = String(stats.parksCompleted)
+        activeAttractionCountLabel.text = String(stats.activeAttractions)
+        defunctAttractionCountLabel.text = String(stats.extinctAttracions)
+        experiencesCountLabel.text = String(stats.experiences)
+        countriesCountLabel.text = String(stats.countries)
+        rollerCoasterCountLabel.text = String(stats.rollerCoasters)
+        darkRideCountLabel.text = String(stats.darkRides)
+        waterRideCountLabel.text = String(stats.waterRides)
+        flatRideCountLabel.text = String(stats.flatRides)
+        showCountLabel.text = String(stats.shows)
+        spectacularCountLabel.text = String(stats.spectaculars)
+        filmCountLabel.text = String(stats.films)
     }
     
     func updateMap(){
