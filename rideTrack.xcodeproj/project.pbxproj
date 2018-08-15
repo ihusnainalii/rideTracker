@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5F08895F21237B3B0065BBF1 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F08895E21237B3A0065BBF1 /* StatsViewController.swift */; };
 		5F088962212381B00065BBF1 /* ParkMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F088961212381B00065BBF1 /* ParkMap.swift */; };
+		5F088964212487BC0065BBF1 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F088963212487BC0065BBF1 /* Stats.swift */; };
 		5F0AEB0C2110B43F0019D607 /* ExpandParksViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0AEB0B2110B43F0019D607 /* ExpandParksViews.swift */; };
 		5F16C51D20BB92FC00E525EF /* AttractionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16C51C20BB92FC00E525EF /* AttractionsTableViewCell.swift */; };
 		5F16C52520BCE89200E525EF /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */; };
@@ -86,6 +87,7 @@
 		4DAB9B110C20DF7D6DF9644A /* Pods-rideTrackTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrackTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrackTests/Pods-rideTrackTests.release.xcconfig"; sourceTree = "<group>"; };
 		5F08895E21237B3A0065BBF1 /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		5F088961212381B00065BBF1 /* ParkMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkMap.swift; sourceTree = "<group>"; };
+		5F088963212487BC0065BBF1 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		5F0AEB0B2110B43F0019D607 /* ExpandParksViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandParksViews.swift; sourceTree = "<group>"; };
 		5F16C51C20BB92FC00E525EF /* AttractionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionsTableViewCell.swift; sourceTree = "<group>"; };
 		5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				5FFCB803210579C80054D84D /* AttractionList.swift */,
 				5FD613DC210A2B90008D4122 /* IgnoreList.swift */,
 				5FD613DE210A356F008D4122 /* ScoreCardList.swift */,
+				5F088963212487BC0065BBF1 /* Stats.swift */,
 			);
 			name = "Firebase Models";
 			path = "New Group";
@@ -593,6 +596,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F2EEC4F210510150036B47A /* SignUpViewController.swift in Sources */,
+				5F088964212487BC0065BBF1 /* Stats.swift in Sources */,
 				98C28A9F20EBE9CE00C7229E /* SuggestTableViewCell.swift in Sources */,
 				98AD7F7320A91A5C00540AB3 /* ParkSearchViewController.swift in Sources */,
 				9845395720BC8D8C00C0E36C /* AttractionsDetailsViewController.swift in Sources */,
