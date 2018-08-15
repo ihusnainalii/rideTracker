@@ -17,6 +17,7 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
     var scoreCard: [ScoreCardList] = []
     var selectedRide: AttractionsModel!
     var highScore = 0
+    var highDate = 0.0
     var parkID: Int!
     
     var fetchRequest: NSFetchedResultsController<RideTrack>? = nil
@@ -26,6 +27,10 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
     var user: User!
    
     
+    @IBOutlet weak var highScoreTextLabel: UILabel!
+    @IBOutlet weak var highScoreDateLabel: UILabel!
+    @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var rideNameLabel: UILabel!
     @IBOutlet weak var highScoreLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -54,9 +59,17 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
             self.scoreCard = newScoreCard
             self.updateHighScore()
             self.tableView.reloadData()
+            if self.highScore == 0 {
+                self.highScoreDateLabel.isHidden = true
+                self.highScoreLabel.isHidden = true
+                self.highScoreTextLabel.text = "No Scores Entered"
+            }
         })
+        print ("High score is \(highScore) at the top")
 
-        
+        topView.layer.shadowOpacity = 0.5
+        topView.layer.shadowOffset = CGSize.zero
+        doneButton.layer.cornerRadius = 6
         rideNameLabel.text = selectedRide.name
         
         // Do any additional setup after loading the view.
@@ -71,6 +84,10 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
         return scoreCard.count
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "scoreCell", for: indexPath) as! ScoreCardTableViewCell
         cell.dateLabel.text = dateFormatter(date: Date(timeIntervalSince1970: scoreCard[indexPath.row].date))
@@ -96,6 +113,7 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
 //            scoreCard.remove(at: indexPath.row)
             updateHighScore()
             tableView.reloadData()
+            print("AT tableview, high scire is \(highScore)")
         }
     }
     
@@ -110,6 +128,9 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
                 let newScoreRef = self.scoreCardRef.child(String(Int(newScoreCard.date)))
                 newScoreRef.setValue(newScoreCard.toAnyObject())
                 
+                self.highScoreDateLabel.isHidden = false
+                self.highScoreLabel.isHidden = false
+                self.highScoreTextLabel.text = "High Score:"
                 //self.scoreCard.insert(ScoreCardModel(score: Int(textField.text!)!, date: Date(), rideID: self.selectedRide.rideID), at: 0)
                 //self.saveNewScore(newScore: Int(textField.text!)!)
            
@@ -133,24 +154,26 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
         //let date = Date(timeIntervalSince1970: Double (timeToFormat))
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "MMMM d, yyyy h:mm" //Specify your format that you want
+        dateFormatter.dateFormat = "MMMM d, yyyy" //Specify your format that you want
         let strDate = dateFormatter.string(from: date)
         return strDate
     }
     
     func updateHighScore() {
+        print("Finding high score")
         highScore = 0
         for i in 0..<scoreCard.count{
             if scoreCard[i].score > highScore{
-                highScore = scoreCard[i].score
+                self.highScore = scoreCard[i].score
+                highDate = scoreCard[i].date
             }
         }
         
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = NumberFormatter.Style.decimal
-        highScoreLabel.text = "High score: \(String(describing: numberFormatter.string(from: NSNumber(value:highScore))!))"
-        
-        
+        highScoreLabel.text = "\(String(describing: numberFormatter.string(from: NSNumber(value:highScore))!))"
+        highScoreDateLabel.text = dateFormatter(date: Date(timeIntervalSince1970: highDate))
+        print("High score is right here... \(highScore)")
     }
     
 //    func getScoreCardData(){
