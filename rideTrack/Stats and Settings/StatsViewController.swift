@@ -27,8 +27,8 @@ class StatsViewController: UIViewController, DataModelProtocol {
     @IBOutlet weak var showCountLabel: UILabel!
     @IBOutlet weak var filmCountLabel: UILabel!
     @IBOutlet weak var spectacularCountLabel: UILabel!
+    @IBOutlet weak var updatingIndicator: UIActivityIndicatorView!
     
-   
     var allParksList = [ParksList]()
     var arrayOfAllParks = [ParksModel]()
     var simulateLocation: Int!
@@ -47,6 +47,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
     var showCount = 0
     var showSpectacularCount = 0
     var filmCount = 0
+    var numberOfParksAnalized = 0
     
     var attractionListRef: DatabaseReference!
     var statsListRef: DatabaseReference!
@@ -93,7 +94,6 @@ class StatsViewController: UIViewController, DataModelProtocol {
         
         //mapView.delegate = self
         updateMap()
-        //updateStatLabels()
         // Do any additional setup after loading the view.
     }
     
@@ -132,9 +132,6 @@ class StatsViewController: UIViewController, DataModelProtocol {
     }
     
     func updateStatistics(){
-        print("UPDATING STATISTICS")
-        let newParkCount = allParksList.count
-        
         let dataModel = DataModel()
         dataModel.delegate = self
         
@@ -142,15 +139,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
         for i in 0..<allParksList.count{
             let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(allParksList[i].parkID!)"
             dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: String(allParksList[i].parkID!))
-
         }
-        
-        
-        
-        let statsItem = statsArray[0]
-        statsItem.ref?.updateChildValues([
-            "parks": newParkCount
-            ])
     }
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
@@ -181,7 +170,6 @@ class StatsViewController: UIViewController, DataModelProtocol {
 
         for i in 0..<parksAttractionList.count{
             if parksAttractionList[i].rideID == userAttractionList[userAttractionIndex].rideID{
-                print("Matched ride ID: \(parksAttractionList[i].rideID!)")
                 attractionCount += 1
                 experiencesCount += userAttractionList[userAttractionIndex].numberOfTimesRidden
                 if parksAttractionList[i].active == 1{
@@ -206,7 +194,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
                 case 10:
                     filmCount += 1
                 default:
-                    print("No Ride ID")
+                    print("Not saving this ride type to stats")
                 }
  
                 if (userAttractionIndex+1) == userAttractionList.count{
@@ -217,20 +205,27 @@ class StatsViewController: UIViewController, DataModelProtocol {
             }
         }
         
-        let statsItem = statsArray[0]
-        statsItem.ref?.updateChildValues([
-            "attractions": attractionCount,
-            "extinctAttracions": extinctAttractionCount,
-            "activeAttractions": activeAttractionCount,
-            "experiences": experiencesCount,
-            "rollerCoasters": rollerCoasterCount,
-            "waterRides": waterRidesCount,
-            "flatRides": flatRidesCount,
-            "darkRides": darkRidesCount,
-            "spectaculars": showSpectacularCount,
-            "shows": showCount,
-            "films": filmCount
-            ])
+        numberOfParksAnalized += 1
+        
+        if numberOfParksAnalized == allParksList.count{
+            print("updating stats")
+            let statsItem = statsArray[0]
+            statsItem.ref?.updateChildValues([
+                "parks": allParksList.count,
+                "attractions": attractionCount,
+                "extinctAttracions": extinctAttractionCount,
+                "activeAttractions": activeAttractionCount,
+                "experiences": experiencesCount,
+                "rollerCoasters": rollerCoasterCount,
+                "waterRides": waterRidesCount,
+                "flatRides": flatRidesCount,
+                "darkRides": darkRidesCount,
+                "spectaculars": showSpectacularCount,
+                "shows": showCount,
+                "films": filmCount
+                ])
+            updatingIndicator.isHidden = true
+        }
     }
     
     override func didReceiveMemoryWarning() {

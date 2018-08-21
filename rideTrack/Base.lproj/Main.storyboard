@@ -876,6 +876,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="kmN-9b-tag">
+                                <rect key="frame" x="26" y="49" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -906,6 +910,7 @@
                         <outlet property="rollerCoasterCountLabel" destination="RyN-pL-2cg" id="AHh-J8-K5J"/>
                         <outlet property="showCountLabel" destination="Ybs-Xh-4KN" id="uG6-F2-nKo"/>
                         <outlet property="spectacularCountLabel" destination="0zb-Gc-FCp" id="WXz-2f-yAY"/>
+                        <outlet property="updatingIndicator" destination="kmN-9b-tag" id="z0t-fn-nXq"/>
                         <outlet property="waterRideCountLabel" destination="OMh-GS-0Ma" id="bg5-mi-R21"/>
                     </connections>
                 </viewController>
