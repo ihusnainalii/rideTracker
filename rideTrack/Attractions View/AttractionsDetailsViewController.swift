@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Firebase
+import FirebaseStorage
 
 class AttractionsDetailsViewController: UIViewController {
    
@@ -27,6 +28,8 @@ class AttractionsDetailsViewController: UIViewController {
     let greyColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     
     
+    @IBOutlet weak var imageSection: UIView!
+    @IBOutlet weak var uiImageView: UIImageView!
     @IBOutlet weak var inspectorButton: UIButton!
     @IBOutlet weak var blankView: UIView!
     @IBOutlet weak var manufacturerStack: UIStackView!
@@ -68,12 +71,7 @@ class AttractionsDetailsViewController: UIViewController {
         
         print ("ride ID: ", self.selectedRide.rideID!)
         
-//        if rememberPasscode == 1 {
-//            inspectorButton.isHidden = false
-//        }
-//        else{
-//            inspectorButton.isHidden = true
-//        }
+
         OverlayView.layer.cornerRadius = 10.0
         OverlayView.backgroundColor = UIColor.white
         
@@ -82,6 +80,8 @@ class AttractionsDetailsViewController: UIViewController {
         scoreCardButton.backgroundColor = greyColor
         scoreCardButton.layer.cornerRadius = 6.0
         
+        self.imageSection.isHidden = true
+
         //dateModifyButton.layer.cornerRadius = 5.0
       //  userDatesView.backgroundColor = greyColor
         //userDatesView.layer.cornerRadius = 10.0
@@ -169,6 +169,43 @@ class AttractionsDetailsViewController: UIViewController {
         }
         attractiontype.text = typeString
 
+        //photo downloading
+        
+        
+       // let database = Database.database().reference()
+        let storage = Storage.storage().reference()
+        let imageRef = storage.child("\(selectedRide.parkID!)/\(selectedRide.rideID!).jpg")
+        
+        imageRef.getData(maxSize: 1*1000*1000) { (data, error) in
+            if error == nil {
+                self.uiImageView.image = UIImage(data: data!)
+                UIView.animate(withDuration: 0.3, animations: { //Animate Here
+                    self.imageSection.isHidden = false
+                }, completion: nil)
+                
+            }
+            else {
+                print(error?.localizedDescription)
+                self.imageSection.isHidden = true
+            }
+        }
+        /*
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        //create a child reference
+        let imagesRef = storageRef.child("images")
+        
+        let fileName = "124.jpg"
+        let spaceRef = imagesRef.child(fileName)
+        // File path is "images/124.jpg"
+        let path = spaceRef.fullPath;
+        
+        // File name is "space.jpg"
+        let name = spaceRef.name;
+        
+        // Points to "images"
+        let images = spaceRef.parent()
+        */
         // Do any additional setup after loading the view.
     }
     

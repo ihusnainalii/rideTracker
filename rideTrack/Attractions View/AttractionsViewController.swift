@@ -462,9 +462,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 cell.attractionButton.setImage(#imageLiteral(resourceName: "green check"), for: .normal)
                 cell.numberOfRidesLabel.alpha = 0.0
                 cell.numberOfRidesLabel.text = ""
-                attractionListForTable[indexPath.row].numberOfTimesRidden = 1
+                CurrtableView[indexPath.row].numberOfTimesRidden = 1
                 configureCellIncrementing(cell: cell, item: item)
-            } else if attractionListForTable[indexPath.row].isIgnored{
+            } else if CurrtableView[indexPath.row].isIgnored{
                 configureCellIgnore(cell: cell, item: item)
             } else{
                 configureCellCheck(cell: cell, item: item)
