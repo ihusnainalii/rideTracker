@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import Firebase
 
-class StatsViewController: UIViewController {
+class StatsViewController: UIViewController, DataModelProtocol {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var parkCountLabel: UILabel!
@@ -26,16 +26,36 @@ class StatsViewController: UIViewController {
     @IBOutlet weak var flatRideCountLabel: UILabel!
     @IBOutlet weak var showCountLabel: UILabel!
     @IBOutlet weak var filmCountLabel: UILabel!
-    
     @IBOutlet weak var spectacularCountLabel: UILabel!
+    
+   
     var allParksList = [ParksList]()
     var arrayOfAllParks = [ParksModel]()
     var simulateLocation: Int!
+    var firstUpdate = true
     
+    var attractionCount = 0
+    //var parksCompleteCount = 0
+    var activeAttractionCount = 0
+    var extinctAttractionCount = 0
+    var experiencesCount = 0
+    //var countriesCount = 0
+    var rollerCoasterCount = 0
+    var darkRidesCount = 0
+    var waterRidesCount = 0
+    var flatRidesCount = 0
+    var showCount = 0
+    var showSpectacularCount = 0
+    var filmCount = 0
+    
+    var attractionListRef: DatabaseReference!
     var statsListRef: DatabaseReference!
     var user: User!
+    var id: String!
     var statsFilter = "lifeTime"
     var stats: Stats!
+    var statsArray = [Stats]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,21 +65,29 @@ class StatsViewController: UIViewController {
             self.user = User(authData: user)
         }
         let userID = Auth.auth().currentUser
-        let id = userID?.uid
+        id = userID?.uid
+        print(id!)
         
-        self.statsListRef = Database.database().reference(withPath: "stats-list/\(id!)/\(statsFilter)")
+        self.statsListRef = Database.database().reference(withPath: "stats-list/\(id!)")
         
         statsListRef.observe(.value, with: { snapshot in
-            var newStat: [Stats] = []
+            var newStats: [Stats] = []
             for child in snapshot.children {
                 if let snapshot = child as? DataSnapshot,
                     let statItem = Stats(snapshot: snapshot) {
-                    newStat.append(statItem)
+                    newStats.append(statItem)
                 }
             }
             print("Gettings stats-list")
-           // self.stats = newStat[0]
+            self.statsArray = newStats
+            self.stats = self.statsArray[0]
+            self.updateStatLabels()
+            if self.firstUpdate{
+                self.updateStatistics()
+            }
+            self.firstUpdate = false
         })
+        
         
         
         
@@ -102,7 +130,109 @@ class StatsViewController: UIViewController {
             allParksIndex += 1
         } while myParksIndex < allParksList.count
     }
+    
+    func updateStatistics(){
+        print("UPDATING STATISTICS")
+        let newParkCount = allParksList.count
+        
+        let dataModel = DataModel()
+        dataModel.delegate = self
+        
+        
+        for i in 0..<allParksList.count{
+            let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(allParksList[i].parkID!)"
+            dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: String(allParksList[i].parkID!))
 
+        }
+        
+        
+        
+        let statsItem = statsArray[0]
+        statsItem.ref?.updateChildValues([
+            "parks": newParkCount
+            ])
+    }
+    
+    func itemsDownloaded(items: NSArray, returnPath: String) {
+        var parksAttractionList: [AttractionsModel] = []
+        
+        for i in 0..<items.count{
+            parksAttractionList.append(items[i] as! AttractionsModel)
+        }
+         parksAttractionList.sort { $0.rideID < $1.rideID }
+        attractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(returnPath)")
+
+        attractionListRef.queryOrdered(byChild: "rideID").observeSingleEvent(of: .value, with: { snapshot in
+            var newAttractions: [AttractionList] = []
+            for child in snapshot.children {
+                if let snapshot = child as? DataSnapshot,
+                    let attractionItem = AttractionList(snapshot: snapshot) {
+                    newAttractions.append(attractionItem)
+                }
+            }
+            self.calculateParksStats(parksAttractionList: parksAttractionList, userAttractionList: newAttractions)
+        })
+
+    }
+    
+    func calculateParksStats(parksAttractionList: [AttractionsModel], userAttractionList: [AttractionList]){
+ 
+        var userAttractionIndex = 0
+
+        for i in 0..<parksAttractionList.count{
+            if parksAttractionList[i].rideID == userAttractionList[userAttractionIndex].rideID{
+                print("Matched ride ID: \(parksAttractionList[i].rideID!)")
+                attractionCount += 1
+                experiencesCount += userAttractionList[userAttractionIndex].numberOfTimesRidden
+                if parksAttractionList[i].active == 1{
+                    activeAttractionCount += 1
+                } else{
+                    extinctAttractionCount += 1
+                }
+                
+                switch parksAttractionList[i].rideType {
+                case 1:
+                    rollerCoasterCount += 1
+                case 2:
+                    waterRidesCount += 1
+                case 4:
+                    flatRidesCount += 1
+                case 6:
+                    darkRidesCount += 1
+                case 8:
+                    showSpectacularCount += 1
+                case 9:
+                    showCount += 1
+                case 10:
+                    filmCount += 1
+                default:
+                    print("No Ride ID")
+                }
+ 
+                if (userAttractionIndex+1) == userAttractionList.count{
+                    break
+                } else{
+                    userAttractionIndex += 1
+                }
+            }
+        }
+        
+        let statsItem = statsArray[0]
+        statsItem.ref?.updateChildValues([
+            "attractions": attractionCount,
+            "extinctAttracions": extinctAttractionCount,
+            "activeAttractions": activeAttractionCount,
+            "experiences": experiencesCount,
+            "rollerCoasters": rollerCoasterCount,
+            "waterRides": waterRidesCount,
+            "flatRides": flatRidesCount,
+            "darkRides": darkRidesCount,
+            "spectaculars": showSpectacularCount,
+            "shows": showCount,
+            "films": filmCount
+            ])
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
