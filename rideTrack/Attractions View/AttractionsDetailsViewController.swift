@@ -178,6 +178,9 @@ class AttractionsDetailsViewController: UIViewController {
         
         imageRef.getData(maxSize: 1*1000*1000) { (data, error) in
             if error == nil {
+                self.uiImageView.layer.cornerRadius = self.uiImageView.frame.size.height/2
+                self.uiImageView.layer.masksToBounds = true
+                self.uiImageView.layer.borderWidth = 0
                 self.uiImageView.image = UIImage(data: data!)
                 UIView.animate(withDuration: 0.3, animations: { //Animate Here
                     self.imageSection.isHidden = false

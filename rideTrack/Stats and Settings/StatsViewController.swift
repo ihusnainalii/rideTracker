@@ -58,7 +58,7 @@ class StatsViewController: UIViewController {
                 }
             }
             print("Gettings stats-list")
-            self.stats = newStat[0]
+           // self.stats = newStat[0]
         })
         
         
