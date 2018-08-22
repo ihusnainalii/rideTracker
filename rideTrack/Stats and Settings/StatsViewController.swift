@@ -93,7 +93,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
         
         
         //mapView.delegate = self
-        updateMap()
+        //updateMap()
         // Do any additional setup after loading the view.
     }
     
