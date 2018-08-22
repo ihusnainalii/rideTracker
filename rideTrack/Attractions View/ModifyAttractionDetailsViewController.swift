@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExtendedAttractionDetailsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, DataModelProtocol, UITextViewDelegate {
+class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, DataModelProtocol, UITextViewDelegate {
 
     
 

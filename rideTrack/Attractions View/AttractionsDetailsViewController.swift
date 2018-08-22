@@ -23,7 +23,7 @@ class AttractionsDetailsViewController: UIViewController {
     var titleName = ""
     var attractionsListRef: DatabaseReference!
     var user: User!
-
+    var attractionImage: UIImage!
     
     let greyColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     
@@ -178,13 +178,17 @@ class AttractionsDetailsViewController: UIViewController {
         
         imageRef.getData(maxSize: 1*1000*1000) { (data, error) in
             if error == nil {
-                self.uiImageView.layer.cornerRadius = self.uiImageView.frame.size.height/2
+                print("image found")
+                self.uiImageView.layer.cornerRadius = 30
+                //self.uiImageView.layer.cornerRadius = self.uiImageView.frame.size.height/2
                 self.uiImageView.layer.masksToBounds = true
                 self.uiImageView.layer.borderWidth = 0
-                self.uiImageView.image = UIImage(data: data!)
-                UIView.animate(withDuration: 0.3, animations: { //Animate Here
+                let Croppedimage = self.cropToSquare(image: UIImage(data: data!)!)
+                self.uiImageView.image = Croppedimage //UIImage(data: data!)
+                self.attractionImage = Croppedimage
+                //UIView.animate(withDuration: 0.3, animations: { //Animate Here
                     self.imageSection.isHidden = false
-                }, completion: nil)
+               // }, completion: nil)
                 
             }
             else {
@@ -192,23 +196,9 @@ class AttractionsDetailsViewController: UIViewController {
                 self.imageSection.isHidden = true
             }
         }
-        /*
-        let storage = Storage.storage()
-        let storageRef = storage.reference()
-        //create a child reference
-        let imagesRef = storageRef.child("images")
-        
-        let fileName = "124.jpg"
-        let spaceRef = imagesRef.child(fileName)
-        // File path is "images/124.jpg"
-        let path = spaceRef.fullPath;
-        
-        // File name is "space.jpg"
-        let name = spaceRef.name;
-        
-        // Points to "images"
-        let images = spaceRef.parent()
-        */
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(AttractionsDetailsViewController.imageTapped(gesture:)))
+        uiImageView.addGestureRecognizer(tapGesture)
+        uiImageView.isUserInteractionEnabled = true
         // Do any additional setup after loading the view.
     }
     
@@ -223,6 +213,30 @@ class AttractionsDetailsViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    func cropToSquare (image: UIImage) -> UIImage {
+        var imageHeight = image.size.height
+        var imageWidth = image.size.width
+        
+        if imageHeight > imageWidth {
+            imageHeight = imageWidth
+        }
+        else {
+            imageWidth = imageHeight
+        }
+        let size = CGSize(width: imageWidth, height: imageHeight)
+        let refWidth : CGFloat = CGFloat(image.cgImage!.width)
+        let refHeight : CGFloat = CGFloat(image.cgImage!.height)
+        
+        let x = (refWidth - size.width) / 2
+        let y = (refHeight - size.height) / 2
+        
+        let cropRect = CGRect(x: x, y: y, width: size.height, height: size.width)
+        let imageRef = image.cgImage!.cropping(to: cropRect)
+        return UIImage(cgImage: imageRef!, scale: 0, orientation: image.imageOrientation)
+        //}
+        
+     //   return nil
     }
     
     @IBAction func didPressModifyDate(_ sender: Any) {
@@ -336,6 +350,17 @@ class AttractionsDetailsViewController: UIViewController {
         let strDate = dateFormatter.string(from: date)
         return strDate
     }
+//    @IBAction func tapToExpand(_ sender: UITapGestureRecognizer) {
+//        print("TAPED")
+//        self.performSegue(withIdentifier: "expandPhoto", sender: self)
+//    }
+    
+    @objc func imageTapped(gesture: UIGestureRecognizer) {
+        if (gesture.view as? UIImageView) != nil {
+            print("Image Tapped")
+             self.performSegue(withIdentifier: "expandPhoto", sender: self)
+        }
+    }
     
     @IBAction func tapToExit(_ sender: UITapGestureRecognizer) {
         print ("Tap")
@@ -395,11 +420,16 @@ class AttractionsDetailsViewController: UIViewController {
             newVC.userAttractionDatabase = userAttractionDatabase
         }
         if segue.identifier == "toModify"{
-            let newVC = segue.destination as! ExtendedAttractionDetailsViewController
+            let newVC = segue.destination as! ModifyAttractionDetailsViewController
             newVC.selectedAttraction = selectedRide
             newVC.parkName = titleName
             print("Seguaing now: ride name is ", selectedRide.name!)
             
+        }
+        if segue.identifier == "expandPhoto" {
+            print("expanding")
+            let newVC = segue.destination as! fullScreenPhotoViewController
+            newVC.attractionImage = attractionImage
         }
     }
     

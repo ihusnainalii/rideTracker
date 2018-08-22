@@ -1365,7 +1365,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lmg-xq-7VK" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="LH5-ib-frc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1017" y="1760"/>
+            <point key="canvasLocation" x="-474" y="1878"/>
         </scene>
         <!--Suggest Details View Controller-->
         <scene sceneID="bm5-uX-7te">
@@ -1613,7 +1613,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eOf-af-g5N" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="WCJ-ri-KmA" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1762" y="1760"/>
+            <point key="canvasLocation" x="270" y="1876"/>
         </scene>
         <!--Modify Attraction View Controller-->
         <scene sceneID="9DV-Im-421">
@@ -2076,7 +2076,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RYd-AR-hZg" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="ELM-xq-OZp" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2510" y="1760"/>
+            <point key="canvasLocation" x="1017" y="1876"/>
         </scene>
         <!--Attractions View Controller-->
         <scene sceneID="OSf-k8-4Sg">
@@ -2533,6 +2533,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cxv-Gr-wFA">
                                 <rect key="frame" x="10" y="198.5" width="355" height="458.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                </accessibility>
                             </view>
                             <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="4dk-a8-P3E">
                                 <rect key="frame" x="20" y="198.5" width="335" height="458.5"/>
@@ -2749,12 +2752,45 @@
                                             <constraint firstAttribute="height" constant="10" id="bjk-bl-aVT"/>
                                         </constraints>
                                     </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="nD7-oM-KFZ">
+                                        <rect key="frame" x="0.0" y="465.5" width="335" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Photo" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="hwt-Ei-1Gz">
+                                                <rect key="frame" x="0.0" y="0.0" width="111.5" height="25"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="rzZ-21-ob5"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text=" by " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="s5r-pZ-WF7">
+                                                <rect key="frame" x="111.5" y="0.0" width="112" height="25"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="CC BY" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4gI-Kl-3SB">
+                                                <rect key="frame" x="223.5" y="0.0" width="111.5" height="25"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                            </textView>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="qag-jz-Reh" secondAttribute="bottom" id="6ZM-rT-loP"/>
                                     <constraint firstItem="qag-jz-Reh" firstAttribute="leading" secondItem="4dk-a8-P3E" secondAttribute="leading" id="MEG-3e-rww"/>
                                     <constraint firstAttribute="trailing" secondItem="qag-jz-Reh" secondAttribute="trailing" id="WqP-P8-esR"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="nD7-oM-KFZ"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="QNf-3v-qOp" appends="YES" id="wKc-lk-5AQ"/>
                                 </connections>
@@ -2842,6 +2878,7 @@
                         <outlet property="yearCloseText" destination="GUi-Yi-uzO" id="x2I-Cf-tKs"/>
                         <outlet property="yearClosedStack" destination="g5p-XM-kaB" id="aQF-1j-Dah"/>
                         <outlet property="yearOpenLabel" destination="IiB-xY-fV2" id="bdz-g1-EUc"/>
+                        <segue destination="ZsW-iu-bfU" kind="showDetail" identifier="expandPhoto" id="DiK-fp-YFR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dic-VF-lMM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2857,12 +2894,54 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1846" y="964"/>
+            <point key="canvasLocation" x="1845.5999999999999" y="963.86806596701661"/>
         </scene>
-        <!--Extended Attraction Details View Controller-->
+        <!--Full Screen Photo View Controller-->
+        <scene sceneID="P9h-Sw-mB5">
+            <objects>
+                <viewController id="ZsW-iu-bfU" customClass="fullScreenPhotoViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cRC-GC-qeJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cSu-fd-58Z">
+                                <rect key="frame" x="0.0" y="146" width="375" height="375"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="cSu-fd-58Z" secondAttribute="height" multiplier="1:1" id="XoY-6S-ONh"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQu-Ex-HRs">
+                                <rect key="frame" x="318" y="25" width="37" height="30"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <segue destination="Lk2-9X-eUL" kind="unwind" unwindAction="unwindToDetailsViewWithSender:" id="5sm-cE-75v"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="YVe-N0-Caq" firstAttribute="trailing" secondItem="tQu-Ex-HRs" secondAttribute="trailing" constant="20" id="7ap-MJ-8WR"/>
+                            <constraint firstItem="cSu-fd-58Z" firstAttribute="leading" secondItem="YVe-N0-Caq" secondAttribute="leading" id="NgH-id-mg2"/>
+                            <constraint firstItem="cSu-fd-58Z" firstAttribute="centerX" secondItem="cRC-GC-qeJ" secondAttribute="centerX" id="T30-ED-f3D"/>
+                            <constraint firstItem="tQu-Ex-HRs" firstAttribute="top" secondItem="YVe-N0-Caq" secondAttribute="top" constant="5" id="YcZ-a0-ROO"/>
+                            <constraint firstItem="cSu-fd-58Z" firstAttribute="centerY" secondItem="cRC-GC-qeJ" secondAttribute="centerY" id="aKD-4B-V7U"/>
+                            <constraint firstItem="cSu-fd-58Z" firstAttribute="trailing" secondItem="YVe-N0-Caq" secondAttribute="trailing" id="mVQ-9O-Wy6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="YVe-N0-Caq"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="cSu-fd-58Z" id="IWN-d1-zNW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A26-Wk-F5A" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Lk2-9X-eUL" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1846" y="1684"/>
+        </scene>
+        <!--Modify Attraction Details View Controller-->
         <scene sceneID="GFf-T2-03K">
             <objects>
-                <viewController id="kVq-ZJ-GQe" customClass="ExtendedAttractionDetailsViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="kVq-ZJ-GQe" customClass="ModifyAttractionDetailsViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SsL-dj-wJC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3316,7 +3395,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="xBk-5p-ois">
-                                                    <rect key="frame" x="25" y="14" width="44.5" height="20.5"/>
+                                                    <rect key="frame" x="20" y="14" width="44.5" height="20.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MVy-xn-kto">
                                                             <rect key="frame" x="0.0" y="0.0" width="44.5" height="20.5"/>
@@ -3327,7 +3406,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vNb-BD-8wB">
-                                                    <rect key="frame" x="309" y="14.5" width="36" height="20.5"/>
+                                                    <rect key="frame" x="319" y="14.5" width="36" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -3335,9 +3414,9 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="vNb-BD-8wB" firstAttribute="centerY" secondItem="NjC-7k-FPP" secondAttribute="centerY" id="29q-Dx-OCu"/>
-                                                <constraint firstItem="xBk-5p-ois" firstAttribute="leading" secondItem="NjC-7k-FPP" secondAttribute="leadingMargin" constant="10" id="9jp-pF-uMR"/>
+                                                <constraint firstItem="xBk-5p-ois" firstAttribute="leading" secondItem="NjC-7k-FPP" secondAttribute="leadingMargin" constant="5" id="9jp-pF-uMR"/>
                                                 <constraint firstItem="xBk-5p-ois" firstAttribute="centerY" secondItem="NjC-7k-FPP" secondAttribute="centerY" id="y9j-Go-cvx"/>
-                                                <constraint firstItem="vNb-BD-8wB" firstAttribute="trailing" secondItem="NjC-7k-FPP" secondAttribute="trailingMargin" constant="-15" id="y9p-Oq-3iz"/>
+                                                <constraint firstItem="vNb-BD-8wB" firstAttribute="trailing" secondItem="NjC-7k-FPP" secondAttribute="trailingMargin" constant="-5" id="y9p-Oq-3iz"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
