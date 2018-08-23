@@ -29,6 +29,17 @@ class StatsViewController: UIViewController, DataModelProtocol {
     @IBOutlet weak var spectacularCountLabel: UILabel!
     @IBOutlet weak var updatingIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var profileView: UIView!
+    @IBOutlet weak var parkAndAttractionsView: UIView!
+    @IBOutlet weak var countryView: UIView!
+    @IBOutlet weak var attractionView: UIView!
+    @IBOutlet weak var experiencesView: UIView!
+    @IBOutlet weak var parksCompleteView: UIView!
+    @IBOutlet weak var rideTypesView: UIView!
+    @IBOutlet weak var mapsView: UIView!
+    @IBOutlet weak var achievementsView: UIView!
+    
+    
     var allParksList = [ParksList]()
     var arrayOfAllParks = [ParksModel]()
     var simulateLocation: Int!
@@ -91,7 +102,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
         
         
         
-        
+        configureView()
         //mapView.delegate = self
         //updateMap()
         // Do any additional setup after loading the view.
@@ -159,7 +170,12 @@ class StatsViewController: UIViewController, DataModelProtocol {
                     newAttractions.append(attractionItem)
                 }
             }
-            self.calculateParksStats(parksAttractionList: parksAttractionList, userAttractionList: newAttractions)
+            print("New attraction count \(newAttractions)")
+            if newAttractions.count != 0{
+                self.calculateParksStats(parksAttractionList: parksAttractionList, userAttractionList: newAttractions)
+            } else{
+                self.numberOfParksAnalized += 1
+            }
         })
 
     }
@@ -169,6 +185,8 @@ class StatsViewController: UIViewController, DataModelProtocol {
         var userAttractionIndex = 0
 
         for i in 0..<parksAttractionList.count{
+            print("Park Attraction Cout \(parksAttractionList.count)")
+            print(userAttractionList.count)
             if parksAttractionList[i].rideID == userAttractionList[userAttractionIndex].rideID{
                 attractionCount += 1
                 experiencesCount += userAttractionList[userAttractionIndex].numberOfTimesRidden
@@ -245,7 +263,26 @@ class StatsViewController: UIViewController, DataModelProtocol {
         }
     }
     
-
+    func configureView(){
+        addShadowAndRoundRec(uiView: profileView)
+        addShadowAndRoundRec(uiView: parkAndAttractionsView)
+        addShadowAndRoundRec(uiView: countryView)
+        addShadowAndRoundRec(uiView: attractionView)
+        addShadowAndRoundRec(uiView: experiencesView)
+        addShadowAndRoundRec(uiView: parksCompleteView)
+        addShadowAndRoundRec(uiView: rideTypesView)
+        addShadowAndRoundRec(uiView: achievementsView)
+        addShadowAndRoundRec(uiView: mapsView)
+    }
+    
+    func addShadowAndRoundRec(uiView: UIView){
+        uiView.layer.cornerRadius = 7
+        uiView.layer.shadowOpacity = 0.3
+        uiView.layer.shadowOffset = CGSize.zero
+        uiView.layer.shadowRadius = 5
+        uiView.layer.backgroundColor = UIColor.white.cgColor
+    }
+    
 }
 
 extension ViewController: MKMapViewDelegate {
