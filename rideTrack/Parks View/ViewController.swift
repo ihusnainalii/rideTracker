@@ -864,7 +864,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         
         segueWithTableViewSelect = false
-        selectedPark = ParksList(parkID: closestPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: closestPark.name, location: closestPark.city, showDefunct: false)
+        //selectedPark = ParksList(parkID: closestPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: closestPark.name, location: closestPark.city, showDefunct: false)
+        selectedPark = allParksList[findIndexInAllParksList(parkID: closestPark.parkID)]
         performSegue(withIdentifier: "toAttractionsAll", sender: nil)
     }
     
