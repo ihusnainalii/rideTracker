@@ -37,6 +37,9 @@ class SearchMyParks{
             parksView.myParksLabel.alpha = 0.0
             parksView.searchParksTextField.alpha = 1.0
             parksView.settingsButton.alpha = 0.0
+            parksView.statsButton.alpha = 0.0
+            parksView.profileButton.alpha = 0.0
+            parksView.doneSearchButton.alpha = 1.0
             parksView.searchParkView.alpha = 0.0
             parksView.addParkButton.alpha = 0.0
             parksView.allParksTableView.alpha = 1.0
@@ -65,7 +68,10 @@ class SearchMyParks{
             parksView.searchParksTextField.alpha = 0.0
             parksView.settingsButton.alpha = 1.0
             parksView.searchParkView.alpha = 1.0
+            parksView.statsButton.alpha = 1.0
+            parksView.profileButton.alpha = 1.0
             parksView.addParkButton.alpha = 1.0
+            parksView.doneSearchButton.alpha = 0.0
             parksView.allParksTableView.alpha = CGFloat(self.allParksTableViewAlpha)
             parksView.favoritesTableView.alpha = CGFloat(self.favoritesTableViewAlpha)
         }))

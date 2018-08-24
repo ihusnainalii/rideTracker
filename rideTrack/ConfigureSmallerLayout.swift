@@ -39,12 +39,9 @@ class ConfigureSmallerLayout{
         parksView.expandParksView.setFavoriteExpandHeight(variable: 163)
         parksView.favoritesViewHeightConstrant.constant = 140.0
         parksView.addParkHeightConstrant.constant = 55
-        parksView.navBarHeightConstants.constant = 55
-        parksView.parksLabel.font =  UIFont.systemFont(ofSize: 26, weight: .bold)
+        //parksView.navBarHeightConstants.constant = 55
         parksView.settingsButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         parksView.doneSearchButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
-        parksView.settingsButtonWidthConstrant.constant = 72
-        parksView.settingsButtonHeightConstrant.constant = 24
         parksView.doneSearchWidthConstrant.constant = 72
         parksView.doneSearchHeightConstrant.constant = 24
         parksView.favoritesLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)

@@ -25,12 +25,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet var backgroundView: UIView!
     @IBOutlet weak var favoritesView: UIView!
     @IBOutlet weak var allParksView: UIView!
-    @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var navigationBar: UIView!
     @IBOutlet weak var addParkButton: UIButton!
     @IBOutlet weak var searchParkView: UIView!
     @IBOutlet weak var viewAttractionLocationButton: UIButton!
-    @IBOutlet weak var parksLabel: UILabel!
     @IBOutlet weak var favoritesLabel: UILabel!
     @IBOutlet weak var myParksLabel: UILabel!
     @IBOutlet weak var currentLocationLabel: UILabel!
@@ -38,9 +36,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var searchMyParksButton: UIButton!
     @IBOutlet weak var doneSearchButton: UIButton!
     @IBOutlet weak var activityIndictor: UIActivityIndicatorView!
+    @IBOutlet weak var statsButton: UIButton!
+    @IBOutlet weak var profileButton: UIButton!
+    @IBOutlet weak var settingsButton: UIButton!
     
-    @IBOutlet weak var settingsButtonHeightConstrant: NSLayoutConstraint!
-    @IBOutlet weak var settingsButtonWidthConstrant: NSLayoutConstraint!
+    
     @IBOutlet weak var navBarHeightConstants: NSLayoutConstraint!
     @IBOutlet weak var addParkHeightConstrant: NSLayoutConstraint!
     @IBOutlet weak var currentLocationViewBottomConstraint: NSLayoutConstraint!
@@ -956,14 +956,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         viewAttractionLocationButton.layer.cornerRadius = 7
         viewAttractionLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
-        
-        settingsButton.backgroundColor = settingsColor
-        settingsButton.layer.cornerRadius = 5
-        settingsButton.titleLabel?.adjustsFontSizeToFitWidth = true
+    
         
         doneSearchButton.backgroundColor = settingsColor
         doneSearchButton.layer.cornerRadius = 5
         doneSearchButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        doneSearchButton.alpha = 0.0
         
         
         navigationBar.layer.shadowOpacity = 0.5

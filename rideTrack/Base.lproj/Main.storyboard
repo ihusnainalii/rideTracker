@@ -168,50 +168,55 @@
                                             <action selector="didTapDownSearchParks:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aOk-vk-TqH"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BzP-aD-VQn">
-                                        <rect key="frame" x="284" y="25" width="80" height="28"/>
-                                        <color key="backgroundColor" red="0.91564949587253353" green="0.92708591642771998" blue="0.93617248925126906" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="AI4-ob-FA5">
+                                        <rect key="frame" x="10" y="32" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N15-Dx-pNY">
+                                        <rect key="frame" x="324" y="18" width="40" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="28" id="f7C-5b-yQN"/>
-                                            <constraint firstAttribute="width" constant="80" id="iGy-eD-pdJ"/>
+                                            <constraint firstAttribute="height" constant="40" id="VCr-sG-Kr7"/>
+                                            <constraint firstAttribute="width" constant="40" id="k8y-VB-bRo"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
-                                        <state key="normal" title="Stats">
+                                        <state key="normal" title="Settings" image="Settings"/>
+                                        <connections>
+                                            <segue destination="yIe-5s-JbS" kind="show" id="OH9-eW-QZx"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dne-LG-ci1">
+                                        <rect key="frame" x="274" y="18" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="4kx-wF-IpE"/>
+                                            <constraint firstAttribute="height" constant="40" id="ceB-CC-vb5"/>
+                                        </constraints>
+                                        <state key="normal" image="Profile"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BzP-aD-VQn">
+                                        <rect key="frame" x="224" y="18" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="f7C-5b-yQN"/>
+                                            <constraint firstAttribute="width" constant="40" id="iGy-eD-pdJ"/>
+                                        </constraints>
+                                        <state key="normal" image="Stats icon">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
                                         <connections>
                                             <segue destination="m4s-2l-tfW" kind="show" identifier="toStats" id="mTh-4c-AyQ"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LogRide" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="RKG-r3-1wv">
-                                        <rect key="frame" x="14" y="24.5" width="107" height="33.5"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="AI4-ob-FA5">
-                                        <rect key="frame" x="131" y="32" width="20" height="20"/>
-                                    </activityIndicatorView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N15-Dx-pNY">
-                                        <rect key="frame" x="190" y="24" width="57" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Settings"/>
-                                        <connections>
-                                            <segue destination="yIe-5s-JbS" kind="show" id="OH9-eW-QZx"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="BzP-aD-VQn" secondAttribute="bottom" constant="7" id="1SY-fR-4By"/>
+                                    <constraint firstAttribute="bottom" secondItem="BzP-aD-VQn" secondAttribute="bottom" constant="2" id="1SY-fR-4By"/>
                                     <constraint firstAttribute="bottom" secondItem="AI4-ob-FA5" secondAttribute="bottom" constant="8" id="27B-te-aej"/>
-                                    <constraint firstAttribute="trailing" secondItem="BzP-aD-VQn" secondAttribute="trailing" constant="11" id="2sh-rv-LCy"/>
-                                    <constraint firstItem="RKG-r3-1wv" firstAttribute="leading" secondItem="SFN-kt-0Xx" secondAttribute="leading" constant="14" id="EKg-lA-hfb"/>
                                     <constraint firstAttribute="height" constant="60" id="Go3-Ny-0yP"/>
-                                    <constraint firstAttribute="bottom" secondItem="RKG-r3-1wv" secondAttribute="bottom" constant="2" id="IGo-iP-aaj"/>
+                                    <constraint firstItem="Dne-LG-ci1" firstAttribute="leading" secondItem="BzP-aD-VQn" secondAttribute="trailing" constant="10" id="K36-Dj-blf"/>
+                                    <constraint firstItem="AI4-ob-FA5" firstAttribute="leading" secondItem="SFN-kt-0Xx" secondAttribute="leading" constant="10" id="WvV-7O-Oi5"/>
+                                    <constraint firstAttribute="bottom" secondItem="Dne-LG-ci1" secondAttribute="bottom" constant="2" id="cuP-sI-bC4"/>
+                                    <constraint firstItem="N15-Dx-pNY" firstAttribute="leading" secondItem="Dne-LG-ci1" secondAttribute="trailing" constant="10" id="qX0-Tr-Xe3"/>
                                     <constraint firstAttribute="trailing" secondItem="Ggp-Ep-vO0" secondAttribute="trailing" constant="11" id="vuv-xO-QCI"/>
-                                    <constraint firstItem="AI4-ob-FA5" firstAttribute="leading" secondItem="RKG-r3-1wv" secondAttribute="trailing" constant="10" id="x2c-MA-jHZ"/>
                                     <constraint firstAttribute="bottom" secondItem="Ggp-Ep-vO0" secondAttribute="bottom" constant="7" id="y8C-2O-S0H"/>
+                                    <constraint firstAttribute="bottom" secondItem="N15-Dx-pNY" secondAttribute="bottom" constant="2" id="ymF-LT-kvb"/>
+                                    <constraint firstAttribute="trailing" secondItem="N15-Dx-pNY" secondAttribute="trailing" constant="11" id="znL-jF-2ed"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wjJ-uA-bd2">
@@ -633,14 +638,13 @@
                         <outlet property="myParksLabel" destination="dHc-jO-smP" id="WaQ-Wr-73g"/>
                         <outlet property="navBarHeightConstants" destination="Go3-Ny-0yP" id="2lG-5R-xJT"/>
                         <outlet property="navigationBar" destination="SFN-kt-0Xx" id="8qU-ba-8ej"/>
-                        <outlet property="parksLabel" destination="RKG-r3-1wv" id="kre-8J-QTc"/>
+                        <outlet property="profileButton" destination="Dne-LG-ci1" id="VcP-aF-4bW"/>
                         <outlet property="searchMyParksButton" destination="sSe-yI-CGl" id="M3R-6n-kVd"/>
                         <outlet property="searchParkView" destination="hBl-RG-inl" id="zTN-Hs-Wvm"/>
                         <outlet property="searchParksTextField" destination="ATh-qj-u0A" id="7Ox-zu-wdh"/>
                         <outlet property="searchRideButtonHeightConstraint" destination="TlX-Rq-kVi" id="0kI-5i-hII"/>
-                        <outlet property="settingsButton" destination="BzP-aD-VQn" id="OoY-nL-HsQ"/>
-                        <outlet property="settingsButtonHeightConstrant" destination="f7C-5b-yQN" id="rfm-i2-Syw"/>
-                        <outlet property="settingsButtonWidthConstrant" destination="iGy-eD-pdJ" id="aO4-iM-PT0"/>
+                        <outlet property="settingsButton" destination="N15-Dx-pNY" id="gSb-BI-tvp"/>
+                        <outlet property="statsButton" destination="BzP-aD-VQn" id="Rs0-Yc-qj5"/>
                         <outlet property="tapExpandAllParksView" destination="OAQ-kG-Doy" id="qPl-N2-abr"/>
                         <outlet property="tapExpandFavoritesView" destination="2B4-cg-KZE" id="Ci9-OB-3YX"/>
                         <outlet property="viewAttractionLocationButton" destination="Xo4-qp-Arf" id="amb-bk-zPh"/>
@@ -1159,8 +1163,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n5x-99-Ie6">
-                                <rect key="frame" x="16" y="40" width="76" height="31.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n5x-99-Ie6">
+                                <rect key="frame" x="16" y="40" width="99" height="31.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1173,7 +1177,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="top" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="PSj-xF-Xbv">
-                                <rect key="frame" x="10" y="172" width="355" height="50"/>
+                                <rect key="frame" x="10" y="172.5" width="355" height="50"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="t4k-MH-MJM">
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="50"/>
@@ -1184,19 +1188,19 @@
                                 </constraints>
                             </stackView>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IQU-RJ-HOO">
-                                <rect key="frame" x="280" y="248.5" width="51" height="31"/>
+                                <rect key="frame" x="280" y="249" width="51" height="31"/>
                                 <connections>
                                     <action selector="simulateLocation:" destination="yIe-5s-JbS" eventType="valueChanged" id="Cqn-xK-fMl"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simulate you are in the magic kingdom" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cju-sr-LTz">
-                                <rect key="frame" x="29" y="253.5" width="234" height="41"/>
+                                <rect key="frame" x="29" y="254" width="234" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Id-GT-tVB">
-                                <rect key="frame" x="80" y="365" width="215" height="30"/>
+                                <rect key="frame" x="80" y="365.5" width="215" height="30"/>
                                 <state key="normal" title="Approve Suggested Attractions"/>
                                 <connections>
                                     <segue destination="MXy-Vm-P8R" kind="showDetail" id="s5V-bV-WgC"/>
@@ -4520,8 +4524,11 @@
         <image name="Filter" width="100" height="100"/>
         <image name="Plus Attraction" width="100" height="100"/>
         <image name="Plus button" width="150" height="150"/>
+        <image name="Profile" width="200" height="200"/>
         <image name="Screen Shot 2018-06-24 at 12.52.26 PM" width="670" height="1196"/>
         <image name="Screen Shot 2018-08-22 at 10.00.03 AM" width="646" height="1130"/>
+        <image name="Settings" width="200" height="200"/>
+        <image name="Stats icon" width="200" height="200"/>
         <image name="app icon" width="1024" height="1024"/>
         <image name="compose icon" width="50" height="50"/>
     </resources>
