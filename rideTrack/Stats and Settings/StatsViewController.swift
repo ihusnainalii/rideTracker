@@ -28,6 +28,8 @@ class StatsViewController: UIViewController, DataModelProtocol {
     @IBOutlet weak var filmCountLabel: UILabel!
     @IBOutlet weak var spectacularCountLabel: UILabel!
     @IBOutlet weak var updatingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var playAreaLabel: UILabel!
+    @IBOutlet weak var doneButton: UIButton!
     
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var parkAndAttractionsView: UIView!
@@ -46,13 +48,15 @@ class StatsViewController: UIViewController, DataModelProtocol {
     var arrayOfAllParks = [ParksModel]()
     var simulateLocation: Int!
     var firstUpdate = true
+    let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
+
     
     var attractionCount = 0
-    //var parksCompleteCount = 0
+    var parksCompleteCount = 0
     var activeAttractionCount = 0
     var extinctAttractionCount = 0
     var experiencesCount = 0
-    //var countriesCount = 0
+    var countriesCount = 0
     var rollerCoasterCount = 0
     var darkRidesCount = 0
     var waterRidesCount = 0
@@ -60,6 +64,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
     var showCount = 0
     var showSpectacularCount = 0
     var filmCount = 0
+    var playArea = 0
     var numberOfParksAnalized = 0
     
     var attractionListRef: DatabaseReference!
@@ -102,12 +107,12 @@ class StatsViewController: UIViewController, DataModelProtocol {
         })
         
         if screenSize.width == 320 {
-            scrollWidth.constant = 310
+            scrollWidth.constant = 304
         }
         
         configureView()
         //mapView.delegate = self
-        //updateMap()
+        updateMap()
         // Do any additional setup after loading the view.
     }
     
@@ -126,6 +131,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
         showCountLabel.text = String(stats.shows)
         spectacularCountLabel.text = String(stats.spectaculars)
         filmCountLabel.text = String(stats.films)
+        playAreaLabel.text = String(stats.playAreas)
     }
     
     func updateMap(){
@@ -133,13 +139,36 @@ class StatsViewController: UIViewController, DataModelProtocol {
         arrayOfAllParks.sort { $0.parkID < $1.parkID }
         var allParksIndex = 0
         var myParksIndex = 0
-        
+        var countryList: [String] = []
         repeat {
             if allParksList[myParksIndex].parkID == arrayOfAllParks[allParksIndex].parkID{
                 myParksIndex += 1
+//                var newCountry = false
+//                if arrayOfAllParks.count != 0{
+//                    countryList.append(arrayOfAllParks[0].country)
+//                    for i in 1..<countryList.count{
+//                        print("compare")
+//                        print(countryList[i])
+//                        print(arrayOfAllParks[allParksIndex].country)
+//                        if countryList[i] != arrayOfAllParks[allParksIndex].country{
+//                            newCountry = true
+//                        }
+//                    }
+//                    if newCountry{
+//                        countriesCount += 1
+//                        countryList.append(arrayOfAllParks[allParksIndex].country)
+//                        print(arrayOfAllParks[allParksIndex].country)
+//                        print("Country Count \(countriesCount)")
+//                    }
+//                }
+                
+                
                 //Set up map view here
-                let parkMapAnnotation = ParkMap(parkName: arrayOfAllParks[allParksIndex].name, longitude: arrayOfAllParks[allParksIndex].longitude, latitude: arrayOfAllParks[allParksIndex].latitude)
-                mapView.addAnnotation(parkMapAnnotation)
+                
+                
+                
+//                let parkMapAnnotation = ParkMap(parkName: arrayOfAllParks[allParksIndex].name, longitude: arrayOfAllParks[allParksIndex].longitude, latitude: arrayOfAllParks[allParksIndex].latitude)
+//                mapView.addAnnotation(parkMapAnnotation)
             }
             allParksIndex += 1
         } while myParksIndex < allParksList.count
@@ -151,6 +180,11 @@ class StatsViewController: UIViewController, DataModelProtocol {
         
         
         for i in 0..<allParksList.count{
+            
+            if allParksList[i].totalRides == allParksList[i].ridesRidden && allParksList[i].totalRides != 0{
+                parksCompleteCount += 1
+            }
+            
             let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(allParksList[i].parkID!)"
             dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: String(allParksList[i].parkID!))
         }
@@ -211,6 +245,8 @@ class StatsViewController: UIViewController, DataModelProtocol {
                     showCount += 1
                 case 10:
                     filmCount += 1
+                case 12:
+                    playArea += 1
                 default:
                     print("Not saving this ride type to stats")
                 }
@@ -240,7 +276,10 @@ class StatsViewController: UIViewController, DataModelProtocol {
                 "darkRides": darkRidesCount,
                 "spectaculars": showSpectacularCount,
                 "shows": showCount,
-                "films": filmCount
+                "playAreas": playArea,
+                "films": filmCount,
+                "parksCompleted": parksCompleteCount,
+                "countries": countriesCount
                 ])
             updatingIndicator.isHidden = true
         }
@@ -273,6 +312,9 @@ class StatsViewController: UIViewController, DataModelProtocol {
         addShadowAndRoundRec(uiView: rideTypesView)
         addShadowAndRoundRec(uiView: achievementsView)
         addShadowAndRoundRec(uiView: mapsView)
+        
+        doneButton.backgroundColor = settingsColor
+        doneButton.layer.cornerRadius = 5
     }
     
     func addShadowAndRoundRec(uiView: UIView){
