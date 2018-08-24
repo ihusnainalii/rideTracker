@@ -655,6 +655,45 @@
             </objects>
             <point key="canvasLocation" x="1016.8" y="224.4377811094453"/>
         </scene>
+        <!--Map View Controller-->
+        <scene sceneID="H2v-rI-QU1">
+            <objects>
+                <viewController id="SMG-WA-QED" customClass="MapViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="i9U-fA-8wN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="LAY-26-4Ul">
+                                <rect key="frame" x="0.0" y="60" width="375" height="607"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u6L-KO-42b">
+                                <rect key="frame" x="328" y="25" width="37" height="30"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <segue destination="na7-sa-Kac" kind="unwind" unwindAction="unwindToStatsViewWithSender:" id="pSP-yk-4Qc"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="LAY-26-4Ul" firstAttribute="top" secondItem="i9U-fA-8wN" secondAttribute="top" constant="60" id="7Os-c7-Xip"/>
+                            <constraint firstItem="LAY-26-4Ul" firstAttribute="leading" secondItem="Cgo-wT-FKH" secondAttribute="leading" id="IPI-tl-09c"/>
+                            <constraint firstAttribute="bottom" secondItem="LAY-26-4Ul" secondAttribute="bottom" id="Nxk-7T-WmC"/>
+                            <constraint firstItem="Cgo-wT-FKH" firstAttribute="trailing" secondItem="LAY-26-4Ul" secondAttribute="trailing" id="RUY-ie-bhz"/>
+                            <constraint firstItem="u6L-KO-42b" firstAttribute="top" secondItem="Cgo-wT-FKH" secondAttribute="top" constant="5" id="eDZ-Qa-BzF"/>
+                            <constraint firstItem="Cgo-wT-FKH" firstAttribute="trailing" secondItem="u6L-KO-42b" secondAttribute="trailing" constant="10" id="qAZ-vM-iyM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Cgo-wT-FKH"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="LAY-26-4Ul" id="dBO-BE-tEm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RFb-DM-9Yu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="na7-sa-Kac" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-474" y="988"/>
+        </scene>
         <!--Stats View Controller-->
         <scene sceneID="XnM-ic-W9M">
             <objects>
@@ -1034,26 +1073,32 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wx8-90-EAC">
                                                         <rect key="frame" x="0.0" y="0.0" width="174.5" height="40"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mxT-dI-ETo">
-                                                                <rect key="frame" x="61.5" y="7" width="53" height="26.5"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1R4-Ya-UU0">
+                                                                <rect key="frame" x="0.0" y="0.0" width="174.5" height="40"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
+                                                                <state key="normal" title="Map">
+                                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <segue destination="SMG-WA-QED" kind="show" identifier="toMapView" id="p68-r1-kWn"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                         <color key="backgroundColor" red="0.91372549020000005" green="0.92549019610000005" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
-                                                            <constraint firstItem="mxT-dI-ETo" firstAttribute="centerX" secondItem="wx8-90-EAC" secondAttribute="centerX" id="Dmo-P6-SBH"/>
-                                                            <constraint firstItem="mxT-dI-ETo" firstAttribute="centerY" secondItem="wx8-90-EAC" secondAttribute="centerY" id="Ucd-V9-40Y"/>
+                                                            <constraint firstAttribute="bottom" secondItem="1R4-Ya-UU0" secondAttribute="bottom" id="EMa-0s-TJj"/>
+                                                            <constraint firstItem="1R4-Ya-UU0" firstAttribute="top" secondItem="wx8-90-EAC" secondAttribute="top" id="FM0-fM-X5C"/>
+                                                            <constraint firstItem="1R4-Ya-UU0" firstAttribute="leading" secondItem="wx8-90-EAC" secondAttribute="leading" id="M9q-iG-VWH"/>
                                                             <constraint firstAttribute="height" constant="40" id="dhx-sE-amg"/>
+                                                            <constraint firstAttribute="trailing" secondItem="1R4-Ya-UU0" secondAttribute="trailing" id="our-zE-keR"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VnB-Tc-sCb">
                                                         <rect key="frame" x="184.5" y="0.0" width="174.5" height="40"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Achievements" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HGP-a2-Cbm">
-                                                                <rect key="frame" x="20" y="7" width="135.5" height="26.5"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                <rect key="frame" x="18" y="7" width="140" height="26.5"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
