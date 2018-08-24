@@ -27,6 +27,8 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
     var user: User!
    
     
+    @IBOutlet weak var scoreView: UIView!
+    @IBOutlet weak var highScoreView: UIView!
     @IBOutlet weak var highScoreTextLabel: UILabel!
     @IBOutlet weak var highScoreDateLabel: UILabel!
     @IBOutlet weak var doneButton: UIButton!
@@ -66,9 +68,10 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
             }
         })
         print ("High score is \(highScore) at the top")
-
-        topView.layer.shadowOpacity = 0.5
-        topView.layer.shadowOffset = CGSize.zero
+        addShadowAndRoundRec(uiView: highScoreView)
+        addShadowAndRoundRec(uiView: scoreView)
+//        topView.layer.shadowOpacity = 0.5
+//        topView.layer.shadowOffset = CGSize.zero
         doneButton.layer.cornerRadius = 6
         rideNameLabel.text = selectedRide.name
         
@@ -175,7 +178,13 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
         highScoreDateLabel.text = dateFormatter(date: Date(timeIntervalSince1970: highDate))
         print("High score is right here... \(highScore)")
     }
-    
+    func addShadowAndRoundRec(uiView: UIView){
+        uiView.layer.cornerRadius = 7
+        uiView.layer.shadowOpacity = 0.3
+        uiView.layer.shadowOffset = CGSize.zero
+        uiView.layer.shadowRadius = 5
+        uiView.layer.backgroundColor = UIColor.white.cgColor
+    }
 //    func getScoreCardData(){
 //
 //        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
