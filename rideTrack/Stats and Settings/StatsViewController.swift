@@ -38,8 +38,10 @@ class StatsViewController: UIViewController, DataModelProtocol {
     @IBOutlet weak var rideTypesView: UIView!
     @IBOutlet weak var mapsView: UIView!
     @IBOutlet weak var achievementsView: UIView!
-    
-    
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var scrollWidth: NSLayoutConstraint!
+    let screenSize = UIScreen.main.bounds
+
     var allParksList = [ParksList]()
     var arrayOfAllParks = [ParksModel]()
     var simulateLocation: Int!
@@ -71,7 +73,6 @@ class StatsViewController: UIViewController, DataModelProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         Auth.auth().addStateDidChangeListener { auth, user in
             guard let user = user else { return }
             self.user = User(authData: user)
@@ -100,7 +101,9 @@ class StatsViewController: UIViewController, DataModelProtocol {
             self.firstUpdate = false
         })
         
-        
+        if screenSize.width == 320 {
+            scrollWidth.constant = 310
+        }
         
         configureView()
         //mapView.delegate = self

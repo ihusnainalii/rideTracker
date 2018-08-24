@@ -9,7 +9,8 @@
 import UIKit
 
 class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
-    @IBOutlet weak var copyRightLabel: UILabel!
+    @IBOutlet weak var copyrightLink: UITextView!
+    @IBOutlet weak var photoLink: UITextView!
     @IBOutlet weak var scrollView: UIScrollView!
     var attractionImage: UIImage!
     @IBOutlet weak var imageView: UIImageView!
@@ -17,19 +18,12 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = attractionImage
-        let tap = UITapGestureRecognizer(target: self, action: #selector(fullScreenPhotoViewController.tapFunction))
-        copyRightLabel.isUserInteractionEnabled = true
-        copyRightLabel.addGestureRecognizer(tap)
+    
         // Do any additional setup after loading the view.
     }
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
-    }
-    
-    @objc
-    func tapFunction(sender:UITapGestureRecognizer) {
-        print("tap link")
     }
     
     override func didReceiveMemoryWarning() {
