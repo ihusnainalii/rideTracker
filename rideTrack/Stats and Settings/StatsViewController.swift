@@ -170,7 +170,6 @@ class StatsViewController: UIViewController, DataModelProtocol {
                     newAttractions.append(attractionItem)
                 }
             }
-            print("New attraction count \(newAttractions)")
             if newAttractions.count != 0{
                 self.calculateParksStats(parksAttractionList: parksAttractionList, userAttractionList: newAttractions)
             } else{
@@ -185,8 +184,6 @@ class StatsViewController: UIViewController, DataModelProtocol {
         var userAttractionIndex = 0
 
         for i in 0..<parksAttractionList.count{
-            print("Park Attraction Cout \(parksAttractionList.count)")
-            print(userAttractionList.count)
             if parksAttractionList[i].rideID == userAttractionList[userAttractionIndex].rideID{
                 attractionCount += 1
                 experiencesCount += userAttractionList[userAttractionIndex].numberOfTimesRidden
