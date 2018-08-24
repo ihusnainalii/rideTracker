@@ -720,6 +720,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             statsVC.allParksList = allParksList
             statsVC.arrayOfAllParks = arrayOfAllParks
         }
+        if segue.identifier == "toSettings"{
+            let settingsVC = segue.destination as! SettingsViewController
+            settingsVC.simulateLocation = simulateLocation
+        }
     }
     
     func getParkModelINdexFromAllParks(parkID: Int) -> Int{

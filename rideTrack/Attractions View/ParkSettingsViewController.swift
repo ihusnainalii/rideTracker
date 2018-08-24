@@ -11,20 +11,24 @@ import MapKit
 import CoreData
 import Firebase
 
-class ParksDetailViewController: UIViewController {
+class ParkSettingsViewController: UIViewController {
 
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var yearOpenLabel: UILabel!
-    @IBOutlet weak var yearClosedLabel: UILabel!
-    @IBOutlet weak var previousNameLabel: UILabel!
+//    @IBOutlet weak var mapView: MKMapView!
+//    @IBOutlet weak var yearOpenLabel: UILabel!
+//    @IBOutlet weak var yearClosedLabel: UILabel!
+//    @IBOutlet weak var previousNameLabel: UILabel!
     @IBOutlet weak var parkNameLabel: UILabel!
-    @IBOutlet weak var parkTypeLabel: UILabel!
-    @IBOutlet weak var yearClosedStack: UIStackView!
-    @IBOutlet weak var previousNamesStack: UIStackView!
-    @IBOutlet weak var yearOpenStack: UIStackView!
+//    @IBOutlet weak var parkTypeLabel: UILabel!
+//    @IBOutlet weak var yearClosedStack: UIStackView!
+//    @IBOutlet weak var previousNamesStack: UIStackView!
+//    @IBOutlet weak var yearOpenStack: UIStackView!
     @IBOutlet weak var incrementorSwitch: UISwitch!
     @IBOutlet weak var defunctSwitch: UISwitch!
+    @IBOutlet weak var navBar: UIView!
+    @IBOutlet weak var settingsView: UIView!
+    @IBOutlet weak var doneButton: UIButton!
     
+    let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     var initialLocation: CLLocation!
     let regionRadius: CLLocationDistance = 1000
     var parksData: ParksModel!
@@ -48,8 +52,8 @@ class ParksDetailViewController: UIViewController {
         configueLayout()
         incrementorSwitch.isOn = parksData.incrementorEnabled
         defunctSwitch.isOn = showDefunct
-        initialLocation = CLLocation(latitude: parksData.latitude, longitude: parksData.longitude)
-        centerMapOnLocation(location: initialLocation)
+        //initialLocation = CLLocation(latitude: parksData.latitude, longitude: parksData.longitude)
+        //centerMapOnLocation(location: initialLocation)
         // Do any additional setup after loading the view.
     }
 
@@ -60,20 +64,35 @@ class ParksDetailViewController: UIViewController {
     
     func configueLayout(){
         parkNameLabel.text = parksData.name
-        parkTypeLabel.text = parksData.type
         
-        if parksData.yearOpen != 0{
-            yearOpenLabel.text = String(parksData.yearOpen)
-        } else{yearOpenStack.isHidden = true}
+        settingsView.layer.cornerRadius = 7
+        settingsView.layer.shadowOpacity = 0.3
+        settingsView.layer.shadowOffset = CGSize.zero
+        settingsView.layer.shadowRadius = 5
+        settingsView.layer.backgroundColor = UIColor.white.cgColor
         
-        if parksData.yearClosed != 0{
-            yearClosedLabel.text = String(parksData.yearClosed)
-        } else {yearClosedStack.isHidden = true}
+        navBar.layer.shadowOpacity = 0.3
+        navBar.layer.shadowOffset = CGSize.zero
+        navBar.layer.shadowRadius = 5
         
+        doneButton.backgroundColor = settingsColor
+        doneButton.layer.cornerRadius = 5
+        doneButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
-        if parksData.perviousNames != ""{
-            previousNameLabel.text = parksData.perviousNames
-        } else{previousNamesStack.isHidden = true}
+        //parkTypeLabel.text = parksData.type
+        
+//        if parksData.yearOpen != 0{
+//            yearOpenLabel.text = String(parksData.yearOpen)
+//        } else{yearOpenStack.isHidden = true}
+//
+//        if parksData.yearClosed != 0{
+//            yearClosedLabel.text = String(parksData.yearClosed)
+//        } else {yearClosedStack.isHidden = true}
+//
+//
+//        if parksData.perviousNames != ""{
+//            previousNameLabel.text = parksData.perviousNames
+//        } else{previousNamesStack.isHidden = true}
     }
     @IBAction func didToggleIncrementorSwitch(_ sender: Any) {
         parksData.incrementorEnabled = incrementorSwitch.isOn
@@ -101,10 +120,10 @@ class ParksDetailViewController: UIViewController {
         }
     }
     
-    func centerMapOnLocation(location: CLLocation) {
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
-        mapView.setRegion(coordinateRegion, animated: true)
-    }
+//    func centerMapOnLocation(location: CLLocation) {
+//        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
+//        mapView.setRegion(coordinateRegion, animated: true)
+//    }
 
     @IBAction func unwindToDetailsView(sender: UIStoryboardSegue) {
         print("Back to details view")
