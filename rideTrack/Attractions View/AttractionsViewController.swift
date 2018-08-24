@@ -121,10 +121,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         emptyParkInstructionsLabel.alpha = 0.0
         self.darkenLayer.backgroundColor = UIColor.clear
         animateRow = -1
-        suggestButton.layer.cornerRadius = 7
-        suggestButton.layer.shadowOpacity = 0.4
-        suggestButton.layer.shadowOffset = CGSize.zero
-        suggestButton.layer.shadowRadius = 7
+    
         progressBar.progressTintColor = appGreen
         progressBar.trackTintColor = lightGreyBar
         progressBar.transform = progressBar.transform.scaledBy(x: 1, y: 5)
@@ -1065,7 +1062,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "toParkInfo"{
-            let infoVC = segue.destination as! ParksDetailViewController
+            let infoVC = segue.destination as! ParkSettingsViewController
             infoVC.parksData = parkData
             infoVC.favoiteParkList = favoiteParkList
             infoVC.showDefunct = showExtinct
@@ -1231,8 +1228,8 @@ print ("selected Index is \(selectedIndex!)")
             self.attractionsTableView.tableHeaderView = searchController.searchBar
            searchController.searchBar.becomeFirstResponder()
         }
-        if sender.source is ParksDetailViewController{
-            let parkDetailsVC = sender.source as! ParksDetailViewController
+        if sender.source is ParkSettingsViewController{
+            let parkDetailsVC = sender.source as! ParkSettingsViewController
             showExtinct = parkDetailsVC.showDefunct
             print("SHOW EXTINCT: \(showExtinct)")
             attractionListForTable.removeAll()

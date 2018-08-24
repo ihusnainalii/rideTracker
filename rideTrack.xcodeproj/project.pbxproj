@@ -15,7 +15,7 @@
 		5F16C52520BCE89200E525EF /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */; };
 		5F16C52920BCF3F700E525EF /* ParkListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16C52820BCF3F700E525EF /* ParkListData.swift */; };
 		5F202C5B20E6E8AF00FFE408 /* NeverClearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F202C5A20E6E8AF00FFE408 /* NeverClearView.swift */; };
-		5F202C5D20EB257700FFE408 /* ParksDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F202C5C20EB257700FFE408 /* ParksDetailViewController.swift */; };
+		5F202C5D20EB257700FFE408 /* ParkSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F202C5C20EB257700FFE408 /* ParkSettingsViewController.swift */; };
 		5F21419620F18087009A2E3A /* SearchMyParksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F21419520F18087009A2E3A /* SearchMyParksView.swift */; };
 		5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */; };
 		5F2EEC4F210510150036B47A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4E210510150036B47A /* SignUpViewController.swift */; };
@@ -93,7 +93,7 @@
 		5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		5F16C52820BCF3F700E525EF /* ParkListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkListData.swift; sourceTree = "<group>"; };
 		5F202C5A20E6E8AF00FFE408 /* NeverClearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeverClearView.swift; sourceTree = "<group>"; };
-		5F202C5C20EB257700FFE408 /* ParksDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksDetailViewController.swift; sourceTree = "<group>"; };
+		5F202C5C20EB257700FFE408 /* ParkSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkSettingsViewController.swift; sourceTree = "<group>"; };
 		5F21419520F18087009A2E3A /* SearchMyParksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMyParksView.swift; sourceTree = "<group>"; };
 		5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5F2EEC4E210510150036B47A /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -214,7 +214,7 @@
 				5F16C51C20BB92FC00E525EF /* AttractionsTableViewCell.swift */,
 				98A9A858210A28EE00B3C36E /* FilterView */,
 				5FF0BBBC20CF637700213DF8 /* Score Card */,
-				5F202C5C20EB257700FFE408 /* ParksDetailViewController.swift */,
+				5F202C5C20EB257700FFE408 /* ParkSettingsViewController.swift */,
 			);
 			path = "Attractions View";
 			sourceTree = "<group>";
@@ -623,7 +623,7 @@
 				5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */,
 				5FF0BBBB20CF62C300213DF8 /* ScoreCardViewController.swift in Sources */,
 				5FF0BBBE20CF639100213DF8 /* ScoreCardTableViewCell.swift in Sources */,
-				5F202C5D20EB257700FFE408 /* ParksDetailViewController.swift in Sources */,
+				5F202C5D20EB257700FFE408 /* ParkSettingsViewController.swift in Sources */,
 				98AD7F7220A91A5C00540AB3 /* UserAttraction.swift in Sources */,
 				5FFCB8062106783E0054D84D /* MigrateToFirebase.swift in Sources */,
 				5F088962212381B00065BBF1 /* ParkMap.swift in Sources */,
