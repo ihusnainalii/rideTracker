@@ -75,9 +75,19 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
         doneButton.layer.cornerRadius = 6
         rideNameLabel.text = selectedRide.name
         
+//        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
+//        edgePan.edges = .left
+        
+ //       view.addGestureRecognizer(edgePan)
         // Do any additional setup after loading the view.
     }
-
+//    @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+//        if recognizer.state == .recognized {
+//            print("Screen edge swiped!")
+//            self.performSegue(withIdentifier: "backtoDetails", sender: self)
+//        }
+//    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
