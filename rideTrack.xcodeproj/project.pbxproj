@@ -20,6 +20,7 @@
 		5F24DA0A2130A92800C2D2CC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F24DA092130A92800C2D2CC /* MapViewController.swift */; };
 		5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */; };
 		5F2EEC4F210510150036B47A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4E210510150036B47A /* SignUpViewController.swift */; };
+		5F44F7152132FB50006E6005 /* ParkInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F44F7142132FB50006E6005 /* ParkInfoViewController.swift */; };
 		5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */; };
 		5FD613DD210A2B90008D4122 /* IgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DC210A2B90008D4122 /* IgnoreList.swift */; };
 		5FD613DF210A356F008D4122 /* ScoreCardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DE210A356F008D4122 /* ScoreCardList.swift */; };
@@ -100,6 +101,7 @@
 		5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5F2EEC4E210510150036B47A /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		5F2EEC53210512E70036B47A /* rideTrack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = rideTrack.entitlements; sourceTree = "<group>"; };
+		5F44F7142132FB50006E6005 /* ParkInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkInfoViewController.swift; sourceTree = "<group>"; };
 		5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSmallerLayout.swift; sourceTree = "<group>"; };
 		5FD613DC210A2B90008D4122 /* IgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreList.swift; sourceTree = "<group>"; };
 		5FD613DE210A356F008D4122 /* ScoreCardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardList.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				98A9A858210A28EE00B3C36E /* FilterView */,
 				5FF0BBBC20CF637700213DF8 /* Score Card */,
 				5F202C5C20EB257700FFE408 /* ParkSettingsViewController.swift */,
+				5F44F7142132FB50006E6005 /* ParkInfoViewController.swift */,
 			);
 			path = "Attractions View";
 			sourceTree = "<group>";
@@ -603,6 +606,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F44F7152132FB50006E6005 /* ParkInfoViewController.swift in Sources */,
 				5F2EEC4F210510150036B47A /* SignUpViewController.swift in Sources */,
 				5F088964212487BC0065BBF1 /* Stats.swift in Sources */,
 				98C28A9F20EBE9CE00C7229E /* SuggestTableViewCell.swift in Sources */,

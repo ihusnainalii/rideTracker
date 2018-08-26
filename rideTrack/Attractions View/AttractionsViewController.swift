@@ -1061,13 +1061,18 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "toParkInfo"{
-            let infoVC = segue.destination as! ParkSettingsViewController
-            infoVC.parksData = parkData
-            infoVC.favoiteParkList = favoiteParkList
-            infoVC.showDefunct = showExtinct
-
+        if segue.identifier == "toParkSettings"{
+            let settingsVC = segue.destination as! ParkSettingsViewController
+            settingsVC.parksData = parkData
+            settingsVC.favoiteParkList = favoiteParkList
+            settingsVC.showDefunct = showExtinct
         }
+        
+        if segue.identifier == "toParkInfo"{
+            let infoVC = segue.destination as! ParkInfoViewController
+            infoVC.parksData = parkData
+        }
+        
         if segue.identifier == "toFilter" {
             print("Going to filter")
             self.attractionsTableView.setContentOffset(.zero, animated: false)
