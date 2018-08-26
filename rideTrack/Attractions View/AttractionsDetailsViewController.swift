@@ -24,6 +24,7 @@ class AttractionsDetailsViewController: UIViewController {
     var attractionsListRef: DatabaseReference!
     var user: User!
     var attractionImage: UIImage!
+    var includeHiddenView = false
     
     let greyColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     
@@ -36,6 +37,7 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var firstRideStack: UIStackView!
     @IBOutlet weak var LatestRideStack: UIStackView!
     @IBOutlet weak var yearClosedStack: UIStackView!
+    @IBOutlet weak var formerNamesStack: UIStackView!
     
     @IBOutlet weak var manufacturerLabel: UILabel!
     @IBOutlet weak var manufacturText: UILabel!
@@ -46,6 +48,7 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var yearOpenLabel: UILabel!
     @IBOutlet weak var yearCloseText: UILabel!
     @IBOutlet weak var attractiontype: UILabel!
+    @IBOutlet weak var formerNamesLabel: UILabel!
     
     @IBOutlet weak var modifyDateView: UIView!
     @IBOutlet weak var modifyDatePicker: UIDatePicker!
@@ -79,6 +82,8 @@ class AttractionsDetailsViewController: UIViewController {
         scoreCardButton.isHidden = true
         scoreCardButton.backgroundColor = greyColor
         scoreCardButton.layer.cornerRadius = 6.0
+        
+        blankView.isHidden = false
         
         self.imageSection.isHidden = true
 
@@ -124,12 +129,23 @@ class AttractionsDetailsViewController: UIViewController {
         }
         if selectedRide.manufacturer == "" {
             manufacturerStack.isHidden = true
-            blankView.isHidden = true
+            includeHiddenView = true
         }
         else {
             manufacturerStack.isHidden = false
             manufacturerLabel.text = selectedRide.manufacturer
-            blankView.isHidden = false
+        }
+        
+        if selectedRide.previousNames == "" {
+            formerNamesStack.isHidden = true
+            includeHiddenView = true
+        }
+        else {
+            formerNamesStack.isHidden = false
+            formerNamesLabel.text = selectedRide.previousNames
+        }
+        if includeHiddenView{
+            blankView.isHidden = true
         }
         
         switch selectedRide.rideType {
