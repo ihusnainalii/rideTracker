@@ -29,8 +29,7 @@ class ParkSettingsViewController: UIViewController {
     @IBOutlet weak var doneButton: UIButton!
     
     let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
-    var initialLocation: CLLocation!
-    let regionRadius: CLLocationDistance = 1000
+ 
     var parksData: ParksModel!
     var favoiteParkList = [ParksList]()
     var showDefunct = false
@@ -52,8 +51,7 @@ class ParkSettingsViewController: UIViewController {
         configueLayout()
         incrementorSwitch.isOn = parksData.incrementorEnabled
         defunctSwitch.isOn = showDefunct
-        //initialLocation = CLLocation(latitude: parksData.latitude, longitude: parksData.longitude)
-        //centerMapOnLocation(location: initialLocation)
+    
         // Do any additional setup after loading the view.
     }
 
@@ -79,20 +77,6 @@ class ParkSettingsViewController: UIViewController {
         doneButton.layer.cornerRadius = 5
         doneButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
-        //parkTypeLabel.text = parksData.type
-        
-//        if parksData.yearOpen != 0{
-//            yearOpenLabel.text = String(parksData.yearOpen)
-//        } else{yearOpenStack.isHidden = true}
-//
-//        if parksData.yearClosed != 0{
-//            yearClosedLabel.text = String(parksData.yearClosed)
-//        } else {yearClosedStack.isHidden = true}
-//
-//
-//        if parksData.perviousNames != ""{
-//            previousNameLabel.text = parksData.perviousNames
-//        } else{previousNamesStack.isHidden = true}
     }
     @IBAction func didToggleIncrementorSwitch(_ sender: Any) {
         parksData.incrementorEnabled = incrementorSwitch.isOn

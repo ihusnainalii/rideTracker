@@ -103,6 +103,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 tempMan = jsonElement["Manufacturer"] as! String
                 attraction.manufacturer = tempMan.replacingOccurrences(of: "!A?", with: "&")
                 attraction.isCheck = false
+                attraction.previousNames = jsonElement["FormerNames"] as! String
                 dataBaseData.add(attraction)
             }
             if dataBase == "Suggest" {

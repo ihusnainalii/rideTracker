@@ -41,6 +41,7 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var firstRideStack: UIStackView!
     @IBOutlet weak var LatestRideStack: UIStackView!
     @IBOutlet weak var yearClosedStack: UIStackView!
+    @IBOutlet weak var formerNamesStack: UIStackView!
     
     @IBOutlet weak var manufacturerLabel: UILabel!
     @IBOutlet weak var manufacturText: UILabel!
@@ -51,6 +52,7 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var yearOpenLabel: UILabel!
     @IBOutlet weak var yearCloseText: UILabel!
     @IBOutlet weak var attractiontype: UILabel!
+    @IBOutlet weak var formerNamesLabel: UILabel!
     
     @IBOutlet weak var modifyDateView: UIView!
     @IBOutlet weak var modifyDatePicker: UIDatePicker!
@@ -137,12 +139,23 @@ class AttractionsDetailsViewController: UIViewController {
         }
         if selectedRide.manufacturer == "" {
             manufacturerStack.isHidden = true
-            blankView.isHidden = true
+            includeHiddenView = true
         }
         else {
             manufacturerStack.isHidden = false
             manufacturerLabel.text = selectedRide.manufacturer
-            blankView.isHidden = false
+        }
+        
+        if selectedRide.previousNames == "" {
+            formerNamesStack.isHidden = true
+            includeHiddenView = true
+        }
+        else {
+            formerNamesStack.isHidden = false
+            formerNamesLabel.text = selectedRide.previousNames
+        }
+        if includeHiddenView{
+            blankView.isHidden = true
         }
         
         switch selectedRide.rideType {
