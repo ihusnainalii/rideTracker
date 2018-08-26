@@ -26,6 +26,7 @@ class AttractionsDetailsViewController: UIViewController {
     var attractionImage: UIImage!
     var imageXCorr: CGFloat = 0.0
     var imageYCorr: CGFloat = 0.0
+    var includeHiddenView = false
     let greyColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     var isfiltering = false
     
@@ -90,6 +91,8 @@ class AttractionsDetailsViewController: UIViewController {
         scoreCardButton.layer.cornerRadius = 6.0
         CCView.isHidden = true
         bottomView.isHidden = false
+        
+        blankView.isHidden = false
         self.imageSection.isHidden = true
 
         //dateModifyButton.layer.cornerRadius = 5.0
