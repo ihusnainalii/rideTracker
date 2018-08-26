@@ -24,14 +24,18 @@ class AttractionsDetailsViewController: UIViewController {
     var attractionsListRef: DatabaseReference!
     var user: User!
     var attractionImage: UIImage!
-    
+    var imageXCorr: CGFloat = 0.0
+    var imageYCorr: CGFloat = 0.0
     let greyColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
-    
+    var isfiltering = false
     
     @IBOutlet weak var imageSection: UIView!
     @IBOutlet weak var uiImageView: UIImageView!
     @IBOutlet weak var inspectorButton: UIButton!
     @IBOutlet weak var blankView: UIView!
+    
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var CCView: UIView!
     @IBOutlet weak var manufacturerStack: UIStackView!
     @IBOutlet weak var firstRideStack: UIStackView!
     @IBOutlet weak var LatestRideStack: UIStackView!
@@ -50,6 +54,11 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var modifyDateView: UIView!
     @IBOutlet weak var modifyDatePicker: UIDatePicker!
     @IBOutlet weak var scoreCardButton: UIButton!
+    
+    @IBOutlet weak var photoLinkText: UITextView!
+    @IBOutlet weak var photoAuthorName: UILabel!
+    @IBOutlet weak var PhotoCCText: UITextView!
+    
     
     @IBOutlet weak var detailViewHeight: NSLayoutConstraint!
   //  @IBOutlet weak var userDatesView: UIView!
@@ -79,7 +88,8 @@ class AttractionsDetailsViewController: UIViewController {
         scoreCardButton.isHidden = true
         scoreCardButton.backgroundColor = greyColor
         scoreCardButton.layer.cornerRadius = 6.0
-        
+        CCView.isHidden = true
+        bottomView.isHidden = false
         self.imageSection.isHidden = true
 
         //dateModifyButton.layer.cornerRadius = 5.0
@@ -189,6 +199,10 @@ class AttractionsDetailsViewController: UIViewController {
                 //UIView.animate(withDuration: 0.3, animations: { //Animate Here
                     self.imageSection.isHidden = false
                // }, completion: nil)
+                self.CCView.isHidden = false
+                self.bottomView.isHidden = true
+                self.PhotoCCText.isEditable = false
+                self.photoLinkText.isEditable = false
                 
             }
             else {
@@ -196,6 +210,9 @@ class AttractionsDetailsViewController: UIViewController {
                 self.imageSection.isHidden = true
             }
         }
+        imageXCorr = uiImageView.frame.origin.x
+        imageYCorr = uiImageView.frame.origin.y
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(AttractionsDetailsViewController.imageTapped(gesture:)))
         uiImageView.addGestureRecognizer(tapGesture)
         uiImageView.isUserInteractionEnabled = true
@@ -430,6 +447,8 @@ class AttractionsDetailsViewController: UIViewController {
             print("expanding")
             let newVC = segue.destination as! fullScreenPhotoViewController
             newVC.attractionImage = attractionImage
+//            newVC.smallimageXCorr = imageXCorr
+//            newVC.smallimageYCorr = imageYCorr
         }
     }
     
@@ -448,6 +467,6 @@ class AttractionsDetailsViewController: UIViewController {
         print("Back to attractions view")
     }
     @IBAction func unwindToAttractionsView(sender: UIStoryboardSegue) {
-        print("Back to attractions view")
+        print("Back to attractions view down here")
     }
 }

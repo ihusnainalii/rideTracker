@@ -75,7 +75,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var countOfRemove = 0
     var selectedAttractionsList: [NSManagedObject] = []
     var totalExtinctCount = 0
-    
+    var isfiltering = false
     //let appGreen = UIColor(red: 29.0/255.0, green: 127.0/255.0, blue: 70.0/255.0, alpha: 1.0)
     let darkGreen = UIColor(red: 40/255.0, green: 119/255.0, blue: 72/255.0, alpha: 1.0)
     let appGreen = UIColor(red: 68.0/255.0, green: 146.0/255.0, blue: 63.0/255.0, alpha: 1.0)
@@ -802,10 +802,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
         //print("Filtering")
         if typeFilter[0] == "ALL" {
-            return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
+            isfiltering = searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
+            return isfiltering
         }
         else  {
-            return searchController.isActive && (true || searchBarScopeIsFiltering) //!searchBarIsEmpty()
+            isfiltering = searchController.isActive && (true || searchBarScopeIsFiltering) //!searchBarIsEmpty()
+            return isfiltering
 
         }
     }
@@ -1103,7 +1105,7 @@ print ("selected Index is \(selectedIndex!)")
             comeFromDetails = true
             detailsVC.titleName = titleName
             detailsVC.favoiteParkList = favoiteParkList
-            print ("down here")
+            detailsVC.isfiltering = isfiltering
             UIView.animate(withDuration: 0.3, animations: ({
                 self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0.4)
                 self.view.layoutIfNeeded()
@@ -1205,8 +1207,12 @@ print ("selected Index is \(selectedIndex!)")
     }
     
     @IBAction func unwindToAttractionsView(sender: UIStoryboardSegue) {
+        if sender.source is AttractionsDetailsViewController {
+            let rideDetailsVC = sender.source as! AttractionsDetailsViewController
+            isfiltering = rideDetailsVC.isfiltering
+        }
         print("Back to attractions view")
-        if sender.source is FilterViewController {
+        if sender.source is FilterViewController || (sender.source is AttractionsDetailsViewController && isfiltering){
             searchController.isActive = true
             typesFiltered.text = ""
             if typeFilter.count == 1 && typeFilter[0] == "ALL"{
