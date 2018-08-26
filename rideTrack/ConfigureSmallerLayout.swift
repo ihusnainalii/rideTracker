@@ -60,6 +60,10 @@ class ConfigureSmallerLayout{
         attractionsView.suggestButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
     }
     
+    func parkInfoViewLayout(parkInfoView: ParkInfoViewController){
+        
+    }
+    
     func attractionCellLayout(attractionsCell: AttractionsTableViewCell){
         attractionsCell.rideName.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         attractionsCell.rideTypeLabel.font = UIFont.systemFont(ofSize: 12, weight: .light)
