@@ -104,6 +104,10 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.manufacturer = tempMan.replacingOccurrences(of: "!A?", with: "&")
                 attraction.isCheck = false
                 attraction.previousNames = jsonElement["FormerNames"] as! String
+                
+                attraction.photoArtist = jsonElement["photoArtist"] as! String
+                attraction.photoLink = jsonElement["photoLink"] as! String
+                attraction.photoCC = jsonElement["CCType"] as! String
                 dataBaseData.add(attraction)
             }
             if dataBase == "Suggest" {

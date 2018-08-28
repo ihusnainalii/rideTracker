@@ -30,6 +30,9 @@ class AttractionsDetailsViewController: UIViewController {
     let greyColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     var isfiltering = false
     
+    var copyrightType = ""
+    var copyrightLinkText = ""
+    
     @IBOutlet weak var imageSection: UIView!
     @IBOutlet weak var uiImageView: UIImageView!
     @IBOutlet weak var inspectorButton: UIButton!
@@ -62,6 +65,7 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var photoAuthorName: UILabel!
     @IBOutlet weak var PhotoCCText: UITextView!
     
+    @IBOutlet weak var copyrightCenter: NSLayoutConstraint!
     
     @IBOutlet weak var detailViewHeight: NSLayoutConstraint!
   //  @IBOutlet weak var userDatesView: UIView!
@@ -205,6 +209,25 @@ class AttractionsDetailsViewController: UIViewController {
         imageRef.getData(maxSize: 1*1000*1000) { (data, error) in
             if error == nil {
                 print("image found")
+                if self.selectedRide.photoLink != "" {
+                    self.setUpCCLinks()
+                    self.CCView.isHidden = false
+                    self.bottomView.isHidden = true
+                    self.imageSection.isHidden = false
+                }
+                else if self.selectedRide.photoArtist == "Self"{
+                    self.CCView.isHidden = true
+                    self.bottomView.isHidden = false
+                    self.imageSection.isHidden = false
+                }
+                else {
+                    print("WE HAVE A PHOTO WITHOUT CC INFO!!!, the picture will not be shown")
+                    self.CCView.isHidden = true
+                    self.bottomView.isHidden = false
+                    self.imageSection.isHidden = true
+
+                }
+                
                 self.uiImageView.layer.cornerRadius = 30
                 //self.uiImageView.layer.cornerRadius = self.uiImageView.frame.size.height/2
                 self.uiImageView.layer.masksToBounds = true
@@ -212,14 +235,12 @@ class AttractionsDetailsViewController: UIViewController {
                 let Croppedimage = self.cropToSquare(image: UIImage(data: data!)!)
                 self.uiImageView.image = Croppedimage //UIImage(data: data!)
                 self.attractionImage = Croppedimage
-                //UIView.animate(withDuration: 0.3, animations: { //Animate Here
-                    self.imageSection.isHidden = false
-               // }, completion: nil)
-                self.CCView.isHidden = false
-                self.bottomView.isHidden = true
                 self.PhotoCCText.isEditable = false
                 self.photoLinkText.isEditable = false
-                
+                self.PhotoCCText.tintColor = UIColor.lightGray
+                self.photoLinkText.tintColor = UIColor.lightGray
+                self.photoAuthorName.tintColor = UIColor.lightGray
+                self.PhotoCCText.textColor = UIColor.lightGray
             }
             else {
                 print(error?.localizedDescription)
@@ -345,6 +366,52 @@ class AttractionsDetailsViewController: UIViewController {
 
     }
     
+    func setUpCCLinks() {
+        print("in cc links")
+        photoAuthorName.text = "by \(selectedRide.photoArtist!)/"
+        
+        if selectedRide.photoCC == "CC 2.0"{
+            copyrightType = "CC by 2.0"
+            copyrightLinkText = "https://creativecommons.org/licenses/by/2.0/"
+        }
+        else if selectedRide.photoCC == "CC 2.0 by SA" {
+            copyrightType = "CC by 2.0 by SA"
+            copyrightLinkText = "https://creativecommons.org/licenses/by-sa/2.0/"
+            copyrightCenter.constant = -30
+        }
+        else if selectedRide.photoCC == "Photo courtesy Orange County Archives" {
+            copyrightType = "Photo courtesy Orange County Archives"
+            copyrightLinkText = "http://www.ocarchives.com"
+            photoAuthorName.text = "courtesy Orange County Archives"
+            PhotoCCText.isHidden = true
+            copyrightCenter.constant = 20
+        }
+        let linkAttributes: [NSAttributedStringKey: Any] = [
+            .link: NSURL(string: copyrightLinkText)!,
+            .foregroundColor: UIColor.lightGray, .underlineColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue
+
+        ]
+        let attributedString = NSMutableAttributedString(string: copyrightType)
+        attributedString.setAttributes(linkAttributes, range: NSMakeRange(0, 6))
+        PhotoCCText.isEditable = false
+        PhotoCCText.attributedText = attributedString
+        PhotoCCText.font = .systemFont(ofSize: 12)
+        
+        let photoLinkSite = selectedRide.photoLink
+        
+        let linkAttributes2: [NSAttributedStringKey: Any] = [
+            .link: NSURL(string: photoLinkSite!)!,
+            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue
+        ]
+        let attributedString2 = NSMutableAttributedString(string: "Photo")
+        attributedString2.setAttributes(linkAttributes2, range: NSMakeRange(0, 5))
+        photoLinkText.isEditable = false
+        photoLinkText.attributedText = attributedString2
+        photoLinkText.font = .systemFont(ofSize: 12)
+        photoLinkText.textAlignment = .right
+        print("at bottem of CC funcion")
+    }
+    
     func saveModifyRideDate(firstRide: Bool, rideID: Int, RideDate: Date){
         if firstRide {
         attractionsListRef.updateChildValues([
@@ -463,6 +530,7 @@ class AttractionsDetailsViewController: UIViewController {
             print("expanding")
             let newVC = segue.destination as! fullScreenPhotoViewController
             newVC.attractionImage = attractionImage
+            newVC.selectedRide = selectedRide
 //            newVC.smallimageXCorr = imageXCorr
 //            newVC.smallimageYCorr = imageYCorr
         }
