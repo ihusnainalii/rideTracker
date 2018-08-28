@@ -116,6 +116,10 @@ class StatsViewController: UIViewController, DataModelProtocol {
     }
     
     func updateStatLabels(){
+        print("Updating lables")
+        print(statsArray.count)
+        print(statsArray[0].parks)
+        print(stats.parks)
         parkCountLabel.text = String(stats.parks)
         attractionCountLabel.text = String(stats.attractions)
         parkCompleteCountLabel.text = String(stats.parksCompleted)
