@@ -175,11 +175,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             print("Gettings stats-list")
             print(newStat.count)
             //If this is first launch, add stats to user's firebase
-            //if newStat.count == 0{
+            if newStat.count == 0{
+                print("This is the first time the user has launched")
                 let newStatsModel = Stats(attractions: 0, extinctAttracions: 0, activeAttractions: 0, parks: 0, parksCompleted: 0, experiences: 0, countries: 0, rollerCoasters: 0, waterRides: 0, childrensRides: 0, flatRides: 0, transportRides: 0, darkRides: 0, exploreRides: 0, spectaculars: 0, shows: 0, films: 0, playAreas: 0, upchargeRides: 0)
                 let newStatsRef = self.statsListRef.child("life-time-stats")
                 newStatsRef.setValue(newStatsModel.toAnyObject())
-            //}
+            }
         })
     
         
