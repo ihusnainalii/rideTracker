@@ -23,6 +23,14 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
     @IBOutlet weak var extinctSwitch: UISwitch!
     @IBOutlet weak var typeButton: UIButton!
     
+    @IBOutlet weak var formerNameField: UITextField!
+    @IBOutlet weak var modelField: UITextField!
+    @IBOutlet weak var heightField: UITextField!
+    @IBOutlet weak var speedField: UITextField!
+    @IBOutlet weak var lengthField: UITextField!
+    @IBOutlet weak var durationField: UITextField!
+    
+    
     
     @IBOutlet weak var defunctTop: NSLayoutConstraint!
     @IBOutlet weak var openingHieght: NSLayoutConstraint!
@@ -190,7 +198,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         
         var urlPath = ""
         if isAdmin == 1{
-        urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(selectedAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)" //uploads to main list
+        urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction(NEW).php?id=\(selectedAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationField.text!)" //uploads to main list
         print (urlPath)
             
             var changes = "MODIFY: "
@@ -240,7 +248,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             let tempNotes = notesView.text.replacingOccurrences(of: " ", with: "_")
             let notes = String (tempNotes.filter { !" \n".contains($0) })
             let alert = UIAlertController(title: "Suggest Modifications to Attraction", message: "Are you sure you want to suggest these modifications to \(rideName!)?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {action in                 urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parkID)&ride=\(tempName)&open=\(yearOpen)&close=\(yearClosed)&type=\(self.rideType)&park=\(self.selectedAttraction.rideID!)&active=\(active)&manufacturer=\(tempMan)&notes=\(notes)&modify=1&scoreCard=\(scoreCard)" //removed park Name
+            alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {action in                 urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice(NEW).php?parknum=\(parkID)&ride=\(tempName)&open=\(yearOpen)&close=\(yearClosed)&type=\(self.rideType)&park=\(self.selectedAttraction.rideID!)&active=\(active)&manufacturer=\(tempMan)&notes=\(notes)&modify=1&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationField.text!)" //removed park Name and reaplaced with rideID
                 print(urlPath)
                 let dataModel = DataModel()
                 dataModel.delegate = self

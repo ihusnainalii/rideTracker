@@ -39,6 +39,11 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     @IBOutlet weak var notesText: UITextView!
     @IBOutlet weak var scoreCardSwitch: UISwitch!
     
+    @IBOutlet weak var durationFeild: UITextField!
+    @IBOutlet weak var lengthField: UITextField!
+    @IBOutlet weak var speedField: UITextField!
+    @IBOutlet weak var heightField: UITextField!
+    @IBOutlet weak var modelField: UITextField!
     let screenSize = UIScreen.main.bounds
     @IBOutlet weak var scrollWidth: NSLayoutConstraint!
     
@@ -65,7 +70,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         
         pickerType.isHidden = true
         yearOpenHeight.constant = 30
-        viewHeight.constant = 550
+        viewHeight.constant = 700
         self.pickerType.delegate = self
         self.pickerType.dataSource = self
         pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
@@ -272,7 +277,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
             self.pickerType.isHidden = false
             self.yearOpenHeight.constant = 150
-            self.viewHeight.constant = 670
+            self.viewHeight.constant = 869
             self.view.layoutIfNeeded()
         }, completion: nil)
        
@@ -292,7 +297,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         if yearOpenHeight.constant == 150 {
             UIView.animate(withDuration: 0.3, animations: { //Animate Here
                 self.yearOpenHeight.constant = 30
-                self.viewHeight.constant = 550
+                self.viewHeight.constant = 700
                 self.pickerType.isHidden = true
                 self.view.layoutIfNeeded()
             }, completion: nil)
@@ -308,7 +313,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         if yearOpenHeight.constant == 150 {
             UIView.animate(withDuration: 0.3, animations: { //Animate Here
                 self.yearOpenHeight.constant = 30
-                self.viewHeight.constant = 550
+                self.viewHeight.constant = 700
                 self.pickerType.isHidden = true
                 self.view.layoutIfNeeded()
             }, completion: nil)
