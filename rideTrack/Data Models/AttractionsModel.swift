@@ -26,6 +26,11 @@ class AttractionsModel: NSObject {
     var dateLastRidden: Date!
     var manufacturer: String!
     var previousNames: String!
+    var model: String!
+    var height: Int!
+    var speed: Int!
+    var length: Int!
+    var duration: Int!
     var photoArtist: String!
     var photoLink: String!
     var photoCC: String!
@@ -35,7 +40,7 @@ class AttractionsModel: NSObject {
         
     }
     
-    init(name: String, rideID: Int, parkID: Int, rideType: Int, yearOpen: Int, yearClosed: Int, active: Int, isCheck: Bool, isFavorite: Bool, isIgnored: Bool, numberOfTimesRidden: Int, dateFirstRidden: Date, dateLastRidden: Date, scoreCard: Int, manufacturer: String, previousNames: String, photoArtist: String, photoLink: String, photoCC: String) {
+    init(name: String, rideID: Int, parkID: Int, rideType: Int, yearOpen: Int, yearClosed: Int, active: Int, isCheck: Bool, isFavorite: Bool, isIgnored: Bool, numberOfTimesRidden: Int, dateFirstRidden: Date, dateLastRidden: Date, scoreCard: Int, manufacturer: String, previousNames: String, model: String, height: Int, speed: Int, length: Int, duration: Int, photoArtist: String, photoLink: String, photoCC: String) {
         self.name = name
         self.rideID = rideID
         self.parkID = parkID
@@ -52,6 +57,11 @@ class AttractionsModel: NSObject {
         self.hasScoreCard = scoreCard
         self.manufacturer = manufacturer
         self.previousNames = previousNames
+        self.model = model
+        self.height = height
+        self.speed = speed
+        self.length = length
+        self.duration = duration
         self.photoArtist = photoArtist
         self.photoLink = photoLink
         self.photoCC = photoCC
