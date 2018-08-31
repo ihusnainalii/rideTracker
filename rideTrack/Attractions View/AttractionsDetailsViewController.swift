@@ -61,6 +61,16 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var modifyDatePicker: UIDatePicker!
     @IBOutlet weak var scoreCardButton: UIButton!
     
+    @IBOutlet weak var extendedDetailsView: UIView!
+    @IBOutlet weak var speedLabel: UILabel!
+    @IBOutlet weak var heightLabel: UILabel!
+    @IBOutlet weak var lengthLabel: UILabel!
+    @IBOutlet weak var durrationLabel: UILabel!
+    @IBOutlet weak var blankView2: UIView!
+    
+    @IBOutlet weak var modelView: UIStackView!
+    @IBOutlet weak var modelLabel: UILabel!
+    
     @IBOutlet weak var photoLinkText: UITextView!
     @IBOutlet weak var photoAuthorName: UILabel!
     @IBOutlet weak var PhotoCCText: UITextView!
@@ -162,6 +172,30 @@ class AttractionsDetailsViewController: UIViewController {
             blankView.isHidden = true
         }
         
+        if selectedRide.model != "" {
+            modelView.isHidden = false
+            modelLabel.text = selectedRide.model
+        }
+        else {
+            modelView.isHidden = true
+        }
+        let height = selectedRide.height
+        let speed = selectedRide.speed
+        let length = selectedRide.length
+        let duration = calculateDuration()
+        
+        if height != 0 || speed != 0 || length != 0 || selectedRide.duration != 0 {
+            extendedDetailsView.isHidden = false
+            blankView2.isHidden = true
+            heightLabel.text = "\(height!) ft"
+            speedLabel.text = "\(speed!) mph"
+            lengthLabel.text = "\(length!) ft"
+            durrationLabel.text = duration
+        }
+        else {
+            extendedDetailsView.isHidden = true
+            blankView2.isHidden = true
+        }
         switch selectedRide.rideType {
         case -1:
             typeString = "Unknown"
@@ -364,6 +398,14 @@ class AttractionsDetailsViewController: UIViewController {
             }, completion: nil)
         }
 
+    }
+    func calculateDuration () -> String {
+        let durationInSeconds = selectedRide.duration
+        let minutes = durationInSeconds!/60
+        let seconds = durationInSeconds!%60
+        print("\(minutes) minutes \(seconds) seconds")
+        return "\(minutes)m \(seconds)s"
+        
     }
     
     func setUpCCLinks() {
