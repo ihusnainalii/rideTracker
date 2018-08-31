@@ -146,8 +146,8 @@
         <!--StatsStoryboard-->
         <scene sceneID="41u-2f-NE6">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Y5N-QF-otN" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewControllerPlaceholder storyboardName="StatsStoryboard" id="yUm-Fr-wRw" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y5N-QF-otN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="451" y="676"/>
         </scene>
@@ -4793,6 +4793,7 @@
                         <outlet property="closingStack" destination="YA5-Z5-jty" id="nXe-EV-ISx"/>
                         <outlet property="defunctTop" destination="jXJ-vB-S7F" id="OZa-2B-jBi"/>
                         <outlet property="durationFeild" destination="3cD-FV-EL8" id="2LM-1V-1k9"/>
+                        <outlet property="formerNameField" destination="le0-gi-fwF" id="LfD-x7-uuU"/>
                         <outlet property="heightField" destination="fdP-Iw-wOp" id="FZM-RP-JtR"/>
                         <outlet property="lengthField" destination="tXP-9v-tCO" id="Q64-g4-LbS"/>
                         <outlet property="manufacturerText" destination="raS-tq-t1z" id="fzc-ug-9xp"/>
@@ -4821,7 +4822,6 @@
         <!--Login View Controller-->
         <scene sceneID="gCU-7G-GcU">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="J9u-TA-82l" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="ciy-dd-ZK8" customClass="LoginViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2aU-0u-IHB"/>
@@ -4923,6 +4923,7 @@
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="SignInFromLogin" modalTransitionStyle="crossDissolve" id="upE-qw-jCU"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J9u-TA-82l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="256.80000000000001" y="-734.48275862068976"/>
         </scene>

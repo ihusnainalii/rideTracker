@@ -17,8 +17,8 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     var rideType = 0
     var userAttractionDatabase: [UserAttractionProvider]!
     var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
-
-
+    var durationInSeconds = 0
+    var loginEmail = ""
     @IBOutlet weak var submitButton: UIButton!
     
     @IBOutlet weak var closingStack: UIStackView!
@@ -39,6 +39,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     @IBOutlet weak var notesText: UITextView!
     @IBOutlet weak var scoreCardSwitch: UISwitch!
     
+    @IBOutlet weak var formerNameField: UITextField!
     @IBOutlet weak var durationFeild: UITextField!
     @IBOutlet weak var lengthField: UITextField!
     @IBOutlet weak var speedField: UITextField!
@@ -64,7 +65,10 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         textFieldOpen.delegate = self
         textFieldClose.delegate = self
         manufacturerText.delegate = self
-        
+        speedField.delegate = self
+        lengthField.delegate = self
+        heightField.delegate = self
+        formerNameField.delegate = self
         notesText.delegate = self
         submitButton.isEnabled = false
         
@@ -245,7 +249,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 let tempName = ride!.replacingOccurrences(of: "&", with: "!A?")
                 let tempMan = manufacturer!.replacingOccurrences(of: "&", with: "!A?")
                 
-                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parknum)&ride=\(tempName)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(tempMan)&notes=\(notes)&modify=0&scoreCard=\(scoreCard)"
+                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice(NEW).php?parknum=\(parknum)&ride=\(tempName)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(tempMan)&notes=\(notes)&modify=0&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&email=\(self.loginEmail)"
 
                 print (urlPath)
                 Active = 1
@@ -348,13 +352,5 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     
     
     
-}
-
-extension String {
-    
-    var stripped: String {
-        let chars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890+-=().!_")
-        return self.filter {chars.contains($0) }
-    }
 }
 

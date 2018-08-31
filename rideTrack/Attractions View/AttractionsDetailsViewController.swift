@@ -29,7 +29,7 @@ class AttractionsDetailsViewController: UIViewController {
     var includeHiddenView = false
     let greyColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     var isfiltering = false
-    
+    var userEmail = ""
     var copyrightType = ""
     var copyrightLinkText = ""
     
@@ -564,6 +564,7 @@ class AttractionsDetailsViewController: UIViewController {
             let newVC = segue.destination as! ModifyAttractionDetailsViewController
             newVC.selectedAttraction = selectedRide
             newVC.parkName = titleName
+            newVC.loginEmail = userEmail
             print("Seguaing now: ride name is ", selectedRide.name!)
             
         }

@@ -49,7 +49,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     let screenSize = UIScreen.main.bounds
     var segueWithTableViewSelect = false
     var insets = UIEdgeInsets(top: -4.5, left: 0, bottom: 5.5, right: 0)
-    
 
     @IBOutlet weak var typesFiltered: UILabel!
     
@@ -98,7 +97,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var favoriteListRef: DatabaseReference!
     var scoreCardRef: DatabaseReference!
     var user: User!
-    
+    var loginEmail = ""
     var typeFilter = ["ALL"]
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -182,6 +181,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         let userID = Auth.auth().currentUser
         let id = userID?.uid
+        loginEmail = (userID?.email)!
         attractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkData.parkID!)")
         parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)/\(String(parkData.parkID))")
         favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)/\(String(parkData.parkID))")
@@ -1094,6 +1094,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             let detailsVC = segue.destination as! AttractionsDetailsViewController
             let selectedRide: AttractionsModel
             let selectedIndex = attractionsTableView.indexPathForSelectedRow?.row
+            
 print ("selected Index is \(selectedIndex!)")
             if isFiltering(){
                 selectedRide = filteredAttractions[selectedIndex!]
@@ -1111,6 +1112,7 @@ print ("selected Index is \(selectedIndex!)")
             detailsVC.titleName = titleName
             detailsVC.favoiteParkList = favoiteParkList
             detailsVC.isfiltering = isfiltering
+            detailsVC.userEmail = loginEmail
             UIView.animate(withDuration: 0.3, animations: ({
                 self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0.4)
                 self.view.layoutIfNeeded()

@@ -33,6 +33,7 @@ class ParkSettingsViewController: UIViewController {
     var parksData: ParksModel!
     var favoiteParkList = [ParksList]()
     var showDefunct = false
+    var loginEmail = ""
     
     var parksListRef: DatabaseReference!
     var favoriteListRef: DatabaseReference!
@@ -45,6 +46,7 @@ class ParkSettingsViewController: UIViewController {
             self.user = User(authData: user)
         }
         let userID = Auth.auth().currentUser
+        loginEmail = (userID?.email)!
         let id = userID?.uid
         self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)/\(String(parksData.parkID))")
         self.favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)/\(String(parksData.parkID))")
@@ -136,6 +138,7 @@ class ParkSettingsViewController: UIViewController {
             let suggestVC = segue.destination as! SuggestRideViewController
             suggestVC.parkName = parksData.name
             suggestVC.parkID = parksData.parkID
+            suggestVC.loginEmail = loginEmail
         }
         
     }

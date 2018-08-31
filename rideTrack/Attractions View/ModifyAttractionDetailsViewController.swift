@@ -52,7 +52,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
     var minutes = 0
     var seconds = 0
     var durationInSeconds = 0
-    
+    var loginEmail = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -345,7 +345,23 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
                     changes += "scoreCard turned on"
                 }
             }
-            let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\("username")&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
+            if selectedAttraction.previousNames != formerNameField.text! {
+                changes += "former names inclue \(formerNameField.text!)"
+            }
+            if selectedAttraction.height != Int(heightField.text!) {
+                changes += " height is now \(heightField.text!)ft"
+            }
+            if selectedAttraction.speed != Int(speedField.text!){
+                changes += " speed is \(speedField.text!)mph"
+            }
+            if selectedAttraction.duration != Int(durationInSeconds) {
+                changes += " duration is \(durationInSeconds)s"
+            }
+            if selectedAttraction.length != Int(lengthField.text!) {
+                changes += " length is \(lengthField.text!)"
+            }
+            
+            let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(loginEmail)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
             
             let dataModel = DataModel()
             dataModel.delegate = self
@@ -357,7 +373,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             let tempNotes = notesView.text.replacingOccurrences(of: " ", with: "_")
             let notes = String (tempNotes.filter { !" \n".contains($0) })
             let alert = UIAlertController(title: "Suggest Modifications to Attraction", message: "Are you sure you want to suggest these modifications to \(rideName!)?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {action in                 urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice(NEW).php?parknum=\(parkID)&ride=\(tempName)&open=\(yearOpen)&close=\(yearClosed)&type=\(self.rideType)&park=\(self.selectedAttraction.rideID!)&active=\(active)&manufacturer=\(tempMan)&notes=\(notes)&modify=1&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)" //removed park Name and reaplaced with rideID
+            alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {action in                 urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice(NEW).php?parknum=\(parkID)&ride=\(tempName)&open=\(yearOpen)&close=\(yearClosed)&type=\(self.rideType)&park=\(self.selectedAttraction.rideID!)&active=\(active)&manufacturer=\(tempMan)&notes=\(notes)&modify=1&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&email=\(self.loginEmail)" //removed park Name and reaplaced with rideID
                 print(urlPath)
                 let dataModel = DataModel()
                 dataModel.delegate = self
