@@ -8,16 +8,14 @@
 
 import UIKit
 
-class StatsPageViewController: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+class StatsContainerViewController: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     
     var allParksList = [ParksList]()
     var arrayOfAllParks = [ParksModel]()
-    
-    var stats: Stats!
-    
-    var overViewController: UIViewController!
-    var topListViewController: UIViewController!
-    var rideTypeViewController: UIViewController!
+        
+    var overViewController: OverViewController!
+    var topListViewController: TopListsViewController!
+    var rideTypeViewController: RideTypeViewController!
     var mapViewController: MapViewController!
     
     
@@ -27,10 +25,11 @@ class StatsPageViewController: UIPageViewController, UIPageViewControllerDelegat
     
     lazy var orderedViewControllers: [UIViewController] = {
         print("Configuring views")
-        overViewController = UIStoryboard(name: "StatsStoryboard", bundle: nil).instantiateViewController(withIdentifier: "overViewController")
-        topListViewController = UIStoryboard(name: "StatsStoryboard", bundle: nil).instantiateViewController(withIdentifier: "topListViewController")
-        rideTypeViewController = UIStoryboard(name: "StatsStoryboard", bundle: nil).instantiateViewController(withIdentifier: "rideTypeViewController")
+        overViewController = UIStoryboard(name: "StatsStoryboard", bundle: nil).instantiateViewController(withIdentifier: "overViewController") as! OverViewController
+        topListViewController = UIStoryboard(name: "StatsStoryboard", bundle: nil).instantiateViewController(withIdentifier: "topListViewController") as! TopListsViewController
+        rideTypeViewController = UIStoryboard(name: "StatsStoryboard", bundle: nil).instantiateViewController(withIdentifier: "rideTypeViewController") as! RideTypeViewController
         mapViewController = UIStoryboard(name: "StatsStoryboard", bundle: nil).instantiateViewController(withIdentifier: "mapViewController") as! MapViewController
+    
         
         mapViewController.allParksList = allParksList
         mapViewController.arrayOfAllParks = arrayOfAllParks
@@ -61,10 +60,9 @@ class StatsPageViewController: UIPageViewController, UIPageViewControllerDelegat
         // Do any additional setup after loading the view.
     }
     
-    func testing(){
-        print("TESTING")
-        print(arrayOfAllParks.count)
-
+    func updateAllStats(stats: Stats){
+        overViewController.updateLabels(stats: stats)
+        //rideTypeViewController.updateLabels(stats: stats)
     }
     
     func configurePageControl() {
@@ -93,6 +91,16 @@ class StatsPageViewController: UIPageViewController, UIPageViewControllerDelegat
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = orderedViewControllers.index(of: viewController) else {
             return nil
+        }
+        
+        print("Configuring view controller data")
+        print(viewController)
+        if viewController is OverViewController{
+            print("Overview")
+        }
+        
+        if viewController is RideTypeViewController{
+            print("Ride type")
         }
         
         let previousIndex = viewControllerIndex - 1

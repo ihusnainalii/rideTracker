@@ -9,19 +9,17 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Stats Page View Controller-->
+        <!--Stats Container View Controller-->
         <scene sceneID="a7o-Kf-alW">
             <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="iH6-No-7W0" customClass="StatsContainerViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aug-eC-sFz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="iH6-No-7W0" customClass="StatsPageViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController"/>
             </objects>
             <point key="canvasLocation" x="-2787" y="-666"/>
         </scene>
         <!--Stats View Controller-->
         <scene sceneID="uH7-cQ-j0d">
             <objects>
-                <exit id="kAQ-U0-2cp" userLabel="Exit" sceneMemberID="exit"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RtS-kX-aJi" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="UEa-LR-qsS" customClass="StatsViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9Y3-TI-sdD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -68,13 +66,14 @@
                         <outlet property="statsView" destination="f5U-4f-gev" id="4YG-Q3-zP5"/>
                     </connections>
                 </viewController>
+                <exit id="kAQ-U0-2cp" userLabel="Exit" sceneMemberID="exit"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RtS-kX-aJi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1999" y="-665"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="Ke9-Ni-qHp">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nKF-lO-B9c" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="mapViewController" id="hnI-HI-v6m" customClass="MapViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iGP-gb-OIE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -97,20 +96,48 @@
                         <outlet property="mapView" destination="a9i-kW-vd5" id="Gq8-qa-UAm"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nKF-lO-B9c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-910" y="125"/>
         </scene>
-        <!--View Controller-->
+        <!--Over View Controller-->
         <scene sceneID="zCZ-xp-7iu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wM4-Hs-nYV" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController storyboardIdentifier="overViewController" id="Rfu-x1-ort" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="overViewController" id="Rfu-x1-ort" customClass="OverViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MSX-H6-L2P">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MBk-jo-xss">
+                                <rect key="frame" x="32" y="89" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Parks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ae-0u-9k9">
+                                <rect key="frame" x="32" y="118" width="43" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbX-Cb-BFk">
+                                <rect key="frame" x="32" y="192" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Attractions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X2c-Sh-s2q">
+                                <rect key="frame" x="33" y="221" width="84" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Yo-ma-JaJ">
-                                <rect key="frame" x="67" y="190" width="240" height="128"/>
+                                <rect key="frame" x="67" y="369" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.30588235289999999" green="0.64705882349999999" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -118,15 +145,19 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Mxs-HS-lfI"/>
                     </view>
+                    <connections>
+                        <outlet property="attractionLabel" destination="tbX-Cb-BFk" id="1aV-cV-981"/>
+                        <outlet property="parkLabel" destination="MBk-jo-xss" id="CCn-S9-HUb"/>
+                    </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wM4-Hs-nYV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3089" y="125"/>
         </scene>
-        <!--View Controller-->
+        <!--Top Lists View Controller-->
         <scene sceneID="iVL-gt-453">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="U0o-Rl-eaF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController storyboardIdentifier="topListViewController" id="ncF-BX-ZQC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="topListViewController" id="ncF-BX-ZQC" customClass="TopListsViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="J0r-bR-RZD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -141,14 +172,14 @@
                         <viewLayoutGuide key="safeArea" id="QxB-LP-aqH"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U0o-Rl-eaF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2377" y="125"/>
         </scene>
-        <!--View Controller-->
+        <!--Ride Type View Controller-->
         <scene sceneID="jIv-yI-cPg">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DzD-UF-a8G" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController storyboardIdentifier="rideTypeViewController" id="7kL-t1-I2L" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="rideTypeViewController" id="7kL-t1-I2L" customClass="RideTypeViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fyf-pL-RIb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -158,11 +189,29 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Roller Coasters" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iK2-EM-FDa">
+                                <rect key="frame" x="67" y="91" width="116" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVo-PV-q31">
+                                <rect key="frame" x="222" y="91" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Cl1-2b-0IR"/>
                     </view>
+                    <connections>
+                        <outlet property="rollerCoasterCheckedLabel" destination="dVo-PV-q31" id="byv-kt-zyw"/>
+                    </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DzD-UF-a8G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1646" y="125"/>
         </scene>

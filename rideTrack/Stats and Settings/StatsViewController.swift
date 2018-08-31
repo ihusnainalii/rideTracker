@@ -17,7 +17,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
     @IBOutlet weak var statsView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var statsContainerViewController: StatsPageViewController!
+    var statsContainerViewController: StatsContainerViewController!
 
     var allParksList = [ParksList]()
     var arrayOfAllParks = [ParksModel]()
@@ -89,8 +89,8 @@ class StatsViewController: UIViewController, DataModelProtocol {
     }
     
     func updateStatLabels(){
-        statsContainerViewController!.stats = stats
         print("Updating lables")
+        statsContainerViewController.updateAllStats(stats: stats)
 //        print(statsArray.count)
 //        print(statsArray[0].parks)
 //        print(stats.parks)
@@ -240,12 +240,12 @@ class StatsViewController: UIViewController, DataModelProtocol {
             settingsVC.simulateLocation = simulateLocation
         }
         if segue.identifier == "StatsContainer" {
-            statsContainerViewController = segue.destination as? StatsPageViewController
+            print("GETTING CONTAINER VIEW")
+            statsContainerViewController = segue.destination as? StatsContainerViewController
             
             print("COUNT: \(allParksList.count)")
             statsContainerViewController.allParksList = allParksList
             statsContainerViewController.arrayOfAllParks = arrayOfAllParks
-            statsContainerViewController.testing()
         }
 //        if segue.identifier == "toMapView"{
 //            let mapVC = segue.destination as! MapViewController
