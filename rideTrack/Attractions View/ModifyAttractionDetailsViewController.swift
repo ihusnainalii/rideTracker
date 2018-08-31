@@ -216,6 +216,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
                 seconds = row
                 durationButton.setTitle("\(minutes)m \(seconds)s", for: .normal)
             }
+        durationButton.setTitleColor(UIColor.black, for: .normal)
         durationInSeconds = minutes*60+seconds
         }
     }
@@ -387,6 +388,9 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
     }
     
     @IBAction func openDurationPicker(_ sender: Any) {
+       var done = textFieldShouldReturn(speedField)
+       done = textFieldShouldReturn(lengthField)
+        done = textFieldShouldReturn(heightField)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
             self.durationPickerView.isHidden = false
             self.topScoreCardConst.constant = 150

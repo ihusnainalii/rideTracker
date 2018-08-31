@@ -239,7 +239,6 @@ class AttractionsDetailsViewController: UIViewController {
        // let database = Database.database().reference()
         let storage = Storage.storage().reference()
         let imageRef = storage.child("\(selectedRide.parkID!)/\(selectedRide.rideID!).jpg")
-        
         imageRef.getData(maxSize: 1*1000*1000) { (data, error) in
             if error == nil {
                 print("image found")
