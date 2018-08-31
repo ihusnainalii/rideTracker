@@ -21,6 +21,11 @@
 		5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */; };
 		5F2EEC4F210510150036B47A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4E210510150036B47A /* SignUpViewController.swift */; };
 		5F44F7152132FB50006E6005 /* ParkInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F44F7142132FB50006E6005 /* ParkInfoViewController.swift */; };
+		5F636B5D2138B1A100D2B922 /* StatsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B5C2138B1A100D2B922 /* StatsContainerViewController.swift */; };
+		5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F636B5E2139C09500D2B922 /* StatsStoryboard.storyboard */; };
+		5F636B612139CD9B00D2B922 /* OverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B602139CD9B00D2B922 /* OverViewController.swift */; };
+		5F636B632139CDAA00D2B922 /* TopListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B622139CDAA00D2B922 /* TopListsViewController.swift */; };
+		5F636B652139CDB500D2B922 /* RideTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B642139CDB500D2B922 /* RideTypeViewController.swift */; };
 		5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */; };
 		5FD613DD210A2B90008D4122 /* IgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DC210A2B90008D4122 /* IgnoreList.swift */; };
 		5FD613DF210A356F008D4122 /* ScoreCardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DE210A356F008D4122 /* ScoreCardList.swift */; };
@@ -102,6 +107,11 @@
 		5F2EEC4E210510150036B47A /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		5F2EEC53210512E70036B47A /* rideTrack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = rideTrack.entitlements; sourceTree = "<group>"; };
 		5F44F7142132FB50006E6005 /* ParkInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkInfoViewController.swift; sourceTree = "<group>"; };
+		5F636B5C2138B1A100D2B922 /* StatsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsContainerViewController.swift; sourceTree = "<group>"; };
+		5F636B5E2139C09500D2B922 /* StatsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = StatsStoryboard.storyboard; sourceTree = "<group>"; };
+		5F636B602139CD9B00D2B922 /* OverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverViewController.swift; sourceTree = "<group>"; };
+		5F636B622139CDAA00D2B922 /* TopListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopListsViewController.swift; sourceTree = "<group>"; };
+		5F636B642139CDB500D2B922 /* RideTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideTypeViewController.swift; sourceTree = "<group>"; };
 		5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSmallerLayout.swift; sourceTree = "<group>"; };
 		5FD613DC210A2B90008D4122 /* IgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreList.swift; sourceTree = "<group>"; };
 		5FD613DE210A356F008D4122 /* ScoreCardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardList.swift; sourceTree = "<group>"; };
@@ -187,10 +197,15 @@
 		5F08896021237B560065BBF1 /* Stats and Settings */ = {
 			isa = PBXGroup;
 			children = (
+				5F636B5E2139C09500D2B922 /* StatsStoryboard.storyboard */,
 				5F08895E21237B3A0065BBF1 /* StatsViewController.swift */,
+				5F636B5C2138B1A100D2B922 /* StatsContainerViewController.swift */,
+				5F636B602139CD9B00D2B922 /* OverViewController.swift */,
+				5F636B622139CDAA00D2B922 /* TopListsViewController.swift */,
+				5F636B642139CDB500D2B922 /* RideTypeViewController.swift */,
+				5F24DA092130A92800C2D2CC /* MapViewController.swift */,
 				987028F320B7897E00DC3B73 /* SettingsViewController.swift */,
 				5F088961212381B00065BBF1 /* ParkMap.swift */,
-				5F24DA092130A92800C2D2CC /* MapViewController.swift */,
 			);
 			path = "Stats and Settings";
 			sourceTree = "<group>";
@@ -501,6 +516,7 @@
 				98A6A55121069FE700102620 /* GoogleService-Info.plist in Resources */,
 				5FE9F81020DB45030012B98C /* Media.xcassets in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
+				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,10 +645,12 @@
 				5FFCB80121055E470054D84D /* User.swift in Sources */,
 				5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */,
 				5FF0BBBB20CF62C300213DF8 /* ScoreCardViewController.swift in Sources */,
+				5F636B5D2138B1A100D2B922 /* StatsContainerViewController.swift in Sources */,
 				5FF0BBBE20CF639100213DF8 /* ScoreCardTableViewCell.swift in Sources */,
 				5F202C5D20EB257700FFE408 /* ParkSettingsViewController.swift in Sources */,
 				98AD7F7220A91A5C00540AB3 /* UserAttraction.swift in Sources */,
 				5FFCB8062106783E0054D84D /* MigrateToFirebase.swift in Sources */,
+				5F636B612139CD9B00D2B922 /* OverViewController.swift in Sources */,
 				5F088962212381B00065BBF1 /* ParkMap.swift in Sources */,
 				98C28A9B20EBD81E00C7229E /* ApproveSuggestedAttractionViewController.swift in Sources */,
 				5FF0BBC020CF652700213DF8 /* ScoreCardModel.swift in Sources */,
@@ -641,8 +659,10 @@
 				98AD7F7520A91A5C00540AB3 /* ViewController.swift in Sources */,
 				982E097820F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift in Sources */,
 				98AD7F7020A91A5C00540AB3 /* ParksModel.swift in Sources */,
+				5F636B632139CDAA00D2B922 /* TopListsViewController.swift in Sources */,
 				98AD7F6F20A91A5C00540AB3 /* AttractionsModel.swift in Sources */,
 				5FF1ECAA20B526EB00BE1609 /* RideTrack.xcdatamodel in Sources */,
+				5F636B652139CDB500D2B922 /* RideTypeViewController.swift in Sources */,
 				5FD613DF210A356F008D4122 /* ScoreCardList.swift in Sources */,
 				98AD7F7620A91A5C00540AB3 /* DataModel.swift in Sources */,
 				5FE9F81320DCA43C0012B98C /* ParksCoreData.swift in Sources */,

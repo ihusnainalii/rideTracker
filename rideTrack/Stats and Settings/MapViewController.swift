@@ -26,21 +26,25 @@ class MapViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+
+    
     func updateMap(){
         allParksList.sort { $0.parkID < $1.parkID }
         arrayOfAllParks.sort { $0.parkID < $1.parkID }
         var allParksIndex = 0
         var myParksIndex = 0
-        repeat {
-            if allParksList[myParksIndex].parkID == arrayOfAllParks[allParksIndex].parkID{
-                myParksIndex += 1
-                
-                //Set up map view here
-                let parkMapAnnotation = ParkMap(parkName: arrayOfAllParks[allParksIndex].name, longitude: arrayOfAllParks[allParksIndex].longitude, latitude: arrayOfAllParks[allParksIndex].latitude)
-                mapView.addAnnotation(parkMapAnnotation)
-            }
-            allParksIndex += 1
-        } while myParksIndex < allParksList.count
+        if allParksList.count != 0{
+            repeat {
+                if allParksList[myParksIndex].parkID == arrayOfAllParks[allParksIndex].parkID{
+                    myParksIndex += 1
+                    
+                    //Set up map view here
+                    let parkMapAnnotation = ParkMap(parkName: arrayOfAllParks[allParksIndex].name, longitude: arrayOfAllParks[allParksIndex].longitude, latitude: arrayOfAllParks[allParksIndex].latitude)
+                    mapView.addAnnotation(parkMapAnnotation)
+                }
+                allParksIndex += 1
+            } while myParksIndex < allParksList.count
+        }
     }
     
 

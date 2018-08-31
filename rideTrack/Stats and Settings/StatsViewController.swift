@@ -12,36 +12,12 @@ import Firebase
 
 class StatsViewController: UIViewController, DataModelProtocol {
 
-    @IBOutlet weak var parkCountLabel: UILabel!
-    @IBOutlet weak var attractionCountLabel: UILabel!
-    @IBOutlet weak var parkCompleteCountLabel: UILabel!
-    @IBOutlet weak var activeAttractionCountLabel: UILabel!
-    @IBOutlet weak var defunctAttractionCountLabel: UILabel!
-    @IBOutlet weak var experiencesCountLabel: UILabel!
-    @IBOutlet weak var countriesCountLabel: UILabel!
-    @IBOutlet weak var rollerCoasterCountLabel: UILabel!
-    @IBOutlet weak var darkRideCountLabel: UILabel!
-    @IBOutlet weak var waterRideCountLabel: UILabel!
-    @IBOutlet weak var flatRideCountLabel: UILabel!
-    @IBOutlet weak var showCountLabel: UILabel!
-    @IBOutlet weak var filmCountLabel: UILabel!
-    @IBOutlet weak var spectacularCountLabel: UILabel!
-    @IBOutlet weak var updatingIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var playAreaLabel: UILabel!
-    @IBOutlet weak var doneButton: UIButton!
     
-    @IBOutlet weak var profileView: UIView!
-    @IBOutlet weak var parkAndAttractionsView: UIView!
-    @IBOutlet weak var countryView: UIView!
-    @IBOutlet weak var attractionView: UIView!
-    @IBOutlet weak var experiencesView: UIView!
-    @IBOutlet weak var parksCompleteView: UIView!
-    @IBOutlet weak var rideTypesView: UIView!
-    @IBOutlet weak var mapsView: UIView!
-    @IBOutlet weak var achievementsView: UIView!
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var scrollWidth: NSLayoutConstraint!
-    let screenSize = UIScreen.main.bounds
+    @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var statsView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    var statsContainerViewController: StatsContainerViewController!
 
     var allParksList = [ParksList]()
     var arrayOfAllParks = [ParksModel]()
@@ -105,77 +81,37 @@ class StatsViewController: UIViewController, DataModelProtocol {
             self.firstUpdate = false
         })
         
-        if screenSize.width == 320 {
-            scrollWidth.constant = 304
-        }
-        
+      
         configureView()
         //mapView.delegate = self
-        updateMap()
+        //updateMap()
         // Do any additional setup after loading the view.
     }
     
     func updateStatLabels(){
         print("Updating lables")
-        print(statsArray.count)
-        print(statsArray[0].parks)
-        print(stats.parks)
-        parkCountLabel.text = String(stats.parks)
-        attractionCountLabel.text = String(stats.attractions)
-        parkCompleteCountLabel.text = String(stats.parksCompleted)
-        activeAttractionCountLabel.text = String(stats.activeAttractions)
-        defunctAttractionCountLabel.text = String(stats.extinctAttracions)
-        experiencesCountLabel.text = String(stats.experiences)
-        countriesCountLabel.text = String(stats.countries)
-        rollerCoasterCountLabel.text = String(stats.rollerCoasters)
-        darkRideCountLabel.text = String(stats.darkRides)
-        waterRideCountLabel.text = String(stats.waterRides)
-        flatRideCountLabel.text = String(stats.flatRides)
-        showCountLabel.text = String(stats.shows)
-        spectacularCountLabel.text = String(stats.spectaculars)
-        filmCountLabel.text = String(stats.films)
-        playAreaLabel.text = String(stats.playAreas)
+        statsContainerViewController.updateAllStats(stats: stats)
+//        print(statsArray.count)
+//        print(statsArray[0].parks)
+//        print(stats.parks)
+//        parkCountLabel.text = String(stats.parks)
+//        attractionCountLabel.text = String(stats.attractions)
+//        parkCompleteCountLabel.text = String(stats.parksCompleted)
+//        activeAttractionCountLabel.text = String(stats.activeAttractions)
+//        defunctAttractionCountLabel.text = String(stats.extinctAttracions)
+//        experiencesCountLabel.text = String(stats.experiences)
+//        countriesCountLabel.text = String(stats.countries)
+//        rollerCoasterCountLabel.text = String(stats.rollerCoasters)
+//        darkRideCountLabel.text = String(stats.darkRides)
+//        waterRideCountLabel.text = String(stats.waterRides)
+//        flatRideCountLabel.text = String(stats.flatRides)
+//        showCountLabel.text = String(stats.shows)
+//        spectacularCountLabel.text = String(stats.spectaculars)
+//        filmCountLabel.text = String(stats.films)
+//        playAreaLabel.text = String(stats.playAreas)
     }
     
-    func updateMap(){
-        allParksList.sort { $0.parkID < $1.parkID }
-        arrayOfAllParks.sort { $0.parkID < $1.parkID }
-        var allParksIndex = 0
-        var myParksIndex = 0
-        var countryList: [String] = []
-        repeat {
-            if allParksList[myParksIndex].parkID == arrayOfAllParks[allParksIndex].parkID{
-                myParksIndex += 1
-//                var newCountry = false
-//                if arrayOfAllParks.count != 0{
-//                    countryList.append(arrayOfAllParks[0].country)
-//                    for i in 1..<countryList.count{
-//                        print("compare")
-//                        print(countryList[i])
-//                        print(arrayOfAllParks[allParksIndex].country)
-//                        if countryList[i] != arrayOfAllParks[allParksIndex].country{
-//                            newCountry = true
-//                        }
-//                    }
-//                    if newCountry{
-//                        countriesCount += 1
-//                        countryList.append(arrayOfAllParks[allParksIndex].country)
-//                        print(arrayOfAllParks[allParksIndex].country)
-//                        print("Country Count \(countriesCount)")
-//                    }
-//                }
-                
-                
-                //Set up map view here
-                
-                
-                
-//                let parkMapAnnotation = ParkMap(parkName: arrayOfAllParks[allParksIndex].name, longitude: arrayOfAllParks[allParksIndex].longitude, latitude: arrayOfAllParks[allParksIndex].latitude)
-//                mapView.addAnnotation(parkMapAnnotation)
-            }
-            allParksIndex += 1
-        } while myParksIndex < allParksList.count
-    }
+    
     
     func updateStatistics(){
         let dataModel = DataModel()
@@ -284,7 +220,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
                 "parksCompleted": parksCompleteCount,
                 "countries": countriesCount
                 ])
-            updatingIndicator.isHidden = true
+            activityIndicator.isHidden = true
         }
     }
     
@@ -303,23 +239,25 @@ class StatsViewController: UIViewController, DataModelProtocol {
             let settingsVC = segue.destination as! SettingsViewController
             settingsVC.simulateLocation = simulateLocation
         }
-        if segue.identifier == "toMapView"{
-            let mapVC = segue.destination as! MapViewController
-            mapVC.arrayOfAllParks = arrayOfAllParks
-            mapVC.allParksList = allParksList
+        if segue.identifier == "StatsContainer" {
+            print("GETTING CONTAINER VIEW")
+            statsContainerViewController = segue.destination as? StatsContainerViewController
+            
+            print("COUNT: \(allParksList.count)")
+            statsContainerViewController.allParksList = allParksList
+            statsContainerViewController.arrayOfAllParks = arrayOfAllParks
         }
+//        if segue.identifier == "toMapView"{
+//            let mapVC = segue.destination as! MapViewController
+//            mapVC.arrayOfAllParks = arrayOfAllParks
+//            mapVC.allParksList = allParksList
+//        }
     }
     
+ 
+    
     func configureView(){
-        addShadowAndRoundRec(uiView: profileView)
-        addShadowAndRoundRec(uiView: parkAndAttractionsView)
-        addShadowAndRoundRec(uiView: countryView)
-        addShadowAndRoundRec(uiView: attractionView)
-        addShadowAndRoundRec(uiView: experiencesView)
-        addShadowAndRoundRec(uiView: parksCompleteView)
-        addShadowAndRoundRec(uiView: rideTypesView)
-        addShadowAndRoundRec(uiView: achievementsView)
-        addShadowAndRoundRec(uiView: mapsView)
+        addShadowAndRoundRec(uiView: statsView)
         
         doneButton.backgroundColor = settingsColor
         doneButton.layer.cornerRadius = 5

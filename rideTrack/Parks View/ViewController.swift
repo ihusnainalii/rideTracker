@@ -717,7 +717,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         if segue.identifier == "toStats"{
             let statsVC = segue.destination as! StatsViewController
-            statsVC.simulateLocation = simulateLocation
+            //statsVC.simulateLocation = simulateLocation
             statsVC.allParksList = allParksList
             statsVC.arrayOfAllParks = arrayOfAllParks
         }
