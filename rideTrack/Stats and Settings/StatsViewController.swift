@@ -90,6 +90,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
     
     func updateStatLabels(){
         print("Updating lables")
+        statsContainerViewController.stats = stats
         statsContainerViewController.updateAllStats(stats: stats)
 //        print(statsArray.count)
 //        print(statsArray[0].parks)
@@ -242,7 +243,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
         if segue.identifier == "StatsContainer" {
             print("GETTING CONTAINER VIEW")
             statsContainerViewController = segue.destination as? StatsContainerViewController
-            
+            statsContainerViewController.statsViewController = self
             print("COUNT: \(allParksList.count)")
             statsContainerViewController.allParksList = allParksList
             statsContainerViewController.arrayOfAllParks = arrayOfAllParks
@@ -257,7 +258,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
  
     
     func configureView(){
-        addShadowAndRoundRec(uiView: statsView)
+        //addShadowAndRoundRec(uiView: statsView)
         
         doneButton.backgroundColor = settingsColor
         doneButton.layer.cornerRadius = 5

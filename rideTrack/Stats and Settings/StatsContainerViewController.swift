@@ -12,12 +12,14 @@ class StatsContainerViewController: UIPageViewController, UIPageViewControllerDe
     
     var allParksList = [ParksList]()
     var arrayOfAllParks = [ParksModel]()
-        
+    
+    var statsViewController: StatsViewController!
     var overViewController: OverViewController!
     var topListViewController: TopListsViewController!
     var rideTypeViewController: RideTypeViewController!
     var mapViewController: MapViewController!
     
+    var stats: Stats!
     
     var pageControl = UIPageControl()
     
@@ -63,17 +65,18 @@ class StatsContainerViewController: UIPageViewController, UIPageViewControllerDe
     func updateAllStats(stats: Stats){
         overViewController.updateLabels(stats: stats)
         //rideTypeViewController.updateLabels(stats: stats)
+        
     }
     
     func configurePageControl() {
         // The total number of pages that are available is based on how many available colors we have.
-        pageControl = UIPageControl(frame: CGRect(x: 0,y: UIScreen.main.bounds.maxY - 50,width: UIScreen.main.bounds.width,height: 50))
+        pageControl = UIPageControl(frame: CGRect(x: 0,y: UIScreen.main.bounds.maxY - 35,width: UIScreen.main.bounds.width,height: 50))
         self.pageControl.numberOfPages = orderedViewControllers.count
         self.pageControl.currentPage = 0
         self.pageControl.tintColor = UIColor.black
         self.pageControl.pageIndicatorTintColor = UIColor.gray
         self.pageControl.currentPageIndicatorTintColor = UIColor.lightGray
-        self.view.addSubview(pageControl)
+        self.statsViewController.view.addSubview(pageControl)
     }
     
 //    func newVc(viewController: String) -> UIViewController {
@@ -84,32 +87,29 @@ class StatsContainerViewController: UIPageViewController, UIPageViewControllerDe
     // MARK: Delegate methords
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         let pageContentViewController = pageViewController.viewControllers![0]
+        if pageContentViewController is OverViewController{
+            overViewController.updateLabels(stats: stats)
+        } else if pageContentViewController is RideTypeViewController{
+            rideTypeViewController.updateLabels(stats: stats)
+        }
         self.pageControl.currentPage = orderedViewControllers.index(of: pageContentViewController)!
     }
+    
+   
     
     // MARK: Data source functions.
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = orderedViewControllers.index(of: viewController) else {
             return nil
         }
-        
-        print("Configuring view controller data")
-        print(viewController)
-        if viewController is OverViewController{
-            print("Overview")
-        }
-        
-        if viewController is RideTypeViewController{
-            print("Ride type")
-        }
+        print("VIEW CONTROLLER BEFORE \(viewController)")
+
         
         let previousIndex = viewControllerIndex - 1
         
         // User is on the first view controller and swiped left to loop to
         // the last view controller.
         guard previousIndex >= 0 else {
-            //return orderedViewControllers.last
-            // Uncommment the line below, remove the line above if you don't want the page control to loop.
             return nil
         }
         
@@ -124,6 +124,7 @@ class StatsContainerViewController: UIPageViewController, UIPageViewControllerDe
         guard let viewControllerIndex = orderedViewControllers.index(of: viewController) else {
             return nil
         }
+        print("VIEW CONTROLLER AFTER \(viewController)")
         
         let nextIndex = viewControllerIndex + 1
         let orderedViewControllersCount = orderedViewControllers.count

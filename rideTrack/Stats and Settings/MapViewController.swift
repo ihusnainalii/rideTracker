@@ -12,12 +12,19 @@ import MapKit
 class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var backgroundView: UIView!
+    
     var allParksList = [ParksList]()
     var arrayOfAllParks = [ParksModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateMap()
+        backgroundView.layer.cornerRadius = 7
+        backgroundView.layer.shadowOpacity = 0.3
+        backgroundView.layer.shadowOffset = CGSize.zero
+        backgroundView.layer.shadowRadius = 5
+        backgroundView.layer.backgroundColor = UIColor.white.cgColor
         // Do any additional setup after loading the view.
     }
 

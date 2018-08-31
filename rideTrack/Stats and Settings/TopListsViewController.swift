@@ -10,9 +10,15 @@ import UIKit
 
 class TopListsViewController: UIViewController {
 
+    @IBOutlet weak var backgroundView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        backgroundView.layer.cornerRadius = 7
+        backgroundView.layer.shadowOpacity = 0.3
+        backgroundView.layer.shadowOffset = CGSize.zero
+        backgroundView.layer.shadowRadius = 5
+        backgroundView.layer.backgroundColor = UIColor.white.cgColor
         // Do any additional setup after loading the view.
     }
 
