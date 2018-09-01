@@ -18,6 +18,8 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     var userAttractionDatabase: [UserAttractionProvider]!
     var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
     var durationInSeconds = 0
+    var seconds = 0
+    var minutes = 0
     var loginEmail = ""
     @IBOutlet weak var submitButton: UIButton!
     
@@ -40,17 +42,20 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     @IBOutlet weak var scoreCardSwitch: UISwitch!
     
     @IBOutlet weak var formerNameField: UITextField!
-    @IBOutlet weak var durationFeild: UITextField!
     @IBOutlet weak var lengthField: UITextField!
+    @IBOutlet weak var durationButton: UIButton!
+    @IBOutlet weak var scoreCardTopContraint: NSLayoutConstraint!
+    @IBOutlet weak var durationPickerView: UIView!
     @IBOutlet weak var speedField: UITextField!
     @IBOutlet weak var heightField: UITextField!
     @IBOutlet weak var modelField: UITextField!
     let screenSize = UIScreen.main.bounds
     @IBOutlet weak var scrollWidth: NSLayoutConstraint!
+    @IBOutlet weak var durationPicker: UIPickerView!
     
     let greyColor = UIColor(red: 222/255.0, green: 222/255.0, blue: 222/255.0, alpha: 1.0)
 
-    var pickerData: [String] = [String]()
+    var rideTypePickerData: [String] = [String]()
     
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
@@ -77,12 +82,15 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         viewHeight.constant = 700
         self.pickerType.delegate = self
         self.pickerType.dataSource = self
-        pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
+        rideTypePickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
         activeSwitch.isOn=false
         closingStack.isHidden = true
         defunctTop.constant = 0
-       
-        
+       durationPickerView.isHidden = true
+        scoreCardTopContraint.constant = 0
+        durationButton.setTitleColor(UIColor.lightGray, for: .normal)
+        durationPicker.delegate = self
+        durationPicker.dataSource = self
          self.textFieldClose.keyboardType = UIKeyboardType.numberPad
         self.textFieldOpen.keyboardType = UIKeyboardType.numberPad
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //hide keyboard when tapping the anywhere else
@@ -111,18 +119,32 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         return true
     }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        if pickerView == pickerType {return 1}
+        else { return 2}
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count;
+        if pickerView == pickerType { return rideTypePickerData.count }
+        else { return 60 }
     }
+    
+    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+        if pickerView == pickerType { return pickerView.frame.size.width}
+        else { return pickerView.frame.size.width/2}
+    }
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerData[row] as String
+        if pickerView == pickerType { return rideTypePickerData[row] as String }
+        else {
+            if component == 0 { return "\(row) minutes" }
+            else { return "\(row) seconds" }
+        }
     }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == pickerType {
         //rideType = pickerData[row]
-        switch pickerData[row] {
+        switch rideTypePickerData[row] {
         case "":
             rideType = -1
         case "Roller Coaster":
@@ -154,12 +176,25 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         default:
             rideType = 0
         }
-        typeLabel.setTitle(pickerData[row], for: .normal)
+        typeLabel.setTitle(rideTypePickerData[row], for: .normal)
         typeLabel.setTitleColor(UIColor.black, for: .normal)
         if textFieldName.text != "" && rideType != 0 {
             submitButton.isEnabled = true
         }
         print("Ride type is: ",rideType)
+        }
+        else {
+            if component == 0 {
+                minutes = row
+                durationButton.setTitle("\(minutes)m \(seconds)s", for: .normal)
+            }
+            else {
+                seconds = row
+                durationButton.setTitle("\(minutes)m \(seconds)s", for: .normal)
+            }
+            durationButton.setTitleColor(UIColor.black, for: .normal)
+            durationInSeconds = minutes*60+seconds
+        }
     }
     
     @IBAction func extinctSwitch(_ sender: Any) {
@@ -296,7 +331,24 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         // Dispose of any resources that can be recreated.
     }
     
-
+    @IBAction func openDurationPicker(_ sender: Any) {
+        UIView.animate(withDuration: 0.3, animations: { //Animate Here
+            self.scoreCardTopContraint.constant = 150
+            self.durationPickerView.isHidden = false
+            self.viewHeight.constant += 150
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    @IBAction func closeDurationPicker(_ sender: Any) {
+        UIView.animate(withDuration: 0.3, animations: { //Animate Here
+            self.scoreCardTopContraint.constant = 0
+            self.durationPickerView.isHidden = true
+            self.viewHeight.constant -= 150
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if yearOpenHeight.constant == 150 {
             UIView.animate(withDuration: 0.3, animations: { //Animate Here

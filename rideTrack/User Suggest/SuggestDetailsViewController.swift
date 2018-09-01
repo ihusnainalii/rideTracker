@@ -33,6 +33,12 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     @IBOutlet weak var openTextField: UITextField!
     @IBOutlet weak var closedTextField: UITextField!
     @IBOutlet weak var manufacturerTextField: UITextField!
+    @IBOutlet weak var modelTextField: UITextField!
+    @IBOutlet weak var heightTextField: UITextField!
+    @IBOutlet weak var lengthTextField: UITextField!
+    @IBOutlet weak var speedTextField: UITextField!
+    @IBOutlet weak var durrationTextField: UITextField!
+    @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var constraintContentHeight: NSLayoutConstraint!
     
   
@@ -54,6 +60,12 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         openTextField.delegate = self
         closedTextField.delegate = self
         manufacturerTextField.delegate = self
+        heightTextField.delegate = self
+        modelTextField.delegate = self
+        lengthTextField.delegate = self
+        speedTextField.delegate = self
+        durrationTextField.delegate = self
+        
         parkNameLabel.text = selectedAttraction.parkName
         nameTextField.text = selectedAttraction.rideName
         pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
@@ -61,6 +73,13 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         openTextField.text = String(selectedAttraction.YearOpen)
         closedTextField.text = String(selectedAttraction.YearClose)
         manufacturerTextField.text = selectedAttraction.manufacturer
+        modelTextField.text = selectedAttraction.model
+        heightTextField.text = String(selectedAttraction.height)
+        lengthTextField.text = String(selectedAttraction.length)
+        speedTextField.text = String(selectedAttraction.speed)
+        durrationTextField.text = String( selectedAttraction.duration)
+        emailLabel.text = selectedAttraction.userEmail
+        
         if selectedAttraction.active == 1 {
             extinctSwitch.isOn = false
         }
