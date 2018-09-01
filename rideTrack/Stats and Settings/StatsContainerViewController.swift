@@ -26,7 +26,6 @@ class StatsContainerViewController: UIPageViewController, UIPageViewControllerDe
     // MARK: UIPageViewControllerDataSource
     
     lazy var orderedViewControllers: [UIViewController] = {
-        print("Configuring views")
         overViewController = UIStoryboard(name: "StatsStoryboard", bundle: nil).instantiateViewController(withIdentifier: "overViewController") as! OverViewController
         topListViewController = UIStoryboard(name: "StatsStoryboard", bundle: nil).instantiateViewController(withIdentifier: "topListViewController") as! TopListsViewController
         rideTypeViewController = UIStoryboard(name: "StatsStoryboard", bundle: nil).instantiateViewController(withIdentifier: "rideTypeViewController") as! RideTypeViewController
@@ -64,9 +63,17 @@ class StatsContainerViewController: UIPageViewController, UIPageViewControllerDe
     
     func updateAllStats(stats: Stats){
         overViewController.updateLabels(stats: stats)
-        //rideTypeViewController.updateLabels(stats: stats)
-        
+        topListViewController.stats = stats
+        if topListViewController.viewAlreadyLoaded{
+            topListViewController.updateLables()
+        }
+        rideTypeViewController.stats = stats
+        if rideTypeViewController.viewAlreadyLoaded{
+            rideTypeViewController.updateLabels()
+        }
     }
+    
+
     
     func configurePageControl() {
         // The total number of pages that are available is based on how many available colors we have.
@@ -87,14 +94,15 @@ class StatsContainerViewController: UIPageViewController, UIPageViewControllerDe
     // MARK: Delegate methords
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         let pageContentViewController = pageViewController.viewControllers![0]
-        if pageContentViewController is OverViewController{
-            overViewController.updateLabels(stats: stats)
-        } else if pageContentViewController is RideTypeViewController{
-            rideTypeViewController.updateLabels(stats: stats)
-        }
+//        if pageContentViewController is OverViewController{
+//            overViewController.updateLabels(stats: stats)
+//        } else if pageContentViewController is RideTypeViewController{
+//            rideTypeViewController.updateLabels(stats: stats)
+//        }
         self.pageControl.currentPage = orderedViewControllers.index(of: pageContentViewController)!
     }
     
+   
    
     
     // MARK: Data source functions.
@@ -102,7 +110,6 @@ class StatsContainerViewController: UIPageViewController, UIPageViewControllerDe
         guard let viewControllerIndex = orderedViewControllers.index(of: viewController) else {
             return nil
         }
-        print("VIEW CONTROLLER BEFORE \(viewController)")
 
         
         let previousIndex = viewControllerIndex - 1
@@ -124,7 +131,6 @@ class StatsContainerViewController: UIPageViewController, UIPageViewControllerDe
         guard let viewControllerIndex = orderedViewControllers.index(of: viewController) else {
             return nil
         }
-        print("VIEW CONTROLLER AFTER \(viewController)")
         
         let nextIndex = viewControllerIndex + 1
         let orderedViewControllersCount = orderedViewControllers.count

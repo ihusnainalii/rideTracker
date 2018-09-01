@@ -11,6 +11,9 @@ import UIKit
 class TopListsViewController: UIViewController {
 
     @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak var completedParksLabel: UILabel!
+    var stats: Stats!
+    var viewAlreadyLoaded = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,9 +22,17 @@ class TopListsViewController: UIViewController {
         backgroundView.layer.shadowOffset = CGSize.zero
         backgroundView.layer.shadowRadius = 5
         backgroundView.layer.backgroundColor = UIColor.white.cgColor
+        
+        viewAlreadyLoaded = true
+        completedParksLabel.text = String(stats.parksCompleted)
+
         // Do any additional setup after loading the view.
     }
 
+    func updateLables(){
+        completedParksLabel.text = String(stats.parksCompleted)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

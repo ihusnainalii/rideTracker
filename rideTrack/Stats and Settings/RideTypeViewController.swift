@@ -14,6 +14,9 @@ class RideTypeViewController: UIViewController {
     @IBOutlet weak var rollerCoasterCheckedLabel: UILabel!
     @IBOutlet weak var backgroundView: UIView!
     
+    var stats: Stats!
+    var viewAlreadyLoaded = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         backgroundView.layer.cornerRadius = 7
@@ -22,6 +25,9 @@ class RideTypeViewController: UIViewController {
         backgroundView.layer.shadowRadius = 5
         backgroundView.layer.backgroundColor = UIColor.white.cgColor
         // Do any additional setup after loading the view.
+        
+        viewAlreadyLoaded = true
+        rollerCoasterCheckedLabel.text = String(stats.rollerCoasters)
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,10 +35,9 @@ class RideTypeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func updateLabels(stats: Stats){
-        print(stats.rollerCoasters)
+    func updateLabels(){
         rollerCoasterCheckedLabel.text = String(stats.rollerCoasters)
-        
+
     }
 
     /*
