@@ -41,7 +41,8 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var constraintContentHeight: NSLayoutConstraint!
     
-  
+    @IBOutlet weak var formerNameTextField: UITextField!
+    
     var pickerData: [String] = [String]()
     var rideType = 0
     
@@ -65,7 +66,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         lengthTextField.delegate = self
         speedTextField.delegate = self
         durrationTextField.delegate = self
-        
+        formerNameTextField.delegate = self
         parkNameLabel.text = selectedAttraction.parkName
         nameTextField.text = selectedAttraction.rideName
         pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
@@ -79,7 +80,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         speedTextField.text = String(selectedAttraction.speed)
         durrationTextField.text = String( selectedAttraction.duration)
         emailLabel.text = selectedAttraction.userEmail
-        
+        formerNameTextField.text = selectedAttraction.formerNames
         if selectedAttraction.active == 1 {
             extinctSwitch.isOn = false
         }
