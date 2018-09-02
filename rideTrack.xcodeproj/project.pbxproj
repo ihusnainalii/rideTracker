@@ -26,6 +26,7 @@
 		5F636B612139CD9B00D2B922 /* OverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B602139CD9B00D2B922 /* OverViewController.swift */; };
 		5F636B632139CDAA00D2B922 /* TopListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B622139CDAA00D2B922 /* TopListsViewController.swift */; };
 		5F636B652139CDB500D2B922 /* RideTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B642139CDB500D2B922 /* RideTypeViewController.swift */; };
+		5F636B67213B3E3A00D2B922 /* RideTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B66213B3E3A00D2B922 /* RideTypeTableViewCell.swift */; };
 		5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */; };
 		5FD613DD210A2B90008D4122 /* IgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DC210A2B90008D4122 /* IgnoreList.swift */; };
 		5FD613DF210A356F008D4122 /* ScoreCardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DE210A356F008D4122 /* ScoreCardList.swift */; };
@@ -112,6 +113,7 @@
 		5F636B602139CD9B00D2B922 /* OverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverViewController.swift; sourceTree = "<group>"; };
 		5F636B622139CDAA00D2B922 /* TopListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopListsViewController.swift; sourceTree = "<group>"; };
 		5F636B642139CDB500D2B922 /* RideTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideTypeViewController.swift; sourceTree = "<group>"; };
+		5F636B66213B3E3A00D2B922 /* RideTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideTypeTableViewCell.swift; sourceTree = "<group>"; };
 		5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSmallerLayout.swift; sourceTree = "<group>"; };
 		5FD613DC210A2B90008D4122 /* IgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreList.swift; sourceTree = "<group>"; };
 		5FD613DE210A356F008D4122 /* ScoreCardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardList.swift; sourceTree = "<group>"; };
@@ -194,7 +196,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5F08896021237B560065BBF1 /* Stats and Settings */ = {
+		5F08896021237B560065BBF1 /* Stats and settings */ = {
 			isa = PBXGroup;
 			children = (
 				5F636B5E2139C09500D2B922 /* StatsStoryboard.storyboard */,
@@ -204,9 +206,11 @@
 				5F636B622139CDAA00D2B922 /* TopListsViewController.swift */,
 				5F636B642139CDB500D2B922 /* RideTypeViewController.swift */,
 				5F24DA092130A92800C2D2CC /* MapViewController.swift */,
-				987028F320B7897E00DC3B73 /* SettingsViewController.swift */,
 				5F088961212381B00065BBF1 /* ParkMap.swift */,
+				5F636B66213B3E3A00D2B922 /* RideTypeTableViewCell.swift */,
+				987028F320B7897E00DC3B73 /* SettingsViewController.swift */,
 			);
+			name = "Stats and settings";
 			path = "Stats and Settings";
 			sourceTree = "<group>";
 		};
@@ -340,7 +344,7 @@
 				5FE9F81120DCA3E10012B98C /* Parks View */,
 				982F068C20EBC2FA00B08474 /* User Suggest */,
 				5F2EEC502105101B0036B47A /* Login view */,
-				5F08896021237B560065BBF1 /* Stats and Settings */,
+				5F08896021237B560065BBF1 /* Stats and settings */,
 				98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */,
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
@@ -639,6 +643,7 @@
 				5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */,
 				5FE9F81720DDCF040012B98C /* AllParksTableViewCell.swift in Sources */,
 				98AD7F7120A91A5C00540AB3 /* SuggestRideViewController.swift in Sources */,
+				5F636B67213B3E3A00D2B922 /* RideTypeTableViewCell.swift in Sources */,
 				5FFCB804210579C80054D84D /* AttractionList.swift in Sources */,
 				5F08895F21237B3B0065BBF1 /* StatsViewController.swift in Sources */,
 				5F16C51D20BB92FC00E525EF /* AttractionsTableViewCell.swift in Sources */,
