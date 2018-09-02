@@ -243,9 +243,11 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         }
         let tempName = rideName!.replacingOccurrences(of: "&", with: "!A?")
         let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
-        let urlPath = "http://www.beingpositioned.com/theparksman/uploadToAttractionDB.php?name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)" //uploads to main list
+        let urlPath = "http://www.beingpositioned.com/theparksman/uploadToAttractionDB(NEW).php?name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameTextField.text!)&model=\(self.modelTextField.text!)&height=\(self.heightTextField.text!)&maxSpeed=\(self.speedTextField.text!)&length=\(self.lengthTextField.text!)&duration=\(self.durrationTextField.text!)" //uploads to main list
+        
+        
         let changes = "NEW RIDE: \(rideName!) at \(parkNameLabel.text!) opened in \(yearOpen) and is type \(rideType)"
-        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\("username")&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
+        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(selectedAttraction.userEmail!)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
         print (urlPath)
         let dataModel = DataModel()
         dataModel.delegate = self
@@ -265,7 +267,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(selectedAttraction.id!)"
         print (urlPath)
         let changes = "NEW RIDE: \(nameTextField.text!) at \(parkNameLabel.text!) opened in \(openTextField.text!) and is type \(rideType)"
-        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\("username")&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log
+        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(selectedAttraction.userEmail)&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log
 
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
@@ -274,15 +276,15 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     
     
     func textFieldDidBeginEditing(_ textView: UITextField) {
-        if openTextField.isEditing {
-            openTextField.text = ""
-        }
-        if closedTextField.isEditing {
-            closedTextField.text = ""
-        }
-        if manufacturerTextField.isEditing {
-            manufacturerTextField.text = ""
-        }
+//        if openTextField.isEditing {
+//            openTextField.text = ""
+//        }
+//        if closedTextField.isEditing {
+//            closedTextField.text = ""
+//        }
+//        if manufacturerTextField.isEditing {
+//            manufacturerTextField.text = ""
+//        }
     }
 
 
