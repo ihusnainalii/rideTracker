@@ -718,7 +718,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 popupGenerator.impactOccurred()
                 print ("impact")
             }
-            let enterTallyAlert = UIAlertController(title: "Attraction Tally", message: "Please enter the number of times you have been on the attraction", preferredStyle: UIAlertControllerStyle.alert)
+            let enterTallyAlert = UIAlertController(title: "Experience Tally", message: "Please enter the number of times you have experienced this attraction", preferredStyle: UIAlertControllerStyle.alert)
             let userInput = UIAlertAction(title: "Enter", style: .default) { (alertAction) in
                 let textField = enterTallyAlert.textFields![0] as UITextField
                 

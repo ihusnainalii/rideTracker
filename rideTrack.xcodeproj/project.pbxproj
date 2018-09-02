@@ -27,6 +27,7 @@
 		5F636B632139CDAA00D2B922 /* TopListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B622139CDAA00D2B922 /* TopListsViewController.swift */; };
 		5F636B652139CDB500D2B922 /* RideTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B642139CDB500D2B922 /* RideTypeViewController.swift */; };
 		5F636B67213B3E3A00D2B922 /* RideTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B66213B3E3A00D2B922 /* RideTypeTableViewCell.swift */; };
+		5F636B6B213C60AD00D2B922 /* TopLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B6A213C60AD00D2B922 /* TopLists.swift */; };
 		5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */; };
 		5FD613DD210A2B90008D4122 /* IgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DC210A2B90008D4122 /* IgnoreList.swift */; };
 		5FD613DF210A356F008D4122 /* ScoreCardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DE210A356F008D4122 /* ScoreCardList.swift */; };
@@ -114,6 +115,7 @@
 		5F636B622139CDAA00D2B922 /* TopListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopListsViewController.swift; sourceTree = "<group>"; };
 		5F636B642139CDB500D2B922 /* RideTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideTypeViewController.swift; sourceTree = "<group>"; };
 		5F636B66213B3E3A00D2B922 /* RideTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideTypeTableViewCell.swift; sourceTree = "<group>"; };
+		5F636B6A213C60AD00D2B922 /* TopLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLists.swift; sourceTree = "<group>"; };
 		5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSmallerLayout.swift; sourceTree = "<group>"; };
 		5FD613DC210A2B90008D4122 /* IgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreList.swift; sourceTree = "<group>"; };
 		5FD613DE210A356F008D4122 /* ScoreCardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardList.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				98AD7F6720A91A5A00540AB3 /* UserAttraction.swift */,
 				5F16C52820BCF3F700E525EF /* ParkListData.swift */,
 				5FF0BBBF20CF652700213DF8 /* ScoreCardModel.swift */,
+				5F636B6A213C60AD00D2B922 /* TopLists.swift */,
 			);
 			path = "Data Models";
 			sourceTree = "<group>";
@@ -657,6 +660,7 @@
 				5FFCB8062106783E0054D84D /* MigrateToFirebase.swift in Sources */,
 				5F636B612139CD9B00D2B922 /* OverViewController.swift in Sources */,
 				5F088962212381B00065BBF1 /* ParkMap.swift in Sources */,
+				5F636B6B213C60AD00D2B922 /* TopLists.swift in Sources */,
 				98C28A9B20EBD81E00C7229E /* ApproveSuggestedAttractionViewController.swift in Sources */,
 				5FF0BBC020CF652700213DF8 /* ScoreCardModel.swift in Sources */,
 				98AD7F7420A91A5C00540AB3 /* AttractionsViewController.swift in Sources */,

@@ -16,8 +16,9 @@ class RideTypeViewController: UIViewController, UITableViewDelegate, UITableView
     
     var stats: Stats!
     var viewAlreadyLoaded = false
-    var rideTypeArray = ["Roller Coasters", "Water Rides", "Shows", "Dark Rides", "Flat Rides", "Films", "Spectaculars", "Play Areas", "Transport Rides", "Children's Rides", "Explore", "Upcharged"]
+    var rideTypeArray = ["Roller Coasters", "Water Rides", "Shows", "Dark Rides", "Flat Rides", "Films", "Parades", "Spectaculars", "Play Areas", "Transport Rides", "Children's Rides", "Explore", "Upcharged"]
     var checkedRides: [Int]!
+    var experiencedRides: [Int]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +46,8 @@ class RideTypeViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func updateLabels(){
-        checkedRides = [stats.rollerCoasters, stats.waterRides, stats.shows, stats.darkRides, stats.flatRides, stats.spectaculars, stats.films, stats.playAreas, stats.transportRides, stats.childrensRides, stats.exploreRides, stats.upchargeRides]
+        checkedRides = [stats.rollerCoasters, stats.waterRides, stats.shows, stats.darkRides, stats.flatRides, stats.spectaculars, stats.parades, stats.films, stats.playAreas, stats.transportRides, stats.childrensRides, stats.exploreRides, stats.upchargeRides]
+        experiencedRides = [stats.rollerCoasterExperience, stats.waterExperience, stats.showExperience, stats.darkRidesExperience, stats.flatRideExperience, stats.spectacularExperince, stats.paradesExperience, stats.filmsExperience, stats.playAreaExperience, stats.transportExperience, stats.childrensRideExperience, stats.exploreExperience, stats.upchargeExperience]
         //rollerCoasterCheckedLabel.text = String(stats.rollerCoasters)
     }
     
@@ -60,6 +62,7 @@ class RideTypeViewController: UIViewController, UITableViewDelegate, UITableView
         cell.selectionStyle = .none
         cell.attractionTypeLabel.text = rideTypeArray[indexPath.row]
         cell.checkedLabel.text = String(checkedRides[indexPath.row])
+        cell.experiencesLabel.text = String(experiencedRides[indexPath.row])
         return cell
     }
 
