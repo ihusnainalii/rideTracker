@@ -17,6 +17,7 @@ class AllParksTableViewCell: UITableViewCell {
     @IBOutlet weak var progressView: UIView!
     @IBOutlet weak var fractionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var fractionViewWidth: NSLayoutConstraint!
+    @IBOutlet weak var numberOfCheckins: UILabel!
     
     let screenSize = UIScreen.main.bounds
     

@@ -242,7 +242,12 @@ class StatsViewController: UIViewController, DataModelProtocol {
         if numberOfParksAnalized == allParksList.count{
             
             usersAttractionsSorted.sort { $0.numberOfTimesRidden > $1.numberOfTimesRidden }
-            for i in 0..<5{
+            var searchIndex = 5
+            if usersAttractionsSorted.count < 5{
+                searchIndex = usersAttractionsSorted.count
+            }
+            
+            for i in 0..<searchIndex{
                 let attraction = attractionsSorted.first(where: {$0.rideID == usersAttractionsSorted[i].rideID})
                 topRides.append(TopLists(name: (attraction?.name)!, number: usersAttractionsSorted[i].numberOfTimesRidden))
             }

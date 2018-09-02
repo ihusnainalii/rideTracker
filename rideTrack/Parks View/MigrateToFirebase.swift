@@ -47,7 +47,7 @@ class MigrateToFireBase {
                 let parkName = arrayOfAllParks[index].name
                 let location = arrayOfAllParks[index].city
                 
-                let newParkModel = ParksList(parkID: parkID, favorite: favorite, ridesRidden: ridesRidden, totalRides: totalRides, incrementorEnabled: incrementorEnabled, name: parkName!, location: location!, showDefunct: false)
+                let newParkModel = ParksList(parkID: parkID, favorite: favorite, ridesRidden: ridesRidden, totalRides: totalRides, incrementorEnabled: incrementorEnabled, name: parkName!, location: location!, showDefunct: false, numberOfCheckIns: 0, lastDayVisited: 0.0, checkedInToday: false)
                 let newParkRef = parksListRef.child(String(newParkModel.parkID))
                 newParkRef.setValue(newParkModel.toAnyObject())
                 

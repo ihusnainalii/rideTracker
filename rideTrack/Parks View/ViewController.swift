@@ -85,6 +85,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     var locationManager: CLLocationManager = CLLocationManager()
     var closestPark: ParksModel!
+    var currentLocationPark: ParksList!
+    
     let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     let favoritesGreen = UIColor(red: 40/255.0, green: 119/255.0, blue: 72/255.0, alpha: 1.0)
     
@@ -348,6 +350,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             cell.parkNameLabel.text = parkData.name
             cell.locationLabel.text = parkData.location
             cell.fractionLabel.text = "\(parkData.ridesRidden!)/\(parkData.totalRides!)"
+            cell.numberOfCheckins.text = String(parkData.numberOfCheckIns)
             
             if screenSize.width == 320.0{
                 ConfigureSmallerLayout().allParksCellLayout(allParksCell: cell)
@@ -564,7 +567,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     
-    func addNewParkToList(newPark: ParksModel) {
+    func addNewParkToList(newPark: ParksModel, newCheckin: Bool) {
         if checkIfNewPark(newPark: newPark){
             
             //Adding defualt user saved data values
@@ -579,8 +582,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                     self.allParksTableView.alpha = 1.0
                 })
             }
-            
-            let newParkModel = ParksList(parkID: newPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: newPark.name, location: newPark.city, showDefunct: false)
+            var checkins = 0
+            var dayVisited = 0.0
+            var checkInToday = false
+            if newCheckin{
+                checkins = 1
+                var calendar = NSCalendar.current
+                calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
+                let midnight = calendar.startOfDay(for: Date())
+                dayVisited = midnight.timeIntervalSince1970
+                checkInToday = true
+            }
+            let newParkModel = ParksList(parkID: newPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: newPark.name, location: newPark.city, showDefunct: false, numberOfCheckIns: checkins, lastDayVisited: dayVisited, checkedInToday: checkInToday)
+    
             let newParkRef = self.parksListRef.child(String(newParkModel.parkID))
             newParkRef.setValue(newParkModel.toAnyObject())
             
@@ -597,7 +611,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let dataModel = DataModel()
             dataModel.delegate = self
             dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "countNumberOfRides")
-            print("new park saved: ", newPark.parkID)
+            print("new park saved: ", newPark.parkID!)
+            allParksList.append(newParkModel)
         }
         else{
             print("Can not add a park twice")
@@ -756,7 +771,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             print("GETTING GPS DATA")
         }
         else if let sourceViewController = segue.source as? ParkSearchViewController, let newPark = sourceViewController.selectedPark{
-            addNewParkToList(newPark: newPark)
+            addNewParkToList(newPark: newPark, newCheckin: false)
             print("unwinding")
             UIView.animate(withDuration: 0.2, animations: {
                 self.darkenBackground.alpha = 0.0
@@ -811,6 +826,36 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                     }
                 }
                 print("Closest park is \(closestPark.name!)")
+                print(allParksList.count)
+                
+                let allParkIndex = findIndexInAllParksList(parkID: closestPark.parkID)
+                if allParkIndex != -1{
+                    currentLocationPark = allParksList[allParkIndex]
+                    
+                    //Checking if the user has already checked in today
+                    var calendar = NSCalendar.current
+                    calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
+                    let midnight = calendar.startOfDay(for: Date())
+                    
+                    if midnight.timeIntervalSince1970 != currentLocationPark.lastDayVisited{
+                        print("User has not checked into this park today")
+                        currentLocationPark.checkedInToday = false
+                        let parkItem = allParksList[allParkIndex]
+                        parkItem.ref?.updateChildValues([
+                            "checkedInToday": false
+                            ])
+                        
+                    }
+                    if currentLocationPark.checkedInToday{
+                        viewAttractionLocationButton.backgroundColor = settingsColor
+                        viewAttractionLocationButton.setTitle("View Attractions", for: .normal)
+                        viewAttractionLocationButton.setTitleColor(.black, for: .normal)
+                    }
+                }
+                
+                
+            
+               
                 
                 self.currentLocationParkNameLabel.text = self.closestPark.name!
                 self.view.layoutIfNeeded()
@@ -862,17 +907,39 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     
     @IBAction func showCurrentlLocationPark(_ sender: Any) {
-        
+    
         if checkIfNewPark(newPark: closestPark){
             print("new park")
-            addNewParkToList(newPark: closestPark)
+            addNewParkToList(newPark: closestPark, newCheckin: true)
         } else{
             print("old")
         }
         
+        
+        
         segueWithTableViewSelect = false
-        //selectedPark = ParksList(parkID: closestPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: closestPark.name, location: closestPark.city, showDefunct: false)
-        selectedPark = allParksList[findIndexInAllParksList(parkID: closestPark.parkID)]
+        let selectedParkIndex = findIndexInAllParksList(parkID: closestPark.parkID)
+
+            selectedPark = allParksList[selectedParkIndex]
+            
+            if !selectedPark.checkedInToday{
+                var calendar = NSCalendar.current
+                calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
+                let midnight = calendar.startOfDay(for: Date())
+                
+                let parkItem = allParksList[selectedParkIndex]
+                parkItem.ref?.updateChildValues([
+                    "lastDayVisited": midnight.timeIntervalSince1970,
+                    "checkedInToday": true,
+                    "numberOfCheckIns": selectedPark.numberOfCheckIns + 1
+                    ])
+            }
+    
+        
+        viewAttractionLocationButton.backgroundColor = settingsColor
+        viewAttractionLocationButton.setTitle("View Attractions", for: .normal)
+        viewAttractionLocationButton.setTitleColor(.black, for: .normal)
+        
         performSegue(withIdentifier: "toAttractionsAll", sender: nil)
     }
     
@@ -959,7 +1026,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         dissmissLocationView.delegate = self
         self.currentLocationView.addGestureRecognizer(dissmissLocationView)
         
-        viewAttractionLocationButton.backgroundColor = settingsColor
+        
         viewAttractionLocationButton.layer.cornerRadius = 7
         viewAttractionLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
@@ -1042,7 +1109,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func findIndexInAllParksList(parkID:Int) -> Int{
-        var allParksIndex = 0
+        var allParksIndex = -1
         for i in 0..<allParksList.count{
             if allParksList[i].parkID == parkID{
                 allParksIndex = i

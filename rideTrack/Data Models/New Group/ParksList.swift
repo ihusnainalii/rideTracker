@@ -24,9 +24,11 @@ struct ParksList {
     var totalRides: Int!
     var incrementorEnabled: Bool!
     var showDefunct: Bool!
+    var numberOfCheckIns: Int!
+    var lastDayVisited: Double!
+    var checkedInToday: Bool!
     
-    
-    init(parkID: Int, favorite: Bool, ridesRidden: Int, totalRides: Int, incrementorEnabled: Bool, name: String, location: String, showDefunct: Bool, key: String = "") {
+    init(parkID: Int, favorite: Bool, ridesRidden: Int, totalRides: Int, incrementorEnabled: Bool, name: String, location: String, showDefunct: Bool, numberOfCheckIns: Int, lastDayVisited: Double, checkedInToday: Bool, key: String = "") {
         self.ref = nil
         self.key = key
         self.parkID = parkID
@@ -37,6 +39,10 @@ struct ParksList {
         self.name = name
         self.location = location
         self.showDefunct = showDefunct
+        self.numberOfCheckIns = numberOfCheckIns
+        self.lastDayVisited = lastDayVisited
+        self.checkedInToday = checkedInToday
+    
     }
     
     init?(snapshot: DataSnapshot) {
@@ -55,6 +61,18 @@ struct ParksList {
         if let showDefunctCheck = value["showDefunct"] as? Bool{
             showDefunct = showDefunctCheck
         }
+        var numberOfCheckIns = 0
+        if let numberOfCheckInsCheck = value["numberOfCheckIns"] as? Int{
+            numberOfCheckIns = numberOfCheckInsCheck
+        }
+        var lastDayVisited = 0.0
+        if let lastDayVisitedCheck = value["lastDayVisited"] as? Double{
+            lastDayVisited = lastDayVisitedCheck
+        }
+        var checkedInToday = false
+        if let checkedInTodayCheck = value["checkedInToday"] as? Bool{
+            checkedInToday = checkedInTodayCheck
+        }
         
         self.ref = snapshot.ref
         self.key = snapshot.key
@@ -66,6 +84,9 @@ struct ParksList {
         self.name = name
         self.location = location
         self.showDefunct = showDefunct
+        self.numberOfCheckIns = numberOfCheckIns
+        self.lastDayVisited = lastDayVisited
+        self.checkedInToday = checkedInToday
     }
     
     func toAnyObject() -> Any {
@@ -77,6 +98,9 @@ struct ParksList {
             "name": name,
             "location": location,
             "showDefunct": showDefunct,
+            "numberOfCheckIns": numberOfCheckIns,
+            "lastDayVisited": lastDayVisited,
+            "checkedInToday": checkedInToday,
             "incrementorEnabled": incrementorEnabled
         ]
     }

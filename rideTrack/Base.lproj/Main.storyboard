@@ -393,6 +393,13 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="354" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRm-N3-krf">
+                                                            <rect key="frame" x="220" y="11" width="42" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="bMP-uj-8jh">
                                                             <rect key="frame" x="3" y="3" width="344" height="37.5"/>
                                                             <subviews>
@@ -455,6 +462,7 @@
                                                     <outlet property="fractionViewHeight" destination="QU7-UI-Kzr" id="NjQ-Cx-rLD"/>
                                                     <outlet property="fractionViewWidth" destination="oiz-Us-VTM" id="NlJ-D0-iRg"/>
                                                     <outlet property="locationLabel" destination="nXN-Rb-lfT" id="y3V-6L-PNl"/>
+                                                    <outlet property="numberOfCheckins" destination="pRm-N3-krf" id="C8Z-CP-PlC"/>
                                                     <outlet property="parkNameLabel" destination="om6-kn-cUv" id="SdD-r9-3FH"/>
                                                     <outlet property="progressView" destination="zPl-15-2Dg" id="tfz-7D-jJM"/>
                                                     <segue destination="zaz-Kb-2WY" kind="presentation" identifier="toAttractionsAll" modalPresentationStyle="overCurrentContext" id="LuG-qw-GfC"/>
@@ -532,12 +540,13 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xo4-qp-Arf">
                                         <rect key="frame" x="237" y="13" width="130" height="32"/>
+                                        <color key="backgroundColor" red="0.1172558116" green="0.38018772740000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="130" id="aj6-9U-TBG"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
-                                        <state key="normal" title="View Attractions">
-                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <state key="normal" title="Check In">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="showCurrentlLocationPark:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vJK-1z-LXk"/>

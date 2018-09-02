@@ -43,7 +43,7 @@ class TopListsViewController: UIViewController {
     }
 
     func updateLables(){
-        //completedParksLabel.text = String(stats.parksCompleted)
+        if topRides.count > 4{
         attraction1.text = topRides[0].name
         attraction2.text = topRides[1].name
         attraction3.text = topRides[2].name
@@ -55,6 +55,7 @@ class TopListsViewController: UIViewController {
         experience3.text = String(topRides[2].number)
         experience4.text = String(topRides[3].number)
         experience5.text = String(topRides[4].number)
+        }
     }
     
     override func didReceiveMemoryWarning() {
