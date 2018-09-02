@@ -63,13 +63,20 @@ class StatsContainerViewController: UIPageViewController, UIPageViewControllerDe
     
     func updateAllStats(stats: Stats){
         overViewController.updateLabels(stats: stats)
-        topListViewController.stats = stats
-        if topListViewController.viewAlreadyLoaded{
-            topListViewController.updateLables()
-        }
+        
+        
         rideTypeViewController.stats = stats
         if rideTypeViewController.viewAlreadyLoaded{
             rideTypeViewController.updateLabels()
+        }
+    }
+    
+    func updateTopLists(topRides: [TopLists]){
+        print("updating list")
+        topListViewController.stats = stats
+        topListViewController.topRides = topRides
+        if topListViewController.viewAlreadyLoaded{
+            topListViewController.updateLables()
         }
     }
     

@@ -180,6 +180,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 let newStatsModel = Stats(attractions: 0, extinctAttracions: 0, activeAttractions: 0, parks: 0, parksCompleted: 0, experiences: 0, countries: 0, rollerCoasters: 0, waterRides: 0, childrensRides: 0, flatRides: 0, transportRides: 0, darkRides: 0, exploreRides: 0, spectaculars: 0, shows: 0, films: 0, playAreas: 0, upchargeRides: 0, rollerCoasterExperience: 0, waterExperience: 0, childrensRideExperience: 0, flatRideExperience: 0, transportExperience: 0, darkRidesExperience: 0, exploreExperience: 0, spectacularExperince: 0, showExperience: 0, filmsExperience: 0, playAreaExperience: 0, upchargeExperience: 0, paradesExperience: 0, parades: 0)
                 let newStatsRef = self.statsListRef.child("life-time-stats")
                 newStatsRef.setValue(newStatsModel.toAnyObject())
+
+                
             }
         })
     

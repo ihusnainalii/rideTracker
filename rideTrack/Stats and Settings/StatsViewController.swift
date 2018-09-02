@@ -21,9 +21,16 @@ class StatsViewController: UIViewController, DataModelProtocol {
 
     var allParksList = [ParksList]()
     var arrayOfAllParks = [ParksModel]()
+    
     var simulateLocation: Int!
     var firstUpdate = true
     let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
+
+    
+    var usersAttractionsSorted = [AttractionList]()
+    var attractionsSorted = [AttractionsModel]()
+    var userParksSorted = [ParksList]()
+    var topRides = [TopLists]()
 
     
     var attractionCount = 0
@@ -63,6 +70,8 @@ class StatsViewController: UIViewController, DataModelProtocol {
     
     var attractionListRef: DatabaseReference!
     var statsListRef: DatabaseReference!
+    var topParkRef: DatabaseReference!
+    var topRideRef: DatabaseReference!
     var user: User!
     var id: String!
     var statsFilter = "lifeTime"
@@ -80,8 +89,8 @@ class StatsViewController: UIViewController, DataModelProtocol {
         id = userID?.uid
         print(id!)
         
-        self.statsListRef = Database.database().reference(withPath: "stats-list/\(id!)")
         
+        self.statsListRef = Database.database().reference(withPath: "stats-list/\(id!)")
         statsListRef.observe(.value, with: { snapshot in
             var newStats: [Stats] = []
             for child in snapshot.children {
@@ -99,7 +108,9 @@ class StatsViewController: UIViewController, DataModelProtocol {
             }
             self.firstUpdate = false
         })
+     
         
+
       
         configureView()
         //mapView.delegate = self
@@ -111,6 +122,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
         print("Updating lables")
         statsContainerViewController.stats = stats
         statsContainerViewController.updateAllStats(stats: stats)
+        
     }
     
     
@@ -137,6 +149,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
         for i in 0..<items.count{
             parksAttractionList.append(items[i] as! AttractionsModel)
         }
+        attractionsSorted += parksAttractionList
          parksAttractionList.sort { $0.rideID < $1.rideID }
         attractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(returnPath)")
 
@@ -150,6 +163,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
             }
             if newAttractions.count != 0{
                 self.calculateParksStats(parksAttractionList: parksAttractionList, userAttractionList: newAttractions)
+                self.usersAttractionsSorted += newAttractions
             } else{
                 self.numberOfParksAnalized += 1
             }
@@ -226,6 +240,15 @@ class StatsViewController: UIViewController, DataModelProtocol {
         numberOfParksAnalized += 1
         
         if numberOfParksAnalized == allParksList.count{
+            
+            usersAttractionsSorted.sort { $0.numberOfTimesRidden > $1.numberOfTimesRidden }
+            for i in 0..<5{
+                let attraction = attractionsSorted.first(where: {$0.rideID == usersAttractionsSorted[i].rideID})
+                topRides.append(TopLists(name: (attraction?.name)!, number: usersAttractionsSorted[i].numberOfTimesRidden))
+            }
+            statsContainerViewController.updateTopLists(topRides: topRides)
+            
+            
             print("updating stats")
             let statsItem = statsArray[0]
             statsItem.ref?.updateChildValues([
@@ -319,5 +342,6 @@ class StatsViewController: UIViewController, DataModelProtocol {
     @IBAction func unwindToStatsView(sender: UIStoryboardSegue) {
         print("Back to stats view")
     }
+
     
 }
