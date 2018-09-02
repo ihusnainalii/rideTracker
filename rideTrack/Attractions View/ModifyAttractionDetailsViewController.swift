@@ -362,7 +362,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             }
             
             let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(loginEmail)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
-            
+            print(urlPath3)
             let dataModel = DataModel()
             dataModel.delegate = self
             dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")

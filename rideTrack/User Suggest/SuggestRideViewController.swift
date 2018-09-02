@@ -332,6 +332,9 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     }
     
     @IBAction func openDurationPicker(_ sender: Any) {
+        var done = textFieldShouldReturn(speedField)
+        done = textFieldShouldReturn(lengthField)
+        done = textFieldShouldReturn(heightField)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
             self.scoreCardTopContraint.constant = 150
             self.durationPickerView.isHidden = false

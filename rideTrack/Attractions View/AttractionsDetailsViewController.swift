@@ -71,6 +71,11 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var modelView: UIStackView!
     @IBOutlet weak var modelLabel: UILabel!
     
+    @IBOutlet weak var speedView: UIView!
+    @IBOutlet weak var heightView: UIView!
+    @IBOutlet weak var lengthView: UIView!
+    @IBOutlet weak var durationView: UIView!
+    
     @IBOutlet weak var photoLinkText: UITextView!
     @IBOutlet weak var photoAuthorName: UILabel!
     @IBOutlet weak var PhotoCCText: UITextView!
@@ -183,6 +188,10 @@ class AttractionsDetailsViewController: UIViewController {
         let speed = selectedRide.speed
         let length = selectedRide.length
         let duration = calculateDuration()
+        if height == 0 { heightView.isHidden = true }
+        if speed == 0 {speedView.isHidden = true }
+        if length == 0 {lengthView.isHidden = true}
+        if  selectedRide.duration == 0 {durationView.isHidden = true}
         
         if height != 0 || speed != 0 || length != 0 || selectedRide.duration != 0 {
             extendedDetailsView.isHidden = false

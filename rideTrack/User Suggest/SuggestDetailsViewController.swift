@@ -324,6 +324,8 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
             let modifyVC = segue.destination as! ModifyAttractionViewController
             modifyVC.suggestedAttraction = selectedAttraction
             modifyVC.originalAttraction = modifyAttraction
+            modifyVC.parkNameText = selectedAttraction.parkName!
+            modifyVC.userName = emailLabel.text!
         }
     }
 
