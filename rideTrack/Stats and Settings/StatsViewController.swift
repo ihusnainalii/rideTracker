@@ -33,13 +33,32 @@ class StatsViewController: UIViewController, DataModelProtocol {
     var experiencesCount = 0
     var countriesCount = 0
     var rollerCoasterCount = 0
+    var rollerCoasterExperience = 0
     var darkRidesCount = 0
+    var darkRideExperience = 0
     var waterRidesCount = 0
+    var waterRideExperience = 0
     var flatRidesCount = 0
+    var flatRideExperience = 0
     var showCount = 0
-    var showSpectacularCount = 0
+    var showExperience = 0
+    var spectacularCount = 0
+    var spectacularExperience = 0
     var filmCount = 0
+    var filmExperience = 0
     var playArea = 0
+    var playAreaExperience = 0
+    var childrensRidesCount = 0
+    var childrensRideExperience = 0
+    var transportRidesCount = 0
+    var transportRideExperience = 0
+    var paradeCount = 0
+    var paradeExperience = 0
+    var exploreCount = 0
+    var exploreExperience = 0
+    var upchargeCount = 0
+    var upchargeExperience = 0
+    
     var numberOfParksAnalized = 0
     
     var attractionListRef: DatabaseReference!
@@ -92,24 +111,6 @@ class StatsViewController: UIViewController, DataModelProtocol {
         print("Updating lables")
         statsContainerViewController.stats = stats
         statsContainerViewController.updateAllStats(stats: stats)
-//        print(statsArray.count)
-//        print(statsArray[0].parks)
-//        print(stats.parks)
-//        parkCountLabel.text = String(stats.parks)
-//        attractionCountLabel.text = String(stats.attractions)
-//        parkCompleteCountLabel.text = String(stats.parksCompleted)
-//        activeAttractionCountLabel.text = String(stats.activeAttractions)
-//        defunctAttractionCountLabel.text = String(stats.extinctAttracions)
-//        experiencesCountLabel.text = String(stats.experiences)
-//        countriesCountLabel.text = String(stats.countries)
-//        rollerCoasterCountLabel.text = String(stats.rollerCoasters)
-//        darkRideCountLabel.text = String(stats.darkRides)
-//        waterRideCountLabel.text = String(stats.waterRides)
-//        flatRideCountLabel.text = String(stats.flatRides)
-//        showCountLabel.text = String(stats.shows)
-//        spectacularCountLabel.text = String(stats.spectaculars)
-//        filmCountLabel.text = String(stats.films)
-//        playAreaLabel.text = String(stats.playAreas)
     }
     
     
@@ -173,22 +174,45 @@ class StatsViewController: UIViewController, DataModelProtocol {
                 switch parksAttractionList[i].rideType {
                 case 1:
                     rollerCoasterCount += 1
+                    rollerCoasterExperience += userAttractionList[userAttractionIndex].numberOfTimesRidden
                 case 2:
                     waterRidesCount += 1
+                    waterRideExperience += userAttractionList[userAttractionIndex].numberOfTimesRidden
+                case 3:
+                    childrensRidesCount += 1
+                    childrensRideExperience += userAttractionList[userAttractionIndex].numberOfTimesRidden
                 case 4:
                     flatRidesCount += 1
+                    flatRideExperience += userAttractionList[userAttractionIndex].numberOfTimesRidden
+                case 5:
+                    transportRidesCount += 1
+                    transportRideExperience += userAttractionList[userAttractionIndex].numberOfTimesRidden
                 case 6:
                     darkRidesCount += 1
+                    darkRideExperience += userAttractionList[userAttractionIndex].numberOfTimesRidden
+                case 7:
+                    exploreCount += 1
+                    exploreExperience += userAttractionList[userAttractionIndex].numberOfTimesRidden
                 case 8:
-                    showSpectacularCount += 1
+                    spectacularCount += 1
+                    spectacularExperience += userAttractionList[userAttractionIndex].numberOfTimesRidden
                 case 9:
                     showCount += 1
+                    showExperience += userAttractionList[userAttractionIndex].numberOfTimesRidden
                 case 10:
                     filmCount += 1
+                    filmExperience += userAttractionList[userAttractionIndex].numberOfTimesRidden
+                case 11:
+                    paradeCount += 1
+                    paradeExperience += userAttractionList[userAttractionIndex].numberOfTimesRidden
                 case 12:
                     playArea += 1
+                    playAreaExperience += userAttractionList[userAttractionIndex].numberOfTimesRidden
+                case 13:
+                    upchargeCount += 1
+                    upchargeExperience += userAttractionList[userAttractionIndex].numberOfTimesRidden
                 default:
-                    print("Not saving this ride type to stats")
+                    print("Not valid rideTypeID")
                 }
  
                 if (userAttractionIndex+1) == userAttractionList.count{
@@ -210,16 +234,36 @@ class StatsViewController: UIViewController, DataModelProtocol {
                 "extinctAttracions": extinctAttractionCount,
                 "activeAttractions": activeAttractionCount,
                 "experiences": experiencesCount,
+                "parksCompleted": parksCompleteCount,
+                "countries": countriesCount,
+                
                 "rollerCoasters": rollerCoasterCount,
                 "waterRides": waterRidesCount,
+                "childrensRides": childrensRidesCount,
                 "flatRides": flatRidesCount,
+                "transportRides": transportRidesCount,
                 "darkRides": darkRidesCount,
-                "spectaculars": showSpectacularCount,
+                "exploreRides": exploreCount,
+                "spectaculars": spectacularCount,
                 "shows": showCount,
-                "playAreas": playArea,
                 "films": filmCount,
-                "parksCompleted": parksCompleteCount,
-                "countries": countriesCount
+                "playAreas": playArea,
+                "upchargeRides": upchargeCount,
+                "parades": paradeCount,
+
+                "rollerCoasterExperience": rollerCoasterExperience,
+                "waterExperience": waterRideExperience,
+                "childrensRideExperience": childrensRideExperience,
+                "flatRideExperience": flatRideExperience,
+                "transportExperience": transportRideExperience,
+                "darkRidesExperience": darkRideExperience,
+                "exploreExperience": exploreExperience,
+                "spectacularExperince": spectacularExperience,
+                "showExperience": showExperience,
+                "filmsExperience": filmExperience,
+                "playAreaExperience": playAreaExperience,
+                "upchargeExperience": upchargeExperience,
+                "paradesExperience": paradeExperience
                 ])
             activityIndicator.isHidden = true
         }

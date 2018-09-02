@@ -36,6 +36,21 @@ struct Stats {
     var films: Int!
     var playAreas: Int!
     var upchargeRides: Int!
+    var parades: Int!
+    
+    var rollerCoasterExperience: Int!
+    var waterExperience: Int!
+    var childrensRideExperience: Int!
+    var flatRideExperience: Int!
+    var transportExperience: Int!
+    var darkRidesExperience: Int!
+    var exploreExperience: Int!
+    var spectacularExperince: Int!
+    var showExperience: Int!
+    var filmsExperience: Int!
+    var playAreaExperience: Int!
+    var upchargeExperience: Int!
+    var paradesExperience: Int!
     
     //Future stats to add:
     //Park visited most frequently (top parks visited, based on number of times visited)
@@ -43,7 +58,7 @@ struct Stats {
     //Number of park visits
     
     
-    init(attractions: Int, extinctAttracions: Int, activeAttractions: Int, parks: Int, parksCompleted: Int, experiences: Int, countries: Int, rollerCoasters: Int, waterRides: Int, childrensRides: Int, flatRides: Int, transportRides: Int, darkRides: Int, exploreRides: Int, spectaculars: Int, shows: Int, films: Int, playAreas: Int, upchargeRides: Int , key: String = "") {
+    init(attractions: Int, extinctAttracions: Int, activeAttractions: Int, parks: Int, parksCompleted: Int, experiences: Int, countries: Int, rollerCoasters: Int, waterRides: Int, childrensRides: Int, flatRides: Int, transportRides: Int, darkRides: Int, exploreRides: Int, spectaculars: Int, shows: Int, films: Int, playAreas: Int, upchargeRides: Int, rollerCoasterExperience: Int, waterExperience: Int, childrensRideExperience: Int, flatRideExperience: Int, transportExperience: Int, darkRidesExperience: Int, exploreExperience: Int, spectacularExperince: Int, showExperience: Int, filmsExperience: Int, playAreaExperience: Int, upchargeExperience: Int, paradesExperience: Int, parades: Int, key: String = "") {
         self.ref = nil
         self.key = key
         
@@ -67,6 +82,21 @@ struct Stats {
         self.films = films
         self.playAreas = playAreas
         self.upchargeRides = upchargeRides
+        self.parades = parades
+        
+        self.rollerCoasterExperience = rollerCoasterExperience
+        self.waterExperience = waterExperience
+        self.childrensRideExperience = childrensRideExperience
+        self.flatRideExperience = flatRideExperience
+        self.transportExperience = transportExperience
+        self.darkRidesExperience = darkRidesExperience
+        self.exploreExperience = exploreExperience
+        self.spectacularExperince = spectacularExperince
+        self.showExperience = showExperience
+        self.filmsExperience = filmsExperience
+        self.playAreaExperience = playAreaExperience
+        self.upchargeExperience = upchargeExperience
+        self.paradesExperience = paradesExperience
     }
     
     init?(snapshot: DataSnapshot) {
@@ -94,6 +124,62 @@ struct Stats {
             let upchargeRides = value["upchargeRides"] as? Int else {
                 return nil
         }
+        var rollerCoasterExperience = 0
+        if let rollerCoasterExperienceCheck = value["rollerCoasterExperience"] as? Int{
+            rollerCoasterExperience = rollerCoasterExperienceCheck
+        }
+        var waterExperience = 0
+        if let waterExperienceCheck = value["waterExperience"] as? Int{
+            waterExperience = waterExperienceCheck
+        }
+        var childrensRideExperience = 0
+        if let childrensRideExperienceCheck = value["childrensRideExperience"] as? Int{
+            childrensRideExperience = childrensRideExperienceCheck
+        }
+        var flatRideExperience = 0
+        if let flatRideExperienceCheck = value["flatRideExperience"] as? Int{
+            flatRideExperience = flatRideExperienceCheck
+        }
+        var transportExperience = 0
+        if let transportExperienceCheck = value["transportExperience"] as? Int{
+            transportExperience = transportExperienceCheck
+        }
+        var darkRidesExperience = 0
+        if let darkRidesCheck = value["darkRidesExperience"] as? Int{
+            darkRidesExperience = darkRidesCheck
+        }
+        var exploreExperience = 0
+        if let exploreRidesCheck = value["exploreExperience"] as? Int{
+            exploreExperience = exploreRidesCheck
+        }
+        var spectacularExperince = 0
+        if let spectacularExperinceCheck = value["spectacularExperince"] as? Int{
+            spectacularExperince = spectacularExperinceCheck
+        }
+        var showExperience = 0
+        if let showExperienceCheck = value["showExperience"] as? Int{
+            showExperience = showExperienceCheck
+        }
+        var filmsExperience = 0
+        if let filmsExperienceCheck = value["filmsExperience"] as? Int{
+            filmsExperience = filmsExperienceCheck
+        }
+        var playAreaExperience = 0
+        if let playAreaExperienceCheck = value["playAreaExperience"] as? Int{
+            playAreaExperience = playAreaExperienceCheck
+        }
+        var upchargeExperience = 0
+        if let upchargeExperienceCheck = value["upchargeExperience"] as? Int{
+            upchargeExperience = upchargeExperienceCheck
+        }
+        var paradesExperience = 0
+        if let paradesExperienceCheck = value["paradesExperience"] as? Int{
+            paradesExperience = paradesExperienceCheck
+        }
+        var parades = 0
+        if let paradesCheck = value["parades"] as? Int{
+            parades = paradesCheck
+        }
         
         self.ref = snapshot.ref
         self.key = snapshot.key
@@ -118,6 +204,21 @@ struct Stats {
         self.films = films
         self.playAreas = playAreas
         self.upchargeRides = upchargeRides
+        self.parades = parades
+        
+        self.rollerCoasterExperience = rollerCoasterExperience
+        self.waterExperience = waterExperience
+        self.childrensRideExperience = childrensRideExperience
+        self.flatRideExperience = flatRideExperience
+        self.transportExperience = transportExperience
+        self.darkRidesExperience = darkRidesExperience
+        self.exploreExperience = exploreExperience
+        self.spectacularExperince = spectacularExperince
+        self.showExperience = showExperience
+        self.filmsExperience = filmsExperience
+        self.playAreaExperience = playAreaExperience
+        self.upchargeExperience = upchargeExperience
+        self.paradesExperience = paradesExperience
     }
     
     func toAnyObject() -> Any {
@@ -140,7 +241,22 @@ struct Stats {
             "shows": shows,
             "films": films,
             "playAreas": playAreas,
-            "upchargeRides": upchargeRides
+            "upchargeRides": upchargeRides,
+            "parades": parades,
+            
+            "rollerCoasterExperience": rollerCoasterExperience,
+            "waterExperience": waterExperience,
+            "childrensRideExperience": childrensRideExperience,
+            "flatRideExperience": flatRideExperience,
+            "transportExperience": transportExperience,
+            "darkRidesExperience": darkRidesExperience,
+            "exploreExperience": exploreExperience,
+            "spectacularExperince": spectacularExperince,
+            "showExperience": showExperience,
+            "filmsExperience": filmsExperience,
+            "playAreaExperience": playAreaExperience,
+            "upchargeExperience": upchargeExperience,
+            "paradesExperience": paradesExperience
         ]
     }
 }
