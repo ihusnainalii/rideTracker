@@ -725,6 +725,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let searchVC = segue.destination as! ParkSearchViewController
             searchVC.parkArray = arrayOfAllParks
             searchVC.parksVC = self
+            searchVC.savedParks = allParksList
+
             UIView.animate(withDuration: 0.2, animations: {
                 self.darkenBackground.alpha =  0.20
             })

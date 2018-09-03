@@ -22,6 +22,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     var minutes = 0
     var loginEmail = ""
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var typeDiscription: UITextView!
     
     @IBOutlet weak var closingStack: UIStackView!
     @IBOutlet weak var yearOpenHeight: NSLayoutConstraint!
@@ -91,6 +92,8 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         durationButton.setTitleColor(UIColor.lightGray, for: .normal)
         durationPicker.delegate = self
         durationPicker.dataSource = self
+        typeDiscription.delegate = self
+
          self.textFieldClose.keyboardType = UIKeyboardType.numberPad
         self.textFieldOpen.keyboardType = UIKeyboardType.numberPad
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //hide keyboard when tapping the anywhere else
@@ -387,7 +390,14 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         textView.resignFirstResponder()
     }
     
-
+    @IBAction func openDiscriptionType(_ sender: Any) {
+        typeDiscription.isHidden = false
+        typeDiscription.layer.cornerRadius = 7
+        typeDiscription.layer.shadowOpacity = 0.3
+        typeDiscription.layer.shadowOffset = CGSize.zero
+        typeDiscription.layer.shadowRadius = 5
+    }
+    
     @objc func adjustForKeyboard(notification: Notification) {
         let userInfo = notification.userInfo!
 

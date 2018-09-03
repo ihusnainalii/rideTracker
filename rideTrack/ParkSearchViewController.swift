@@ -16,7 +16,9 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     var firstEntry = true
     var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
     var parksVC: ViewController!
-    
+    var savedParks = [ParksList]()
+
+
     //A list of parks searched for, to display in results table
     var searchedParksList: [ParksModel]!
     
@@ -115,6 +117,13 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchedParkCell", for: indexPath) as! SearchTableViewCell
         let item: ParksModel = searchedParksList[indexPath.row]
+        for i in 0..<savedParks.count {
+            if item.name == savedParks[i].name {
+                cell.greenDot.isHidden = false
+                break
+            }
+            else {cell.greenDot.isHidden = true}
+        }
         cell.parkNameLabel.text = item.name
         cell.parkLocationLabel.text = "\(item.city!), \(item.country!)"
         return cell
