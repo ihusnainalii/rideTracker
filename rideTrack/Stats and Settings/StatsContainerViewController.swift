@@ -71,10 +71,11 @@ class StatsContainerViewController: UIPageViewController, UIPageViewControllerDe
         }
     }
     
-    func updateTopLists(topRides: [TopLists]){
+    func updateTopLists(topRides: [TopLists], topParks: [ParksList]){
         print("updating list")
         topListViewController.stats = stats
         topListViewController.topRides = topRides
+        topListViewController.topParks = topParks
         if topListViewController.viewAlreadyLoaded{
             topListViewController.updateLables()
         }

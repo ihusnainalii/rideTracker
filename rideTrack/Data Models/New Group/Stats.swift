@@ -23,6 +23,7 @@ struct Stats {
     var parksCompleted: Int!
     var experiences: Int!
     var countries: Int!
+    var checkIns: Int!
     
     var rollerCoasters: Int!
     var waterRides: Int!
@@ -58,7 +59,7 @@ struct Stats {
     //Number of park visits
     
     
-    init(attractions: Int, extinctAttracions: Int, activeAttractions: Int, parks: Int, parksCompleted: Int, experiences: Int, countries: Int, rollerCoasters: Int, waterRides: Int, childrensRides: Int, flatRides: Int, transportRides: Int, darkRides: Int, exploreRides: Int, spectaculars: Int, shows: Int, films: Int, playAreas: Int, upchargeRides: Int, rollerCoasterExperience: Int, waterExperience: Int, childrensRideExperience: Int, flatRideExperience: Int, transportExperience: Int, darkRidesExperience: Int, exploreExperience: Int, spectacularExperince: Int, showExperience: Int, filmsExperience: Int, playAreaExperience: Int, upchargeExperience: Int, paradesExperience: Int, parades: Int, key: String = "") {
+    init(attractions: Int, extinctAttracions: Int, activeAttractions: Int, parks: Int, parksCompleted: Int, experiences: Int, countries: Int, rollerCoasters: Int, waterRides: Int, childrensRides: Int, flatRides: Int, transportRides: Int, darkRides: Int, exploreRides: Int, spectaculars: Int, shows: Int, films: Int, playAreas: Int, upchargeRides: Int, rollerCoasterExperience: Int, waterExperience: Int, childrensRideExperience: Int, flatRideExperience: Int, transportExperience: Int, darkRidesExperience: Int, exploreExperience: Int, spectacularExperince: Int, showExperience: Int, filmsExperience: Int, playAreaExperience: Int, upchargeExperience: Int, paradesExperience: Int, parades: Int, checkIns: Int, key: String = "") {
         self.ref = nil
         self.key = key
         
@@ -69,6 +70,7 @@ struct Stats {
         self.parksCompleted = parksCompleted
         self.experiences = experiences
         self.countries = countries
+        self.checkIns = checkIns
         
         self.rollerCoasters = rollerCoasters
         self.waterRides = waterRides
@@ -180,7 +182,10 @@ struct Stats {
         if let paradesCheck = value["parades"] as? Int{
             parades = paradesCheck
         }
-        
+        var checkIns = 0
+        if let checkInsCheck = value["checkIns"] as? Int{
+            checkIns = checkInsCheck
+        }
         self.ref = snapshot.ref
         self.key = snapshot.key
         
@@ -191,6 +196,7 @@ struct Stats {
         self.parksCompleted = parksCompleted
         self.experiences = experiences
         self.countries = countries
+        self.checkIns = checkIns
         
         self.rollerCoasters = rollerCoasters
         self.waterRides = waterRides
@@ -230,6 +236,7 @@ struct Stats {
             "parksCompleted": parksCompleted,
             "experiences": experiences,
             "countries": countries,
+            "checkIns": checkIns,
             "rollerCoasters": rollerCoasters,
             "waterRides": waterRides,
             "childrensRides": childrensRides,

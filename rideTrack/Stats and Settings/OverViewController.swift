@@ -54,7 +54,7 @@ class OverViewController: UIViewController {
         parkLabel.text = String(stats.parks)
         attractionLabel.text = String(stats.attractions)
         completedLabel.text = String(stats.parksCompleted)
-        //checkInLabel.text = String(stats.)
+        checkInLabel.text = String(stats.checkIns)
         countiesLabel.text = String(stats.countries)
         activeLabel.text = String(stats.activeAttractions)
         expierencesLabel.text = String(stats.experiences)

@@ -31,6 +31,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
     var attractionsSorted = [AttractionsModel]()
     var userParksSorted = [ParksList]()
     var topRides = [TopLists]()
+     var firstTime = 0
 
     
     var attractionCount = 0
@@ -153,22 +154,49 @@ class StatsViewController: UIViewController, DataModelProtocol {
          parksAttractionList.sort { $0.rideID < $1.rideID }
         attractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(returnPath)")
 
-        attractionListRef.queryOrdered(byChild: "rideID").observeSingleEvent(of: .value, with: { snapshot in
+       
+//        attractionListRef.observeSingleEvent(of: .value, with: { snapshot in
+//            var newAttractions: [AttractionList] = []
+//            for child in snapshot.children {
+//                if let snapshot = child as? DataSnapshot,
+//                    let attractionItem = AttractionList(snapshot: snapshot) {
+//                   //print("ADDING NEW ATTRACTION \(attractionItem.rideID!)")
+//                    self.firstTime += 1
+//                    newAttractions.append(attractionItem)
+//                }
+//            }
+//
+//            self.usersAttractionsSorted += newAttractions
+//
+//            if newAttractions.count != 0{
+//                self.calculateParksStats(parksAttractionList: parksAttractionList, userAttractionList: newAttractions)
+//            } else{
+//                self.numberOfParksAnalized += 1
+//            }
+//
+//        })
+        
+
+        attractionListRef.observe(.value, with: { snapshot in
             var newAttractions: [AttractionList] = []
             for child in snapshot.children {
                 if let snapshot = child as? DataSnapshot,
                     let attractionItem = AttractionList(snapshot: snapshot) {
+                    //print("ADDING NEW ATTRACTION \(attractionItem.rideID!)")
                     newAttractions.append(attractionItem)
                 }
             }
+            self.usersAttractionsSorted += newAttractions
+
             if newAttractions.count != 0{
                 self.calculateParksStats(parksAttractionList: parksAttractionList, userAttractionList: newAttractions)
-                self.usersAttractionsSorted += newAttractions
             } else{
                 self.numberOfParksAnalized += 1
             }
-        })
 
+        })
+        
+        
     }
     
     func calculateParksStats(parksAttractionList: [AttractionsModel], userAttractionList: [AttractionList]){
@@ -241,6 +269,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
         
         if numberOfParksAnalized == allParksList.count{
             
+            //Calulating top Attractions
             usersAttractionsSorted.sort { $0.numberOfTimesRidden > $1.numberOfTimesRidden }
             var searchIndex = 5
             if usersAttractionsSorted.count < 5{
@@ -251,7 +280,17 @@ class StatsViewController: UIViewController, DataModelProtocol {
                 let attraction = attractionsSorted.first(where: {$0.rideID == usersAttractionsSorted[i].rideID})
                 topRides.append(TopLists(name: (attraction?.name)!, number: usersAttractionsSorted[i].numberOfTimesRidden))
             }
-            statsContainerViewController.updateTopLists(topRides: topRides)
+            
+            
+            var checkIns = 0
+            for i in 0..<allParksList.count{
+                checkIns += allParksList[i].numberOfCheckIns
+            }
+            
+            var sortedParksList = allParksList
+            sortedParksList.sort { $0.numberOfCheckIns > $1.numberOfCheckIns }
+            statsContainerViewController.updateTopLists(topRides: topRides, topParks: sortedParksList)
+            
             
             
             print("updating stats")
@@ -264,6 +303,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
                 "experiences": experiencesCount,
                 "parksCompleted": parksCompleteCount,
                 "countries": countriesCount,
+                "checkIns": checkIns,
                 
                 "rollerCoasters": rollerCoasterCount,
                 "waterRides": waterRidesCount,
