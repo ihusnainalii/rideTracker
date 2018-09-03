@@ -10,6 +10,7 @@ import UIKit
 
 class SearchTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var greenDot: UIImageView!
     @IBOutlet weak var parkNameLabel: UILabel!
     @IBOutlet weak var parkLocationLabel: UILabel!
     

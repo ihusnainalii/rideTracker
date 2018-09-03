@@ -40,14 +40,31 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Pjk-qE-LIB">
                                                                 <rect key="frame" x="15" y="3" width="350" height="37.5"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Park Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eri-UU-T1c">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="350" height="23"/>
-                                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uJf-Ar-CFl">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="350" height="25"/>
+                                                                        <subviews>
+                                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Green Dot" translatesAutoresizingMaskIntoConstraints="NO" id="Sse-0J-WGl">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" secondItem="Sse-0J-WGl" secondAttribute="height" multiplier="1:1" id="tSH-WV-6rG"/>
+                                                                                </constraints>
+                                                                            </imageView>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Park Namej" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eri-UU-T1c">
+                                                                                <rect key="frame" x="25" y="0.0" width="325" height="25"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="height" constant="25" id="TAG-VF-Dkz"/>
+                                                                                </constraints>
+                                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                        </subviews>
+                                                                        <constraints>
+                                                                            <constraint firstItem="Sse-0J-WGl" firstAttribute="centerY" secondItem="uJf-Ar-CFl" secondAttribute="centerY" id="jMh-nx-pcT"/>
+                                                                        </constraints>
+                                                                    </stackView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ccz-5b-MZd">
-                                                                        <rect key="frame" x="0.0" y="23" width="350" height="14.5"/>
+                                                                        <rect key="frame" x="0.0" y="25" width="350" height="12.5"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -66,6 +83,7 @@
                                                     </tableViewCellContentView>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <connections>
+                                                        <outlet property="greenDot" destination="Sse-0J-WGl" id="BsE-nM-WVo"/>
                                                         <outlet property="parkLocationLabel" destination="Ccz-5b-MZd" id="Ysp-Di-EIx"/>
                                                         <outlet property="parkNameLabel" destination="eri-UU-T1c" id="khc-xp-nK3"/>
                                                         <segue destination="R6N-UU-UtL" kind="unwind" identifier="addNewParkToList" unwindAction="unwindToParkListWithSegue:" id="ch0-Eq-jeM"/>
@@ -471,7 +489,7 @@
                                         </prototypes>
                                     </tableView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Down Bar" translatesAutoresizingMaskIntoConstraints="NO" id="6Sn-Af-gIn">
-                                        <rect key="frame" x="136" y="9" width="23" height="30"/>
+                                        <rect key="frame" x="137" y="9" width="23" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="23" id="Wu8-bP-dhD"/>
                                             <constraint firstAttribute="height" constant="30" id="yHH-Sb-KRR"/>
@@ -498,7 +516,7 @@
                                     <constraint firstAttribute="bottom" secondItem="VXB-kA-HSX" secondAttribute="bottom" id="OeG-WS-gIM"/>
                                     <constraint firstItem="T2A-XL-wHa" firstAttribute="top" secondItem="dHc-jO-smP" secondAttribute="bottom" constant="8" id="OyT-0h-ah4"/>
                                     <constraint firstItem="dHc-jO-smP" firstAttribute="top" secondItem="sWj-I5-Xhq" secondAttribute="top" constant="7" id="Sa2-HO-M6J"/>
-                                    <constraint firstItem="6Sn-Af-gIn" firstAttribute="leading" secondItem="dHc-jO-smP" secondAttribute="trailing" constant="7.5" id="UKe-X1-UiE"/>
+                                    <constraint firstItem="6Sn-Af-gIn" firstAttribute="leading" secondItem="dHc-jO-smP" secondAttribute="trailing" constant="9" id="UKe-X1-UiE"/>
                                     <constraint firstItem="VXB-kA-HSX" firstAttribute="top" secondItem="dHc-jO-smP" secondAttribute="bottom" constant="3" id="aJn-DN-7cB"/>
                                     <constraint firstItem="T2A-XL-wHa" firstAttribute="leading" secondItem="sWj-I5-Xhq" secondAttribute="leading" constant="5" id="eQR-rP-GJ6"/>
                                     <constraint firstAttribute="trailing" secondItem="VXB-kA-HSX" secondAttribute="trailing" id="fVa-JJ-ffk"/>
@@ -670,7 +688,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1016.8" y="224.4377811094453"/>
+            <point key="canvasLocation" x="943" y="224"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="Ev0-Hl-FU5">
@@ -785,7 +803,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OdQ-q0-JAg" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="5gB-Pn-MPZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1017" y="986"/>
+            <point key="canvasLocation" x="943" y="1008"/>
         </scene>
         <!--Approve Suggested Attraction View Controller-->
         <scene sceneID="FgH-5C-l2A">
@@ -3199,7 +3217,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aHX-0E-RQI">
                                                 <rect key="frame" x="-10" y="0.0" width="345" height="25"/>
                                                 <subviews>
-                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" text="Photo" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="5OY-LG-17R" userLabel="PhotoLink">
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" editable="NO" text="Photo" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5OY-LG-17R" userLabel="PhotoLink">
                                                         <rect key="frame" x="10" y="0.0" width="126" height="25"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -3217,7 +3235,7 @@
                                                         <color key="textColor" red="0.69092049870000005" green="0.69092049870000005" blue="0.69092049870000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="CC by" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="BAF-lB-amP">
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="CC by" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BAF-lB-amP">
                                                         <rect key="frame" x="195.5" y="0.0" width="149.5" height="25"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -3427,7 +3445,7 @@
                                     <action selector="doneButtonPressed:" destination="ZsW-iu-bfU" eventType="touchUpInside" id="FF8-O3-5mY"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" text="Photo" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="Vta-ya-A9S">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" editable="NO" text="Photo" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vta-ya-A9S">
                                 <rect key="frame" x="5" y="632" width="144.5" height="35"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -3443,7 +3461,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="CC by 2.0" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="iav-F5-IcD">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="CC by 2.0" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iav-F5-IcD">
                                 <rect key="frame" x="215.5" y="632" width="154.5" height="35"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -4527,7 +4545,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dph-mv-cRx" userLabel="Filter View">
-                                <rect key="frame" x="55" y="150" width="264" height="287"/>
+                                <rect key="frame" x="55" y="150" width="264" height="300"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EwZ-pa-m3U">
                                         <rect key="frame" x="8" y="8" width="53" height="27"/>
@@ -4544,7 +4562,7 @@
                                         </connections>
                                     </button>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FAm-mW-45l">
-                                        <rect key="frame" x="0.0" y="42" width="264" height="245"/>
+                                        <rect key="frame" x="0.0" y="42" width="264" height="258"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterCell" id="qB4-7G-bqe" customClass="FilterTableViewCell" customModule="rideTrack" customModuleProvider="target">
@@ -4589,6 +4607,7 @@
                                     <constraint firstItem="EwZ-pa-m3U" firstAttribute="top" secondItem="Dph-mv-cRx" secondAttribute="top" constant="8" id="G7c-HG-cST"/>
                                     <constraint firstItem="EwZ-pa-m3U" firstAttribute="leading" secondItem="Dph-mv-cRx" secondAttribute="leading" constant="8" id="Gga-AQ-On8"/>
                                     <constraint firstAttribute="bottom" secondItem="FAm-mW-45l" secondAttribute="bottom" id="Hgf-wJ-UOv"/>
+                                    <constraint firstAttribute="height" constant="300" id="Kcb-7O-7Vm"/>
                                     <constraint firstAttribute="trailing" secondItem="FAm-mW-45l" secondAttribute="trailing" id="OUJ-Wg-yVX"/>
                                     <constraint firstAttribute="trailing" secondItem="IvR-T3-oBB" secondAttribute="trailing" constant="8" id="iWS-rK-XW3"/>
                                     <constraint firstItem="FAm-mW-45l" firstAttribute="leading" secondItem="Dph-mv-cRx" secondAttribute="leading" id="lgU-SX-9ja"/>
@@ -4599,7 +4618,6 @@
                         <constraints>
                             <constraint firstItem="Dph-mv-cRx" firstAttribute="centerX" secondItem="9Bk-3E-5ie" secondAttribute="centerX" id="AcI-11-b3n"/>
                             <constraint firstItem="Dph-mv-cRx" firstAttribute="top" secondItem="Zjg-IO-5fB" secondAttribute="top" constant="130" id="Hxm-QB-gSR"/>
-                            <constraint firstItem="Zjg-IO-5fB" firstAttribute="bottom" secondItem="Dph-mv-cRx" secondAttribute="bottom" constant="230" id="gh3-1i-iOR"/>
                             <constraint firstItem="Dph-mv-cRx" firstAttribute="leading" secondItem="Zjg-IO-5fB" secondAttribute="leading" constant="55" id="yTI-zf-8ek"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Zjg-IO-5fB"/>
@@ -4688,6 +4706,18 @@
                                                             <constraint firstAttribute="width" constant="10" id="FyJ-u0-Vk0"/>
                                                         </constraints>
                                                     </view>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X5B-8K-Uig">
+                                                        <rect key="frame" x="10" y="0.0" width="22" height="40"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <state key="normal">
+                                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="openDiscriptionType:" destination="d4P-N9-9bs" eventType="touchUpInside" id="Dvj-yW-E4r"/>
+                                                        </connections>
+                                                    </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Attraction type:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jdt-93-SsH">
                                                         <rect key="frame" x="10" y="0.0" width="204" height="40"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -4721,6 +4751,11 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="evU-1N-CJj"/>
                                                 </constraints>
+                                                <variation key="default">
+                                                    <mask key="subviews">
+                                                        <exclude reference="X5B-8K-Uig"/>
+                                                    </mask>
+                                                </variation>
                                             </stackView>
                                             <pickerView contentMode="scaleToFill" verticalCompressionResistancePriority="740" translatesAutoresizingMaskIntoConstraints="NO" id="c4o-xR-vye">
                                                 <rect key="frame" x="0.0" y="95" width="374" height="120"/>
@@ -5258,8 +5293,316 @@
                                     <constraint firstAttribute="bottom" secondItem="p0f-wu-Lc9" secondAttribute="bottom" constant="50" id="iLc-Py-AMq"/>
                                 </constraints>
                             </scrollView>
+                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FyS-lY-X0e">
+                                <rect key="frame" x="72.5" y="111" width="230" height="200"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="VW5-CZ-Y1E"/>
+                                    <constraint firstAttribute="width" constant="230" id="YMW-QS-kNs"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment content="Roller Coaster">
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Bold"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">: roller coaster
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Water Ride">
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Bold"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">: Vehicle is floating on water
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Children's Ride">
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Bold"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">: Ride built for children specifically . Look at the way the park classifies.
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Flat Ride">
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Bold"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">: 
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Transport Ride">
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Bold"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">: trains, gondolas, Autopia-style cars, funiculars, ferries, boats
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Dark Ride">
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Bold"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">: 	
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Explore">
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Bold"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">: museum, walkthrough, exhibit
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Spectacular">
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Bold"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">:	fireworks, fountain show, laser shows, usually at night
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Show">
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Bold"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">: live stage show, animatronic show
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Film">
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Bold"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">: 3D/4D theater attractions, film show
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Parade">
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Bold"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">: parades, street parties, usually contains moving stages/floats
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Play Area">
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Bold"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">: children's static play area, may include water features
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Upcharge">
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Bold"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">: Attraction that requires additional cost beyond theme park entry. This does not apply towards attractions in "pay per ride" parks.</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="SFProText-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Submit New Attraction" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="yF1-Wf-cTn">
-                                <rect key="frame" x="87" y="30" width="201.5" height="23"/>
+                                <rect key="frame" x="87" y="30" width="201" height="23"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -5271,7 +5614,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7db-R0-hbq">
-                                <rect key="frame" x="298.5" y="25" width="71.5" height="36"/>
+                                <rect key="frame" x="298" y="25" width="72" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="71.5" id="c2k-QL-vKH"/>
                                 </constraints>
@@ -5290,8 +5633,9 @@
                             <constraint firstItem="7db-R0-hbq" firstAttribute="leading" secondItem="yF1-Wf-cTn" secondAttribute="trailing" constant="10" id="GAX-J1-YJs"/>
                             <constraint firstItem="yF1-Wf-cTn" firstAttribute="centerX" secondItem="SHX-fS-AIV" secondAttribute="centerX" id="NA9-8r-Ltr"/>
                             <constraint firstItem="X6s-Ji-cp1" firstAttribute="top" secondItem="HPR-gc-uEV" secondAttribute="bottom" constant="5" id="Oyj-9D-399"/>
+                            <constraint firstItem="FyS-lY-X0e" firstAttribute="centerX" secondItem="SHX-fS-AIV" secondAttribute="centerX" id="R3o-Mi-pII"/>
                             <constraint firstAttribute="bottom" secondItem="X6s-Ji-cp1" secondAttribute="bottom" id="R40-Tg-FTL"/>
-                            <constraint firstItem="yF1-Wf-cTn" firstAttribute="leading" secondItem="IOM-GE-Z2Q" secondAttribute="trailing" constant="10" id="TZQ-G5-JHZ"/>
+                            <constraint firstItem="FyS-lY-X0e" firstAttribute="top" secondItem="IOM-GE-Z2Q" secondAttribute="bottom" constant="50" id="Sjj-ZZ-WKC"/>
                             <constraint firstItem="IOM-GE-Z2Q" firstAttribute="top" secondItem="33q-eC-ZC2" secondAttribute="top" constant="5" id="gVv-jO-px7"/>
                             <constraint firstItem="HPR-gc-uEV" firstAttribute="leading" secondItem="33q-eC-ZC2" secondAttribute="leading" constant="10" id="gXE-GV-BhY"/>
                             <constraint firstItem="HPR-gc-uEV" firstAttribute="top" secondItem="yF1-Wf-cTn" secondAttribute="bottom" constant="10" id="hwt-Hc-PFj"/>
@@ -5301,6 +5645,11 @@
                             <constraint firstItem="7db-R0-hbq" firstAttribute="top" secondItem="33q-eC-ZC2" secondAttribute="top" constant="5" id="wa5-9m-hjn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="33q-eC-ZC2"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="FyS-lY-X0e"/>
+                            </mask>
+                        </variation>
                     </view>
                     <size key="freeformSize" width="375" height="1110"/>
                     <connections>
@@ -5328,6 +5677,7 @@
                         <outlet property="textFieldClose" destination="N1P-xX-s9x" id="GnR-Ge-3wN"/>
                         <outlet property="textFieldName" destination="q6I-cB-ETL" id="6e1-Zh-UkF"/>
                         <outlet property="textFieldOpen" destination="X1L-Cu-98l" id="ok9-zu-PxN"/>
+                        <outlet property="typeDiscription" destination="FyS-lY-X0e" id="3ud-A7-NyF"/>
                         <outlet property="typeLabel" destination="Cdg-6q-tOk" id="aKA-FN-NQa"/>
                         <outlet property="viewHeight" destination="KiM-dt-wkN" id="hfa-pT-lDv"/>
                         <outlet property="yearOpenHeight" destination="DKc-jn-jP2" id="I77-dH-5jy"/>
@@ -5529,6 +5879,7 @@
         <image name="Delete" width="100" height="100"/>
         <image name="Down Bar" width="65" height="65"/>
         <image name="Filter" width="100" height="100"/>
+        <image name="Green Dot" width="75" height="75"/>
         <image name="Plus Attraction" width="100" height="100"/>
         <image name="Plus button" width="150" height="150"/>
         <image name="Profile" width="200" height="200"/>
