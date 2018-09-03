@@ -2172,10 +2172,10 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9b6-HB-NGD">
-                                                            <rect key="frame" x="272" y="8" width="40" height="40"/>
+                                                            <rect key="frame" x="276" y="8" width="38" height="38"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="40" id="9Ro-bG-0iC"/>
-                                                                <constraint firstAttribute="width" constant="40" id="9eG-c7-K3D"/>
+                                                                <constraint firstAttribute="height" constant="38" id="9Ro-bG-0iC"/>
+                                                                <constraint firstAttribute="width" constant="38" id="9eG-c7-K3D"/>
                                                             </constraints>
                                                             <state key="normal" image="park info button"/>
                                                             <connections>
@@ -2198,10 +2198,10 @@
                                                     </connections>
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqB-3X-RMS">
-                                                    <rect key="frame" x="320" y="7" width="40" height="40"/>
+                                                    <rect key="frame" x="322" y="7" width="38" height="38"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="40" id="2Je-s9-Ejc"/>
-                                                        <constraint firstAttribute="height" constant="40" id="oem-uY-gzK"/>
+                                                        <constraint firstAttribute="width" constant="38" id="2Je-s9-Ejc"/>
+                                                        <constraint firstAttribute="height" constant="38" id="oem-uY-gzK"/>
                                                     </constraints>
                                                     <state key="normal" image="Settings">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
