@@ -232,7 +232,7 @@
                                             <constraint firstItem="4DZ-oi-COX" firstAttribute="leading" secondItem="8F1-Eo-Cj0" secondAttribute="leading" constant="52" id="z05-pB-zAz"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UgU-Af-2hV">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UgU-Af-2hV">
                                         <rect key="frame" x="12" y="149" width="150" height="60"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Countries" translatesAutoresizingMaskIntoConstraints="NO" id="nPF-d7-PiM">
