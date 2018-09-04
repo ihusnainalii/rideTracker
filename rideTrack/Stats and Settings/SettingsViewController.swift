@@ -17,14 +17,17 @@ class SettingsViewController: UIViewController, UITextViewDelegate {
     // var showExtinct : Int?
     var simulateLocation = 0
     var resetPressed : Int?
-    
+    var privacyLinkText = "https://www.theparksman.com/logride-privacy-policy/"
+    var termsOfServiceLinktext = "https://www.theparksman.com/logride-terms-and-conditions/"
     @IBOutlet weak var simulateLocationLabel: UILabel!
     @IBOutlet weak var approveSuggestionsButton: UIButton!
     @IBOutlet weak var simulateLocationSwitch: UISwitch!
     @IBOutlet weak var emailLink: UITextView!
     var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
 
+    @IBOutlet weak var termsOfServiceLink: UITextView!
     
+    @IBOutlet weak var privacyLink: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +36,28 @@ class SettingsViewController: UIViewController, UITextViewDelegate {
         emailLink.dataDetectorTypes = .link
         resetPressed = 0
         
+        let linkAttributes: [NSAttributedStringKey: Any] = [
+            .link: NSURL(string: termsOfServiceLinktext)!,
+            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue
+        ]
+        let attributedString = NSMutableAttributedString(string: "Terms and Conditions")
+        attributedString.setAttributes(linkAttributes, range: NSMakeRange(0, 20))
+        termsOfServiceLink.isEditable = false
+        termsOfServiceLink.attributedText = attributedString
+        termsOfServiceLink.font = .systemFont(ofSize: 15)
+        termsOfServiceLink.textAlignment = .center
+
+        
+        let linkAttributes2: [NSAttributedStringKey: Any] = [
+            .link: NSURL(string: privacyLinkText)!,
+            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue
+        ]
+        let attributedString2 = NSMutableAttributedString(string: "Privacy Policy")
+        attributedString2.setAttributes(linkAttributes2, range: NSMakeRange(0, 14))
+        privacyLink.isEditable = false
+        privacyLink.attributedText = attributedString2
+        privacyLink.font = .systemFont(ofSize: 15)
+        privacyLink.textAlignment = .center
         
         if simulateLocation == 0{
             simulateLocationSwitch.isOn = false
