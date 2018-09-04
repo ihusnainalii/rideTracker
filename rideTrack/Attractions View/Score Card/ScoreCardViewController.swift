@@ -27,6 +27,8 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
     var user: User!
    
     
+    @IBOutlet weak var doneButtonTopConstrant: NSLayoutConstraint!
+    @IBOutlet weak var scoreCardTopConstrant: NSLayoutConstraint!
     @IBOutlet weak var scoreView: UIView!
     @IBOutlet weak var highScoreView: UIView!
     @IBOutlet weak var highScoreTextLabel: UILabel!
@@ -41,6 +43,11 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         self.tableView.dataSource = self
         //getScoreCardData()
+        if UIScreen.main.bounds.height == 812.0{
+            scoreCardTopConstrant.constant = 29
+            doneButtonTopConstrant.constant = 35
+        }
+        
         
         Auth.auth().addStateDidChangeListener { auth, user in
             guard let user = user else { return }
@@ -195,81 +202,7 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
         uiView.layer.shadowRadius = 5
         uiView.layer.backgroundColor = UIColor.white.cgColor
     }
-//    func getScoreCardData(){
-//
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return
-//        }
-//
-//
-//
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//
-//        let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ScoreCard")
-//        fetchRequest.sortDescriptors = [sortDescriptor]
-//
-//        do {
-//            print("Loading new scores")
-//            let tempCard = try managedContext.fetch(fetchRequest)
-//            for i in 0..<tempCard.count {
-//                //Only display the scores from the current rideID
-//                if tempCard[i].value(forKeyPath: "rideID") as? Int == selectedRide.rideID {
-//                scoreCard.append(ScoreCardModel(score: tempCard[i].value(forKeyPath: "score") as! Int, date: tempCard[i].value(forKeyPath: "date") as! Date, rideID: tempCard[i].value(forKeyPath: "rideID") as! Int))
-//                }
-//            }
-//        }
-//        catch _ {
-//            print("Could not increment")
-//        }
-//        tableView.reloadData()
-//    }
-    
-//    func saveNewScore(newScore: Int){
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return
-//        }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        let entity = NSEntityDescription.entity(forEntityName: "ScoreCard", in: managedContext)!
-//        let newScoreCard = NSManagedObject(entity: entity, insertInto: managedContext)
-//
-//        newScoreCard.setValue(newScore, forKey: "score")
-//        newScoreCard.setValue(selectedRide.rideID, forKeyPath: "rideID")
-//        newScoreCard.setValue(Date(), forKeyPath: "date")
-//
-//        do {
-//            try managedContext.save()
-//            print("Saved score")
-//        } catch let error as NSError {
-//            print("Could not save. \(error), \(error.userInfo)")
-//        }
-//    }
-    
-//    func deleteScore(scoreToDelete: Int) {
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return
-//        }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ScoreCard")
-//        fetchRequest.predicate = NSPredicate(format: "score = %@", "\(scoreToDelete)")
-//        do
-//        {
-//            let fetchedResults =  try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as? [NSManagedObject]
-//
-//            for entity in fetchedResults! {
-//                if entity.value(forKeyPath: "rideID") as? Int == selectedRide.rideID {
-//                    managedContext.delete(entity)
-//                    print("Score \(scoreToDelete) has been deleted")
-//                    try! managedContext.save()
-//                }
-//            }
-//        }
-//        catch _ {
-//            print("Could not delete")
-//
-//        }
-//
-//    }
+
     
     /*
      // MARK: - Navigation

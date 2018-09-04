@@ -19,6 +19,8 @@ class RideTypeViewController: UIViewController, UITableViewDelegate, UITableView
     var rideTypeArray = ["Roller Coasters", "Water Rides", "Shows", "Dark Rides", "Flat Rides", "Films", "Parades", "Spectaculars", "Play Areas", "Transport Rides", "Children's Rides", "Explore", "Upcharged"]
     var checkedRides: [Int]!
     var experiencedRides: [Int]!
+    let screenSize = UIScreen.main.bounds
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +39,9 @@ class RideTypeViewController: UIViewController, UITableViewDelegate, UITableView
         
         viewAlreadyLoaded = true
         updateLabels()
+        if screenSize.width == 320.0{
+            configureSmallerLayout()
+        }
         //rollerCoasterCheckedLabel.text = String(stats.rollerCoasters)
     }
 
@@ -49,6 +54,10 @@ class RideTypeViewController: UIViewController, UITableViewDelegate, UITableView
         checkedRides = [stats.rollerCoasters, stats.waterRides, stats.shows, stats.darkRides, stats.flatRides, stats.spectaculars, stats.parades, stats.films, stats.playAreas, stats.transportRides, stats.childrensRides, stats.exploreRides, stats.upchargeRides]
         experiencedRides = [stats.rollerCoasterExperience, stats.waterExperience, stats.showExperience, stats.darkRidesExperience, stats.flatRideExperience, stats.spectacularExperince, stats.paradesExperience, stats.filmsExperience, stats.playAreaExperience, stats.transportExperience, stats.childrensRideExperience, stats.exploreExperience, stats.upchargeExperience]
         //rollerCoasterCheckedLabel.text = String(stats.rollerCoasters)
+    }
+    
+    func configureSmallerLayout(){
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

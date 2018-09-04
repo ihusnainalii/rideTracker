@@ -27,6 +27,8 @@ class ParkSettingsViewController: UIViewController {
     @IBOutlet weak var navBar: UIView!
     @IBOutlet weak var settingsView: UIView!
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var parkNameTopConstrant: NSLayoutConstraint!
+    @IBOutlet weak var doneButtonTopConstrant: NSLayoutConstraint!
     
     let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
  
@@ -53,7 +55,11 @@ class ParkSettingsViewController: UIViewController {
         configueLayout()
         incrementorSwitch.isOn = parksData.incrementorEnabled
         defunctSwitch.isOn = showDefunct
-    
+        
+        if UIScreen.main.bounds.height == 812.0{
+            parkNameTopConstrant.constant = 29
+            doneButtonTopConstrant.constant = 35
+        }
         // Do any additional setup after loading the view.
     }
 

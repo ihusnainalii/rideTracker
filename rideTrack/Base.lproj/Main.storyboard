@@ -2810,12 +2810,14 @@
                     </view>
                     <connections>
                         <outlet property="doneButton" destination="4Pe-ye-fxH" id="nyQ-5W-hD3"/>
+                        <outlet property="doneButtonTopConstrant" destination="WLN-zd-wWG" id="RVR-qA-ga1"/>
                         <outlet property="infoView" destination="EUd-gu-LDZ" id="48z-5M-TvG"/>
                         <outlet property="locationLabel" destination="Odo-pX-oWA" id="6Ss-8u-nd7"/>
                         <outlet property="mapBackgroundView" destination="sxz-RH-yEq" id="8xw-wg-LfM"/>
                         <outlet property="mapView" destination="kJ6-gM-aT0" id="whd-46-Lpf"/>
                         <outlet property="navigationView" destination="oMb-EE-yoQ" id="qUd-CH-Ohj"/>
                         <outlet property="parkNameLabel" destination="EgR-o0-Zs1" id="iEu-SB-29m"/>
+                        <outlet property="parkNameTopConstrant" destination="s5O-D6-9cN" id="ovV-nM-LLP"/>
                         <outlet property="parkTypeLabel" destination="yYy-6b-BPV" id="Rtp-Sb-Bpp"/>
                         <outlet property="previousNamesLabel" destination="Uzn-k5-t4C" id="GP2-NZ-GYF"/>
                         <outlet property="previousNamesStack" destination="ADk-md-kXs" id="A23-wa-EDM"/>
@@ -4428,11 +4430,13 @@
                     </view>
                     <connections>
                         <outlet property="doneButton" destination="tbD-g1-4Ye" id="4tB-Uv-Nqv"/>
+                        <outlet property="doneButtonTopConstrant" destination="a3Q-ZR-g6Z" id="ci5-Zf-9iF"/>
                         <outlet property="highScoreDateLabel" destination="J8i-iD-AWk" id="taJ-5m-6Fs"/>
                         <outlet property="highScoreLabel" destination="dii-zg-1dg" id="hL5-Vc-UMJ"/>
                         <outlet property="highScoreTextLabel" destination="DeH-ET-RAc" id="HCR-3i-bsg"/>
                         <outlet property="highScoreView" destination="U0i-W5-vSf" id="3Ji-Ji-fmr"/>
                         <outlet property="rideNameLabel" destination="JM4-J7-IFW" id="Bji-zG-gfU"/>
+                        <outlet property="scoreCardTopConstrant" destination="JEO-5w-v6l" id="D96-M8-oyb"/>
                         <outlet property="scoreView" destination="15p-u1-I3F" id="eRQ-iQ-tSk"/>
                         <outlet property="tableView" destination="0GL-2Q-GEJ" id="DsT-21-ocG"/>
                         <outlet property="topView" destination="SFY-J8-D7u" id="Aar-gp-l8r"/>
@@ -4560,9 +4564,11 @@
                     <connections>
                         <outlet property="defunctSwitch" destination="O5L-eJ-TuT" id="LvI-Rc-eb4"/>
                         <outlet property="doneButton" destination="zei-0l-DbR" id="kXH-iy-nlI"/>
+                        <outlet property="doneButtonTopConstrant" destination="uKD-LM-Zhh" id="GuD-Bl-npJ"/>
                         <outlet property="incrementorSwitch" destination="fSe-mw-Jhh" id="P2V-j5-OkZ"/>
                         <outlet property="navBar" destination="EcL-5g-hTv" id="LAU-oc-rLh"/>
                         <outlet property="parkNameLabel" destination="Nee-Ik-lVn" id="4kQ-c3-Twp"/>
+                        <outlet property="parkNameTopConstrant" destination="CMZ-g5-8rD" id="8XB-0F-VjS"/>
                         <outlet property="settingsView" destination="Eta-AH-qOv" id="QdE-It-bCV"/>
                     </connections>
                 </viewController>
