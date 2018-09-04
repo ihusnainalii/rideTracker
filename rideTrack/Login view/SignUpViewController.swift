@@ -15,9 +15,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var termsOfServiceLink: UITextView!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var userNameFeild: UITextField!
     
     var privacyLinkText = "https://www.theparksman.com/logride-privacy-policy/"
     var termsOfServiceLinktext = "https://www.theparksman.com/logride-terms-and-conditions/"
+    var userRef: DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,23 +57,38 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBAction func didTapSignUp(_ sender: UIButton) {
         let email = emailField.text
         let password = passwordField.text
-        Auth.auth().createUser(withEmail: email!, password: password!, completion: { (user, error) in
-            if let error = error {
-                if let errCode = AuthErrorCode(rawValue: error._code) {
-                    switch errCode {
-                    case .invalidEmail:
-                        self.showAlert("Enter a valid email.")
-                    case .emailAlreadyInUse:
-                        self.showAlert("Email already in use.")
-                    default:
-                        self.showAlert("Error: \(error.localizedDescription)")
+        let userName = userNameFeild.text
+        
+        if userName == ""{
+            showAlert("Please enter a user name.")
+        }
+        else{
+            
+            Auth.auth().createUser(withEmail: email!, password: password!, completion: { (user, error) in
+                if let error = error {
+                    if let errCode = AuthErrorCode(rawValue: error._code) {
+                        switch errCode {
+                        case .invalidEmail:
+                            self.showAlert("Enter a valid email.")
+                        case .emailAlreadyInUse:
+                            self.showAlert("Email already in use.")
+                        default:
+                            self.showAlert("Error: \(error.localizedDescription)")
+                        }
                     }
+                    return
                 }
-                return
-            }
-            Auth.auth().signIn(withEmail: email!,
-                               password: password!)
-        })
+                Auth.auth().signIn(withEmail: email!,
+                                   password: password!)
+                let userID = Auth.auth().currentUser
+                let id = userID?.uid
+                self.userRef = Database.database().reference(withPath: "users/details")
+                let newUser = UserName(userName: userName!, userID: id!)
+                let newUserRef = self.userRef.child(id!)
+                newUserRef.setValue(newUser.toAnyObject())
+                
+            })
+        }
     }
     
     @IBAction func didTapBackToLogin(_ sender: UIButton) {

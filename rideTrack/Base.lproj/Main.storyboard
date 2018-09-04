@@ -5917,24 +5917,34 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rgh-U9-LdZ">
+                                <rect key="frame" x="75" y="90" width="225" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Yak-Gc-YTg" firstAttribute="centerX" secondItem="8O6-Bo-S02" secondAttribute="centerX" id="1x0-rU-ezu"/>
+                            <constraint firstItem="rgh-U9-LdZ" firstAttribute="top" secondItem="bNz-89-HML" secondAttribute="top" constant="70" id="40B-hL-Nss"/>
                             <constraint firstItem="Vda-Ob-361" firstAttribute="width" secondItem="8O6-Bo-S02" secondAttribute="width" multiplier="0.6" id="4Ld-zf-JEO"/>
                             <constraint firstItem="Vda-Ob-361" firstAttribute="top" secondItem="4Q7-NF-OC2" secondAttribute="bottom" constant="120" id="4NK-7l-o21"/>
-                            <constraint firstItem="OBq-7j-ctt" firstAttribute="top" secondItem="Vda-Ob-361" secondAttribute="bottom" constant="20" id="AWZ-2p-Jac"/>
+                            <constraint firstItem="OBq-7j-ctt" firstAttribute="top" secondItem="Vda-Ob-361" secondAttribute="bottom" constant="20" id="ICD-cy-4YI"/>
                             <constraint firstItem="VkN-Gl-Vhm" firstAttribute="top" secondItem="RPC-Cn-Ygj" secondAttribute="bottom" constant="36" id="ILM-zB-ufW"/>
+                            <constraint firstItem="rgh-U9-LdZ" firstAttribute="centerX" secondItem="8O6-Bo-S02" secondAttribute="centerX" id="J3K-f3-Zgu"/>
                             <constraint firstItem="aP4-kV-hTK" firstAttribute="width" secondItem="OBq-7j-ctt" secondAttribute="width" id="Jkw-KE-xz5"/>
                             <constraint firstItem="RPC-Cn-Ygj" firstAttribute="top" secondItem="aP4-kV-hTK" secondAttribute="bottom" constant="8" id="Ks8-2o-QkL"/>
                             <constraint firstItem="aP4-kV-hTK" firstAttribute="centerX" secondItem="8O6-Bo-S02" secondAttribute="centerX" id="QLX-Ob-rMp"/>
                             <constraint firstItem="OBq-7j-ctt" firstAttribute="width" secondItem="Vda-Ob-361" secondAttribute="width" id="RyH-Rk-PLM"/>
                             <constraint firstItem="RPC-Cn-Ygj" firstAttribute="centerX" secondItem="8O6-Bo-S02" secondAttribute="centerX" id="SRl-Pc-ajz"/>
+                            <constraint firstItem="rgh-U9-LdZ" firstAttribute="width" secondItem="Vda-Ob-361" secondAttribute="width" id="STZ-iD-SoT"/>
                             <constraint firstItem="BWE-8V-Zsq" firstAttribute="top" secondItem="6a6-Gq-rJh" secondAttribute="bottom" constant="50" id="SbR-K7-zPg"/>
                             <constraint firstItem="aP4-kV-hTK" firstAttribute="top" secondItem="OBq-7j-ctt" secondAttribute="bottom" constant="20" id="Uiy-pz-3zL"/>
                             <constraint firstItem="OBq-7j-ctt" firstAttribute="centerX" secondItem="8O6-Bo-S02" secondAttribute="centerX" id="YPY-RE-zdj"/>
                             <constraint firstItem="Vda-Ob-361" firstAttribute="centerX" secondItem="8O6-Bo-S02" secondAttribute="centerX" id="Zl4-vn-QHx"/>
                             <constraint firstItem="VkN-Gl-Vhm" firstAttribute="centerX" secondItem="8O6-Bo-S02" secondAttribute="centerX" id="aHD-ho-Vzk"/>
+                            <constraint firstItem="Vda-Ob-361" firstAttribute="top" secondItem="rgh-U9-LdZ" secondAttribute="bottom" constant="20" id="hu5-B3-ndq"/>
                             <constraint firstItem="Yak-Gc-YTg" firstAttribute="top" secondItem="VkN-Gl-Vhm" secondAttribute="bottom" constant="8" id="qdt-Ae-4Az"/>
                             <constraint firstItem="6a6-Gq-rJh" firstAttribute="centerX" secondItem="8O6-Bo-S02" secondAttribute="centerX" id="wQ8-L3-A9K"/>
                         </constraints>
@@ -5945,6 +5955,7 @@
                         <outlet property="passwordField" destination="OBq-7j-ctt" id="oyf-7q-eV1"/>
                         <outlet property="privacyLink" destination="Yak-Gc-YTg" id="WtJ-x1-9X5"/>
                         <outlet property="termsOfServiceLink" destination="VkN-Gl-Vhm" id="nBr-Lj-QYY"/>
+                        <outlet property="userNameFeild" destination="rgh-U9-LdZ" id="7Ak-lX-sZd"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="SignInFromSignUp" id="19H-TV-wTl"/>
                     </connections>
                 </viewController>

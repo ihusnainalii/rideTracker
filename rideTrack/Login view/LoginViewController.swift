@@ -56,7 +56,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func didRequestPasswordReset(_ sender: UIButton) {
-        let prompt = UIAlertController(title: "To Do App", message: "Email:", preferredStyle: .alert)
+        let prompt = UIAlertController(title: "Reset you password", message: "Please enter your email so we can send you a link to reset your password.", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
             let userInput = prompt.textFields![0].text
             if (userInput!.isEmpty) {

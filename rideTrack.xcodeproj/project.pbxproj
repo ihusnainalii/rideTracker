@@ -29,6 +29,7 @@
 		5F636B67213B3E3A00D2B922 /* RideTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B66213B3E3A00D2B922 /* RideTypeTableViewCell.swift */; };
 		5F636B6B213C60AD00D2B922 /* TopLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B6A213C60AD00D2B922 /* TopLists.swift */; };
 		5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */; };
+		5F8E5CB7213E1D6300C80FB1 /* UserName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8E5CB6213E1D6300C80FB1 /* UserName.swift */; };
 		5FD613DD210A2B90008D4122 /* IgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DC210A2B90008D4122 /* IgnoreList.swift */; };
 		5FD613DF210A356F008D4122 /* ScoreCardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DE210A356F008D4122 /* ScoreCardList.swift */; };
 		5FE9F81020DB45030012B98C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FE9F80F20DB45030012B98C /* Media.xcassets */; };
@@ -117,6 +118,7 @@
 		5F636B66213B3E3A00D2B922 /* RideTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideTypeTableViewCell.swift; sourceTree = "<group>"; };
 		5F636B6A213C60AD00D2B922 /* TopLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLists.swift; sourceTree = "<group>"; };
 		5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSmallerLayout.swift; sourceTree = "<group>"; };
+		5F8E5CB6213E1D6300C80FB1 /* UserName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserName.swift; sourceTree = "<group>"; };
 		5FD613DC210A2B90008D4122 /* IgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreList.swift; sourceTree = "<group>"; };
 		5FD613DE210A356F008D4122 /* ScoreCardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardList.swift; sourceTree = "<group>"; };
 		5FE9F80F20DB45030012B98C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				5FD613DC210A2B90008D4122 /* IgnoreList.swift */,
 				5FD613DE210A356F008D4122 /* ScoreCardList.swift */,
 				5F088963212487BC0065BBF1 /* Stats.swift */,
+				5F8E5CB6213E1D6300C80FB1 /* UserName.swift */,
 			);
 			name = "Firebase Models";
 			path = "New Group";
@@ -672,6 +675,7 @@
 				98AD7F6F20A91A5C00540AB3 /* AttractionsModel.swift in Sources */,
 				5FF1ECAA20B526EB00BE1609 /* RideTrack.xcdatamodel in Sources */,
 				5F636B652139CDB500D2B922 /* RideTypeViewController.swift in Sources */,
+				5F8E5CB7213E1D6300C80FB1 /* UserName.swift in Sources */,
 				5FD613DF210A356F008D4122 /* ScoreCardList.swift in Sources */,
 				98AD7F7620A91A5C00540AB3 /* DataModel.swift in Sources */,
 				5FE9F81320DCA43C0012B98C /* ParksCoreData.swift in Sources */,
