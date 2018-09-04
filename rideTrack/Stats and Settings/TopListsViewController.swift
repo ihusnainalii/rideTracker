@@ -35,7 +35,7 @@ class TopListsViewController: UIViewController {
     @IBOutlet weak var checkIn4: UILabel!
     @IBOutlet weak var checkIn5: UILabel!
     
-    
+    let screenSize = UIScreen.main.bounds
     var stats: Stats!
     var topRides = [TopLists]()
     var topParks = [ParksList]()
@@ -52,6 +52,10 @@ class TopListsViewController: UIViewController {
         viewAlreadyLoaded = true
         if topRides.count != 0{
             updateLables()
+        }
+        
+        if screenSize.width == 320.0{
+            configureSmallerLayout()
         }
         // Do any additional setup after loading the view.
     }
@@ -91,6 +95,18 @@ class TopListsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func configureSmallerLayout(){
+        attraction1.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        attraction2.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        attraction3.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        attraction4.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        attraction5.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        park1.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        park2.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        park3.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        park4.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        park5.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+    }
 
     /*
     // MARK: - Navigation

@@ -27,6 +27,9 @@ class ParkInfoViewController: UIViewController {
     @IBOutlet weak var yearOpenStack: UIStackView!
     @IBOutlet weak var yearClosedStack: UIStackView!
     @IBOutlet weak var statusStack: UIStackView!
+    @IBOutlet weak var parkNameTopConstrant: NSLayoutConstraint!
+    @IBOutlet weak var doneButtonTopConstrant: NSLayoutConstraint!
+    
     
     var parksData: ParksModel!
     let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
@@ -38,6 +41,10 @@ class ParkInfoViewController: UIViewController {
         configureView()
         initialLocation = CLLocation(latitude: parksData.latitude, longitude: parksData.longitude)
         centerMapOnLocation(location: initialLocation)
+        if UIScreen.main.bounds.height == 812.0{
+            parkNameTopConstrant.constant = 29
+            doneButtonTopConstrant.constant = 35
+        }
         // Do any additional setup after loading the view.
     }
 
