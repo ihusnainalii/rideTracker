@@ -19,7 +19,10 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var photoAuthorNameLabel: UILabel!
     @IBOutlet weak var copyrightCenter: NSLayoutConstraint!
     
-    
+    @IBOutlet weak var imageViewBottom: NSLayoutConstraint!
+    let phoneSize = UIScreen.main.bounds
+
+    @IBOutlet weak var imageViewTop: NSLayoutConstraint!
     let screenSize = UIScreen.main.bounds
     var smallHieght: CGFloat = 0.0
     var smallWidth: CGFloat = 0.0
@@ -32,6 +35,7 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
     
     var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
     override func viewDidLoad() {
+        print ("Hieght is \(phoneSize.height)")
         super.viewDidLoad()
         imageView.image = attractionImage
         backgroundView.backgroundColor = UIColor.white.withAlphaComponent(1)
@@ -52,6 +56,17 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
         photoLink.tintColor = UIColor.lightGray
         copyrightLink.tintColor = UIColor.lightGray
         copyrightLink.textColor = UIColor.lightGray
+        
+        imageView.frame = CGRect(x: screenSize.width/4, y: screenSize.height/4, width: smallWidth, height: smallHieght)
+        imageView.layer.cornerRadius = 0
+        imageView.clipsToBounds = true
+        print ("at top, size \(self.imageView.frame.width)  \(self.imageView.frame.height)")
+
+        if phoneSize.width == 320 {
+            
+            imageViewBottom.constant = 50
+            imageViewTop.constant = 50
+        }
         // Do any additional setup after loading the view.
     }
 
@@ -77,9 +92,7 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
                 self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
             }
             if touchPoint.y >= 150 && scrollView.zoomScale == 1{
-             
-                print ("size \(self.imageView.frame.width)")
-            UIView.animate(withDuration: 0.3, animations: { //Animate Here
+                    UIView.animate(withDuration: 0.3, animations: { //Animate Here
                 self.backgroundView.backgroundColor = UIColor.white.withAlphaComponent(0)
                 self.imageView.frame = CGRect(x: self.screenSize.width/4, y: self.screenSize.height/4, width: self.smallWidth, height: self.smallHieght)
                 self.imageView.layer.cornerRadius = 30
@@ -92,7 +105,6 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
         }
         else if sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled && scrollView.zoomScale == 1 {
             if touchPoint.y - initialToucnPoint.y > 50 && scrollView.zoomScale == 1 {
-                print(touchPoint.y - initialToucnPoint.y)
                 self.performSegue(withIdentifier: "unwindToDetails", sender: self)
                 self.dismiss(animated: true, completion: nil)
 //            } else {
@@ -100,7 +112,7 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
                 UIView.animate(withDuration: 0.3, animations: {
                     self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
 
-                    UIView.animate(withDuration: 0.2, animations: { //Animate Here
+                   // UIView.animate(withDuration: 0.2, animations: { //Animate Here
                         self.backgroundView.backgroundColor = UIColor.white.withAlphaComponent(1)
                         self.doneButton.isHidden = false
                         self.imageView.frame = CGRect(x: self.widthX, y: self.heightY, width: self.smallWidth*2, height: self.smallHieght*2)
@@ -108,7 +120,7 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
                         self.imageView.clipsToBounds = true
                         // self.view.layoutIfNeeded()
                     }, completion: nil)
-                })
+                //})
             }
         }
     }
