@@ -124,6 +124,9 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
             }
             else {cell.greenDot.isHidden = true}
         }
+        if savedParks.count == 0 {
+            cell.greenDot.isHidden = true
+        }
         cell.parkNameLabel.text = item.name
         cell.parkLocationLabel.text = "\(item.city!), \(item.country!)"
         return cell

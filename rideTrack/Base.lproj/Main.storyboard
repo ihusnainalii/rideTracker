@@ -411,7 +411,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="354" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRm-N3-krf">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRm-N3-krf">
                                                             <rect key="frame" x="220" y="11" width="42" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -473,6 +473,11 @@
                                                         <constraint firstItem="bMP-uj-8jh" firstAttribute="top" secondItem="ye4-yd-7e6" secondAttribute="top" constant="3" id="T7m-Xw-OTz"/>
                                                         <constraint firstAttribute="bottom" secondItem="bMP-uj-8jh" secondAttribute="bottom" constant="3" id="eIA-qA-WOh"/>
                                                     </constraints>
+                                                    <variation key="default">
+                                                        <mask key="subviews">
+                                                            <exclude reference="pRm-N3-krf"/>
+                                                        </mask>
+                                                    </variation>
                                                 </tableViewCellContentView>
                                                 <connections>
                                                     <outlet property="fractionLabel" destination="Qsm-nd-AEq" id="Hjb-H9-OtK"/>
