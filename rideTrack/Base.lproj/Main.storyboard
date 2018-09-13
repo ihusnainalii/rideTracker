@@ -2912,10 +2912,10 @@
                                         <rect key="frame" x="0.0" y="37" width="335" height="150"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dSF-tk-KKG">
-                                                <rect key="frame" x="93" y="0.0" width="150" height="150"/>
+                                                <rect key="frame" x="55.5" y="0.0" width="225" height="150"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="150" id="94z-Ht-yRO"/>
-                                                    <constraint firstAttribute="width" constant="150" id="zQ3-3h-jW9"/>
+                                                    <constraint firstAttribute="height" constant="150" id="HCI-b9-Bcc"/>
+                                                    <constraint firstAttribute="width" constant="225" id="zQ3-3h-jW9"/>
                                                 </constraints>
                                             </imageView>
                                         </subviews>
@@ -3398,7 +3398,9 @@
                         <outlet property="formerNamesStack" destination="uwd-P6-OHd" id="tcY-ov-Hs1"/>
                         <outlet property="heightLabel" destination="1ye-un-OA3" id="Fto-is-Ikh"/>
                         <outlet property="heightView" destination="EXP-Uf-TMX" id="yWC-Xm-Iwi"/>
+                        <outlet property="imageHeight" destination="HCI-b9-Bcc" id="7cF-qH-XUV"/>
                         <outlet property="imageSection" destination="sTF-Hh-J86" id="iLU-db-lNL"/>
+                        <outlet property="imageWidth" destination="zQ3-3h-jW9" id="w5c-U0-jD3"/>
                         <outlet property="inspectorButton" destination="Z8K-RT-4Qr" id="BN2-fM-fgR"/>
                         <outlet property="lengthLabel" destination="k3G-Rj-0O6" id="qKC-Qw-gpw"/>
                         <outlet property="lengthView" destination="loZ-Wy-59w" id="zl6-40-r6Z"/>
@@ -3451,19 +3453,20 @@
                                 <rect key="frame" x="0.0" y="78" width="375" height="554"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cSu-fd-58Z">
-                                        <rect key="frame" x="0.0" y="89.5" width="375" height="375"/>
+                                        <rect key="frame" x="0.0" y="129" width="375" height="297"/>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="cSu-fd-58Z" secondAttribute="height" multiplier="1:1" id="Qmx-Yc-hnZ"/>
+                                            <constraint firstAttribute="height" constant="297" id="O9O-Fa-F6b"/>
+                                            <constraint firstAttribute="width" constant="375" id="ey9-75-ZdR"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="cSu-fd-58Z" secondAttribute="trailing" id="4Rs-cW-rNm"/>
-                                    <constraint firstItem="cSu-fd-58Z" firstAttribute="top" secondItem="MpI-aW-phH" secondAttribute="top" constant="89.5" id="MjS-8i-CFO"/>
                                     <constraint firstItem="cSu-fd-58Z" firstAttribute="centerX" secondItem="MpI-aW-phH" secondAttribute="centerX" id="der-wW-SxR"/>
-                                    <constraint firstAttribute="bottom" secondItem="cSu-fd-58Z" secondAttribute="bottom" constant="89.5" id="leE-us-aEo"/>
                                     <constraint firstItem="cSu-fd-58Z" firstAttribute="leading" secondItem="MpI-aW-phH" secondAttribute="leading" id="lfh-Zx-eiF"/>
+                                    <constraint firstItem="cSu-fd-58Z" firstAttribute="centerY" secondItem="MpI-aW-phH" secondAttribute="centerY" id="v0L-86-3Tc"/>
+                                    <constraint firstAttribute="bottom" secondItem="cSu-fd-58Z" secondAttribute="bottom" constant="128" id="vKp-2v-zQm"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="ZsW-iu-bfU" id="yJN-oR-R0Y"/>
@@ -3481,7 +3484,7 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" editable="NO" text="Photo" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="Vta-ya-A9S">
-                                <rect key="frame" x="5" y="632" width="144.5" height="35"/>
+                                <rect key="frame" x="5" y="632" width="145" height="35"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="IS3-Yc-cZy"/>
@@ -3491,13 +3494,13 @@
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by NAME/" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cer-QV-ITA">
-                                <rect key="frame" x="150.5" y="640" width="64" height="17"/>
+                                <rect key="frame" x="151" y="640" width="64" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="CC by 2.0" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="iav-F5-IcD">
-                                <rect key="frame" x="215.5" y="632" width="154.5" height="35"/>
+                                <rect key="frame" x="216" y="632" width="154" height="35"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="7B1-4y-G5J"/>
@@ -3545,9 +3548,9 @@
                         <outlet property="copyrightCenter" destination="MYy-1e-Eie" id="KDr-rT-S3y"/>
                         <outlet property="copyrightLink" destination="iav-F5-IcD" id="Lne-0C-Jiu"/>
                         <outlet property="doneButton" destination="tQu-Ex-HRs" id="vAv-Gf-OO6"/>
+                        <outlet property="imageHeight" destination="O9O-Fa-F6b" id="jWc-xm-VyG"/>
                         <outlet property="imageView" destination="cSu-fd-58Z" id="IWN-d1-zNW"/>
-                        <outlet property="imageViewBottom" destination="leE-us-aEo" id="nzO-VO-fut"/>
-                        <outlet property="imageViewTop" destination="MjS-8i-CFO" id="Uac-gZ-WdQ"/>
+                        <outlet property="imageWidth" destination="ey9-75-ZdR" id="p1T-AE-t8g"/>
                         <outlet property="photoAuthorNameLabel" destination="Cer-QV-ITA" id="DA5-jn-sH6"/>
                         <outlet property="photoLink" destination="Vta-ya-A9S" id="fVU-ge-Sym"/>
                         <outlet property="scrollView" destination="MpI-aW-phH" id="fDZ-EV-kPo"/>

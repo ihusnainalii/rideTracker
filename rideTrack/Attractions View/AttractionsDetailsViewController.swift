@@ -33,6 +33,8 @@ class AttractionsDetailsViewController: UIViewController {
     var copyrightType = ""
     var copyrightLinkText = ""
     
+    @IBOutlet weak var imageWidth: NSLayoutConstraint!
+    @IBOutlet weak var imageHeight: NSLayoutConstraint!
     @IBOutlet weak var imageSection: UIView!
     @IBOutlet weak var uiImageView: UIImageView!
     @IBOutlet weak var inspectorButton: UIButton!
@@ -274,9 +276,16 @@ class AttractionsDetailsViewController: UIViewController {
                 //self.uiImageView.layer.cornerRadius = self.uiImageView.frame.size.height/2
                 self.uiImageView.layer.masksToBounds = true
                 self.uiImageView.layer.borderWidth = 0
-                let Croppedimage = self.cropToSquare(image: UIImage(data: data!)!)
-                self.uiImageView.image = Croppedimage //UIImage(data: data!)
-                self.attractionImage = Croppedimage
+                //let Croppedimage = self.cropToSquare(image: UIImage(data: data!)!)
+                self.attractionImage = UIImage(data: data!)
+                    print("size is \(self.attractionImage.size)")
+                    let height = self.attractionImage.size.height
+                    let heightCons = height/150.0
+                    let width = self.attractionImage.size.width/heightCons //gets width to match up when height is 150
+                    self.imageWidth.constant = width
+                    self.imageHeight.constant = 150
+                self.uiImageView.image = UIImage(data: data!) //UIImage(data: data!)
+
                 self.PhotoCCText.isEditable = false
                 self.photoLinkText.isEditable = false
                 self.PhotoCCText.tintColor = UIColor.lightGray

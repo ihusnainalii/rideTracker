@@ -20,30 +20,38 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var copyrightCenter: NSLayoutConstraint!
     
     @IBOutlet weak var imageViewBottom: NSLayoutConstraint!
+    
+    @IBOutlet weak var imageHeight: NSLayoutConstraint!
+    @IBOutlet weak var imageWidth: NSLayoutConstraint!
+    
     let phoneSize = UIScreen.main.bounds
 
     @IBOutlet weak var imageViewTop: NSLayoutConstraint!
     let screenSize = UIScreen.main.bounds
+    var normHieght: CGFloat = 0.0
+    var normWidth: CGFloat = 0.0
     var smallHieght: CGFloat = 0.0
     var smallWidth: CGFloat = 0.0
-    var heightY:CGFloat = 0.0
-    var widthX:CGFloat = 0.0
+    var heightLocY:CGFloat = 0.0
+    var widthLocX:CGFloat = 0.0
     var copyrightType = ""
     var copyrightLinkText = ""
     var selectedRide = AttractionsModel()
-
+    var screenWidth: CGFloat = 375.0
     
     var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
     override func viewDidLoad() {
         print ("Hieght is \(phoneSize.height)")
+
         super.viewDidLoad()
+        
+        if phoneSize.width == 320 {
+            screenWidth = 320
+        }
+        
         imageView.image = attractionImage
         backgroundView.backgroundColor = UIColor.white.withAlphaComponent(1)
-        smallHieght = imageView.frame.height/2
-        smallWidth = imageView.frame.width/2
-        
-        heightY = imageView.frame.origin.y
-        widthX = imageView.frame.origin.x
+  
         if self.selectedRide.photoLink != "" {
             self.setUpCCLinks()
         }
@@ -57,16 +65,22 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
         copyrightLink.tintColor = UIColor.lightGray
         copyrightLink.textColor = UIColor.lightGray
         
-        imageView.frame = CGRect(x: screenSize.width/4, y: screenSize.height/4, width: smallWidth, height: smallHieght)
+        //imageView.frame = CGRect(x: screenSize.width/4, y: screenSize.height/4, width: smallWidth, height: smallHieght)
+            let width = self.attractionImage.size.width
+            let widthCons = width/screenWidth
+            normHieght = self.attractionImage.size.height/widthCons //gets width to match up when height is 150
+            normWidth = screenWidth
+            self.imageWidth.constant = normWidth
+            self.imageHeight.constant = normHieght
         imageView.layer.cornerRadius = 0
         imageView.clipsToBounds = true
-        print ("at top, size \(self.imageView.frame.width)  \(self.imageView.frame.height)")
 
-        if phoneSize.width == 320 {
-            
-            imageViewBottom.constant = 50
-            imageViewTop.constant = 50
-        }
+        smallHieght = imageView.frame.height/2
+        smallWidth = imageView.frame.width/2
+        
+        heightLocY = imageView.frame.origin.y
+        widthLocX = imageView.frame.origin.x
+        
         // Do any additional setup after loading the view.
     }
 
@@ -108,14 +122,15 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
                 self.performSegue(withIdentifier: "unwindToDetails", sender: self)
                 self.dismiss(animated: true, completion: nil)
 //            } else {
-            } else if scrollView.zoomScale == 1 {
+            } else if scrollView.zoomScale == 1 { //retrun
                 UIView.animate(withDuration: 0.3, animations: {
                     self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
-
-                   // UIView.animate(withDuration: 0.2, animations: { //Animate Here
+                    print("returning back here")
                         self.backgroundView.backgroundColor = UIColor.white.withAlphaComponent(1)
                         self.doneButton.isHidden = false
-                        self.imageView.frame = CGRect(x: self.widthX, y: self.heightY, width: self.smallWidth*2, height: self.smallHieght*2)
+                        self.imageView.frame = CGRect(x: self.widthLocX, y: self.heightLocY, width: self.normWidth, height: self.normHieght)
+                    //self.imageWidth.constant = self.normWidth
+                    //self.imageHeight.constant = self.normHieght
                         self.imageView.layer.cornerRadius = 0
                         self.imageView.clipsToBounds = true
                         // self.view.layoutIfNeeded()
