@@ -50,9 +50,9 @@
 		982E097620F54957007F2D02 /* ModifyAttractionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E097520F54957007F2D02 /* ModifyAttractionViewController.swift */; };
 		982E097820F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E097720F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift */; };
 		9845395720BC8D8C00C0E36C /* AttractionsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */; };
+		986D50EB21542D11008875AE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 986D50EA21542D11008875AE /* GoogleService-Info.plist */; };
 		987028F420B7897E00DC3B73 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987028F320B7897E00DC3B73 /* SettingsViewController.swift */; };
 		987CCCB9212E081D00D11825 /* fullScreenPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987CCCB8212E081D00D11825 /* fullScreenPhotoViewController.swift */; };
-		98A6A55121069FE700102620 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 98A6A55021069FE700102620 /* GoogleService-Info.plist */; };
 		98A9A8552109207E00B3C36E /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A9A8542109207E00B3C36E /* FilterTableViewCell.swift */; };
 		98A9A857210A28E600B3C36E /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A9A856210A28E600B3C36E /* FilterViewController.swift */; };
 		98AD7F3620A91A2D00540AB3 /* rideTrackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F3520A91A2D00540AB3 /* rideTrackTests.swift */; };
@@ -139,9 +139,9 @@
 		982E097520F54957007F2D02 /* ModifyAttractionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyAttractionViewController.swift; sourceTree = "<group>"; };
 		982E097720F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyAttractionDetailsViewController.swift; sourceTree = "<group>"; };
 		9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionsDetailsViewController.swift; sourceTree = "<group>"; };
+		986D50EA21542D11008875AE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		987028F320B7897E00DC3B73 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		987CCCB8212E081D00D11825 /* fullScreenPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fullScreenPhotoViewController.swift; sourceTree = "<group>"; };
-		98A6A55021069FE700102620 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		98A9A8542109207E00B3C36E /* FilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
 		98A9A856210A28E600B3C36E /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		98AD7F1A20A91A2B00540AB3 /* rideTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rideTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -356,8 +356,8 @@
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
+				986D50EA21542D11008875AE /* GoogleService-Info.plist */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
-				98A6A55021069FE700102620 /* GoogleService-Info.plist */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
 				98AD7F6E20A91A5C00540AB3 /* Info.plist */,
 				5FE9F80F20DB45030012B98C /* Media.xcassets */,
@@ -478,6 +478,7 @@
 				TargetAttributes = {
 					98AD7F1920A91A2B00540AB3 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1000;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 1;
@@ -489,10 +490,12 @@
 					};
 					98AD7F3020A91A2D00540AB3 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1000;
 						TestTargetID = 98AD7F1920A91A2B00540AB3;
 					};
 					98AD7F3B20A91A2D00540AB3 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1000;
 						TestTargetID = 98AD7F1920A91A2B00540AB3;
 					};
 				};
@@ -523,8 +526,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FF1ECB020B5271800BE1609 /* LaunchScreen.storyboard in Resources */,
-				98A6A55121069FE700102620 /* GoogleService-Info.plist in Resources */,
 				5FE9F81020DB45030012B98C /* Media.xcassets in Resources */,
+				986D50EB21542D11008875AE /* GoogleService-Info.plist in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
 			);
@@ -871,7 +874,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.parksman.LogRide;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -892,7 +895,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.parksman.LogRide;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -913,7 +916,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = self.rideTrackTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rideTrack.app/rideTrack";
 			};
@@ -935,7 +938,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = self.rideTrackTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rideTrack.app/rideTrack";
 			};
@@ -956,7 +959,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = self.rideTrackUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = rideTrack;
 			};
@@ -977,7 +980,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = self.rideTrackUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = rideTrack;
 			};

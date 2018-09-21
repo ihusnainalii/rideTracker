@@ -82,7 +82,7 @@ class ParkInfoViewController: UIViewController {
     func centerMapOnLocation(location: CLLocation) {
         let parkMapAnnotation = ParkMap(parkName: parksData.name, longitude: parksData.longitude, latitude: parksData.latitude)
         mapView.addAnnotation(parkMapAnnotation)
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
+        let coordinateRegion = MKCoordinateRegion.init(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
         mapView.setRegion(coordinateRegion, animated: true)
     }
     

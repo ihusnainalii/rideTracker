@@ -33,14 +33,25 @@ class AttractionsDetailsViewController: UIViewController {
     var copyrightType = ""
     var copyrightLinkText = ""
     
+    let screenSize = UIScreen.main.bounds
+
+    //contraints for new design
+    @IBOutlet weak var topOfRideName: NSLayoutConstraint!
+    @IBOutlet weak var upperViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var bottomOfScrollView: NSLayoutConstraint!
+    var totalHeightDetails = 0.0
+    @IBOutlet weak var itemsInScrollHeight: NSLayoutConstraint!
+    @IBOutlet weak var pushDownScroll: NSLayoutConstraint!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var scrollWidth: NSLayoutConstraint!
+    
+    
     @IBOutlet weak var imageWidth: NSLayoutConstraint!
     @IBOutlet weak var imageHeight: NSLayoutConstraint!
     @IBOutlet weak var imageSection: UIView!
     @IBOutlet weak var uiImageView: UIImageView!
     @IBOutlet weak var inspectorButton: UIButton!
-    @IBOutlet weak var blankView: UIView!
     
-    @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var CCView: UIView!
     @IBOutlet weak var manufacturerStack: UIStackView!
     @IBOutlet weak var firstRideStack: UIStackView!
@@ -63,28 +74,24 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var modifyDatePicker: UIDatePicker!
     @IBOutlet weak var scoreCardButton: UIButton!
     
-    @IBOutlet weak var extendedDetailsView: UIView!
     @IBOutlet weak var speedLabel: UILabel!
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var lengthLabel: UILabel!
     @IBOutlet weak var durrationLabel: UILabel!
-    @IBOutlet weak var blankView2: UIView!
     
     @IBOutlet weak var modelView: UIStackView!
     @IBOutlet weak var modelLabel: UILabel!
     
-    @IBOutlet weak var speedView: UIView!
-    @IBOutlet weak var heightView: UIView!
-    @IBOutlet weak var lengthView: UIView!
-    @IBOutlet weak var durationView: UIView!
+    @IBOutlet weak var speedView: UIStackView!
+    @IBOutlet weak var heightView: UIStackView!
+    @IBOutlet weak var lengthView: UIStackView!
+    @IBOutlet weak var durationView: UIStackView!
     
     @IBOutlet weak var photoLinkText: UITextView!
     @IBOutlet weak var photoAuthorName: UILabel!
     @IBOutlet weak var PhotoCCText: UITextView!
     
-    @IBOutlet weak var copyrightCenter: NSLayoutConstraint!
     
-    @IBOutlet weak var detailViewHeight: NSLayoutConstraint!
   //  @IBOutlet weak var userDatesView: UIView!
     //@IBOutlet weak var detailsView: UIView!
     @IBOutlet weak var OverlayView: UIView!
@@ -103,7 +110,6 @@ class AttractionsDetailsViewController: UIViewController {
         self.attractionsListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(String(selectedRide.parkID))/\(String(selectedRide.rideID))")
         
         print ("ride ID: ", self.selectedRide.rideID!)
-        
 
         OverlayView.layer.cornerRadius = 10.0
         OverlayView.backgroundColor = UIColor.white
@@ -113,11 +119,9 @@ class AttractionsDetailsViewController: UIViewController {
         scoreCardButton.backgroundColor = greyColor
         scoreCardButton.layer.cornerRadius = 6.0
         CCView.isHidden = true
-        bottomView.isHidden = false
         
-        blankView.isHidden = false
         self.imageSection.isHidden = true
-
+        
         //dateModifyButton.layer.cornerRadius = 5.0
       //  userDatesView.backgroundColor = greyColor
         //userDatesView.layer.cornerRadius = 10.0
@@ -145,12 +149,14 @@ class AttractionsDetailsViewController: UIViewController {
             }
             else{
                 LatestRideStack.isHidden = true
+                totalHeightDetails += 30
             }
         }
         else{
             FirstdateModifyButton.isHidden = true
             firstRideStack.isHidden = true
             LatestRideStack.isHidden = true
+            totalHeightDetails += 60
             //userDatesView.isHidden = true
             
         }
@@ -161,6 +167,7 @@ class AttractionsDetailsViewController: UIViewController {
         if selectedRide.manufacturer == "" {
             manufacturerStack.isHidden = true
             includeHiddenView = true
+            totalHeightDetails += 30
         }
         else {
             manufacturerStack.isHidden = false
@@ -170,13 +177,11 @@ class AttractionsDetailsViewController: UIViewController {
         if selectedRide.previousNames == "" {
             formerNamesStack.isHidden = true
             includeHiddenView = true
+            totalHeightDetails += 30
         }
         else {
             formerNamesStack.isHidden = false
             formerNamesLabel.text = selectedRide.previousNames
-        }
-        if includeHiddenView{
-            blankView.isHidden = true
         }
         
         if selectedRide.model != "" {
@@ -185,28 +190,36 @@ class AttractionsDetailsViewController: UIViewController {
         }
         else {
             modelView.isHidden = true
+            totalHeightDetails += 30
         }
         let height = selectedRide.height
         let speed = selectedRide.speed
         let length = selectedRide.length
         let duration = calculateDuration()
-        if height == 0 { heightView.isHidden = true }
-        if speed == 0 {speedView.isHidden = true }
-        if length == 0 {lengthView.isHidden = true}
-        if  selectedRide.duration == 0 {durationView.isHidden = true}
+        if height == 0 {
+            heightView.isHidden = true
+            totalHeightDetails += 30
+        }
+        if speed == 0 {
+            speedView.isHidden = true
+            totalHeightDetails += 30
+        }
+        if length == 0 {
+            lengthView.isHidden = true
+            totalHeightDetails += 30
+        }
+        if  selectedRide.duration == 0 {
+            durationView.isHidden = true
+            totalHeightDetails += 30
+        }
         
         if height != 0 || speed != 0 || length != 0 || selectedRide.duration != 0 {
-            extendedDetailsView.isHidden = false
-            blankView2.isHidden = true
             heightLabel.text = "\(height!) ft"
             speedLabel.text = "\(speed!) mph"
             lengthLabel.text = "\(length!) ft"
             durrationLabel.text = duration
         }
-        else {
-            extendedDetailsView.isHidden = true
-            blankView2.isHidden = true
-        }
+
         switch selectedRide.rideType {
         case -1:
             typeString = "Unknown"
@@ -243,9 +256,37 @@ class AttractionsDetailsViewController: UIViewController {
             attractiontype.isHidden = true
         }
         attractiontype.text = typeString
-
-        //photo downloading
         
+        var maxFromTop: CGFloat = 0
+        print("screen size is: \(screenSize.height)")
+        if screenSize.height > 700 {
+            maxFromTop = screenSize.height - 550//497
+        }
+        else if screenSize.height == 568 {
+            print("iphone 5 size")
+            maxFromTop = 80
+        }
+        else {
+            maxFromTop = 170
+        }
+        //photo downloading
+        topOfRideName.constant = (5.5-150) //remove photo spot
+    
+        itemsInScrollHeight.constant = CGFloat((270 - totalHeightDetails)) //makes the scroller scroll the righ height based on contents
+        scrollWidth.constant = screenSize.width - 80
+        bottomOfScrollView.constant = 5
+        let currHeightOfScroll = CGFloat(scrollView.frame.height)
+       
+        
+        var newUpperHeight = Double(maxFromTop + 180 + currHeightOfScroll) //lower top bar MaxFromTop(originalTop) + 150(imageView) + 30 (CCView) + heightOfScrollView - (total keep in scrollView)
+        if (270 - totalHeightDetails) < 145 {
+            print("only need this much space: \(270 - totalHeightDetails). The height will be \(newUpperHeight - (270 - totalHeightDetails)). CurrHright is \(currHeightOfScroll)")
+            
+            upperViewHeight.constant = CGFloat(newUpperHeight - (270 - totalHeightDetails))
+        }
+        else {upperViewHeight.constant = (maxFromTop+150)}
+        
+
         
        // let database = Database.database().reference()
         let storage = Storage.storage().reference()
@@ -256,18 +297,15 @@ class AttractionsDetailsViewController: UIViewController {
                 if self.selectedRide.photoLink != "" {
                     self.setUpCCLinks()
                     self.CCView.isHidden = false
-                    self.bottomView.isHidden = true
                     self.imageSection.isHidden = false
                 }
                 else if self.selectedRide.photoArtist == "Self"{
                     self.CCView.isHidden = true
-                    self.bottomView.isHidden = false
                     self.imageSection.isHidden = false
                 }
                 else {
                     print("WE HAVE A PHOTO WITHOUT CC INFO!!!, the picture will not be shown")
                     self.CCView.isHidden = true
-                    self.bottomView.isHidden = false
                     self.imageSection.isHidden = true
 
                 }
@@ -292,10 +330,28 @@ class AttractionsDetailsViewController: UIViewController {
                 self.photoLinkText.tintColor = UIColor.lightGray
                 self.photoAuthorName.tintColor = UIColor.lightGray
                 self.PhotoCCText.textColor = UIColor.lightGray
+                self.topOfRideName.constant = 5.5
+                self.upperViewHeight.constant = (150)
+                self.bottomOfScrollView.constant = 35
+                newUpperHeight = Double(maxFromTop + currHeightOfScroll)
+                if (270 - self.totalHeightDetails) < 145 {
+                    print("with image, but no scroll")
+                    
+                    self.upperViewHeight.constant = CGFloat(newUpperHeight - (270 - self.totalHeightDetails)) //lower top bar
+                }
+                else {self.upperViewHeight.constant = (maxFromTop)}
             }
             else {
+               print("over here")
                 print(error?.localizedDescription)
                 self.imageSection.isHidden = true
+                //self.topOfRideName.constant = (5.5-150)
+               // if (270 - self.totalHeightDetails) < 145 {
+              //      self.upperViewHeight.constant = CGFloat(150 + 150) //lower top bar
+              //  }
+              //  else { self.upperViewHeight.constant = (150+150) }
+
+                
             }
         }
         imageXCorr = uiImageView.frame.origin.x
@@ -351,7 +407,6 @@ class AttractionsDetailsViewController: UIViewController {
         modifyDateView.isHidden = false
         modifyDatePicker.setDate(selectedRide.dateFirstRidden, animated: false)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
-            self.detailViewHeight.constant += 170
          //   self.detailsView.frame.origin.y -= 10
             self.view.layoutIfNeeded()
         }, completion: nil)
@@ -364,7 +419,6 @@ class AttractionsDetailsViewController: UIViewController {
         modifyDateView.isHidden = false
         modifyDatePicker.setDate(selectedRide.dateLastRidden, animated: false)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
-            self.detailViewHeight.constant += 170
             self.view.layoutIfNeeded()
         }, completion: nil)
         
@@ -398,7 +452,6 @@ class AttractionsDetailsViewController: UIViewController {
         selectedRide.dateFirstRidden = modifyDatePicker.date
             saveModifyRideDate(firstRide: true, rideID: selectedRide.rideID, RideDate: modifyDatePicker.date)
             UIView.animate(withDuration: 0.3, animations: { //Animate Here
-                self.detailViewHeight.constant -= 170
                 self.view.layoutIfNeeded()
             }, completion: nil)
         }
@@ -410,7 +463,6 @@ class AttractionsDetailsViewController: UIViewController {
             selectedRide.dateLastRidden = modifyDatePicker.date
             saveModifyRideDate(firstRide: false, rideID: selectedRide.rideID, RideDate: modifyDatePicker.date)
             UIView.animate(withDuration: 0.3, animations: { //Animate Here
-                self.detailViewHeight.constant -= 170
                 self.view.layoutIfNeeded()
             }, completion: nil)
         }
@@ -436,18 +488,16 @@ class AttractionsDetailsViewController: UIViewController {
         else if selectedRide.photoCC == "CC 2.0 by SA" {
             copyrightType = "CC by 2.0 by SA"
             copyrightLinkText = "https://creativecommons.org/licenses/by-sa/2.0/"
-            copyrightCenter.constant = -30
         }
         else if selectedRide.photoCC == "Photo courtesy Orange County Archives" {
             copyrightType = "Photo courtesy Orange County Archives"
             copyrightLinkText = "http://www.ocarchives.com"
             photoAuthorName.text = "courtesy Orange County Archives"
             PhotoCCText.isHidden = true
-            copyrightCenter.constant = 20
         }
-        let linkAttributes: [NSAttributedStringKey: Any] = [
+        let linkAttributes: [NSAttributedString.Key: Any] = [
             .link: NSURL(string: copyrightLinkText)!,
-            .foregroundColor: UIColor.lightGray, .underlineColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue
+            .foregroundColor: UIColor.lightGray, .underlineColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue
 
         ]
         let attributedString = NSMutableAttributedString(string: copyrightType)
@@ -458,9 +508,9 @@ class AttractionsDetailsViewController: UIViewController {
         
         let photoLinkSite = selectedRide.photoLink
         
-        let linkAttributes2: [NSAttributedStringKey: Any] = [
+        let linkAttributes2: [NSAttributedString.Key: Any] = [
             .link: NSURL(string: photoLinkSite!)!,
-            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue
+            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
         let attributedString2 = NSMutableAttributedString(string: "Photo")
         attributedString2.setAttributes(linkAttributes2, range: NSMakeRange(0, 5))
@@ -534,16 +584,16 @@ class AttractionsDetailsViewController: UIViewController {
     @IBAction func panToExit(_ sender: UIPanGestureRecognizer) {
         let touchPoint = (sender as AnyObject).location(in: self.view?.window)
         
-        if (sender as AnyObject).state == UIGestureRecognizerState.began{
+        if (sender as AnyObject).state == UIGestureRecognizer.State.began{
             initialToucnPoint = touchPoint
             
         }
-        else if sender.state == UIGestureRecognizerState.changed {
+        else if sender.state == UIGestureRecognizer.State.changed {
             if touchPoint.y - initialToucnPoint.y > 0 {
                 self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
             }
         }
-        else if sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled {
+        else if sender.state == UIGestureRecognizer.State.ended || sender.state == UIGestureRecognizer.State.cancelled {
             if touchPoint.y - initialToucnPoint.y > 50 {
                 self.performSegue(withIdentifier: "unwindToAttractions", sender: self)
                 self.dismiss(animated: true, completion: nil)

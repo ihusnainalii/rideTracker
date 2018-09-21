@@ -41,17 +41,17 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         // Do any additional setup after loading the view.
         
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     @objc func adjustForKeyboard(notification: Notification) {
         let userInfo = notification.userInfo!
         
-        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
         
-        if notification.name == Notification.Name.UIKeyboardWillHide {
+        if notification.name == UIResponder.keyboardWillHideNotification {
             resultsTableView.contentInset = UIEdgeInsets.zero
         } else {
             resultsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
@@ -159,17 +159,17 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     @IBAction func panSeachAway(_ sender: UIPanGestureRecognizer) {
         let touchPoint = (sender as AnyObject).location(in: self.view?.window)
         
-        if (sender as AnyObject).state == UIGestureRecognizerState.began{
+        if (sender as AnyObject).state == UIGestureRecognizer.State.began{
             initialToucnPoint = touchPoint
         }
-        else if sender.state == UIGestureRecognizerState.changed {
+        else if sender.state == UIGestureRecognizer.State.changed {
             if touchPoint.y - initialToucnPoint.y > 0 {
                 self.downButton.setImage(UIImage(named: "Flat Bar"), for: .normal)
                 
                 self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
             }
         }
-        else if sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled {
+        else if sender.state == UIGestureRecognizer.State.ended || sender.state == UIGestureRecognizer.State.cancelled {
             if touchPoint.y - initialToucnPoint.y > 200 {
                 self.dismiss(animated: true, completion: nil)
                 self.searchTextFeild.resignFirstResponder()

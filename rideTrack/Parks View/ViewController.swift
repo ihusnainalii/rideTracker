@@ -121,8 +121,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
 
         
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
         self.allParksTableView.contentInset = insets
         
@@ -949,7 +949,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
         
-        if gestureRecognizer.state != UIGestureRecognizerState.ended {
+        if gestureRecognizer.state != UIGestureRecognizer.State.ended {
             searchRideButtonHeightConstraint.constant = 23
             currentLocationViewBottomConstraint.constant = -61
             //If iPhone X, make the locationView heigher
@@ -989,10 +989,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @objc func adjustForKeyboard(notification: Notification) {
         let userInfo = notification.userInfo!
         
-        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
         
-        if notification.name == Notification.Name.UIKeyboardWillHide {
+        if notification.name == UIResponder.keyboardWillHideNotification {
             allParksTableView.contentInset = UIEdgeInsets.zero
         } else {
             allParksTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)

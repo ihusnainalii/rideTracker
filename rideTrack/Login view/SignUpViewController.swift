@@ -23,9 +23,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let linkAttributes: [NSAttributedStringKey: Any] = [
+        let linkAttributes: [NSAttributedString.Key: Any] = [
             .link: NSURL(string: termsOfServiceLinktext)!,
-            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue
+            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
         let attributedString = NSMutableAttributedString(string: "Terms and Conditions")
         attributedString.setAttributes(linkAttributes, range: NSMakeRange(0, 20))
@@ -35,9 +35,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         termsOfServiceLink.textAlignment = .center
         
         
-        let linkAttributes2: [NSAttributedStringKey: Any] = [
+        let linkAttributes2: [NSAttributedString.Key: Any] = [
             .link: NSURL(string: privacyLinkText)!,
-            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue
+            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
         let attributedString2 = NSMutableAttributedString(string: "Privacy Policy")
         attributedString2.setAttributes(linkAttributes2, range: NSMakeRange(0, 14))
@@ -95,8 +95,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         self.dismiss(animated: true, completion: {})
     }
     func showAlert(_ message: String) {
-        let alertController = UIAlertController(title: "Please try again", message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+        let alertController = UIAlertController(title: "Please try again", message: message, preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

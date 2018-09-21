@@ -122,8 +122,8 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == UITableViewCellEditingStyle.delete) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCell.EditingStyle.delete) {
             // handle delete (by removing the data from your array and updating the tableview)
             
             let scoreCardItem = self.scoreCard[indexPath.row]
@@ -139,7 +139,7 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     @IBAction func didAddNewScore(_ sender: Any) {
-        let alert = UIAlertController(title: "Add  new score", message: "Enter your new score for \(selectedRide.name!) to your score card.", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Add  new score", message: "Enter your new score for \(selectedRide.name!) to your score card.", preferredStyle: UIAlertController.Style.alert)
         let userInput = UIAlertAction(title: "Add your Score", style: .default) { (alertAction) in
             let textField = alert.textFields![0] as UITextField
             if textField.text != ""{

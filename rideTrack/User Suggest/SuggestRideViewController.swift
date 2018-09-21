@@ -104,12 +104,10 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         notesText.layer.cornerRadius = 5.0
         
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
-        if screenSize.width == 320 {
-            scrollWidth.constant = 319
-        }
+            scrollWidth.constant = (screenSize.width - 1)
         // Do any additional setup after loading the view.
     }
     
@@ -401,10 +399,10 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     @objc func adjustForKeyboard(notification: Notification) {
         let userInfo = notification.userInfo!
 
-        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
 
-        if notification.name == Notification.Name.UIKeyboardWillHide {
+        if notification.name == UIResponder.keyboardWillHideNotification {
             scrollView.contentInset = UIEdgeInsets.zero
         } else {
 

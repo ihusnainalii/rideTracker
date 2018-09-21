@@ -96,14 +96,11 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         typeSwitcher.selectRow((Int(selectedAttraction.type!)), inComponent: 0, animated: true)
         //typeSwitcher.selectRow(, inComponent: 0, animated: true)
         // Do any additional setup after loading the view.
-        //if iphone 5 class
-        if screenSize.width == 320 {
-            scrollWidth.constant = 320
-        }
+        scrollWidth.constant = screenSize.width
         
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //hide keyboard when tapping the anywhere else
@@ -133,7 +130,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
                     self.modifyAttraction = self.listOfAttractionsAtPark[i]
                     self.performSegue(withIdentifier: "toModifyVC", sender: self)
                 }
-                let alert = UIAlertController(title: "Duplicate Attraction", message: "This attraction already exists in the database. Would you like to delete the suggestion or update the existing attraction?", preferredStyle: UIAlertControllerStyle.alert)
+                let alert = UIAlertController(title: "Duplicate Attraction", message: "This attraction already exists in the database. Would you like to delete the suggestion or update the existing attraction?", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
                    print ("cancel")
                 }))
@@ -299,10 +296,10 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     @objc func adjustForKeyboard(notification: Notification) {
         let userInfo = notification.userInfo!
         
-        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
         
-        if notification.name == Notification.Name.UIKeyboardWillHide {
+        if notification.name == UIResponder.keyboardWillHideNotification {
             scrollView.contentInset = UIEdgeInsets.zero
 
         } else {

@@ -60,10 +60,10 @@ class AttractionsTableViewCell: UITableViewCell {
     
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
         
-        if gestureRecognizer.state == UIGestureRecognizerState.began{
+        if gestureRecognizer.state == UIGestureRecognizer.State.began{
             delegate?.enterAttractionTally(self)
         }
-        if gestureRecognizer.state == UIGestureRecognizerState.ended{
+        if gestureRecognizer.state == UIGestureRecognizer.State.ended{
             delegate?.endLongPress(self)
             
         }

@@ -109,8 +109,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         print("Show incrementor is \(parkData.incrementorEnabled)")
         super.viewDidLoad()
@@ -217,7 +217,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.searchBarStyle = UISearchBarStyle.minimal
+        searchController.searchBar.searchBarStyle = UISearchBar.Style.minimal
         searchController.searchBar.sizeToFit()
         searchController.searchBar.enablesReturnKeyAutomatically = false
        // searchController.searchBar.showsScopeBar = true
@@ -718,7 +718,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 popupGenerator.impactOccurred()
                 print ("impact")
             }
-            let enterTallyAlert = UIAlertController(title: "Experience Tally", message: "Please enter the number of times you have experienced this attraction", preferredStyle: UIAlertControllerStyle.alert)
+            let enterTallyAlert = UIAlertController(title: "Experience Tally", message: "Please enter the number of times you have experienced this attraction", preferredStyle: UIAlertController.Style.alert)
             let userInput = UIAlertAction(title: "Enter", style: .default) { (alertAction) in
                 let textField = enterTallyAlert.textFields![0] as UITextField
                 
@@ -861,10 +861,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @objc func adjustForKeyboard(notification: Notification) {
         let userInfo = notification.userInfo!
         
-        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
         
-        if notification.name == Notification.Name.UIKeyboardWillHide {
+        if notification.name == UIResponder.keyboardWillHideNotification {
             attractionsTableView.contentInset = UIEdgeInsets.zero
         } else {
             
@@ -1137,7 +1137,7 @@ print ("selected Index is \(selectedIndex!)")
         if selectedRide.rideID == 523 || selectedRide.rideID == 3236 || selectedRide.rideID == 611{
             title = "Fine Shoot’n Partner!"
         }
-        let scoreAlert = UIAlertController(title: title, message: "Enter your new score below and view this attraction’s ScoreCard through its details page", preferredStyle: UIAlertControllerStyle.alert)
+        let scoreAlert = UIAlertController(title: title, message: "Enter your new score below and view this attraction’s ScoreCard through its details page", preferredStyle: UIAlertController.Style.alert)
         let userInput = UIAlertAction(title: "Add your Score", style: .default) { (alertAction) in
             let textField = scoreAlert.textFields![0] as UITextField
             if textField.text != ""{
@@ -1269,17 +1269,17 @@ print ("selected Index is \(selectedIndex!)")
     @IBAction func panGestureReconizer(_ sender: UIPanGestureRecognizer) {
         let touchPoint = (sender as AnyObject).location(in: self.view?.window)
         
-        if (sender as AnyObject).state == UIGestureRecognizerState.began{
+        if (sender as AnyObject).state == UIGestureRecognizer.State.began{
             initialToucnPoint = touchPoint
         }
-        else if sender.state == UIGestureRecognizerState.changed {
+        else if sender.state == UIGestureRecognizer.State.changed {
             if touchPoint.y - initialToucnPoint.y > 0 {
                 self.downBar.setImage(UIImage(named: "Flat Bar"), for: .normal)
                 
                 self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
             }
         }
-        else if sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled {
+        else if sender.state == UIGestureRecognizer.State.ended || sender.state == UIGestureRecognizer.State.cancelled {
             if touchPoint.y - initialToucnPoint.y > 200 {
                 self.dismiss(animated: true, completion: nil)
                 parksViewController.unwindFromAttractions(parkID: parkID)

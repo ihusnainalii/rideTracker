@@ -36,9 +36,9 @@ class SettingsViewController: UIViewController, UITextViewDelegate {
         emailLink.dataDetectorTypes = .link
         resetPressed = 0
         
-        let linkAttributes: [NSAttributedStringKey: Any] = [
+        let linkAttributes: [NSAttributedString.Key: Any] = [
             .link: NSURL(string: termsOfServiceLinktext)!,
-            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue
+            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
         let attributedString = NSMutableAttributedString(string: "Terms and Conditions")
         attributedString.setAttributes(linkAttributes, range: NSMakeRange(0, 20))
@@ -48,9 +48,9 @@ class SettingsViewController: UIViewController, UITextViewDelegate {
         termsOfServiceLink.textAlignment = .center
 
         
-        let linkAttributes2: [NSAttributedStringKey: Any] = [
+        let linkAttributes2: [NSAttributedString.Key: Any] = [
             .link: NSURL(string: privacyLinkText)!,
-            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue
+            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
         let attributedString2 = NSMutableAttributedString(string: "Privacy Policy")
         attributedString2.setAttributes(linkAttributes2, range: NSMakeRange(0, 14))

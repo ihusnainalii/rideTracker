@@ -97,11 +97,11 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
        // print ("working")
         let touchPoint = (sender as AnyObject).location(in: self.view?.window)
 
-        if (sender as AnyObject).state == UIGestureRecognizerState.began && scrollView.zoomScale == 1{
+        if (sender as AnyObject).state == UIGestureRecognizer.State.began && scrollView.zoomScale == 1{
             initialToucnPoint = touchPoint
             // print ("begun")
         }
-        else if sender.state == UIGestureRecognizerState.changed && scrollView.zoomScale == 1 {
+        else if sender.state == UIGestureRecognizer.State.changed && scrollView.zoomScale == 1 {
             if touchPoint.y - initialToucnPoint.y > 0 {
                 self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
             }
@@ -117,7 +117,7 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
             }
             
         }
-        else if sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled && scrollView.zoomScale == 1 {
+        else if sender.state == UIGestureRecognizer.State.ended || sender.state == UIGestureRecognizer.State.cancelled && scrollView.zoomScale == 1 {
             if touchPoint.y - initialToucnPoint.y > 50 && scrollView.zoomScale == 1 {
                 self.performSegue(withIdentifier: "unwindToDetails", sender: self)
                 self.dismiss(animated: true, completion: nil)
@@ -171,9 +171,9 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
             copyrightLink.isHidden = true
 
         }
-        let linkAttributes: [NSAttributedStringKey: Any] = [
+        let linkAttributes: [NSAttributedString.Key: Any] = [
             .link: NSURL(string: copyrightLinkText)!,
-            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue
+            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
         let attributedString = NSMutableAttributedString(string: copyrightType)
         attributedString.setAttributes(linkAttributes, range: NSMakeRange(0, 6))
@@ -183,9 +183,9 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
         
         let photoLinkSite = selectedRide.photoLink
         
-        let linkAttributes2: [NSAttributedStringKey: Any] = [
+        let linkAttributes2: [NSAttributedString.Key: Any] = [
             .link: NSURL(string: photoLinkSite!)!,
-            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue
+            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
         let attributedString2 = NSMutableAttributedString(string: "Photo")
         attributedString2.setAttributes(linkAttributes2, range: NSMakeRange(0, 5))
