@@ -44,6 +44,7 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var pushDownScroll: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollWidth: NSLayoutConstraint!
+    @IBOutlet weak var bottomOfOverlayView: NSLayoutConstraint!
     
     
     @IBOutlet weak var imageWidth: NSLayoutConstraint!
@@ -273,8 +274,14 @@ class AttractionsDetailsViewController: UIViewController {
         topOfRideName.constant = (5.5-150) //remove photo spot
     
         itemsInScrollHeight.constant = CGFloat((270 - totalHeightDetails)) //makes the scroller scroll the righ height based on contents
-        scrollWidth.constant = screenSize.width - 80
-        bottomOfScrollView.constant = 5
+        scrollWidth.constant = screenSize.width - 60
+//        if selectedRide.ridePartern == "" {
+            bottomOfScrollView.constant = 5
+//            parkPartnerView.isHidden = true
+//        }
+//        else {
+//            bottomOfScrollView.constant = 45
+//        }
         let currHeightOfScroll = CGFloat(scrollView.frame.height)
        
         
@@ -290,6 +297,7 @@ class AttractionsDetailsViewController: UIViewController {
         
        // let database = Database.database().reference()
         let storage = Storage.storage().reference()
+        var showImage = true
         let imageRef = storage.child("\(selectedRide.parkID!)/\(selectedRide.rideID!).jpg")
         imageRef.getData(maxSize: 1*1000*1000) { (data, error) in
             if error == nil {
@@ -307,51 +315,53 @@ class AttractionsDetailsViewController: UIViewController {
                     print("WE HAVE A PHOTO WITHOUT CC INFO!!!, the picture will not be shown")
                     self.CCView.isHidden = true
                     self.imageSection.isHidden = true
-
+                    showImage = false
                 }
-                
-                self.uiImageView.layer.cornerRadius = 30
-                //self.uiImageView.layer.cornerRadius = self.uiImageView.frame.size.height/2
-                self.uiImageView.layer.masksToBounds = true
-                self.uiImageView.layer.borderWidth = 0
-                //let Croppedimage = self.cropToSquare(image: UIImage(data: data!)!)
-                self.attractionImage = UIImage(data: data!)
-                    print("size is \(self.attractionImage.size)")
-                    let height = self.attractionImage.size.height
-                    let heightCons = height/150.0
-                    let width = self.attractionImage.size.width/heightCons //gets width to match up when height is 150
-                    self.imageWidth.constant = width
-                    self.imageHeight.constant = 150
-                self.uiImageView.image = UIImage(data: data!) //UIImage(data: data!)
+                if showImage {
+                    self.uiImageView.layer.cornerRadius = 30
+                    //self.uiImageView.layer.cornerRadius = self.uiImageView.frame.size.height/2
+                    self.uiImageView.layer.masksToBounds = true
+                    self.uiImageView.layer.borderWidth = 0
+                    //let Croppedimage = self.cropToSquare(image: UIImage(data: data!)!)
+                    self.attractionImage = UIImage(data: data!)
+                        print("size is \(self.attractionImage.size)")
+                        let height = self.attractionImage.size.height
+                        let heightCons = height/150.0
+                        let width = self.attractionImage.size.width/heightCons //gets width to match up when height is 150
+                        self.imageWidth.constant = width
+                        self.imageHeight.constant = 150
+                    self.uiImageView.image = UIImage(data: data!) //UIImage(data: data!)
 
-                self.PhotoCCText.isEditable = false
-                self.photoLinkText.isEditable = false
-                self.PhotoCCText.tintColor = UIColor.lightGray
-                self.photoLinkText.tintColor = UIColor.lightGray
-                self.photoAuthorName.tintColor = UIColor.lightGray
-                self.PhotoCCText.textColor = UIColor.lightGray
-                self.topOfRideName.constant = 5.5
-                self.upperViewHeight.constant = (150)
-                self.bottomOfScrollView.constant = 35
-                newUpperHeight = Double(maxFromTop + currHeightOfScroll)
-                if (270 - self.totalHeightDetails) < 145 {
-                    print("with image, but no scroll")
-                    
-                    self.upperViewHeight.constant = CGFloat(newUpperHeight - (270 - self.totalHeightDetails)) //lower top bar
+                    self.PhotoCCText.isEditable = false
+                    self.photoLinkText.isEditable = false
+                    self.PhotoCCText.tintColor = UIColor.lightGray
+                    self.photoLinkText.tintColor = UIColor.lightGray
+                    self.photoAuthorName.tintColor = UIColor.lightGray
+                    self.PhotoCCText.textColor = UIColor.lightGray
+                    self.PhotoCCText.isScrollEnabled = false
+                    self.photoLinkText.isScrollEnabled = false
+                    self.topOfRideName.constant = 5.5
+                    self.upperViewHeight.constant = (150)
+//                    if self.selectedRide.ridePartern == "" {
+                        self.bottomOfScrollView.constant = 35
+//                        self.parkPartnerView.isHidden = true
+//                    }
+//                    else {
+//                        self.bottomOfScrollView.constant = 75
+//                    }
+                    newUpperHeight = Double(maxFromTop + currHeightOfScroll)
+                    if (270 - self.totalHeightDetails) < 145 {
+                        print("with image, but no scroll")
+                        
+                        self.upperViewHeight.constant = CGFloat(newUpperHeight - (270 - self.totalHeightDetails)) //lower top bar
+                    }
+                    else {self.upperViewHeight.constant = (maxFromTop)}
                 }
-                else {self.upperViewHeight.constant = (maxFromTop)}
-            }
             else {
                print("over here")
                 print(error?.localizedDescription)
                 self.imageSection.isHidden = true
-                //self.topOfRideName.constant = (5.5-150)
-               // if (270 - self.totalHeightDetails) < 145 {
-              //      self.upperViewHeight.constant = CGFloat(150 + 150) //lower top bar
-              //  }
-              //  else { self.upperViewHeight.constant = (150+150) }
-
-                
+            }
             }
         }
         imageXCorr = uiImageView.frame.origin.x
@@ -408,6 +418,8 @@ class AttractionsDetailsViewController: UIViewController {
         modifyDatePicker.setDate(selectedRide.dateFirstRidden, animated: false)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
          //   self.detailsView.frame.origin.y -= 10
+            self.upperViewHeight.constant -= 165
+            self.bottomOfOverlayView.constant += 165
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
@@ -419,6 +431,8 @@ class AttractionsDetailsViewController: UIViewController {
         modifyDateView.isHidden = false
         modifyDatePicker.setDate(selectedRide.dateLastRidden, animated: false)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
+            self.upperViewHeight.constant -= 165
+            self.bottomOfOverlayView.constant += 165
             self.view.layoutIfNeeded()
         }, completion: nil)
         
@@ -452,6 +466,8 @@ class AttractionsDetailsViewController: UIViewController {
         selectedRide.dateFirstRidden = modifyDatePicker.date
             saveModifyRideDate(firstRide: true, rideID: selectedRide.rideID, RideDate: modifyDatePicker.date)
             UIView.animate(withDuration: 0.3, animations: { //Animate Here
+                self.upperViewHeight.constant += 165
+                self.bottomOfOverlayView.constant -= 165
                 self.view.layoutIfNeeded()
             }, completion: nil)
         }
@@ -463,6 +479,8 @@ class AttractionsDetailsViewController: UIViewController {
             selectedRide.dateLastRidden = modifyDatePicker.date
             saveModifyRideDate(firstRide: false, rideID: selectedRide.rideID, RideDate: modifyDatePicker.date)
             UIView.animate(withDuration: 0.3, animations: { //Animate Here
+                self.upperViewHeight.constant += 165
+                self.bottomOfOverlayView.constant -= 165
                 self.view.layoutIfNeeded()
             }, completion: nil)
         }
@@ -495,6 +513,18 @@ class AttractionsDetailsViewController: UIViewController {
             photoAuthorName.text = "courtesy Orange County Archives"
             PhotoCCText.isHidden = true
         }
+        else if selectedRide.photoCC == "" {
+            print("We dont need a copyright notice")
+            photoAuthorName.text = "by \(selectedRide.photoArtist!)"
+            copyrightType = "CC by 2.0"
+            copyrightLinkText = "https://creativecommons.org/licenses/by/2.0/"
+            PhotoCCText.isHidden = true
+        }
+        else {
+            copyrightType = selectedRide.photoCC
+            copyrightLinkText = "https://creativecommons.org/licenses/by/2.0/"
+        }
+
         let linkAttributes: [NSAttributedString.Key: Any] = [
             .link: NSURL(string: copyrightLinkText)!,
             .foregroundColor: UIColor.lightGray, .underlineColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue

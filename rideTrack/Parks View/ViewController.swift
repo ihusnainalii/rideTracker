@@ -1007,11 +1007,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             ConfigureSmallerLayout().configureParksView(parksView: self)
         }
         
-        //If iPhone X
-        if screenSize.height == 812{
-            navBarHeightConstants.constant = 80
-        }
-        
         
         //Initialize current location UI
         currentLocationView.layer.shadowOffset = CGSize.zero

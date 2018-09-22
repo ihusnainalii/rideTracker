@@ -169,8 +169,19 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
              photoAuthorNameLabel.text = "courtesy Orange County Archives"
             copyrightCenter.constant = 35
             copyrightLink.isHidden = true
-
         }
+        else if selectedRide.photoCC == "" {
+            print("We dont need a copyright notice")
+            photoAuthorNameLabel.text = "by \(selectedRide.photoArtist!)"
+            copyrightType = "CC by 2.0"
+            copyrightLinkText = "https://creativecommons.org/licenses/by/2.0/"
+            copyrightLink.isHidden = true
+        }
+        else {
+            copyrightType = selectedRide.photoCC
+            copyrightLinkText = "https://creativecommons.org/licenses/by/2.0/"
+        }
+        
         let linkAttributes: [NSAttributedString.Key: Any] = [
             .link: NSURL(string: copyrightLinkText)!,
             .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue
