@@ -36,15 +36,17 @@ class AttractionsDetailsViewController: UIViewController {
     let screenSize = UIScreen.main.bounds
 
     //contraints for new design
-    @IBOutlet weak var topOfRideName: NSLayoutConstraint!
+   // @IBOutlet weak var topOfRideName: NSLayoutConstraint!
     @IBOutlet weak var upperViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var bottomOfScrollView: NSLayoutConstraint!
+//    @IBOutlet weak var bottomOfScrollView: NSLayoutConstraint!
     var totalHeightDetails = 0.0
     @IBOutlet weak var itemsInScrollHeight: NSLayoutConstraint!
-    @IBOutlet weak var pushDownScroll: NSLayoutConstraint!
+//    @IBOutlet weak var pushDownScroll: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollWidth: NSLayoutConstraint!
     @IBOutlet weak var bottomOfOverlayView: NSLayoutConstraint!
+    @IBOutlet weak var parkPartnerView: UIView!
+    @IBOutlet weak var partnerStack: UIStackView!
     
     
     @IBOutlet weak var imageWidth: NSLayoutConstraint!
@@ -123,6 +125,7 @@ class AttractionsDetailsViewController: UIViewController {
         
         self.imageSection.isHidden = true
         
+        parkPartnerView.layer.cornerRadius = 10
         //dateModifyButton.layer.cornerRadius = 5.0
       //  userDatesView.backgroundColor = greyColor
         //userDatesView.layer.cornerRadius = 10.0
@@ -135,7 +138,10 @@ class AttractionsDetailsViewController: UIViewController {
             yearOpenLabel.text = String(selectedRide.yearOpen)
         }
         if selectedRide.active == 1 {
-            yearClosedStack.isHidden = true
+            yearCloseLabel.text = "Currently Operating"
+            yearCloseText.font.withSize(10)
+            yearCloseText.isHidden = true
+            //yearClosedStack.isHidden = true
         }
         else {
             yearCloseLabel.text = String (selectedRide.yearClosed)
@@ -261,7 +267,7 @@ class AttractionsDetailsViewController: UIViewController {
         var maxFromTop: CGFloat = 0
         print("screen size is: \(screenSize.height)")
         if screenSize.height > 700 {
-            maxFromTop = screenSize.height - 550//497
+            maxFromTop = screenSize.height - 510//497
         }
         else if screenSize.height == 568 {
             print("iphone 5 size")
@@ -271,17 +277,19 @@ class AttractionsDetailsViewController: UIViewController {
             maxFromTop = 170
         }
         //photo downloading
-        topOfRideName.constant = (5.5-150) //remove photo spot
+        //topOfRideName.constant = (5.5-150) //remove photo spot
     
         itemsInScrollHeight.constant = CGFloat((270 - totalHeightDetails)) //makes the scroller scroll the righ height based on contents
+        
         scrollWidth.constant = screenSize.width - 60
-//        if selectedRide.ridePartern == "" {
-            bottomOfScrollView.constant = 5
-//            parkPartnerView.isHidden = true
-//        }
-//        else {
-//            bottomOfScrollView.constant = 45
-//        }
+        
+        if selectedRide.ridePartern == "" {
+            partnerStack.isHidden = true
+        }
+        else {
+            partnerStack.isHidden = false
+        }
+        
         let currHeightOfScroll = CGFloat(scrollView.frame.height)
        
         
@@ -291,7 +299,10 @@ class AttractionsDetailsViewController: UIViewController {
             
             upperViewHeight.constant = CGFloat(newUpperHeight - (270 - totalHeightDetails))
         }
-        else {upperViewHeight.constant = (maxFromTop+150)}
+        else {
+            upperViewHeight.constant = (maxFromTop+150)
+            
+        }
         
 
         
@@ -340,20 +351,21 @@ class AttractionsDetailsViewController: UIViewController {
                     self.PhotoCCText.textColor = UIColor.lightGray
                     self.PhotoCCText.isScrollEnabled = false
                     self.photoLinkText.isScrollEnabled = false
-                    self.topOfRideName.constant = 5.5
+                  //  self.topOfRideName.constant = 5.5
                     self.upperViewHeight.constant = (150)
-//                    if self.selectedRide.ridePartern == "" {
-                        self.bottomOfScrollView.constant = 35
-//                        self.parkPartnerView.isHidden = true
-//                    }
-//                    else {
-//                        self.bottomOfScrollView.constant = 75
-//                    }
+                   
+                    if self.selectedRide.ridePartern == "" {
+                      //  self.bottomOfScrollView.constant = 35
+                    self.partnerStack.isHidden = true
+                    }
+                    else {
+                    self.partnerStack.isHidden = false
+                    }
                     newUpperHeight = Double(maxFromTop + currHeightOfScroll)
                     if (270 - self.totalHeightDetails) < 145 {
                         print("with image, but no scroll")
                         
-                        self.upperViewHeight.constant = CGFloat(newUpperHeight - (270 - self.totalHeightDetails)) //lower top bar
+                    self.upperViewHeight.constant = CGFloat(newUpperHeight - (270 - self.totalHeightDetails)) //lower top bar
                     }
                     else {self.upperViewHeight.constant = (maxFromTop)}
                 }
