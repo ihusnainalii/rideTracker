@@ -13,22 +13,14 @@ import Firebase
 
 class ParkSettingsViewController: UIViewController {
 
-//    @IBOutlet weak var mapView: MKMapView!
-//    @IBOutlet weak var yearOpenLabel: UILabel!
-//    @IBOutlet weak var yearClosedLabel: UILabel!
-//    @IBOutlet weak var previousNameLabel: UILabel!
+
     @IBOutlet weak var parkNameLabel: UILabel!
-//    @IBOutlet weak var parkTypeLabel: UILabel!
-//    @IBOutlet weak var yearClosedStack: UIStackView!
-//    @IBOutlet weak var previousNamesStack: UIStackView!
-//    @IBOutlet weak var yearOpenStack: UIStackView!
     @IBOutlet weak var incrementorSwitch: UISwitch!
     @IBOutlet weak var defunctSwitch: UISwitch!
     @IBOutlet weak var navBar: UIView!
     @IBOutlet weak var settingsView: UIView!
-    @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var parkNameTopConstrant: NSLayoutConstraint!
-    @IBOutlet weak var doneButtonTopConstrant: NSLayoutConstraint!
+    @IBOutlet weak var submitAttractionButton: UIButton!
     
     let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
  
@@ -50,15 +42,18 @@ class ParkSettingsViewController: UIViewController {
         let userID = Auth.auth().currentUser
         loginEmail = (userID?.email)!
         let id = userID?.uid
+        print(parksData.parkID)
+        print (id!)
+        
         self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)/\(String(parksData.parkID))")
         self.favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)/\(String(parksData.parkID))")
         configueLayout()
         incrementorSwitch.isOn = parksData.incrementorEnabled
         defunctSwitch.isOn = showDefunct
+        submitAttractionButton.layer.cornerRadius = 7
         
         if UIScreen.main.bounds.height == 812.0{
             parkNameTopConstrant.constant = 29
-            doneButtonTopConstrant.constant = 35
         }
         // Do any additional setup after loading the view.
     }
@@ -80,10 +75,7 @@ class ParkSettingsViewController: UIViewController {
         navBar.layer.shadowOpacity = 0.3
         navBar.layer.shadowOffset = CGSize.zero
         navBar.layer.shadowRadius = 5
-        
-        doneButton.backgroundColor = settingsColor
-        doneButton.layer.cornerRadius = 5
-        doneButton.titleLabel?.adjustsFontSizeToFitWidth = true
+    
         
     }
     @IBAction func didToggleIncrementorSwitch(_ sender: Any) {

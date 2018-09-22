@@ -130,6 +130,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         VisualEffectsLayer.layer.cornerRadius = 10.0
         VisualEffectsLayer.clipsToBounds = true
         
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        UINavigationBar.appearance().tintColor = UIColor.white
+        
         notificationView.layer.shadowOffset = CGSize.zero
         notificationView.layer.shadowRadius = 5
         notificationView.layer.shadowOpacity = 0.3
@@ -1063,7 +1068,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "toParkSettings"{
+        if segue.identifier == "toParkSettings"{            
             let settingsVC = segue.destination as! ParkSettingsViewController
             settingsVC.parksData = parkData
             settingsVC.favoiteParkList = favoiteParkList
@@ -1372,4 +1377,14 @@ extension AttractionsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
 }
