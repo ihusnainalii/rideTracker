@@ -118,6 +118,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         searchParksTextField.delegate = self
         
         settingsButton.isUserInteractionEnabled = false
+        
+  
 
         
         let notificationCenter = NotificationCenter.default
@@ -673,7 +675,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toAttractionsAll" || segue.identifier == "toAttractionsFavorites"{
             //Re write this to simplify calling RideTrack coreData only here, while going to Attractions view
-            let attractionVC = segue.destination as! AttractionsViewController
+            let navVC = segue.destination as? UINavigationController
+            let attractionVC = navVC?.viewControllers.first as! AttractionsViewController
+            
             print("SEGUE")
             if segueWithTableViewSelect && segue.identifier == "toAttractionsAll"{
                 let selectedIndex = (allParksTableView.indexPathForSelectedRow?.row)!
@@ -1114,5 +1118,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         return allParksIndex
     }
 
+  
+    
+    
 }
 

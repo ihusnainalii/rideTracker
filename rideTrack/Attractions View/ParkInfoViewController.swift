@@ -13,7 +13,6 @@ class ParkInfoViewController: UIViewController {
     
     @IBOutlet weak var navigationView: UIView!
     @IBOutlet weak var parkNameLabel: UILabel!
-    @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var parkTypeLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var previousNamesLabel: UILabel!
@@ -28,7 +27,6 @@ class ParkInfoViewController: UIViewController {
     @IBOutlet weak var yearClosedStack: UIStackView!
     @IBOutlet weak var statusStack: UIStackView!
     @IBOutlet weak var parkNameTopConstrant: NSLayoutConstraint!
-    @IBOutlet weak var doneButtonTopConstrant: NSLayoutConstraint!
     
     
     var parksData: ParksModel!
@@ -43,7 +41,6 @@ class ParkInfoViewController: UIViewController {
         centerMapOnLocation(location: initialLocation)
         if UIScreen.main.bounds.height == 812.0{
             parkNameTopConstrant.constant = 29
-            doneButtonTopConstrant.constant = 35
         }
         // Do any additional setup after loading the view.
     }
@@ -74,9 +71,6 @@ class ParkInfoViewController: UIViewController {
         }
         addShadowAndRoundRec(uiView: infoView)
         addShadowAndRoundRec(uiView: mapBackgroundView)
-        doneButton.backgroundColor = settingsColor
-        doneButton.layer.cornerRadius = 5
-        doneButton.titleLabel?.adjustsFontSizeToFitWidth = true
     }
     
     func centerMapOnLocation(location: CLLocation) {
