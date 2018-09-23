@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import SafariServices
 
-class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
+class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate, SFSafariViewControllerDelegate {
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet var backgroundView: UIView!
-    @IBOutlet weak var copyrightLink: UITextView!
-    @IBOutlet weak var photoLink: UITextView!
+    
+    @IBOutlet weak var ccLable: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     var attractionImage: UIImage!
     @IBOutlet weak var imageView: UIImageView!
@@ -53,17 +54,18 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
         backgroundView.backgroundColor = UIColor.white.withAlphaComponent(1)
   
         if self.selectedRide.photoLink != "" {
-            self.setUpCCLinks()
+            self.ccLable.setTitle("\(String(describing: self.selectedRide.photoCC!))", for: .normal)
+            if self.selectedRide.photoCC == "Photo courtesy Orange County Archives" {
+                self.photoAuthorNameLabel.text = "Photo courtesy Orange County Archives"
+                self.ccLable.isHidden = true
+            }
+            self.photoAuthorNameLabel.text = "by \(self.selectedRide.photoArtist!)/"
         }
         else {
             photoAuthorNameLabel.text = ""
-            photoLink.text = ""
-            copyrightLink.text = ""
+           
         }
-       photoAuthorNameLabel.textColor = UIColor.lightGray
-        photoLink.tintColor = UIColor.lightGray
-        copyrightLink.tintColor = UIColor.lightGray
-        copyrightLink.textColor = UIColor.lightGray
+     
         
         //imageView.frame = CGRect(x: screenSize.width/4, y: screenSize.height/4, width: smallWidth, height: smallHieght)
             let width = self.attractionImage.size.width
@@ -151,59 +153,33 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate {
         self.performSegue(withIdentifier: "unwindToDetails", sender: self)
     }
     
-    func setUpCCLinks() {
-        photoAuthorNameLabel.text = " by \(selectedRide.photoArtist!)/"
-        
+    @IBAction func didPressPhotoLink(_ sender: Any) {
+        let photoLinkSite = selectedRide.photoLink
+        let safariVC = SFSafariViewController(url: NSURL(string: photoLinkSite!)! as URL)
+        safariVC.delegate = self
+        self.present(safariVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func didPressCCLink(_ sender: Any) {
         if selectedRide.photoCC == "CC 2.0"{
-            copyrightType = "CC by 2.0"
             copyrightLinkText = "https://creativecommons.org/licenses/by/2.0/"
         }
         else if selectedRide.photoCC == "CC 2.0 by SA" {
-            copyrightType = "CC by 2.0 by SA"
             copyrightLinkText = "https://creativecommons.org/licenses/by-sa/2.0/"
-            copyrightCenter.constant = -30
         }
         else if selectedRide.photoCC == "Photo courtesy Orange County Archives" {
-            copyrightType = "Photo courtesy Orange County Archives"
             copyrightLinkText = "http://www.ocarchives.com"
-             photoAuthorNameLabel.text = "courtesy Orange County Archives"
-            copyrightCenter.constant = 35
-            copyrightLink.isHidden = true
         }
         else if selectedRide.photoCC == "" {
             print("We dont need a copyright notice")
-            photoAuthorNameLabel.text = "by \(selectedRide.photoArtist!)"
-            copyrightType = "CC by 2.0"
             copyrightLinkText = "https://creativecommons.org/licenses/by/2.0/"
-            copyrightLink.isHidden = true
         }
         else {
-            copyrightType = selectedRide.photoCC
             copyrightLinkText = "https://creativecommons.org/licenses/by/2.0/"
         }
-        
-        let linkAttributes: [NSAttributedString.Key: Any] = [
-            .link: NSURL(string: copyrightLinkText)!,
-            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue
-        ]
-        let attributedString = NSMutableAttributedString(string: copyrightType)
-        attributedString.setAttributes(linkAttributes, range: NSMakeRange(0, 6))
-        copyrightLink.isEditable = false
-        copyrightLink.attributedText = attributedString
-        copyrightLink.font = .systemFont(ofSize: 14)
-        
-        let photoLinkSite = selectedRide.photoLink
-        
-        let linkAttributes2: [NSAttributedString.Key: Any] = [
-            .link: NSURL(string: photoLinkSite!)!,
-            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue
-        ]
-        let attributedString2 = NSMutableAttributedString(string: "Photo")
-        attributedString2.setAttributes(linkAttributes2, range: NSMakeRange(0, 5))
-        photoLink.isEditable = false
-        photoLink.attributedText = attributedString2
-        photoLink.font = .systemFont(ofSize: 14)
-        photoLink.textAlignment = .right
+        let safariVC = SFSafariViewController(url: NSURL(string: copyrightLinkText)! as URL)
+        safariVC.delegate = self
+        self.present(safariVC, animated: true, completion: nil)
     }
     /*
     // MARK: - Navigation

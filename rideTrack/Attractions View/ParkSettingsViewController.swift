@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import CoreData
 import Firebase
+import SafariServices
 
 class ParkSettingsViewController: UIViewController {
 
@@ -39,6 +40,9 @@ class ParkSettingsViewController: UIViewController {
             guard let user = user else { return }
             self.user = User(authData: user)
         }
+        
+        
+       
         let userID = Auth.auth().currentUser
         loginEmail = (userID?.email)!
         let id = userID?.uid
@@ -61,6 +65,9 @@ class ParkSettingsViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        dismiss(animated: true)
     }
     
     func configueLayout(){
@@ -138,7 +145,6 @@ class ParkSettingsViewController: UIViewController {
             suggestVC.parkID = parksData.parkID
             suggestVC.loginEmail = loginEmail
         }
-        
     }
     
 

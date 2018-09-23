@@ -10,8 +10,9 @@ import UIKit
 import CoreData
 import Firebase
 import FirebaseStorage
+import SafariServices
 
-class AttractionsDetailsViewController: UIViewController {
+class AttractionsDetailsViewController: UIViewController, SFSafariViewControllerDelegate {
    
     var rememberPasscode = UserDefaults.standard.integer(forKey: "rememberPasscode")
     var typeString = ""
@@ -32,28 +33,28 @@ class AttractionsDetailsViewController: UIViewController {
     var userEmail = ""
     var copyrightType = ""
     var copyrightLinkText = ""
-    
+    var insets = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
+
+    @IBOutlet weak var ccTypeButton: UIButton!
     let screenSize = UIScreen.main.bounds
 
     //contraints for new design
-   // @IBOutlet weak var topOfRideName: NSLayoutConstraint!
     @IBOutlet weak var upperViewHeight: NSLayoutConstraint!
-//    @IBOutlet weak var bottomOfScrollView: NSLayoutConstraint!
     var totalHeightDetails = 0.0
     @IBOutlet weak var itemsInScrollHeight: NSLayoutConstraint!
-//    @IBOutlet weak var pushDownScroll: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollWidth: NSLayoutConstraint!
     @IBOutlet weak var bottomOfOverlayView: NSLayoutConstraint!
     @IBOutlet weak var parkPartnerView: UIView!
     @IBOutlet weak var partnerStack: UIStackView!
+    @IBOutlet weak var greyLine: UIView!
     
     
     @IBOutlet weak var imageWidth: NSLayoutConstraint!
     @IBOutlet weak var imageHeight: NSLayoutConstraint!
     @IBOutlet weak var imageSection: UIView!
     @IBOutlet weak var uiImageView: UIImageView!
-    @IBOutlet weak var inspectorButton: UIButton!
+    @IBOutlet weak var modifyAttractionButton: UIButton!
     
     @IBOutlet weak var CCView: UIView!
     @IBOutlet weak var manufacturerStack: UIStackView!
@@ -90,9 +91,7 @@ class AttractionsDetailsViewController: UIViewController {
     @IBOutlet weak var lengthView: UIStackView!
     @IBOutlet weak var durationView: UIStackView!
     
-    @IBOutlet weak var photoLinkText: UITextView!
     @IBOutlet weak var photoAuthorName: UILabel!
-    @IBOutlet weak var PhotoCCText: UITextView!
     
     
   //  @IBOutlet weak var userDatesView: UIView!
@@ -103,7 +102,6 @@ class AttractionsDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         Auth.auth().addStateDidChangeListener { auth, user in
             guard let user = user else { return }
             self.user = User(authData: user)
@@ -119,12 +117,18 @@ class AttractionsDetailsViewController: UIViewController {
         
         modifyDatePicker.maximumDate = Date()
         scoreCardButton.isHidden = true
-        scoreCardButton.backgroundColor = greyColor
-        scoreCardButton.layer.cornerRadius = 6.0
+        scoreCardButton.layer.shadowOffset = CGSize.zero
+        scoreCardButton.layer.shadowRadius = 5
+        scoreCardButton.layer.shadowOpacity = 0.3
+        modifyAttractionButton.layer.shadowOffset = CGSize.zero
+        modifyAttractionButton.layer.shadowRadius = 5
+        modifyAttractionButton.layer.shadowOpacity = 0.3
+        
         CCView.isHidden = true
         
         self.imageSection.isHidden = true
-        
+    //    scrollView.contentInset = insets
+
         parkPartnerView.layer.cornerRadius = 10
         //dateModifyButton.layer.cornerRadius = 5.0
       //  userDatesView.backgroundColor = greyColor
@@ -265,6 +269,12 @@ class AttractionsDetailsViewController: UIViewController {
         attractiontype.text = typeString
         
         var maxFromTop: CGFloat = 0
+        
+        let textSize = CGSize(width: CGFloat(rideNameLabel.frame.size.width), height: CGFloat(MAXFLOAT)) //sees how many lines the ride name is to make the view the right height
+        let rHeight: Int = lroundf(Float(rideNameLabel.sizeThatFits(textSize).height))
+        let charSize: Int = lroundf(Float(rideNameLabel.font.pointSize))
+        let numLines = rHeight / charSize
+        
         print("screen size is: \(screenSize.height)")
         if screenSize.height > 700 {
             maxFromTop = screenSize.height - 510//497
@@ -274,17 +284,20 @@ class AttractionsDetailsViewController: UIViewController {
             maxFromTop = 80
         }
         else {
-            maxFromTop = 170
+            maxFromTop = 170 //200
         }
         //photo downloading
-        //topOfRideName.constant = (5.5-150) //remove photo spot
     
         itemsInScrollHeight.constant = CGFloat((270 - totalHeightDetails)) //makes the scroller scroll the righ height based on contents
         
         scrollWidth.constant = screenSize.width - 60
-        
+        if numLines != 1 {
+        maxFromTop -= CGFloat(charSize)
+        }
         if selectedRide.ridePartern == "" {
             partnerStack.isHidden = true
+            maxFromTop += 30
+            print("mac from top is: \(maxFromTop)")
         }
         else {
             partnerStack.isHidden = false
@@ -314,9 +327,14 @@ class AttractionsDetailsViewController: UIViewController {
             if error == nil {
                 print("image found")
                 if self.selectedRide.photoLink != "" {
-                    self.setUpCCLinks()
                     self.CCView.isHidden = false
                     self.imageSection.isHidden = false
+                    self.ccTypeButton.setTitle("\(String(describing: self.selectedRide.photoCC!))", for: .normal)
+                    if self.selectedRide.photoCC == "Photo courtesy Orange County Archives" {
+                        self.photoAuthorName.text = "Photo courtesy Orange County Archives"
+                        self.ccTypeButton.isHidden = true
+                    }
+                    self.photoAuthorName.text = "by \(self.selectedRide.photoArtist!)/"
                 }
                 else if self.selectedRide.photoArtist == "Self"{
                     self.CCView.isHidden = true
@@ -330,7 +348,6 @@ class AttractionsDetailsViewController: UIViewController {
                 }
                 if showImage {
                     self.uiImageView.layer.cornerRadius = 30
-                    //self.uiImageView.layer.cornerRadius = self.uiImageView.frame.size.height/2
                     self.uiImageView.layer.masksToBounds = true
                     self.uiImageView.layer.borderWidth = 0
                     //let Croppedimage = self.cropToSquare(image: UIImage(data: data!)!)
@@ -343,24 +360,22 @@ class AttractionsDetailsViewController: UIViewController {
                         self.imageHeight.constant = 150
                     self.uiImageView.image = UIImage(data: data!) //UIImage(data: data!)
 
-                    self.PhotoCCText.isEditable = false
-                    self.photoLinkText.isEditable = false
-                    self.PhotoCCText.tintColor = UIColor.lightGray
-                    self.photoLinkText.tintColor = UIColor.lightGray
-                    self.photoAuthorName.tintColor = UIColor.lightGray
-                    self.PhotoCCText.textColor = UIColor.lightGray
-                    self.PhotoCCText.isScrollEnabled = false
-                    self.photoLinkText.isScrollEnabled = false
-                  //  self.topOfRideName.constant = 5.5
+        
                     self.upperViewHeight.constant = (150)
-                   
+                   if (270 - self.totalHeightDetails) < 145 && self.screenSize.height != 568{
+                        maxFromTop += 30
+                    }
+                   else if self.screenSize.height != 568 {
+                        maxFromTop -= 30
+                    }
                     if self.selectedRide.ridePartern == "" {
-                      //  self.bottomOfScrollView.constant = 35
-                    self.partnerStack.isHidden = true
+                        self.partnerStack.isHidden = true
+                        //maxFromTop += 30
                     }
                     else {
                     self.partnerStack.isHidden = false
                     }
+                   
                     newUpperHeight = Double(maxFromTop + currHeightOfScroll)
                     if (270 - self.totalHeightDetails) < 145 {
                         print("with image, but no scroll")
@@ -375,6 +390,9 @@ class AttractionsDetailsViewController: UIViewController {
                 self.imageSection.isHidden = true
             }
             }
+        }
+        if 270 - totalHeightDetails == 0 {
+            greyLine.isHidden = true
         }
         imageXCorr = uiImageView.frame.origin.x
         imageYCorr = uiImageView.frame.origin.y
@@ -507,60 +525,38 @@ class AttractionsDetailsViewController: UIViewController {
         
     }
     
-    func setUpCCLinks() {
-        print("in cc links")
-        photoAuthorName.text = "by \(selectedRide.photoArtist!)/"
-        
+    
+    @IBAction func didPressPhotoLink(_ sender: Any) {
+        let photoLinkSite = selectedRide.photoLink
+        let safariVC = SFSafariViewController(url: NSURL(string: photoLinkSite!)! as URL)
+        safariVC.delegate = self
+        self.present(safariVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func didPressCCLink(_ sender: Any) {
         if selectedRide.photoCC == "CC 2.0"{
-            copyrightType = "CC by 2.0"
             copyrightLinkText = "https://creativecommons.org/licenses/by/2.0/"
         }
         else if selectedRide.photoCC == "CC 2.0 by SA" {
-            copyrightType = "CC by 2.0 by SA"
             copyrightLinkText = "https://creativecommons.org/licenses/by-sa/2.0/"
         }
         else if selectedRide.photoCC == "Photo courtesy Orange County Archives" {
-            copyrightType = "Photo courtesy Orange County Archives"
             copyrightLinkText = "http://www.ocarchives.com"
-            photoAuthorName.text = "courtesy Orange County Archives"
-            PhotoCCText.isHidden = true
         }
         else if selectedRide.photoCC == "" {
             print("We dont need a copyright notice")
-            photoAuthorName.text = "by \(selectedRide.photoArtist!)"
-            copyrightType = "CC by 2.0"
             copyrightLinkText = "https://creativecommons.org/licenses/by/2.0/"
-            PhotoCCText.isHidden = true
         }
         else {
-            copyrightType = selectedRide.photoCC
             copyrightLinkText = "https://creativecommons.org/licenses/by/2.0/"
         }
-
-        let linkAttributes: [NSAttributedString.Key: Any] = [
-            .link: NSURL(string: copyrightLinkText)!,
-            .foregroundColor: UIColor.lightGray, .underlineColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue
-
-        ]
-        let attributedString = NSMutableAttributedString(string: copyrightType)
-        attributedString.setAttributes(linkAttributes, range: NSMakeRange(0, 6))
-        PhotoCCText.isEditable = false
-        PhotoCCText.attributedText = attributedString
-        PhotoCCText.font = .systemFont(ofSize: 12)
-        
-        let photoLinkSite = selectedRide.photoLink
-        
-        let linkAttributes2: [NSAttributedString.Key: Any] = [
-            .link: NSURL(string: photoLinkSite!)!,
-            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue
-        ]
-        let attributedString2 = NSMutableAttributedString(string: "Photo")
-        attributedString2.setAttributes(linkAttributes2, range: NSMakeRange(0, 5))
-        photoLinkText.isEditable = false
-        photoLinkText.attributedText = attributedString2
-        photoLinkText.font = .systemFont(ofSize: 12)
-        photoLinkText.textAlignment = .right
-        print("at bottem of CC funcion")
+        let safariVC = SFSafariViewController(url: NSURL(string: copyrightLinkText)! as URL)
+        safariVC.delegate = self
+        self.present(safariVC, animated: true, completion: nil)
+    }
+    
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        controller.dismiss(animated: true, completion: nil)
     }
     
     func saveModifyRideDate(firstRide: Bool, rideID: Int, RideDate: Date){
