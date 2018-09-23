@@ -21,7 +21,6 @@
 		5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */; };
 		5F2EEC4F210510150036B47A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4E210510150036B47A /* SignUpViewController.swift */; };
 		5F44F7152132FB50006E6005 /* ParkInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F44F7142132FB50006E6005 /* ParkInfoViewController.swift */; };
-		5F52AB362156D36400783E23 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F52AB352156D36400783E23 /* GoogleService-Info.plist */; };
 		5F636B5D2138B1A100D2B922 /* StatsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B5C2138B1A100D2B922 /* StatsContainerViewController.swift */; };
 		5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F636B5E2139C09500D2B922 /* StatsStoryboard.storyboard */; };
 		5F636B612139CD9B00D2B922 /* OverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B602139CD9B00D2B922 /* OverViewController.swift */; };
@@ -53,6 +52,7 @@
 		9845395720BC8D8C00C0E36C /* AttractionsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */; };
 		987028F420B7897E00DC3B73 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987028F320B7897E00DC3B73 /* SettingsViewController.swift */; };
 		987CCCB9212E081D00D11825 /* fullScreenPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987CCCB8212E081D00D11825 /* fullScreenPhotoViewController.swift */; };
+		98A6A55121069FE700102620 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 98A6A55021069FE700102620 /* GoogleService-Info.plist */; };
 		98A9A8552109207E00B3C36E /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A9A8542109207E00B3C36E /* FilterTableViewCell.swift */; };
 		98A9A857210A28E600B3C36E /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A9A856210A28E600B3C36E /* FilterViewController.swift */; };
 		98AD7F3620A91A2D00540AB3 /* rideTrackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F3520A91A2D00540AB3 /* rideTrackTests.swift */; };
@@ -110,7 +110,6 @@
 		5F2EEC4E210510150036B47A /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		5F2EEC53210512E70036B47A /* rideTrack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = rideTrack.entitlements; sourceTree = "<group>"; };
 		5F44F7142132FB50006E6005 /* ParkInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkInfoViewController.swift; sourceTree = "<group>"; };
-		5F52AB352156D36400783E23 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5F636B5C2138B1A100D2B922 /* StatsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsContainerViewController.swift; sourceTree = "<group>"; };
 		5F636B5E2139C09500D2B922 /* StatsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = StatsStoryboard.storyboard; sourceTree = "<group>"; };
 		5F636B602139CD9B00D2B922 /* OverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverViewController.swift; sourceTree = "<group>"; };
@@ -142,6 +141,7 @@
 		9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionsDetailsViewController.swift; sourceTree = "<group>"; };
 		987028F320B7897E00DC3B73 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		987CCCB8212E081D00D11825 /* fullScreenPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fullScreenPhotoViewController.swift; sourceTree = "<group>"; };
+		98A6A55021069FE700102620 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		98A9A8542109207E00B3C36E /* FilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
 		98A9A856210A28E600B3C36E /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		98AD7F1A20A91A2B00540AB3 /* rideTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rideTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -355,9 +355,9 @@
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
-				5F52AB352156D36400783E23 /* GoogleService-Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
+				98A6A55021069FE700102620 /* GoogleService-Info.plist */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
 				98AD7F6E20A91A5C00540AB3 /* Info.plist */,
 				5FE9F80F20DB45030012B98C /* Media.xcassets */,
@@ -526,8 +526,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FF1ECB020B5271800BE1609 /* LaunchScreen.storyboard in Resources */,
+				98A6A55121069FE700102620 /* GoogleService-Info.plist in Resources */,
 				5FE9F81020DB45030012B98C /* Media.xcassets in Resources */,
-				5F52AB362156D36400783E23 /* GoogleService-Info.plist in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
 			);
@@ -865,7 +865,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = rideTrack/rideTrack.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Y48L6965QA;
+				DEVELOPMENT_TEAM = 28L3G462YX;
 				INFOPLIST_FILE = rideTrack/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -875,7 +875,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.parksman.LogRide;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -886,7 +886,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = rideTrack/rideTrack.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Y48L6965QA;
+				DEVELOPMENT_TEAM = 28L3G462YX;
 				INFOPLIST_FILE = rideTrack/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -896,7 +896,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.parksman.LogRide;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
