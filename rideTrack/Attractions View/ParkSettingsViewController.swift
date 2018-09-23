@@ -29,6 +29,7 @@ class ParkSettingsViewController: UIViewController {
     var favoiteParkList = [ParksList]()
     var showDefunct = false
     var loginEmail = ""
+    var attractionViewController: AttractionsViewController!
     
     var parksListRef: DatabaseReference!
     var favoriteListRef: DatabaseReference!
@@ -145,6 +146,10 @@ class ParkSettingsViewController: UIViewController {
             suggestVC.parkID = parksData.parkID
             suggestVC.loginEmail = loginEmail
         }
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        print("back")
+        attractionViewController.updateViewFromSettings(parkDetailVC: self)
     }
     
 

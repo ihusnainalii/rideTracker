@@ -75,11 +75,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var selectedAttractionsList: [NSManagedObject] = []
     var totalExtinctCount = 0
     var isfiltering = false
-    //let appGreen = UIColor(red: 29.0/255.0, green: 127.0/255.0, blue: 70.0/255.0, alpha: 1.0)
+    //let appGreen = UIColor(red: 68.0/255.0, green: 146.0/255.0, blue: 63.0/255.0, alpha: 1.0)
     let darkGreen = UIColor(red: 40/255.0, green: 119/255.0, blue: 72/255.0, alpha: 1.0)
-    let appGreen = UIColor(red: 68.0/255.0, green: 146.0/255.0, blue: 63.0/255.0, alpha: 1.0)
+    let appGreen = UIColor(red: 98.0/255.0, green: 213.0/255.0, blue: 88.0/255.0, alpha: 1.0)
     let goldBar = UIColor(red: 250/255.0, green: 204/255.0, blue: 73/255.0, alpha: 1.0)
-    let lightGreyBar = UIColor(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1.0)
+//    let lightGreyBar = UIColor(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1.0)
+    let lightGreyBar = UIColor(red: 223.0/255.0, green: 223.0/255.0, blue: 223.0/255.0, alpha: 1.0)
     var userAttractions: [NSManagedObject] = []
     var userNumExtinct = 0
     var userRidesRidden = 0
@@ -123,7 +124,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
         progressBar.progressTintColor = appGreen
         progressBar.trackTintColor = lightGreyBar
-        progressBar.transform = progressBar.transform.scaledBy(x: 1, y: 5)
+        progressBar.transform = progressBar.transform.scaledBy(x: 1, y: 10)
         
         rectangleView.backgroundColor = UIColor.clear
         rectangleView.clipsToBounds = true
@@ -387,7 +388,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             extinctLabel.isHidden = true
         }
         
-        rideCountLabel.isHidden  = false
+        //rideCountLabel.isHidden  = false
         NumCompleteLabel.isHidden = false
         
         
@@ -1073,6 +1074,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             settingsVC.parksData = parkData
             settingsVC.favoiteParkList = favoiteParkList
             settingsVC.showDefunct = showExtinct
+            settingsVC.attractionViewController = self
         }
         
         if segue.identifier == "toParkInfo"{
@@ -1180,7 +1182,7 @@ print ("selected Index is \(selectedIndex!)")
         self.RidesComplete = String(userCount)
         self.RidesComplete += "/"
         self.RidesComplete += String(totNum)
-        self.NumCompleteLabel.text = self.RidesComplete
+        self.NumCompleteLabel.text = "Progress: \(self.RidesComplete)"
         parkData.totalRides = totNum
         parkData.ridesRidden = userCount
         let percentage = Float(userCount)/Float(totNum)
@@ -1247,18 +1249,20 @@ print ("selected Index is \(selectedIndex!)")
            searchController.searchBar.becomeFirstResponder()
         }
         if sender.source is ParkSettingsViewController{
-            let parkDetailsVC = sender.source as! ParkSettingsViewController
-            showExtinct = parkDetailsVC.showDefunct
-            print("SHOW EXTINCT: \(showExtinct)")
-            attractionListForTable.removeAll()
-            userAttractionDatabase.removeAll()
-            updateAttraction()
-            attractionsTableView.reloadData()
+            
         }
         UIView.animate(withDuration: 0.3, animations: ({
             self.darkenLayer.backgroundColor = UIColor.clear
             self.view.layoutIfNeeded()
         }))
+    }
+    
+    func updateViewFromSettings(parkDetailVC: ParkSettingsViewController){
+        showExtinct = parkDetailVC.showDefunct
+        attractionListForTable.removeAll()
+        userAttractionDatabase.removeAll()
+        updateAttraction()
+        attractionsTableView.reloadData()
     }
     
     @IBAction func unwindfromdetails(_ sender: UIStoryboardSegue) {
