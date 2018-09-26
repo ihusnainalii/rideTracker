@@ -19,7 +19,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var attractionsTableView: UITableView!
     @IBOutlet weak var parkLabel: UILabel!
     @IBOutlet weak var NumCompleteLabel: UILabel!
-    @IBOutlet weak var extinctLabel: UILabel!
     @IBOutlet weak var extinctText: UITextField!
     @IBOutlet weak var rectangleView: UIView!
     @IBOutlet weak var suggestButton: UIButton!
@@ -377,15 +376,13 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         if showExtinct || userNumExtinct >= 1 {
             extinctText.isHidden = false
-            extinctLabel.isHidden = false
             extinctComplete = String (userNumExtinct)
             // extinctComplete += "/"
             //extinctComplete += String (totalNumExtinct)
-            extinctText.text = extinctComplete
+            extinctText.text = "Defunct \(extinctComplete)"
         }
         else{
             extinctText.isHidden = true
-            extinctLabel.isHidden = true
         }
         
         //rideCountLabel.isHidden  = false
@@ -621,7 +618,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         var index = -1
         print(ignore.count)
         for i in 0..<ignore.count{
-            print("Ignore ID: \(ignore[i].rideID)")
+            //print("Ignore ID: \(ignore[i].rideID)")
             if ignore[i].rideID == rideID{
                 index = i
             }
@@ -936,7 +933,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.extinctComplete = String (self.userNumExtinct)
         // self.extinctComplete += "/"
         // self.extinctComplete += String (self.totalNumExtinct)
-        self.extinctText.text = self.extinctComplete
+        self.extinctText.text = "Defunct: \(self.extinctComplete)"
         
         if CurrtableViewList[indexPath.row].hasScoreCard == 1{
             self.addScoreToCard(selectedRide: CurrtableViewList[indexPath.row])
@@ -996,7 +993,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.extinctComplete = String (self.userNumExtinct)
         //  self.extinctComplete += "/"
         //  self.extinctComplete += String (self.totalNumExtinct)
-        self.extinctText.text = self.extinctComplete
+        self.extinctText.text = "Defunct: \(self.extinctComplete)"
         
         
         //Update tableview cell
