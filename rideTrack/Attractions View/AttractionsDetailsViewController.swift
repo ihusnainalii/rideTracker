@@ -277,14 +277,14 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
         
         print("screen size is: \(screenSize.height)")
         if screenSize.height > 700 {
-            maxFromTop = screenSize.height - 510//497
+            maxFromTop = screenSize.height - 540//540//497
         }
         else if screenSize.height == 568 {
             print("iphone 5 size")
             maxFromTop = 80
         }
         else {
-            maxFromTop = 170 //200
+            maxFromTop = 190//170 //200
         }
         //photo downloading
     
@@ -292,7 +292,8 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
         
         scrollWidth.constant = screenSize.width - 60
         if numLines != 1 {
-        maxFromTop -= CGFloat(charSize)
+        maxFromTop -= CGFloat(numLines*20) //15 -=
+            print("two lines")
         }
         if selectedRide.ridePartern == "" {
             partnerStack.isHidden = true
@@ -335,6 +336,8 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
                         self.ccTypeButton.isHidden = true
                     }
                     self.photoAuthorName.text = "by \(self.selectedRide.photoArtist!)/"
+                    maxFromTop -= 25
+
                 }
                 else if self.selectedRide.photoArtist == "Self"{
                     self.CCView.isHidden = true
@@ -361,7 +364,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
                     self.uiImageView.image = UIImage(data: data!) //UIImage(data: data!)
 
         
-                    self.upperViewHeight.constant = (150)
+                  //  self.upperViewHeight.constant = (150)
                    if (270 - self.totalHeightDetails) < 145 && self.screenSize.height != 568{
                         maxFromTop += 30
                     }
@@ -700,5 +703,20 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
     }
     @IBAction func unwindToAttractionsView(sender: UIStoryboardSegue) {
         print("Back to attractions view down here")
+    }
+}
+extension UIView {
+    @IBInspectable var ignoresInvertColors: Bool {
+        get {
+            if #available(iOS 11.0, *) {
+                return accessibilityIgnoresInvertColors
+            }
+            return false
+        }
+        set {
+            if #available(iOS 11.0, *) {
+                accessibilityIgnoresInvertColors = newValue
+            }
+        }
     }
 }

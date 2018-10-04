@@ -202,6 +202,9 @@
                                             <constraint firstAttribute="width" constant="40" id="k8y-VB-bRo"/>
                                         </constraints>
                                         <state key="normal" title="Settings" image="Settings"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="yIe-5s-JbS" kind="show" identifier="toSettings" id="OH9-eW-QZx"/>
                                         </connections>
@@ -213,6 +216,9 @@
                                             <constraint firstAttribute="height" constant="40" id="ceB-CC-vb5"/>
                                         </constraints>
                                         <state key="normal" image="Profile"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BzP-aD-VQn">
                                         <rect key="frame" x="224" y="3" width="40" height="40"/>
@@ -223,6 +229,9 @@
                                         <state key="normal" image="Stats icon">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="yUm-Fr-wRw" kind="show" identifier="toStats" id="8y0-1X-Ybe"/>
                                         </connections>
@@ -294,6 +303,9 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="69" height="32"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <color key="backgroundColor" red="0.36470588235294116" green="0.69803921568627447" blue="0.34509803921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <userDefinedRuntimeAttributes>
+                                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                                                            </userDefinedRuntimeAttributes>
                                                                         </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20/20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="zhZ-Ao-su9">
                                                                             <rect key="frame" x="9" y="4" width="57" height="24"/>
@@ -447,6 +459,9 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="69" height="32"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <color key="backgroundColor" red="0.36470588240000001" green="0.69803921570000005" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <userDefinedRuntimeAttributes>
+                                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                                                            </userDefinedRuntimeAttributes>
                                                                         </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20/20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qsm-nd-AEq">
                                                                             <rect key="frame" x="9" y="4" width="57" height="24"/>
@@ -617,6 +632,9 @@
                                     <constraint firstAttribute="width" secondItem="0nb-Xl-qwe" secondAttribute="height" multiplier="1:1" id="SJi-EO-QJu"/>
                                 </constraints>
                                 <state key="normal" image="Plus button"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="0zg-md-OYR" kind="presentation" identifier="toSearch" modalPresentationStyle="overCurrentContext" id="6B6-jh-Y6W"/>
                                 </connections>
@@ -2191,6 +2209,9 @@
                                                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="rKa-vC-Lf2">
                                                             <rect key="frame" x="0.0" y="86" width="375" height="2"/>
                                                             <color key="tintColor" red="0.12941176470588237" green="0.51372549019607838" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                                            </userDefinedRuntimeAttributes>
                                                         </progressView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="uVR-cf-Ne8">
                                                             <rect key="frame" x="5" y="36" width="365" height="35"/>
@@ -2218,6 +2239,9 @@
                                                                 <constraint firstAttribute="width" constant="33" id="9eG-c7-K3D"/>
                                                             </constraints>
                                                             <state key="normal" image="Info-green"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                                            </userDefinedRuntimeAttributes>
                                                             <connections>
                                                                 <segue destination="wrA-NJ-RiO" kind="show" identifier="toParkInfo" id="DZd-xR-Aud"/>
                                                             </connections>
@@ -2234,6 +2258,9 @@
                                                             <state key="normal" image="Green settings">
                                                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                                            </userDefinedRuntimeAttributes>
                                                             <connections>
                                                                 <segue destination="jMr-JT-Io1" kind="show" identifier="toParkSettings" id="Rej-L2-CJ3"/>
                                                             </connections>
@@ -2333,6 +2360,9 @@
                                                                             <constraint firstItem="W6n-KF-xiC" firstAttribute="top" secondItem="rvz-C6-4do" secondAttribute="top" constant="1" id="lT9-VX-f4z"/>
                                                                             <constraint firstItem="W6n-KF-xiC" firstAttribute="leading" secondItem="rvz-C6-4do" secondAttribute="leading" constant="3" id="raV-bg-iKm"/>
                                                                         </constraints>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                                                        </userDefinedRuntimeAttributes>
                                                                     </view>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="jZi-L2-hpH">
                                                                         <rect key="frame" x="5" y="5" width="299.5" height="43.5"/>
@@ -2467,6 +2497,9 @@
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" notEnabled="YES"/>
                                 </accessibility>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2643,6 +2676,9 @@
                                     <constraint firstItem="EgR-o0-Zs1" firstAttribute="top" secondItem="oMb-EE-yoQ" secondAttribute="top" constant="22" id="s5O-D6-9cN"/>
                                     <constraint firstItem="WP7-PA-P4g" firstAttribute="leading" secondItem="oMb-EE-yoQ" secondAttribute="leading" constant="8" id="uBt-dk-rg5"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EUd-gu-LDZ">
                                 <rect key="frame" x="10" y="101.5" width="355" height="168"/>
@@ -2829,6 +2865,9 @@
                                                                         </constraints>
                                                                         <color key="tintColor" red="0.97227032229999999" green="0.97920274169999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <state key="normal" title="Done" image="white down bar"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                                                        </userDefinedRuntimeAttributes>
                                                                         <connections>
                                                                             <action selector="pressDownBar:" destination="S7M-68-41E" eventType="touchUpInside" id="xBE-AU-b2j"/>
                                                                             <segue destination="091-aH-31t" kind="unwind" identifier="unwindToAttractions" unwindAction="unwindToAttractionsViewWithSender:" id="Bi7-Or-A18"/>
@@ -2851,6 +2890,9 @@
                                                                             <constraint firstAttribute="height" constant="150" id="HCI-b9-Bcc"/>
                                                                             <constraint firstAttribute="width" constant="225" id="zQ3-3h-jW9"/>
                                                                         </constraints>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                                                        </userDefinedRuntimeAttributes>
                                                                     </imageView>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2876,6 +2918,9 @@
                                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="27"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                                                        </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PVW-Lb-52F">
                                                                         <rect key="frame" x="325" y="0.0" width="30" height="40"/>
@@ -2895,6 +2940,9 @@
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="3" id="bEw-2g-Ebk"/>
                                                                         </constraints>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                                                        </userDefinedRuntimeAttributes>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ojK-1v-ooQ">
                                                                         <rect key="frame" x="30" y="13.5" width="75.5" height="3"/>
@@ -2902,12 +2950,18 @@
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="3" id="7xV-hl-6kC"/>
                                                                         </constraints>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                                                        </userDefinedRuntimeAttributes>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attraction Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1EU-ak-yLu">
                                                                         <rect key="frame" x="115.5" y="4.5" width="124" height="21.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                                                        </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2933,6 +2987,9 @@
                                                     <constraint firstAttribute="bottom" secondItem="QXh-RD-O2t" secondAttribute="bottom" id="jGB-ad-Exe"/>
                                                     <constraint firstItem="QXh-RD-O2t" firstAttribute="top" secondItem="o1Z-3q-PCg" secondAttribute="top" id="sTp-1s-Hzf"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                             </view>
                                             <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Hmx-j4-tLe" userLabel="Open/close">
                                                 <rect key="frame" x="0.0" y="256" width="355" height="50"/>
@@ -3275,6 +3332,9 @@
                                                             <constraint firstItem="yCt-DG-Xdy" firstAttribute="top" secondItem="e8X-h0-gTg" secondAttribute="top" constant="2" id="mv5-gQ-8nT"/>
                                                             <constraint firstAttribute="height" constant="45" id="uRs-Ai-S7x"/>
                                                         </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aON-qR-FeH">
                                                         <rect key="frame" x="300" y="0.0" width="55" height="45"/>
@@ -3353,6 +3413,9 @@
                                             <constraint firstAttribute="height" constant="42" id="wW2-77-Y4t"/>
                                         </constraints>
                                         <state key="normal" image="Modify Button"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="kVq-ZJ-GQe" kind="showDetail" identifier="toModify" id="Ofj-na-YUR"/>
                                         </connections>
@@ -3367,6 +3430,9 @@
                                         <state key="normal" title="ScoreCard" image="ScoreCard button">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="Veb-fS-54h" kind="showDetail" identifier="toScoreCard" id="8WK-OK-gkO"/>
                                         </connections>
@@ -3536,6 +3602,9 @@
                                             <constraint firstAttribute="height" constant="297" id="O9O-Fa-F6b"/>
                                             <constraint firstAttribute="width" constant="375" id="ey9-75-ZdR"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
                                     </imageView>
                                 </subviews>
                                 <constraints>
@@ -3847,7 +3916,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sEI-ZF-tgK">
                                                         <rect key="frame" x="314" y="0.0" width="53" height="40"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="51" id="g96-YN-ROZ"/>
                                                         </constraints>
@@ -4405,6 +4474,9 @@
                                     <constraint firstItem="skT-OL-Eo9" firstAttribute="leading" secondItem="SFY-J8-D7u" secondAttribute="leading" constant="8" id="jib-mC-IJJ"/>
                                     <constraint firstAttribute="trailing" secondItem="JM4-J7-IFW" secondAttribute="trailing" constant="8" id="mWI-xu-856"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U0i-W5-vSf" userLabel="High Score View">
                                 <rect key="frame" x="7" y="110.5" width="361" height="59.5"/>
@@ -4706,6 +4778,9 @@
                                                                 <constraint firstAttribute="width" constant="30" id="APi-ZM-DiN"/>
                                                                 <constraint firstAttribute="height" constant="30" id="qrX-ao-YvQ"/>
                                                             </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
+                                                            </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                     </subviews>
                                                     <constraints>
@@ -4978,7 +5053,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xlP-dU-yK2">
                                                         <rect key="frame" x="313" y="0.0" width="53" height="40"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="51" id="5Am-qo-zcp"/>
                                                         </constraints>
@@ -5319,7 +5394,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cqy-Bu-k9b">
                                                         <rect key="frame" x="313" y="0.0" width="53" height="40"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="51" id="u1R-fs-ufb"/>
                                                         </constraints>
