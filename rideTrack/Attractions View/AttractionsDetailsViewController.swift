@@ -281,7 +281,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
         }
         else if screenSize.height == 568 {
             print("iphone 5 size")
-            maxFromTop = 80
+            maxFromTop = 100 //80
         }
         else {
             maxFromTop = 190//170 //200

@@ -53,7 +53,6 @@ class ConfigureSmallerLayout{
     
     func attractionsViewLayout(attractionsView: AttractionsViewController){
         attractionsView.parkLabel.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
-        attractionsView.rideCountLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         attractionsView.NumCompleteLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         attractionsView.extinctText.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         attractionsView.suggestButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)

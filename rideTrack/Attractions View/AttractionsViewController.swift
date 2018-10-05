@@ -24,7 +24,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var suggestButton: UIButton!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var VisualEffectsLayer: UIVisualEffectView!
-    @IBOutlet weak var rideCountLabel: UILabel!
     @IBOutlet weak var emptyParkInstructionsLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var darkenLayer: UIView!
@@ -91,6 +90,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var totalNumExtinct = 0
     var hasHaptic = 0
     var filteredAttractions = [AttractionsModel]()
+    var userRef: DatabaseReference!
+
     
     var attractionListRef: DatabaseReference!
     var parksListRef: DatabaseReference!
@@ -190,14 +191,40 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         let userID = Auth.auth().currentUser
         id = (userID?.uid)!
         loginEmail = (userID?.email)!
-        userNameRef = Database.database().reference(withPath:"users/details/\(id)/userName")
+        userNameRef = Database.database().reference(withPath:"users/details/\(id)/userName") ///userName
         attractionListRef = Database.database().reference(withPath: "attractions-list/\(id)/\(parkData.parkID!)")
         parksListRef = Database.database().reference(withPath: "all-parks-list/\(id)/\(String(parkData.parkID))")
         favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id)/\(String(parkData.parkID))")
         ignoreListRef = Database.database().reference(withPath: "ignore-list/\(id)/\(String(parkData.parkID))")
 
+        
         userNameRef.observe(.value, with: { snapshot in
-            self.userName = (snapshot.value as! String)
+            if snapshot.exists(){ //hasChild("testJustin"){
+                self.userName = (snapshot.value as! String)
+                print("Has username")
+            }
+            else {
+                self.userName = ""
+                let alertController = UIAlertController(title: "Please enter a user name", message: "When you created an account for LogRide, we did not ask for a username. For future features, we will require all uses to create a username.", preferredStyle: .alert)
+                alertController.addTextField { textField in
+                    textField.placeholder = "userName"
+                }
+                let confirmAction = UIAlertAction(title: "Enter", style: .default) { [weak alertController] _ in
+                    guard let alertController = alertController, let textField = alertController.textFields?.first else { return }
+                    self.userName = String(describing: textField.text!)
+                    let userID = Auth.auth().currentUser
+                    let id = userID?.uid
+                    self.userRef = Database.database().reference(withPath: "users/details")
+                    let newUser = UserName(userName: self.userName, userID: id!)
+                    let newUserRef = self.userRef.child(id!)
+                    newUserRef.setValue(newUser.toAnyObject())
+                    //compare the current password and do action here
+                }
+                alertController.addAction(confirmAction)
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                self.present(alertController, animated: true, completion: nil)
+            }
         })
         print("user name is \(userName)")
         

@@ -3522,11 +3522,6 @@
                             <constraint firstItem="cJr-Oe-NCN" firstAttribute="trailing" secondItem="QL7-61-DhJ" secondAttribute="trailing" id="oLP-CG-Aop"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cJr-Oe-NCN"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="KpE-N1-tqN"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="CCView" destination="aHX-0E-RQI" id="CBv-Yz-bi2"/>
