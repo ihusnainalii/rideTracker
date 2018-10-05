@@ -39,6 +39,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     @IBOutlet weak var statsButton: UIButton!
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var centerLogoWidthConstrant: NSLayoutConstraint!
     
     
     @IBOutlet weak var navBarHeightConstants: NSLayoutConstraint!
@@ -1060,8 +1061,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         let gradient = CAGradientLayer()
         gradient.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
-        let lightGreen = UIColor(red: 38.0/255.0, green: 214.0/255.0, blue: 32.0/255.0, alpha: 1.0).cgColor
-        let darkGreen = UIColor(red: 47.0/255.0, green: 104.0/255.0, blue: 40.0/255.0, alpha: 1.0).cgColor
+        let lightGreen = UIColor(red: 63.0/255.0, green: 180.0/255.0, blue: 61.0/255.0, alpha: 1.0).cgColor
+        let darkGreen = UIColor(red: 32.0/255.0, green: 104.0/255.0, blue: 41.0/255.0, alpha: 1.0).cgColor
         gradient.colors = [lightGreen, darkGreen]
         gradient.startPoint = CGPoint(x: 1, y: 0)
         gradient.endPoint = CGPoint(x: 0, y: 1)

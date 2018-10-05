@@ -49,6 +49,7 @@ class ConfigureSmallerLayout{
         parksView.currentLocationParkNameLabel.font = UIFont.systemFont(ofSize: 19, weight: .semibold)
         parksView.currentLocationLabel.font = UIFont.systemFont(ofSize: 12, weight: .light)
         parksView.viewAttractionLocationButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        parksView.centerLogoWidthConstrant.constant = 60
     }
     
     func attractionsViewLayout(attractionsView: AttractionsViewController){
