@@ -52,7 +52,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
     var minutes = 0
     var seconds = 0
     var durationInSeconds = 0
-    var loginEmail = ""
+    var userID = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -305,7 +305,10 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         
         var urlPath = ""
         if isAdmin == 1{
-        urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction(NEW).php?id=\(selectedAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)" //uploads to main list
+            var modifiedBy = ""
+            modifiedBy = selectedAttraction.modifyBy!
+
+        urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(selectedAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&modifyBy=\(modifiedBy)" //uploads to main list
         print (urlPath)
             
             var changes = "MODIFY: "
@@ -359,7 +362,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
                 changes += " length is \(lengthField.text!)"
             }
             
-            let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(loginEmail)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
+            let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(userID)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
             print(urlPath3)
             let dataModel = DataModel()
             dataModel.delegate = self
@@ -370,8 +373,9 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         else {
             let tempNotes = notesView.text.replacingOccurrences(of: " ", with: "_")
             let notes = String (tempNotes.filter { !" \n".contains($0) })
+            
             let alert = UIAlertController(title: "Suggest Modifications to Attraction", message: "Are you sure you want to suggest these modifications to \(rideName!)?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {action in                 urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice(NEW).php?parknum=\(parkID)&ride=\(tempName)&open=\(yearOpen)&close=\(yearClosed)&type=\(self.rideType)&park=\(self.selectedAttraction.rideID!)&active=\(active)&manufacturer=\(tempMan)&notes=\(notes)&modify=1&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&email=\(self.loginEmail)" //removed park Name and reaplaced with rideID
+            alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {action in                 urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice.php?parknum=\(parkID)&ride=\(tempName)&open=\(yearOpen)&close=\(yearClosed)&type=\(self.rideType)&park=\(self.parkName)&rideID=\(self.selectedAttraction.rideID!)&active=\(active)&manufacturer=\(tempMan)&notes=\(notes)&modify=1&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&email=\(self.userID)" //removed park Namer and reaplaced with rideID
                 print(urlPath)
                 let dataModel = DataModel()
                 dataModel.delegate = self

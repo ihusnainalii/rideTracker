@@ -30,7 +30,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
     var includeHiddenView = false
     let greyColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
     var isfiltering = false
-    var userEmail = ""
+    var userID = ""
     var copyrightType = ""
     var copyrightLinkText = ""
     var insets = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
@@ -295,7 +295,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
         maxFromTop -= CGFloat(numLines*20) //15 -=
             print("two lines")
         }
-        if selectedRide.ridePartern == "" {
+        if selectedRide.ridePartner == "" {
             partnerStack.isHidden = true
             maxFromTop += 30
             print("mac from top is: \(maxFromTop)")
@@ -371,7 +371,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
                    else if self.screenSize.height != 568 {
                         maxFromTop -= 30
                     }
-                    if self.selectedRide.ridePartern == "" {
+                    if self.selectedRide.ridePartner == "" {
                         self.partnerStack.isHidden = true
                         //maxFromTop += 30
                     }
@@ -673,7 +673,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
             let newVC = segue.destination as! ModifyAttractionDetailsViewController
             newVC.selectedAttraction = selectedRide
             newVC.parkName = titleName
-            newVC.loginEmail = userEmail
+            newVC.userID = userID
             print("Seguaing now: ride name is ", selectedRide.name!)
             
         }

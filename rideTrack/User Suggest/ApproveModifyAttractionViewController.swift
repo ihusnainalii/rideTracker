@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, DataModelProtocol {
+class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, DataModelProtocol {
     
 
     @IBOutlet weak var scrollView: UIScrollView!
@@ -56,6 +56,7 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
     @IBOutlet weak var lengthField: UITextField!
     @IBOutlet weak var speedField: UITextField!
     @IBOutlet weak var durationField: UITextField!
+    @IBOutlet weak var parkNameLabel: UILabel!
     
     @IBOutlet weak var topScrollWidth: NSLayoutConstraint!
     @IBOutlet weak var scrollWidth: NSLayoutConstraint!
@@ -115,7 +116,7 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         originalLength.text = String(originalAttraction.length)
         originalSpeed.text = String(originalAttraction.speed)
         originalDuration.text = String(originalAttraction.duration)
-        
+        parkNameLabel.text = suggestedAttraction.parkName
         self.rideTypeSwitch.delegate = self
         self.rideTypeSwitch.dataSource = self
         
@@ -302,7 +303,22 @@ class ModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UI
         }
         let tempName = rideName!.replacingOccurrences(of: "&", with: "!A?")
         let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
-        let urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction(NEW).php?id=\(originalAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationField.text!)"  //uploads to main list
+        var modifiedBy = ""
+        if originalAttraction.modifyBy! == "" {
+            modifiedBy = userName
+            print("first adder")
+        }
+        else if originalAttraction.modifyBy.contains(userName){
+            modifiedBy = originalAttraction.modifyBy!
+            print("repeat adder")
+        }
+        else {
+        modifiedBy = "\(originalAttraction.modifyBy!), \(userName)"
+        }
+        print("changed by: \(modifiedBy)")
+        
+        
+        let urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(originalAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationField.text!)&modifyBy=\(modifiedBy)"  //uploads to main list
         print (urlPath)
         let changes = getChangedDetails()
         let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(userName)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log

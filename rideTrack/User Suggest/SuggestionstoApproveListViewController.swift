@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ApproveSuggestedAttractionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataModelProtocol {
+class SuggestionstoApproveListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataModelProtocol {
     
     //var feedItems: NSArray = NSArray()
     var listOfSuggestions = [ApproveSuggestAttracionModel]()

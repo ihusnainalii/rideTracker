@@ -112,7 +112,8 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.photoArtist = jsonElement["photoArtist"] as! String
                 attraction.photoLink = jsonElement["photoLink"] as! String
                 attraction.photoCC = jsonElement["CCType"] as! String
-                attraction.ridePartern = jsonElement["attractionLink"] as! String
+                attraction.ridePartner = jsonElement["attractionLink"] as! String
+                attraction.modifyBy = jsonElement["modifyBy"] as! String
                 dataBaseData.add(attraction)
             }
             if dataBase == "Suggest" {
@@ -125,6 +126,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 tempName = tempName.replacingOccurrences(of: "_", with: " ")
                 attraction.rideName = tempName.replacingOccurrences(of: "!A?", with: "&")
                 attraction.YearOpen = Int (jsonElement["YearOpen"] as! String)
+                attraction.rideID = Int(jsonElement["rideID"] as! String)
                 attraction.YearClose = Int (jsonElement["YearClose"] as! String)
                 attraction.type = Int (jsonElement["Type"] as! String)
                 attraction.parkName = jsonElement["Park"] as? String
@@ -142,7 +144,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.speed = Int(jsonElement["maxSpeed"] as! String)
                 attraction.length = Int(jsonElement["length"] as! String)
                 attraction.duration = Int(jsonElement["attractionDuration"] as! String)
-                attraction.userEmail = jsonElement["userEmail"] as? String
+                attraction.userName = jsonElement["userEmail"] as? String
                 dataBaseData.add(attraction)
                 print ("Ride name is: ", attraction.rideName!)
             }

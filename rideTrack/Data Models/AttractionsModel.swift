@@ -34,14 +34,15 @@ class AttractionsModel: NSObject {
     var photoArtist: String!
     var photoLink: String!
     var photoCC: String!
-    var ridePartern: String!
+    var modifyBy: String!
+    var ridePartner: String!
      
     
     override init() {
         
     }
     
-    init(name: String, rideID: Int, parkID: Int, rideType: Int, yearOpen: Int, yearClosed: Int, active: Int, isCheck: Bool, isFavorite: Bool, isIgnored: Bool, numberOfTimesRidden: Int, dateFirstRidden: Date, dateLastRidden: Date, scoreCard: Int, manufacturer: String, previousNames: String, model: String, height: Int, speed: Int, length: Int, duration: Int, photoArtist: String, photoLink: String, photoCC: String, ridePartern: String) {
+    init(name: String, rideID: Int, parkID: Int, rideType: Int, yearOpen: Int, yearClosed: Int, active: Int, isCheck: Bool, isFavorite: Bool, isIgnored: Bool, numberOfTimesRidden: Int, dateFirstRidden: Date, dateLastRidden: Date, scoreCard: Int, manufacturer: String, previousNames: String, model: String, height: Int, speed: Int, length: Int, duration: Int, photoArtist: String, photoLink: String, photoCC: String,modifyBy: String, ridePartner: String) {
         self.name = name
         self.rideID = rideID
         self.parkID = parkID
@@ -66,7 +67,8 @@ class AttractionsModel: NSObject {
         self.photoArtist = photoArtist
         self.photoLink = photoLink
         self.photoCC = photoCC
-        self.ridePartern = ridePartern
+        self.modifyBy = modifyBy
+        self.ridePartner = ridePartner
     
     }
     

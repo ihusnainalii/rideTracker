@@ -20,7 +20,8 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     var modifyAttraction: AttractionsModel = AttractionsModel()
     var listOfAttractionsAtPark = [AttractionsModel]()
     let deleteColor = UIColor(red: 206/255.0, green: 59/255.0, blue: 63/255.0, alpha: 1.0)
-    
+    var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
+
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     
@@ -79,7 +80,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         lengthTextField.text = String(selectedAttraction.length)
         speedTextField.text = String(selectedAttraction.speed)
         durrationTextField.text = String( selectedAttraction.duration)
-        emailLabel.text = selectedAttraction.userEmail
+        emailLabel.text = selectedAttraction.userName
         formerNameTextField.text = selectedAttraction.formerNames
         if selectedAttraction.active == 1 {
             extinctSwitch.isOn = false
@@ -116,9 +117,9 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         listOfAttractionsAtPark.sort { ($0.active, $1.name) > ($1.active, $0.name) }
         exisitingAttractionsTableView.reloadData()
         
-        if selectedAttraction.modify == 1 && Int(selectedAttraction.parkName) != nil {
+        if selectedAttraction.modify == 1 && Int(selectedAttraction.rideID) != nil {
             for i in 0..<listOfAttractionsAtPark.count {
-                if listOfAttractionsAtPark[i].rideID == Int(selectedAttraction.parkName)!{
+                if listOfAttractionsAtPark[i].rideID == Int(selectedAttraction.rideID){
                     self.modifyAttraction = self.listOfAttractionsAtPark[i]
                     self.performSegue(withIdentifier: "toModifyVC", sender: self)
                 }
@@ -240,11 +241,12 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         }
         let tempName = rideName!.replacingOccurrences(of: "&", with: "!A?")
         let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
-        let urlPath = "http://www.beingpositioned.com/theparksman/uploadToAttractionDB(NEW).php?name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameTextField.text!)&model=\(self.modelTextField.text!)&height=\(self.heightTextField.text!)&maxSpeed=\(self.speedTextField.text!)&length=\(self.lengthTextField.text!)&duration=\(self.durrationTextField.text!)" //uploads to main list
+        
+        let urlPath = "http://www.beingpositioned.com/theparksman/uploadToAttractionDB.php?name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameTextField.text!)&model=\(self.modelTextField.text!)&height=\(self.heightTextField.text!)&maxSpeed=\(self.speedTextField.text!)&length=\(self.lengthTextField.text!)&duration=\(self.durrationTextField.text!)&userID=\(selectedAttraction.userName!)" //uploads to main list
         
         
         let changes = "NEW RIDE: \(rideName!) at \(parkNameLabel.text!) opened in \(yearOpen) and is type \(rideType)"
-        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(selectedAttraction.userEmail!)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
+        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(selectedAttraction.userName!)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
         print (urlPath)
         let dataModel = DataModel()
         dataModel.delegate = self
@@ -264,7 +266,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(selectedAttraction.id!)"
         print (urlPath)
         let changes = "NEW RIDE: \(nameTextField.text!) at \(parkNameLabel.text!) opened in \(openTextField.text!) and is type \(rideType)"
-        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(selectedAttraction.userEmail)&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log
+        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(selectedAttraction.userName)&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log
 
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
@@ -318,7 +320,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toModifyVC"{
-            let modifyVC = segue.destination as! ModifyAttractionViewController
+            let modifyVC = segue.destination as! ApproveModifyAttractionViewController
             modifyVC.suggestedAttraction = selectedAttraction
             modifyVC.originalAttraction = modifyAttraction
             modifyVC.parkNameText = selectedAttraction.parkName!

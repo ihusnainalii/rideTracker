@@ -96,8 +96,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var parksListRef: DatabaseReference!
     var favoriteListRef: DatabaseReference!
     var scoreCardRef: DatabaseReference!
+    var userNameRef: DatabaseReference!
     var user: User!
     var loginEmail = ""
+    var userName = ""
+    var id = ""
     var typeFilter = ["ALL"]
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -185,13 +188,19 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.user = User(authData: user)
         }
         let userID = Auth.auth().currentUser
-        let id = userID?.uid
+        id = (userID?.uid)!
         loginEmail = (userID?.email)!
-        attractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkData.parkID!)")
-        parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)/\(String(parkData.parkID))")
-        favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)/\(String(parkData.parkID))")
-        ignoreListRef = Database.database().reference(withPath: "ignore-list/\(id!)/\(String(parkData.parkID))")
+        userNameRef = Database.database().reference(withPath:"users/details/\(id)/userName")
+        attractionListRef = Database.database().reference(withPath: "attractions-list/\(id)/\(parkData.parkID!)")
+        parksListRef = Database.database().reference(withPath: "all-parks-list/\(id)/\(String(parkData.parkID))")
+        favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id)/\(String(parkData.parkID))")
+        ignoreListRef = Database.database().reference(withPath: "ignore-list/\(id)/\(String(parkData.parkID))")
 
+        userNameRef.observe(.value, with: { snapshot in
+            self.userName = (snapshot.value as! String)
+        })
+        print("user name is \(userName)")
+        
         
         attractionListRef.observe(.value, with: { snapshot in
             var newAttractions: [AttractionList] = []
@@ -1072,6 +1081,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             settingsVC.favoiteParkList = favoiteParkList
             settingsVC.showDefunct = showExtinct
             settingsVC.attractionViewController = self
+            settingsVC.userName = userName
         }
         
         if segue.identifier == "toParkInfo"{
@@ -1116,7 +1126,7 @@ print ("selected Index is \(selectedIndex!)")
             detailsVC.titleName = titleName
             detailsVC.favoiteParkList = favoiteParkList
             detailsVC.isfiltering = isfiltering
-            detailsVC.userEmail = loginEmail
+            detailsVC.userID = userName
             UIView.animate(withDuration: 0.3, animations: ({
                 self.darkenLayer.backgroundColor = UIColor.black.withAlphaComponent(0.4)
                 self.view.layoutIfNeeded()
@@ -1130,7 +1140,6 @@ print ("selected Index is \(selectedIndex!)")
             parkVC.unwindFromAttractions(parkID: parkID)
         }
     
-        
     }
     
     func addScoreToCard(selectedRide: AttractionsModel){

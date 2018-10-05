@@ -20,7 +20,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     var durationInSeconds = 0
     var seconds = 0
     var minutes = 0
-    var loginEmail = ""
+    var userName = ""
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var typeDiscription: UITextView!
     
@@ -285,7 +285,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 let tempName = ride!.replacingOccurrences(of: "&", with: "!A?")
                 let tempMan = manufacturer!.replacingOccurrences(of: "&", with: "!A?")
                 
-                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice(NEW).php?parknum=\(parknum)&ride=\(tempName)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(tempMan)&notes=\(notes)&modify=0&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&email=\(self.loginEmail)"
+                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice(NEW).php?parknum=\(parknum)&ride=\(tempName)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(tempMan)&notes=\(notes)&modify=0&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&email=\(self.userName)"
 
                 print (urlPath)
                 Active = 1
