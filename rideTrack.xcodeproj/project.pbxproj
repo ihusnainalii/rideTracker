@@ -69,6 +69,7 @@
 		98C28A9B20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9A20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift */; };
 		98C28A9D20EBD90900C7229E /* ApproveSuggestAttracionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9C20EBD90900C7229E /* ApproveSuggestAttracionModel.swift */; };
 		98C28A9F20EBE9CE00C7229E /* SuggestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9E20EBE9CE00C7229E /* SuggestTableViewCell.swift */; };
+		98F17C65216AABFB0009BE91 /* SuggestParkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F17C64216AABFB0009BE91 /* SuggestParkViewController.swift */; };
 		98F24F5120EFE35200A42C7E /* SuggestDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F24F5020EFE35200A42C7E /* SuggestDetailsViewController.swift */; };
 		B0FA1522D4FC83CB07B24B1A /* Pods_rideTrack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB608ACB379A8CD3D52D2DC7 /* Pods_rideTrack.framework */; };
 		E6B156FD8C7DB575E3EB5626 /* Pods_rideTrackTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFAC9EC2AA55F3F6961EFE58 /* Pods_rideTrackTests.framework */; };
@@ -164,6 +165,7 @@
 		98C28A9A20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionstoApproveListViewController.swift; sourceTree = "<group>"; };
 		98C28A9C20EBD90900C7229E /* ApproveSuggestAttracionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveSuggestAttracionModel.swift; sourceTree = "<group>"; };
 		98C28A9E20EBE9CE00C7229E /* SuggestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestTableViewCell.swift; sourceTree = "<group>"; };
+		98F17C64216AABFB0009BE91 /* SuggestParkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestParkViewController.swift; sourceTree = "<group>"; };
 		98F24F5020EFE35200A42C7E /* SuggestDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDetailsViewController.swift; sourceTree = "<group>"; };
 		B21792B8823F950BD12EAEF7 /* Pods-rideTrackUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrackUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrackUITests/Pods-rideTrackUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B5146A36BD64CE2A349D869A /* Pods-rideTrackUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrackUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrackUITests/Pods-rideTrackUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -301,11 +303,9 @@
 			isa = PBXGroup;
 			children = (
 				98AD7F6620A91A5A00540AB3 /* SuggestRideViewController.swift */,
-				98C28A9C20EBD90900C7229E /* ApproveSuggestAttracionModel.swift */,
-				98C28A9A20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift */,
 				98F24F5020EFE35200A42C7E /* SuggestDetailsViewController.swift */,
-				98C28A9E20EBE9CE00C7229E /* SuggestTableViewCell.swift */,
-				982E097520F54957007F2D02 /* ApproveModifyAttractionViewController.swift */,
+				98F17C63216AAA9A0009BE91 /* ApproveAttractions */,
+				98F17C64216AABFB0009BE91 /* SuggestParkViewController.swift */,
 			);
 			path = "User Suggest";
 			sourceTree = "<group>";
@@ -381,6 +381,17 @@
 				98AD7F4220A91A2D00540AB3 /* Info.plist */,
 			);
 			path = rideTrackUITests;
+			sourceTree = "<group>";
+		};
+		98F17C63216AAA9A0009BE91 /* ApproveAttractions */ = {
+			isa = PBXGroup;
+			children = (
+				98C28A9C20EBD90900C7229E /* ApproveSuggestAttracionModel.swift */,
+				98C28A9A20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift */,
+				98C28A9E20EBE9CE00C7229E /* SuggestTableViewCell.swift */,
+				982E097520F54957007F2D02 /* ApproveModifyAttractionViewController.swift */,
+			);
+			path = ApproveAttractions;
 			sourceTree = "<group>";
 		};
 		B0A494DD90BA7FF0A2372A03 /* Frameworks */ = {
@@ -684,6 +695,7 @@
 				5FE9F81320DCA43C0012B98C /* ParksCoreData.swift in Sources */,
 				98A9A857210A28E600B3C36E /* FilterViewController.swift in Sources */,
 				5F0AEB0C2110B43F0019D607 /* ExpandParksViews.swift in Sources */,
+				98F17C65216AABFB0009BE91 /* SuggestParkViewController.swift in Sources */,
 				98F24F5120EFE35200A42C7E /* SuggestDetailsViewController.swift in Sources */,
 				5F202C5B20E6E8AF00FFE408 /* NeverClearView.swift in Sources */,
 				5F16C52520BCE89200E525EF /* SearchTableViewCell.swift in Sources */,

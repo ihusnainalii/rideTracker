@@ -1309,6 +1309,7 @@ print ("selected Index is \(selectedIndex!)")
 
     
     @IBAction func panGestureReconizer(_ sender: UIPanGestureRecognizer) {
+        print("Pressed")
         let touchPoint = (sender as AnyObject).location(in: self.view?.window)
         
         if (sender as AnyObject).state == UIGestureRecognizer.State.began{

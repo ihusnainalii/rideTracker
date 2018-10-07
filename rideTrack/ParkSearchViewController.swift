@@ -66,7 +66,6 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
    
     @IBAction func didUpdateText(_ sender: Any) {
         searchedParksList.removeAll()
-        
         var searchedString = searchTextFeild.text!.replacingOccurrences(of: "’", with: "'", options: .literal, range: nil)
         print(searchedString)
         if searchedString.last == " "{
@@ -131,6 +130,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         cell.parkLocationLabel.text = "\(item.city!), \(item.country!)"
         return cell
     }
+    
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
