@@ -775,6 +775,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             locationManager.requestLocation()
             print("GETTING GPS DATA")
         }
+        if segue.source is SuggestParkViewController{
+             self.darkenBackground.alpha =  0
+            print("Back from suggest park")
+        }
         else if let sourceViewController = segue.source as? ParkSearchViewController, let newPark = sourceViewController.selectedPark{
             addNewParkToList(newPark: newPark, newCheckin: false)
             print("unwinding")

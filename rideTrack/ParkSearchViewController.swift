@@ -17,7 +17,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
     var parksVC: ViewController!
     var savedParks = [ParksList]()
-
+    var SuggestPark = ParksModel()
 
     //A list of parks searched for, to display in results table
     var searchedParksList: [ParksModel]!
@@ -31,6 +31,9 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        SuggestPark.name = "Park Not Found"
+        SuggestPark.city = "To add it to our database"
+        SuggestPark.country = "please suggest it here"
         blurBackgroundView.layer.cornerRadius = 10
         parkArray.sort { $0.name < $1.name }
         searchTextFeild.becomeFirstResponder()
@@ -66,6 +69,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
    
     @IBAction func didUpdateText(_ sender: Any) {
         searchedParksList.removeAll()
+        
         var searchedString = searchTextFeild.text!.replacingOccurrences(of: "’", with: "'", options: .literal, range: nil)
         print(searchedString)
         if searchedString.last == " "{
@@ -93,6 +97,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
                 firstEntry = false
             }
         }
+        searchedParksList.append(SuggestPark) //add option to suggest park at bottom
         self.resultsTableView.reloadData()
     }
     
@@ -113,6 +118,16 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         return searchedParksList.count
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let parkName = searchedParksList![indexPath.row].name!
+        if parkName != "Park Not Found" {
+            print("run unwind at \(parkName)")
+            self.performSegue(withIdentifier: "addNewParkToList", sender: self)
+        }
+        else {
+            self.performSegue(withIdentifier: "suggestPark", sender: self)
+        }
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchedParkCell", for: indexPath) as! SearchTableViewCell
         let item: ParksModel = searchedParksList[indexPath.row]
@@ -137,8 +152,10 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         super.prepare(for: segue, sender: sender)
         
         if (segue.identifier == "addNewParkToList") {
+            print("here")
             if let indexPath = resultsTableView.indexPathForSelectedRow {
                 selectedPark = (searchedParksList[indexPath.row] )
+                print("Adding \(selectedPark?.name!)")
             }
             searchTextFeild.resignFirstResponder()
         }
