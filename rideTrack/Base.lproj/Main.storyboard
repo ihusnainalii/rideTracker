@@ -2788,7 +2788,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ww5-cA-KWO">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="97"/>
                                                     <subviews>
-                                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="rKa-vC-Lf2">
+                                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rKa-vC-Lf2">
                                                             <rect key="frame" x="0.0" y="86" width="375" height="2"/>
                                                             <color key="tintColor" red="0.12941176470588237" green="0.51372549019607838" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <userDefinedRuntimeAttributes>
