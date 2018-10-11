@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, DataModelProtocol {
     
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var parkNameField: UITextField!
@@ -31,11 +31,20 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
 
     var parkTypeData: [String] = [String]()
     var selectedType = ""
+    
+    var parkName = ""
+    var type = ""
+    var city = ""
+    var country = ""
+    var defunct = 0
+    var oldName = ""
+    var seasonal = 0
+    var URLtext = ""
     override func viewDidLoad() {
         super.viewDidLoad()
 
         scrollWidth.constant = screenSize.width
-        parkTypeData = ["","Theme Park", "Amusment Park","Zoo", "Kiddie Park", "Family Entertainment Center"]
+        parkTypeData = ["","Theme Park", "Amusment Park","Zoo", "Kiddie Park", "Family Entertainment Center, Resort & Casino"]
         parkNameField.delegate = self
         typePicker.delegate = self
         typePicker.dataSource = self
@@ -53,6 +62,45 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //hide keyboard when tapping the anywhere else
 
+    }
+    
+    
+    @IBAction func pressedSubmit(_ sender: Any) {
+        parkName = parkNameField.text!
+        let open = openField.text!
+        let closed = closedField.text!
+        city = cityField.text!
+        country = countryField.text!
+        oldName = previousNamesField.text!
+        let lat = latitudeField.text!
+        let long = longitudeField.text!
+        URLtext = websiteField.text!
+        if defuntSwitch.isOn { defunct = 1 }
+        else {defunct = 0}
+        if seasonalSwitch.isOn {seasonal = 1}
+        else {seasonal = 0}
+        let dataModel = DataModel()
+        
+        let alertController = UIAlertController(title: "Suggest Park", message: "Are you sure you want suggest \(parkName)?", preferredStyle: .alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
+            let urlPath = "http://www.beingpositioned.com/theparksman/suggestParkUploadtoApprove.php?name=\(self.parkName)&type=\(self.type)&city=\(self.city)&count=\(self.country)&lat=\(lat)&long=\(long)&open=\(open)&closed=\(closed)&defunct=\(self.defunct)&prevName=\(self.oldName)&seasonal=\(self.seasonal)&website=\(self.URLtext)"
+            print (urlPath)
+            dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+                let ThankAlertController = UIAlertController(title: "Thank You", message: "Thank you for your submission. We will review it and add it to the database.", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default) { (action) -> Void in
+               // self.performSegue(withIdentifier: "unwindToDetailsView", sender: self)
+                }
+                ThankAlertController.addAction(action)
+            self.present(ThankAlertController, animated: true, completion:nil)
+        }
+        alertController.addAction(OKAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
+            print("Cancel button tapped");
+        }
+        alertController.addAction(cancelAction)
+        // Present Dialog message
+        self.present(alertController, animated: true, completion:nil)
     }
     
     @IBAction func defunctSwitch(_ sender: Any) {
@@ -90,8 +138,12 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedType = parkTypeData[row]
+        type = parkTypeData[row]
         typeButton.setTitle(parkTypeData[row], for: .normal)
         typeButton.setTitleColor(.black, for: .normal)
+        if type != "" && parkNameField.text != "" && countryField.text != "" && cityField.text != "" {
+            submitButton.isEnabled = true
+        }
     }
 
 //set up textfields
@@ -105,5 +157,11 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
         self.view.endEditing(true)
         return true
     }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if type != "" && parkNameField.text != "" && countryField.text != "" && cityField.text != "" {
+            submitButton.isEnabled = true
+        }
+    }
+func itemsDownloaded(items: NSArray, returnPath: String) {}
     
 }
