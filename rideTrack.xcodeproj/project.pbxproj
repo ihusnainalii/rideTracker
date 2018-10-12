@@ -30,6 +30,11 @@
 		5F636B6B213C60AD00D2B922 /* TopLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B6A213C60AD00D2B922 /* TopLists.swift */; };
 		5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */; };
 		5F8E5CB7213E1D6300C80FB1 /* UserName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8E5CB6213E1D6300C80FB1 /* UserName.swift */; };
+		5F964AE0217153A400989DB4 /* UserCreatedLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F964ADF217153A400989DB4 /* UserCreatedLists.swift */; };
+		5F964AE52171549200989DB4 /* AllListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F964AE42171549200989DB4 /* AllListsViewController.swift */; };
+		5F964AE7217155C000989DB4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F964AE6217155BF00989DB4 /* GoogleService-Info.plist */; };
+		5F964AE9217158CE00989DB4 /* UserCreatedLists.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F964AE8217158CE00989DB4 /* UserCreatedLists.storyboard */; };
+		5F964AEB2171597400989DB4 /* AllListsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F964AEA2171597400989DB4 /* AllListsTableViewCell.swift */; };
 		5FD613DD210A2B90008D4122 /* IgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DC210A2B90008D4122 /* IgnoreList.swift */; };
 		5FD613DF210A356F008D4122 /* ScoreCardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DE210A356F008D4122 /* ScoreCardList.swift */; };
 		5FE9F81020DB45030012B98C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FE9F80F20DB45030012B98C /* Media.xcassets */; };
@@ -124,6 +129,11 @@
 		5F636B6A213C60AD00D2B922 /* TopLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLists.swift; sourceTree = "<group>"; };
 		5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSmallerLayout.swift; sourceTree = "<group>"; };
 		5F8E5CB6213E1D6300C80FB1 /* UserName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserName.swift; sourceTree = "<group>"; };
+		5F964ADF217153A400989DB4 /* UserCreatedLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCreatedLists.swift; sourceTree = "<group>"; };
+		5F964AE42171549200989DB4 /* AllListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListsViewController.swift; sourceTree = "<group>"; };
+		5F964AE6217155BF00989DB4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5F964AE8217158CE00989DB4 /* UserCreatedLists.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UserCreatedLists.storyboard; sourceTree = "<group>"; };
+		5F964AEA2171597400989DB4 /* AllListsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListsTableViewCell.swift; sourceTree = "<group>"; };
 		5FD613DC210A2B90008D4122 /* IgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreList.swift; sourceTree = "<group>"; };
 		5FD613DE210A356F008D4122 /* ScoreCardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardList.swift; sourceTree = "<group>"; };
 		5FE9F80F20DB45030012B98C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -268,6 +278,16 @@
 			path = "Login view";
 			sourceTree = "<group>";
 		};
+		5F964AE32171546500989DB4 /* User Created Lists */ = {
+			isa = PBXGroup;
+			children = (
+				5F964AE42171549200989DB4 /* AllListsViewController.swift */,
+				5F964AEA2171597400989DB4 /* AllListsTableViewCell.swift */,
+				5F964AE8217158CE00989DB4 /* UserCreatedLists.storyboard */,
+			);
+			path = "User Created Lists";
+			sourceTree = "<group>";
+		};
 		5FE9F81120DCA3E10012B98C /* Parks View */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +322,7 @@
 				5FD613DE210A356F008D4122 /* ScoreCardList.swift */,
 				5F088963212487BC0065BBF1 /* Stats.swift */,
 				5F8E5CB6213E1D6300C80FB1 /* UserName.swift */,
+				5F964ADF217153A400989DB4 /* UserCreatedLists.swift */,
 			);
 			name = "Firebase Models";
 			path = "New Group";
@@ -373,10 +394,12 @@
 				982F068C20EBC2FA00B08474 /* User Suggest */,
 				5F2EEC502105101B0036B47A /* Login view */,
 				5F08896021237B560065BBF1 /* Stats and settings */,
+				5F964AE32171546500989DB4 /* User Created Lists */,
 				98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */,
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
+				5F964AE6217155BF00989DB4 /* GoogleService-Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
@@ -559,9 +582,11 @@
 			files = (
 				5FF1ECB020B5271800BE1609 /* LaunchScreen.storyboard in Resources */,
 				5FE9F81020DB45030012B98C /* Media.xcassets in Resources */,
+				5F964AE9217158CE00989DB4 /* UserCreatedLists.storyboard in Resources */,
 				988A1A352170E885004CF3A8 /* ApproveSuggestions.storyboard in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
+				5F964AE7217155C000989DB4 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -681,6 +706,8 @@
 				98A9A8552109207E00B3C36E /* FilterTableViewCell.swift in Sources */,
 				988A1A3B2170F036004CF3A8 /* approveSuggParksModel.swift in Sources */,
 				987028F420B7897E00DC3B73 /* SettingsViewController.swift in Sources */,
+				5F964AEB2171597400989DB4 /* AllListsTableViewCell.swift in Sources */,
+				5F964AE0217153A400989DB4 /* UserCreatedLists.swift in Sources */,
 				982E097620F54957007F2D02 /* ApproveModifyAttractionViewController.swift in Sources */,
 				5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */,
 				5FE9F81720DDCF040012B98C /* AllParksTableViewCell.swift in Sources */,
@@ -690,6 +717,7 @@
 				5F08895F21237B3B0065BBF1 /* StatsViewController.swift in Sources */,
 				5F16C51D20BB92FC00E525EF /* AttractionsTableViewCell.swift in Sources */,
 				5FFCB80121055E470054D84D /* User.swift in Sources */,
+				5F964AE52171549200989DB4 /* AllListsViewController.swift in Sources */,
 				5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */,
 				5FF0BBBB20CF62C300213DF8 /* ScoreCardViewController.swift in Sources */,
 				5F636B5D2138B1A100D2B922 /* StatsContainerViewController.swift in Sources */,
