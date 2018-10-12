@@ -109,6 +109,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         return view.traitCollection.forceTouchCapability == .available
     }
     
+    
     var ignoreListRef: DatabaseReference!
     
     override func viewDidLoad() {

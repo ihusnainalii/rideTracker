@@ -32,7 +32,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        SuggestPark.name = "Park Not Found"
+        SuggestPark.name = "Park Not Found?"
         SuggestPark.city = "To add it to our database"
         SuggestPark.country = "please suggest it here"
         blurBackgroundView.layer.cornerRadius = 10
@@ -121,7 +121,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let parkName = searchedParksList![indexPath.row].name!
-        if parkName != "Park Not Found" {
+        if parkName != "Park Not Found?" {
             print("run unwind at \(parkName)")
             self.performSegue(withIdentifier: "addNewParkToList", sender: self)
         }

@@ -62,6 +62,7 @@
 		988A1A392170EEDB004CF3A8 /* ParkSuggListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A1A382170EEDB004CF3A8 /* ParkSuggListViewController.swift */; };
 		988A1A3B2170F036004CF3A8 /* approveSuggParksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A1A3A2170F036004CF3A8 /* approveSuggParksModel.swift */; };
 		988A1A3D21710B07004CF3A8 /* ApproveParkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A1A3C21710B07004CF3A8 /* ApproveParkViewController.swift */; };
+		988A1A412171316C004CF3A8 /* SuggestMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A1A402171316C004CF3A8 /* SuggestMapViewController.swift */; };
 		98A9A8552109207E00B3C36E /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A9A8542109207E00B3C36E /* FilterTableViewCell.swift */; };
 		98A9A857210A28E600B3C36E /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A9A856210A28E600B3C36E /* FilterViewController.swift */; };
 		98AD7F3620A91A2D00540AB3 /* rideTrackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F3520A91A2D00540AB3 /* rideTrackTests.swift */; };
@@ -158,9 +159,10 @@
 		987CCCB8212E081D00D11825 /* fullScreenPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fullScreenPhotoViewController.swift; sourceTree = "<group>"; };
 		988A1A342170E885004CF3A8 /* ApproveSuggestions.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ApproveSuggestions.storyboard; sourceTree = "<group>"; };
 		988A1A362170EA92004CF3A8 /* SelectTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTypeViewController.swift; sourceTree = "<group>"; };
-		988A1A382170EEDB004CF3A8 /* ParkSuggListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ParkSuggListViewController.swift; path = "rideTrack/User Suggest/ParkSuggListViewController.swift"; sourceTree = "<group>"; };
-		988A1A3A2170F036004CF3A8 /* approveSuggParksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = approveSuggParksModel.swift; path = "rideTrack/User Suggest/approveSuggParksModel.swift"; sourceTree = "<group>"; };
-		988A1A3C21710B07004CF3A8 /* ApproveParkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ApproveParkViewController.swift; path = "rideTrack/User Suggest/ApproveParkViewController.swift"; sourceTree = "<group>"; };
+		988A1A382170EEDB004CF3A8 /* ParkSuggListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkSuggListViewController.swift; sourceTree = "<group>"; };
+		988A1A3A2170F036004CF3A8 /* approveSuggParksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = approveSuggParksModel.swift; sourceTree = "<group>"; };
+		988A1A3C21710B07004CF3A8 /* ApproveParkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveParkViewController.swift; sourceTree = "<group>"; };
+		988A1A402171316C004CF3A8 /* SuggestMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestMapViewController.swift; sourceTree = "<group>"; };
 		98A9A8542109207E00B3C36E /* FilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
 		98A9A856210A28E600B3C36E /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		98AD7F1A20A91A2B00540AB3 /* rideTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rideTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -333,24 +335,23 @@
 			children = (
 				988A1A362170EA92004CF3A8 /* SelectTypeViewController.swift */,
 				98AD7F6620A91A5A00540AB3 /* SuggestRideViewController.swift */,
-				98F24F5020EFE35200A42C7E /* SuggestDetailsViewController.swift */,
-				988A1A332170E844004CF3A8 /* ApproveParks */,
+				98F17C64216AABFB0009BE91 /* SuggestParkViewController.swift */,
+				988A1A402171316C004CF3A8 /* SuggestMapViewController.swift */,
+				988A1A422171318B004CF3A8 /* ApproveParks */,
 				98F17C63216AAA9A0009BE91 /* ApproveAttractions */,
 				988A1A342170E885004CF3A8 /* ApproveSuggestions.storyboard */,
-				98F17C64216AABFB0009BE91 /* SuggestParkViewController.swift */,
 			);
 			path = "User Suggest";
 			sourceTree = "<group>";
 		};
-		988A1A332170E844004CF3A8 /* ApproveParks */ = {
+		988A1A422171318B004CF3A8 /* ApproveParks */ = {
 			isa = PBXGroup;
 			children = (
 				988A1A382170EEDB004CF3A8 /* ParkSuggListViewController.swift */,
 				988A1A3C21710B07004CF3A8 /* ApproveParkViewController.swift */,
 				988A1A3A2170F036004CF3A8 /* approveSuggParksModel.swift */,
 			);
-			name = ApproveParks;
-			path = ../..;
+			path = ApproveParks;
 			sourceTree = "<group>";
 		};
 		98A9A858210A28EE00B3C36E /* FilterView */ = {
@@ -430,6 +431,7 @@
 		98F17C63216AAA9A0009BE91 /* ApproveAttractions */ = {
 			isa = PBXGroup;
 			children = (
+				98F24F5020EFE35200A42C7E /* SuggestDetailsViewController.swift */,
 				98C28A9C20EBD90900C7229E /* ApproveSuggestAttracionModel.swift */,
 				98C28A9A20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift */,
 				98C28A9E20EBE9CE00C7229E /* SuggestTableViewCell.swift */,
@@ -726,6 +728,7 @@
 				98AD7F7220A91A5C00540AB3 /* UserAttraction.swift in Sources */,
 				5FFCB8062106783E0054D84D /* MigrateToFirebase.swift in Sources */,
 				5F636B612139CD9B00D2B922 /* OverViewController.swift in Sources */,
+				988A1A412171316C004CF3A8 /* SuggestMapViewController.swift in Sources */,
 				5F088962212381B00065BBF1 /* ParkMap.swift in Sources */,
 				5F636B6B213C60AD00D2B922 /* TopLists.swift in Sources */,
 				98C28A9B20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift in Sources */,
