@@ -25,6 +25,7 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
     @IBOutlet weak var previousNamesField: UITextField!
     @IBOutlet weak var seasonalSwitch: UISwitch!
     @IBOutlet weak var websiteField: UITextField!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var scrollWidth: NSLayoutConstraint!
     let screenSize = UIScreen.main.bounds
@@ -40,6 +41,7 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
     var oldName = ""
     var seasonal = 0
     var URLtext = ""
+    var userName = ""
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -61,6 +63,9 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
         submitButton.isEnabled = false
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //hide keyboard when tapping the anywhere else
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
 
     }
     
@@ -84,7 +89,8 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
         let alertController = UIAlertController(title: "Suggest Park", message: "Are you sure you want suggest \(parkName)?", preferredStyle: .alert)
         
         let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
-            let urlPath = "http://www.beingpositioned.com/theparksman/suggestParkUploadtoApprove.php?name=\(self.parkName)&type=\(self.type)&city=\(self.city)&count=\(self.country)&lat=\(lat)&long=\(long)&open=\(open)&closed=\(closed)&defunct=\(self.defunct)&prevName=\(self.oldName)&seasonal=\(self.seasonal)&website=\(self.URLtext)"
+            let urlPath = "http://www.beingpositioned.com/theparksman/suggestParkUploadtoApprove.php?name=\(self.parkName)&type=\(self.type)&city=\(self.city)&count=\(self.country)&lat=\(lat)&long=\(long)&open=\(open)&closed=\(closed)&defunct=\(self.defunct)&prevName=\(self.oldName)&seasonal=\(self.seasonal)&website=\(self.URLtext)&userName=\(self.userName)"
+            
             print (urlPath)
             dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
                 let ThankAlertController = UIAlertController(title: "Thank You", message: "Thank you for your submission. We will review it and add it to the database.", preferredStyle: .alert)
@@ -153,6 +159,7 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true
@@ -164,4 +171,18 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
     }
 func itemsDownloaded(items: NSArray, returnPath: String) {}
     
+    @objc func adjustForKeyboard(notification: Notification) {
+        let userInfo = notification.userInfo!
+        
+        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            scrollView.contentInset = UIEdgeInsets.zero
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+        }
+        
+        scrollView.scrollIndicatorInsets = scrollView.contentInset
+    }
 }

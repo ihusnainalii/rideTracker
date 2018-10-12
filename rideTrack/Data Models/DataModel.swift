@@ -148,6 +148,23 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 dataBaseData.add(attraction)
                 print ("Ride name is: ", attraction.rideName!)
             }
+            if dataBase == "ParkSuggest" {
+                let suggPark = ApproveSuggParksModel()
+                suggPark.name = (jsonElement["name"] as! String)
+                suggPark.type = (jsonElement["type"] as! String)
+                suggPark.city = (jsonElement["city"] as! String)
+                suggPark.country = (jsonElement["country"] as! String)
+                suggPark.latitude = Int(jsonElement["latitude"] as! String)
+                suggPark.longitude = Int(jsonElement["longitude"] as! String)
+                suggPark.open = Int(jsonElement["open"] as! String)
+                suggPark.closed = Int(jsonElement["closed"] as! String)
+                suggPark.defunct = Int(jsonElement["name"] as! String)
+                suggPark.prevName = (jsonElement["prevName"] as! String)
+                suggPark.seasonal = Int(jsonElement["seasonal"] as! String)
+                suggPark.userName = (jsonElement["userName"] as! String)
+                suggPark.website = (jsonElement["website"] as! String)
+                dataBaseData.add(suggPark)
+            }
         }
         DispatchQueue.main.async(execute: { () -> Void in
             self.delegate.itemsDownloaded(items: dataBaseData, returnPath: returnPath)

@@ -18,6 +18,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     var parksVC: ViewController!
     var savedParks = [ParksList]()
     var SuggestPark = ParksModel()
+    var userName = ""
 
     //A list of parks searched for, to display in results table
     var searchedParksList: [ParksModel]!
@@ -169,6 +170,10 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
             parksVC.allParksTableView.contentInset = insets
             selectedPark = nil
             searchTextFeild.resignFirstResponder()
+        }
+        if (segue.identifier == "suggestPark"){
+            let suggestPark = segue.destination as! SuggestParkViewController
+            suggestPark.userName = userName
         }
         
     }

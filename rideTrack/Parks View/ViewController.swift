@@ -77,6 +77,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var selectedAttractionsList: [NSManagedObject] = []
     var savedParkList: [NSManagedObject] = []
     var arrayOfAllParks = [ParksModel]()
+    var userName = ""
     
     var savedMyParksForSearch = [ParksList]()
     var isSearchingMyParks = false
@@ -95,6 +96,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     let expandParksView = ExpandParksView()
     let searchMyParks = SearchMyParks()
     
+    var userNameRef: DatabaseReference!
     var parksListRef: DatabaseReference!
     var favoritesListRef: DatabaseReference!
     var statsListRef: DatabaseReference!
@@ -135,9 +137,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         let userID = Auth.auth().currentUser
         let id = userID?.uid
+        self.userNameRef = Database.database().reference(withPath:"users/details/\(id!)/userName") ///userName
         self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)")
         self.favoritesListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)")
         
+        userNameRef.observe(.value, with: { snapshot in
+            if snapshot.exists(){ //hasChild("testJustin"){
+                self.userName = (snapshot.value as! String)
+                print("Has username")
+            }
+            else {
+                self.userName = ""
+            }
+        })
+        print("user name is \(userName)")
         parksListRef.queryOrdered(byChild: "name").observe(.value, with: { snapshot in
             var newParks: [ParksList] = []
             for child in snapshot.children {
@@ -731,7 +744,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             searchVC.parkArray = arrayOfAllParks
             searchVC.parksVC = self
             searchVC.savedParks = allParksList
-
+            searchVC.userName = userName
             UIView.animate(withDuration: 0.2, animations: {
                 self.darkenBackground.alpha =  0.20
             })
