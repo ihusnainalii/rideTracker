@@ -112,7 +112,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a94-MB-Az4" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="xkX-lD-76B" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6" y="2260"/>
+            <point key="canvasLocation" x="6" y="2217"/>
         </scene>
         <!--Approve Park View Controller-->
         <scene sceneID="TYl-Hd-mGg">
@@ -156,7 +156,7 @@
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     </textField>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vDR-J6-XHz">
                                                         <rect key="frame" x="367" y="0.0" width="8" height="40"/>
@@ -192,7 +192,7 @@
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     </textField>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qfj-wq-u7X">
                                                         <rect key="frame" x="367" y="0.0" width="8" height="40"/>
@@ -228,7 +228,7 @@
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     </textField>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bf7-Mo-fof">
                                                         <rect key="frame" x="367" y="0.0" width="8" height="40"/>
@@ -264,7 +264,7 @@
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     </textField>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u7P-uH-ZRP">
                                                         <rect key="frame" x="367" y="0.0" width="8" height="40"/>
@@ -300,7 +300,7 @@
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                     </textField>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4EY-DH-OvK">
                                                         <rect key="frame" x="367" y="0.0" width="8" height="40"/>
@@ -336,7 +336,7 @@
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                     </textField>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BKD-0c-yPS">
                                                         <rect key="frame" x="367" y="0.0" width="8" height="40"/>
@@ -372,7 +372,7 @@
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                     </textField>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aD0-gO-OEJ">
                                                         <rect key="frame" x="367" y="0.0" width="8" height="40"/>
@@ -408,7 +408,7 @@
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                     </textField>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r9V-Uz-Wc6">
                                                         <rect key="frame" x="367" y="0.0" width="8" height="40"/>
@@ -441,6 +441,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4bF-Y6-T77">
                                                         <rect key="frame" x="318" y="0.0" width="51" height="40"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </switch>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ccy-WS-wck">
                                                         <rect key="frame" x="367" y="0.0" width="8" height="40"/>
@@ -450,6 +451,7 @@
                                                         </constraints>
                                                     </view>
                                                 </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="wWj-Oy-UhG"/>
                                                 </constraints>
@@ -476,7 +478,7 @@
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     </textField>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R18-PH-kKn">
                                                         <rect key="frame" x="367" y="0.0" width="8" height="40"/>
@@ -509,6 +511,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dou-Ed-1ss">
                                                         <rect key="frame" x="318" y="0.0" width="51" height="40"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </switch>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mUe-1k-EfQ">
                                                         <rect key="frame" x="367" y="0.0" width="8" height="40"/>
@@ -602,7 +605,7 @@
                                         </constraints>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.87820631270000005" green="0.88227742909999995" blue="0.89045602079999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="K5i-gs-VT8" firstAttribute="leading" secondItem="UDP-WF-Rki" secondAttribute="leading" id="2nk-YW-0OT"/>
                                     <constraint firstAttribute="bottom" secondItem="K5i-gs-VT8" secondAttribute="bottom" id="37R-nZ-ldA"/>
@@ -612,17 +615,25 @@
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dhi-xc-6VD">
                                 <rect key="frame" x="45" y="627" width="45" height="30"/>
-                                <state key="normal" title="Delete"/>
+                                <state key="normal" title="Delete">
+                                    <color key="titleColor" red="1" green="0.068983529109999997" blue="7.7064603809999998e-05" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteButtonPressed:" destination="B3b-nD-NVy" eventType="touchUpInside" id="azI-L1-jMY"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ME-Ws-6H1">
                                 <rect key="frame" x="272" y="627" width="58" height="30"/>
                                 <state key="normal" title="Approve"/>
+                                <connections>
+                                    <action selector="approveParkPressed:" destination="B3b-nD-NVy" eventType="touchUpInside" id="6Ec-ER-6wz"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGm-R5-TAk">
                                 <rect key="frame" x="312" y="22" width="48" height="30"/>
                                 <state key="normal" title="Cancel"/>
                                 <connections>
-                                    <segue destination="Sg9-oX-hCy" kind="unwind" unwindAction="unwindTosuggParkListWithSender:" id="hSS-5d-aLe"/>
+                                    <segue destination="Sg9-oX-hCy" kind="unwind" identifier="toSuggestParksList" unwindAction="unwindTosuggParkListWithSender:" id="hSS-5d-aLe"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -664,7 +675,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eML-Ib-8Nu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Sg9-oX-hCy" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="874" y="2259"/>
+            <point key="canvasLocation" x="857" y="2217"/>
         </scene>
         <!--Suggestionsto Approve List View Controller-->
         <scene sceneID="6G3-r5-Qnj">

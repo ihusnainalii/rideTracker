@@ -57,6 +57,14 @@ class ParkSuggListViewController: UIViewController, UITableViewDataSource, UITab
     }
    
     @IBAction func unwindTosuggParkList(sender: UIStoryboardSegue) {
+        print("back to list of parks suggestions")
+        for i in 0..<self.listOfSuggestions.count {
+            if self.listOfSuggestions[i].tempID! == selectedPark.tempID! {
+                self.listOfSuggestions.remove(at: i)
+                break
+            }
+        }
+        suggestedParkTableView.reloadData()
         //print("Back to choose what type of attraction/park/photo to approve")
     }
 }

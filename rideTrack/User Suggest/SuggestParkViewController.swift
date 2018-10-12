@@ -16,12 +16,11 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
     @IBOutlet weak var typePicker: UIPickerView!
     @IBOutlet weak var cityField: UITextField!
     @IBOutlet weak var countryField: UITextField!
-    @IBOutlet weak var latitudeField: UITextField!
-    @IBOutlet weak var longitudeField: UITextField!
     @IBOutlet weak var openField: UITextField!
     @IBOutlet weak var defuntSwitch: UISwitch!
     @IBOutlet weak var closedStack: UIStackView!
     @IBOutlet weak var closedField: UITextField!
+    @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var previousNamesField: UITextField!
     @IBOutlet weak var seasonalSwitch: UISwitch!
     @IBOutlet weak var websiteField: UITextField!
@@ -42,6 +41,8 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
     var seasonal = 0
     var URLtext = ""
     var userName = ""
+    var lat = 0.0
+    var long = 0.0
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -77,8 +78,6 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
         city = cityField.text!
         country = countryField.text!
         oldName = previousNamesField.text!
-        let lat = latitudeField.text!
-        let long = longitudeField.text!
         URLtext = websiteField.text!
         if defuntSwitch.isOn { defunct = 1 }
         else {defunct = 0}
@@ -89,13 +88,13 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
         let alertController = UIAlertController(title: "Suggest Park", message: "Are you sure you want suggest \(parkName)?", preferredStyle: .alert)
         
         let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
-            let urlPath = "http://www.beingpositioned.com/theparksman/suggestParkUploadtoApprove.php?name=\(self.parkName)&type=\(self.type)&city=\(self.city)&count=\(self.country)&lat=\(lat)&long=\(long)&open=\(open)&closed=\(closed)&defunct=\(self.defunct)&prevName=\(self.oldName)&seasonal=\(self.seasonal)&website=\(self.URLtext)&userName=\(self.userName)"
+            let urlPath = "http://www.beingpositioned.com/theparksman/suggestParkUploadtoApprove.php?name=\(self.parkName)&type=\(self.type)&city=\(self.city)&count=\(self.country)&lat=\(self.lat)&long=\(self.long)&open=\(open)&closed=\(closed)&defunct=\(self.defunct)&prevName=\(self.oldName)&seasonal=\(self.seasonal)&website=\(self.URLtext)&userName=\(self.userName)"
             
             print (urlPath)
             dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
                 let ThankAlertController = UIAlertController(title: "Thank You", message: "Thank you for your submission. We will review it and add it to the database.", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default) { (action) -> Void in
-               // self.performSegue(withIdentifier: "unwindToDetailsView", sender: self)
+                    self.performSegue(withIdentifier: "leaveSuggPark", sender: self)
                 }
                 ThankAlertController.addAction(action)
             self.present(ThankAlertController, animated: true, completion:nil)
@@ -167,6 +166,15 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
     func textFieldDidEndEditing(_ textField: UITextField) {
         if type != "" && parkNameField.text != "" && countryField.text != "" && cityField.text != "" {
             submitButton.isEnabled = true
+        }
+    }
+    @IBAction func unwindtoSuggestPark(sender: UIStoryboardSegue) {
+        let suggestVC = sender.source as! SuggestMapViewController
+        lat = suggestVC.lat
+        long = suggestVC.long
+        if lat != 0.0 || long != 0.0{
+        locationButton.setTitle("latitude: \(lat), Longitude: \(long)", for: .normal)
+        locationButton.setTitleColor(UIColor.black, for: .normal)
         }
     }
 func itemsDownloaded(items: NSArray, returnPath: String) {}
