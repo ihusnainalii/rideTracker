@@ -35,6 +35,8 @@
 		5F964AE7217155C000989DB4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F964AE6217155BF00989DB4 /* GoogleService-Info.plist */; };
 		5F964AE9217158CE00989DB4 /* UserCreatedLists.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F964AE8217158CE00989DB4 /* UserCreatedLists.storyboard */; };
 		5F964AEB2171597400989DB4 /* AllListsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F964AEA2171597400989DB4 /* AllListsTableViewCell.swift */; };
+		5FA9901521723EE600F76025 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA9901421723EE600F76025 /* ListTableViewCell.swift */; };
+		5FA9901721723F4200F76025 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA9901621723F4200F76025 /* ListViewController.swift */; };
 		5FD613DD210A2B90008D4122 /* IgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DC210A2B90008D4122 /* IgnoreList.swift */; };
 		5FD613DF210A356F008D4122 /* ScoreCardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DE210A356F008D4122 /* ScoreCardList.swift */; };
 		5FE9F81020DB45030012B98C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FE9F80F20DB45030012B98C /* Media.xcassets */; };
@@ -135,6 +137,8 @@
 		5F964AE6217155BF00989DB4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5F964AE8217158CE00989DB4 /* UserCreatedLists.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UserCreatedLists.storyboard; sourceTree = "<group>"; };
 		5F964AEA2171597400989DB4 /* AllListsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListsTableViewCell.swift; sourceTree = "<group>"; };
+		5FA9901421723EE600F76025 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
+		5FA9901621723F4200F76025 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		5FD613DC210A2B90008D4122 /* IgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreList.swift; sourceTree = "<group>"; };
 		5FD613DE210A356F008D4122 /* ScoreCardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardList.swift; sourceTree = "<group>"; };
 		5FE9F80F20DB45030012B98C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -284,7 +288,9 @@
 			isa = PBXGroup;
 			children = (
 				5F964AE42171549200989DB4 /* AllListsViewController.swift */,
+				5FA9901621723F4200F76025 /* ListViewController.swift */,
 				5F964AEA2171597400989DB4 /* AllListsTableViewCell.swift */,
+				5FA9901421723EE600F76025 /* ListTableViewCell.swift */,
 				5F964AE8217158CE00989DB4 /* UserCreatedLists.storyboard */,
 			);
 			path = "User Created Lists";
@@ -718,6 +724,7 @@
 				5FFCB804210579C80054D84D /* AttractionList.swift in Sources */,
 				5F08895F21237B3B0065BBF1 /* StatsViewController.swift in Sources */,
 				5F16C51D20BB92FC00E525EF /* AttractionsTableViewCell.swift in Sources */,
+				5FA9901521723EE600F76025 /* ListTableViewCell.swift in Sources */,
 				5FFCB80121055E470054D84D /* User.swift in Sources */,
 				5F964AE52171549200989DB4 /* AllListsViewController.swift in Sources */,
 				5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */,
@@ -731,6 +738,7 @@
 				988A1A412171316C004CF3A8 /* SuggestMapViewController.swift in Sources */,
 				5F088962212381B00065BBF1 /* ParkMap.swift in Sources */,
 				5F636B6B213C60AD00D2B922 /* TopLists.swift in Sources */,
+				5FA9901721723F4200F76025 /* ListViewController.swift in Sources */,
 				98C28A9B20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift in Sources */,
 				5FF0BBC020CF652700213DF8 /* ScoreCardModel.swift in Sources */,
 				98AD7F7420A91A5C00540AB3 /* AttractionsViewController.swift in Sources */,

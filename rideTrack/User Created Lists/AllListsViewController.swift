@@ -23,6 +23,11 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
         allListsTableView.delegate = self
         allListsTableView.dataSource = self
         
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        //UINavigationBar.appearance().tintColor = UIColor.white
+        
         
         Auth.auth().addStateDidChangeListener { auth, user in
             guard let user = user else { return }
@@ -50,6 +55,7 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
         let newListAlert = UIAlertController(title: "Create a new list", message: "Enter the name of your new list below", preferredStyle: UIAlertController.Style.alert)
         let userInput = UIAlertAction(title: "Create List", style: .default) { (alertAction) in
             let textField = newListAlert.textFields![0] as UITextField
+            textField.autocapitalizationType = .words
             if textField.text != ""{
                 let newList = UserCreatedLists(listName: textField.text!, listData: ["TEST", "123"])
                 
@@ -79,6 +85,29 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
         cell.listNameLabel.text = usersLists[indexPath.row].listName
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "toList"{
+            let listVC = segue.destination as! ListViewController
+            let selectedIndex = allListsTableView.indexPathForSelectedRow?.row
+            listVC.usersList = usersLists[selectedIndex!]
+        }
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
 }
