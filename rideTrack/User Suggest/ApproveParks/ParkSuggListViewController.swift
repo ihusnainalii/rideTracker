@@ -46,7 +46,9 @@ class ParkSuggListViewController: UIViewController, UITableViewDataSource, UITab
         cell.textLabel?.text = listOfSuggestions[indexPath.row].name
         return cell
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toApprovePark"{
             let selectedIndex = (suggestedParkTableView.indexPathForSelectedRow?.row)!
@@ -66,5 +68,8 @@ class ParkSuggListViewController: UIViewController, UITableViewDataSource, UITab
         }
         suggestedParkTableView.reloadData()
         //print("Back to choose what type of attraction/park/photo to approve")
+    }
+    @IBAction func unwindFromcancelButton(sender: UIStoryboardSegue) {
+        print ("back from cancel")
     }
 }

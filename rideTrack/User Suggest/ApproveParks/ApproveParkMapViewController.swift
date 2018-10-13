@@ -1,5 +1,5 @@
 //
-//  SuggestMapViewController.swift
+//  ApproveParkMapViewController.swift
 //  rideTrack
 //
 //  Created by Justin Lawrence on 10/12/18.
@@ -9,11 +9,12 @@
 import UIKit
 import MapKit
 
-class SuggestMapViewController: UIViewController, UISearchBarDelegate {
+class ApproveParkMapViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var saveButton: UIView!
+    
     var lat = 0.0
     var long = 0.0
     var is3DTouchAvailable: Bool {
@@ -21,15 +22,27 @@ class SuggestMapViewController: UIViewController, UISearchBarDelegate {
     }
     var generator: UIImpactFeedbackGenerator!
     var popupGenerator: UIImpactFeedbackGenerator!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("latitude: \(lat), Longitude: \(long)")
         saveButton.layer.cornerRadius = 7
         saveButton.isHidden = true
         saveButton.layer.shadowOpacity = 0.4
         saveButton.layer.shadowOffset = CGSize.zero
         saveButton.layer.shadowRadius = 9
         saveButton.layer.shadowColor = UIColor.black.cgColor
+        
+        //set up map to show where the user submitted
+        let annotation  = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2DMake(lat, long)
+        self.mapView.addAnnotation(annotation)
+        
+        //zoom in at location
+        let coordinates:CLLocationCoordinate2D = CLLocationCoordinate2DMake(lat, long)
+        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        let region = MKCoordinateRegion(center: coordinates, span: span)
+        self.mapView.setRegion(region, animated: true)
         
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(appPoint(longGesture:)))
         mapView.addGestureRecognizer(longGesture)
@@ -64,15 +77,14 @@ class SuggestMapViewController: UIViewController, UISearchBarDelegate {
                 print ("ERROR")
             }
             else {
-               self.saveButton.isHidden = false
                 self.saveButton.isHidden = false
                 let annotationsOld = self.mapView.annotations
                 self.mapView.removeAnnotations(annotationsOld)
                 //get data
                 let latitude = response?.boundingRegion.center.latitude
                 let longitude = response?.boundingRegion.center.longitude
-//                self.lat = Double(latitude!)
-//                self.long = Double(longitude!)
+                //                self.lat = Double(latitude!)
+                //                self.long = Double(longitude!)
                 self.lat = Double(round(1000*Double(latitude!))/1000)
                 self.long = Double(round(1000*Double(longitude!))/1000) //only show 3 decimal points
                 print("latitude: \(self.lat), Longitude: \(self.long)")
@@ -89,7 +101,7 @@ class SuggestMapViewController: UIViewController, UISearchBarDelegate {
                 self.mapView.setRegion(region, animated: true)
                 
             }
-        
+            
         }
         
     }
@@ -108,11 +120,11 @@ class SuggestMapViewController: UIViewController, UISearchBarDelegate {
         print("latitude: \(lat), Longitude: \(long)")
         self.saveButton.isHidden = false
     }
-
-    @IBAction func cancelButtonPressed(_ sender: Any) {
-        lat = 0.0
-        long = 0.0
-        self.performSegue(withIdentifier: "backtoSuggestPark", sender: self)
+    
+    @IBAction func cancelButtonPresssed(_ sender: Any) {
+      //  lat = 0.0
+     //   long = 0.0
+        self.performSegue(withIdentifier: "backtoApprovePark", sender: self)
     }
     
 }

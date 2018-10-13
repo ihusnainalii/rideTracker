@@ -28,7 +28,9 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
     let screenSize = UIScreen.main.bounds
 
     var selectedPark: ApproveSuggParksModel = ApproveSuggParksModel()
-
+    var lat = 0.0
+    var long = 0.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollWidth.constant = screenSize.width
@@ -54,6 +56,9 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
         prevNameField.text = selectedPark.prevName
         websiteField.text = selectedPark.website
         userNameText.text = selectedPark.userName
+        
+        lat = selectedPark.latitude
+        long = selectedPark.longitude
         
         if selectedPark.defunct == 0 {
             defunctSwitch.isOn = false }
@@ -126,6 +131,25 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
         self.view.endEditing(true)
         return true
     }
-    
+    @IBAction func unwindtoApproveParks(sender: UIStoryboardSegue) {
+        let suggestVC = sender.source as! ApproveParkMapViewController
+        lat = suggestVC.lat
+        long = suggestVC.long
+        if lat != 0.0 || long != 0.0{
+            latField.text = String(lat)
+            longField.text = String(long)
+        }
+        else {
+            
+        }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toMap"{
+            print("here going")
+            let mapVC = segue.destination as! ApproveParkMapViewController
+            mapVC.lat = lat
+            mapVC.long = long
+        }
+    }
     func itemsDownloaded(items: NSArray, returnPath: String) {}
 }

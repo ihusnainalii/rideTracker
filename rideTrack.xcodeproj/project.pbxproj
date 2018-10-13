@@ -36,7 +36,6 @@
 		5F964AEB2171597400989DB4 /* AllListsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F964AEA2171597400989DB4 /* AllListsTableViewCell.swift */; };
 		5FA9901521723EE600F76025 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA9901421723EE600F76025 /* ListTableViewCell.swift */; };
 		5FA9901721723F4200F76025 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA9901621723F4200F76025 /* ListViewController.swift */; };
-		5FA9901921725BA100F76025 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5FA9901821725BA000F76025 /* GoogleService-Info.plist */; };
 		5FA9901B21725BC800F76025 /* SelectParkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA9901A21725BC800F76025 /* SelectParkViewController.swift */; };
 		5FA9901D21725BDA00F76025 /* SelectAttractionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA9901C21725BDA00F76025 /* SelectAttractionViewController.swift */; };
 		5FA9901F2172618E00F76025 /* SelectParkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA9901E2172618E00F76025 /* SelectParkTableViewCell.swift */; };
@@ -85,6 +84,7 @@
 		98C28A9B20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9A20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift */; };
 		98C28A9D20EBD90900C7229E /* ApproveSuggestAttracionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9C20EBD90900C7229E /* ApproveSuggestAttracionModel.swift */; };
 		98C28A9F20EBE9CE00C7229E /* SuggestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9E20EBE9CE00C7229E /* SuggestTableViewCell.swift */; };
+		98D7A7022172767E008A4E35 /* ApproveParkMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D7A7012172767E008A4E35 /* ApproveParkMapViewController.swift */; };
 		98F17C65216AABFB0009BE91 /* SuggestParkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F17C64216AABFB0009BE91 /* SuggestParkViewController.swift */; };
 		98F24F5120EFE35200A42C7E /* SuggestDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F24F5020EFE35200A42C7E /* SuggestDetailsViewController.swift */; };
 		B0FA1522D4FC83CB07B24B1A /* Pods_rideTrack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB608ACB379A8CD3D52D2DC7 /* Pods_rideTrack.framework */; };
@@ -142,7 +142,6 @@
 		5F964AEA2171597400989DB4 /* AllListsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListsTableViewCell.swift; sourceTree = "<group>"; };
 		5FA9901421723EE600F76025 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		5FA9901621723F4200F76025 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		5FA9901821725BA000F76025 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5FA9901A21725BC800F76025 /* SelectParkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectParkViewController.swift; sourceTree = "<group>"; };
 		5FA9901C21725BDA00F76025 /* SelectAttractionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAttractionViewController.swift; sourceTree = "<group>"; };
 		5FA9901E2172618E00F76025 /* SelectParkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectParkTableViewCell.swift; sourceTree = "<group>"; };
@@ -197,6 +196,7 @@
 		98C28A9A20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionstoApproveListViewController.swift; sourceTree = "<group>"; };
 		98C28A9C20EBD90900C7229E /* ApproveSuggestAttracionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveSuggestAttracionModel.swift; sourceTree = "<group>"; };
 		98C28A9E20EBE9CE00C7229E /* SuggestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestTableViewCell.swift; sourceTree = "<group>"; };
+		98D7A7012172767E008A4E35 /* ApproveParkMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveParkMapViewController.swift; sourceTree = "<group>"; };
 		98F17C64216AABFB0009BE91 /* SuggestParkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestParkViewController.swift; sourceTree = "<group>"; };
 		98F24F5020EFE35200A42C7E /* SuggestDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDetailsViewController.swift; sourceTree = "<group>"; };
 		B21792B8823F950BD12EAEF7 /* Pods-rideTrackUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrackUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrackUITests/Pods-rideTrackUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -365,6 +365,7 @@
 		988A1A422171318B004CF3A8 /* ApproveParks */ = {
 			isa = PBXGroup;
 			children = (
+				98D7A7012172767E008A4E35 /* ApproveParkMapViewController.swift */,
 				988A1A382170EEDB004CF3A8 /* ParkSuggListViewController.swift */,
 				988A1A3C21710B07004CF3A8 /* ApproveParkViewController.swift */,
 				988A1A3A2170F036004CF3A8 /* approveSuggParksModel.swift */,
@@ -418,7 +419,6 @@
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
-				5FA9901821725BA000F76025 /* GoogleService-Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
@@ -606,7 +606,6 @@
 				988A1A352170E885004CF3A8 /* ApproveSuggestions.storyboard in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
-				5FA9901921725BA100F76025 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -774,6 +773,7 @@
 				5FE9F81320DCA43C0012B98C /* ParksCoreData.swift in Sources */,
 				98A9A857210A28E600B3C36E /* FilterViewController.swift in Sources */,
 				5F0AEB0C2110B43F0019D607 /* ExpandParksViews.swift in Sources */,
+				98D7A7022172767E008A4E35 /* ApproveParkMapViewController.swift in Sources */,
 				988A1A3D21710B07004CF3A8 /* ApproveParkViewController.swift in Sources */,
 				98F17C65216AABFB0009BE91 /* SuggestParkViewController.swift in Sources */,
 				98F24F5120EFE35200A42C7E /* SuggestDetailsViewController.swift in Sources */,

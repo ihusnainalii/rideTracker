@@ -16,6 +16,7 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
     @IBOutlet weak var typePicker: UIPickerView!
     @IBOutlet weak var cityField: UITextField!
     @IBOutlet weak var countryField: UITextField!
+    @IBOutlet weak var stateField: UITextField!
     @IBOutlet weak var openField: UITextField!
     @IBOutlet weak var defuntSwitch: UISwitch!
     @IBOutlet weak var closedStack: UIStackView!
@@ -34,7 +35,7 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
     
     var parkName = ""
     var type = ""
-    var city = ""
+    var cityState = ""
     var country = ""
     var defunct = 0
     var oldName = ""
@@ -75,7 +76,7 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
         parkName = parkNameField.text!
         let open = openField.text!
         let closed = closedField.text!
-        city = cityField.text!
+        cityState = "\(cityField.text!), \(stateField.text!)"
         country = countryField.text!
         oldName = previousNamesField.text!
         URLtext = websiteField.text!
@@ -88,7 +89,7 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
         let alertController = UIAlertController(title: "Suggest Park", message: "Are you sure you want suggest \(parkName)?", preferredStyle: .alert)
         
         let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
-            let urlPath = "http://www.beingpositioned.com/theparksman/suggestParkUploadtoApprove.php?name=\(self.parkName)&type=\(self.type)&city=\(self.city)&count=\(self.country)&lat=\(self.lat)&long=\(self.long)&open=\(open)&closed=\(closed)&defunct=\(self.defunct)&prevName=\(self.oldName)&seasonal=\(self.seasonal)&website=\(self.URLtext)&userName=\(self.userName)"
+            let urlPath = "http://www.beingpositioned.com/theparksman/suggestParkUploadtoApprove.php?name=\(self.parkName)&type=\(self.type)&city=\(self.cityState)&count=\(self.country)&lat=\(self.lat)&long=\(self.long)&open=\(open)&closed=\(closed)&defunct=\(self.defunct)&prevName=\(self.oldName)&seasonal=\(self.seasonal)&website=\(self.URLtext)&userName=\(self.userName)"
             
             print (urlPath)
             dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
