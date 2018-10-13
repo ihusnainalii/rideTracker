@@ -839,7 +839,7 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="ignoresInvertColors" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="QB1-33-B5S" kind="show" id="mhT-Qz-7DS"/>
+                                            <segue destination="QB1-33-B5S" kind="show" identifier="toLists" id="mhT-Qz-7DS"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BzP-aD-VQn">

@@ -11,9 +11,10 @@ import Firebase
 
 class AllListsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var usersLists = [UserCreatedLists]()
     @IBOutlet weak var allListsTableView: UITableView!
     
+    var usersLists = [UserCreatedLists]()
+    var allParksList = [ParksList]()
     var userCreatedListsRef: DatabaseReference!
     var user: User!
     
@@ -57,7 +58,8 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
             let textField = newListAlert.textFields![0] as UITextField
             textField.autocapitalizationType = .words
             if textField.text != ""{
-                let newList = UserCreatedLists(listName: textField.text!, listData: ["TEST", "123"])
+                //let newList = UserCreatedLists(listName: textField.text!, listData: ["TEST", "123"])
+                let newList = UserCreatedLists(listName: textField.text!, listData: ["TEST", "123"], listEntryRideID: [43, 52])
                 
                 let newListRef = self.userCreatedListsRef.child(String(textField.text!))
                 newListRef.setValue(newList.toAnyObject())
@@ -97,6 +99,7 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
             let listVC = segue.destination as! ListViewController
             let selectedIndex = allListsTableView.indexPathForSelectedRow?.row
             listVC.usersList = usersLists[selectedIndex!]
+            listVC.allParksList = allParksList
         }
         
     }

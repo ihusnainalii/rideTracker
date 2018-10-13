@@ -32,11 +32,15 @@
 		5F8E5CB7213E1D6300C80FB1 /* UserName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8E5CB6213E1D6300C80FB1 /* UserName.swift */; };
 		5F964AE0217153A400989DB4 /* UserCreatedLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F964ADF217153A400989DB4 /* UserCreatedLists.swift */; };
 		5F964AE52171549200989DB4 /* AllListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F964AE42171549200989DB4 /* AllListsViewController.swift */; };
-		5F964AE7217155C000989DB4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F964AE6217155BF00989DB4 /* GoogleService-Info.plist */; };
 		5F964AE9217158CE00989DB4 /* UserCreatedLists.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F964AE8217158CE00989DB4 /* UserCreatedLists.storyboard */; };
 		5F964AEB2171597400989DB4 /* AllListsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F964AEA2171597400989DB4 /* AllListsTableViewCell.swift */; };
 		5FA9901521723EE600F76025 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA9901421723EE600F76025 /* ListTableViewCell.swift */; };
 		5FA9901721723F4200F76025 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA9901621723F4200F76025 /* ListViewController.swift */; };
+		5FA9901921725BA100F76025 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5FA9901821725BA000F76025 /* GoogleService-Info.plist */; };
+		5FA9901B21725BC800F76025 /* SelectParkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA9901A21725BC800F76025 /* SelectParkViewController.swift */; };
+		5FA9901D21725BDA00F76025 /* SelectAttractionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA9901C21725BDA00F76025 /* SelectAttractionViewController.swift */; };
+		5FA9901F2172618E00F76025 /* SelectParkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA9901E2172618E00F76025 /* SelectParkTableViewCell.swift */; };
+		5FA990212172677E00F76025 /* SelectAttractionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA990202172677E00F76025 /* SelectAttractionTableViewCell.swift */; };
 		5FD613DD210A2B90008D4122 /* IgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DC210A2B90008D4122 /* IgnoreList.swift */; };
 		5FD613DF210A356F008D4122 /* ScoreCardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DE210A356F008D4122 /* ScoreCardList.swift */; };
 		5FE9F81020DB45030012B98C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FE9F80F20DB45030012B98C /* Media.xcassets */; };
@@ -134,11 +138,15 @@
 		5F8E5CB6213E1D6300C80FB1 /* UserName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserName.swift; sourceTree = "<group>"; };
 		5F964ADF217153A400989DB4 /* UserCreatedLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCreatedLists.swift; sourceTree = "<group>"; };
 		5F964AE42171549200989DB4 /* AllListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListsViewController.swift; sourceTree = "<group>"; };
-		5F964AE6217155BF00989DB4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5F964AE8217158CE00989DB4 /* UserCreatedLists.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UserCreatedLists.storyboard; sourceTree = "<group>"; };
 		5F964AEA2171597400989DB4 /* AllListsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListsTableViewCell.swift; sourceTree = "<group>"; };
 		5FA9901421723EE600F76025 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		5FA9901621723F4200F76025 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		5FA9901821725BA000F76025 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5FA9901A21725BC800F76025 /* SelectParkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectParkViewController.swift; sourceTree = "<group>"; };
+		5FA9901C21725BDA00F76025 /* SelectAttractionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAttractionViewController.swift; sourceTree = "<group>"; };
+		5FA9901E2172618E00F76025 /* SelectParkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectParkTableViewCell.swift; sourceTree = "<group>"; };
+		5FA990202172677E00F76025 /* SelectAttractionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAttractionTableViewCell.swift; sourceTree = "<group>"; };
 		5FD613DC210A2B90008D4122 /* IgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreList.swift; sourceTree = "<group>"; };
 		5FD613DE210A356F008D4122 /* ScoreCardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardList.swift; sourceTree = "<group>"; };
 		5FE9F80F20DB45030012B98C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -289,7 +297,11 @@
 			children = (
 				5F964AE42171549200989DB4 /* AllListsViewController.swift */,
 				5FA9901621723F4200F76025 /* ListViewController.swift */,
+				5FA9901A21725BC800F76025 /* SelectParkViewController.swift */,
+				5FA9901C21725BDA00F76025 /* SelectAttractionViewController.swift */,
 				5F964AEA2171597400989DB4 /* AllListsTableViewCell.swift */,
+				5FA9901E2172618E00F76025 /* SelectParkTableViewCell.swift */,
+				5FA990202172677E00F76025 /* SelectAttractionTableViewCell.swift */,
 				5FA9901421723EE600F76025 /* ListTableViewCell.swift */,
 				5F964AE8217158CE00989DB4 /* UserCreatedLists.storyboard */,
 			);
@@ -406,7 +418,7 @@
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
-				5F964AE6217155BF00989DB4 /* GoogleService-Info.plist */,
+				5FA9901821725BA000F76025 /* GoogleService-Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
@@ -594,7 +606,7 @@
 				988A1A352170E885004CF3A8 /* ApproveSuggestions.storyboard in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
-				5F964AE7217155C000989DB4 /* GoogleService-Info.plist in Resources */,
+				5FA9901921725BA100F76025 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,9 +727,12 @@
 				988A1A3B2170F036004CF3A8 /* approveSuggParksModel.swift in Sources */,
 				987028F420B7897E00DC3B73 /* SettingsViewController.swift in Sources */,
 				5F964AEB2171597400989DB4 /* AllListsTableViewCell.swift in Sources */,
+				5FA9901F2172618E00F76025 /* SelectParkTableViewCell.swift in Sources */,
+				5FA9901B21725BC800F76025 /* SelectParkViewController.swift in Sources */,
 				5F964AE0217153A400989DB4 /* UserCreatedLists.swift in Sources */,
 				982E097620F54957007F2D02 /* ApproveModifyAttractionViewController.swift in Sources */,
 				5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */,
+				5FA9901D21725BDA00F76025 /* SelectAttractionViewController.swift in Sources */,
 				5FE9F81720DDCF040012B98C /* AllParksTableViewCell.swift in Sources */,
 				98AD7F7120A91A5C00540AB3 /* SuggestRideViewController.swift in Sources */,
 				5F636B67213B3E3A00D2B922 /* RideTypeTableViewCell.swift in Sources */,
@@ -745,6 +760,7 @@
 				5FE9F81520DDCEF20012B98C /* FavoritesTableViewCell.swift in Sources */,
 				988A1A372170EA92004CF3A8 /* SelectTypeViewController.swift in Sources */,
 				98AD7F7520A91A5C00540AB3 /* ViewController.swift in Sources */,
+				5FA990212172677E00F76025 /* SelectAttractionTableViewCell.swift in Sources */,
 				982E097820F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift in Sources */,
 				98AD7F7020A91A5C00540AB3 /* ParksModel.swift in Sources */,
 				988A1A392170EEDB004CF3A8 /* ParkSuggListViewController.swift in Sources */,

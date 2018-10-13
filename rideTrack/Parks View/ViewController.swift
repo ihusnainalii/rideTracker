@@ -760,6 +760,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let settingsVC = segue.destination as! SettingsViewController
             settingsVC.simulateLocation = simulateLocation
         }
+        if segue.identifier == "toLists"{
+            //let allListVC = segue.destination as! AllListsViewController
+            let navVC = segue.destination as? UINavigationController
+            let allListVC = navVC?.viewControllers.first as! AllListsViewController
+            allListVC.allParksList = allParksList
+        }
     }
     
     func getParkModelINdexFromAllParks(parkID: Int) -> Int{

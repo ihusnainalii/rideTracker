@@ -16,6 +16,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var usersList: UserCreatedLists!
     var userCreatedListsRef: DatabaseReference!
     var editToggle = false
+    var allParksList = [ParksList]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,22 +48,25 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "listCell", for: indexPath) as! ListTableViewCell
         cell.listRankLabel.text = "\(indexPath.row+1))"
-        cell.listItemLabel.text = usersList.listData[indexPath.row]
+        cell.listItemLabel.text = usersList.listEntryNames[indexPath.row]
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return usersList.listData.count
+        return usersList.listEntryNames.count
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            usersList.listData.remove(at: indexPath.row)
+            usersList.listEntryNames.remove(at: indexPath.row)
+            usersList.listEntryRideID.remove(at: indexPath.row)
             usersList.ref?.updateChildValues([
-                "listData": usersList.listData
+                "listEntryNames": usersList.listEntryNames,
+                "listEntryRideID": usersList.listEntryRideID
                 ])
             listTableView.deleteRows(at: [indexPath], with: .left)
+            listTableView.reloadData()
         }
     }
     
@@ -70,14 +74,46 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return true
     }
     
+    
+    
     func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        let itemToMove = usersList.listData[fromIndexPath.row]
-        usersList.listData.remove(at: fromIndexPath.row)
-        usersList.listData.insert(itemToMove, at: to.row)
+        let itemToMove = usersList.listEntryNames[fromIndexPath.row]
+        let itemToMoveID = usersList.listEntryRideID[fromIndexPath.row]
+        usersList.listEntryNames.remove(at: fromIndexPath.row)
+        usersList.listEntryRideID.remove(at: fromIndexPath.row)
+        
+        usersList.listEntryNames.insert(itemToMove, at: to.row)
+        usersList.listEntryRideID.insert(itemToMoveID, at: to.row)
         usersList.ref?.updateChildValues([
-            "listData": usersList.listData
+            "listEntryNames": usersList.listEntryNames,
+            "listEntryRideID": usersList.listEntryRideID
             ])
         listTableView.reloadData()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "toAddNewAttraction"{
+            let selectPark = segue.destination as! SelectParkViewController
+            selectPark.allParksList = allParksList
+        }
+        
+    }
+    
+    @IBAction func unwindToListView(segue:UIStoryboardSegue) {
+        if let sourceViewController = segue.source as? SelectAttractionViewController, let
+            newAttraction = sourceViewController.selectedAttraction{
+            
+            //Add new attraction to list
+            usersList.listEntryNames.append(newAttraction.name)
+            usersList.listEntryRideID.append(newAttraction.rideID)
+            usersList.ref?.updateChildValues([
+                "listEntryNames": usersList.listEntryNames,
+                "listEntryRideID": usersList.listEntryRideID
+                ])
+            listTableView.reloadData()
+        }
+    
     }
     
 }
