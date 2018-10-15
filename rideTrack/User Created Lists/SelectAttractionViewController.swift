@@ -8,20 +8,29 @@
 
 import UIKit
 
-class SelectAttractionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataModelProtocol {
+class SelectAttractionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, DataModelProtocol {
 
     @IBOutlet weak var selectAttractionTableView: UITableView!
+    @IBOutlet weak var searchAttractionsTextFeidl: UITextField!
     
     var attractionList = [AttractionsModel]()
     var selectedAttraction: AttractionsModel!
-    var selectedPark: ParksList!
+    var selectedPark: ParksModel!
+    var searchAttractionList = [AttractionsModel]()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         selectAttractionTableView.dataSource = self
         selectAttractionTableView.delegate = self
+        searchAttractionsTextFeidl.delegate = self
+        
+        
 
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(selectedPark.parkID!)"
         let dataModel = DataModel()
@@ -36,20 +45,55 @@ class SelectAttractionViewController: UIViewController, UITableViewDataSource, U
             attractionList.append(items[i] as! AttractionsModel)
         }
         attractionList.sort { ($0.active, $1.name) > ($1.active, $0.name)}
+        searchAttractionList = attractionList
         selectAttractionTableView.reloadData()
         
     }
     
+    @IBAction func didUpdateText(_ sender: Any) {
+        searchAttractionList.removeAll()
+        var searchedString = searchAttractionsTextFeidl.text!.replacingOccurrences(of: "’", with: "'", options: .literal, range: nil)
+        //searchedParksList = searchForPark.searchParks(searchString: searchedString, parkArray: allParksList)
+        var attraction = AttractionsModel()
+        var firstEntry = true
+        
+        if searchedString.last == " "{
+            searchedString.removeLast()
+        }
+        if searchedString == ""{
+            searchAttractionList = attractionList
+        }
+        
+        for i in 0..<attractionList.count {
+            attraction = attractionList[i]
+            firstEntry = true
+            if (attraction.name.lowercased().range(of: searchedString.lowercased()) != nil){
+                searchAttractionList.append(attraction)
+                firstEntry = false
+            }
+            
+            //Not allow you to add duplicates
+            if (convertRideTypeID(rideTypeID: attraction.rideType).lowercased().range(of: searchedString.lowercased()) != nil) && firstEntry{
+                searchAttractionList.append(attraction)
+                firstEntry = false
+            }
+        }
+        self.selectAttractionTableView.reloadData()
+    }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return attractionList.count
+        return searchAttractionList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "selectAttraction", for: indexPath) as! SelectAttractionTableViewCell
-        cell.attractionNameLabel.text = attractionList[indexPath.row].name
-        cell.rideTypeLabel.text = convertRideTypeID(rideTypeID: attractionList[indexPath.row].rideType)
+        cell.attractionNameLabel.text = searchAttractionList[indexPath.row].name
+        cell.rideTypeLabel.text = convertRideTypeID(rideTypeID: searchAttractionList[indexPath.row].rideType)
         return cell
     }
     
@@ -86,6 +130,23 @@ class SelectAttractionViewController: UIViewController, UITableViewDataSource, U
         default:
             return ""
         }
+    }
+    
+    @objc func adjustForKeyboard(notification: Notification) {
+        let userInfo = notification.userInfo!
+        
+        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            selectAttractionTableView.contentInset = UIEdgeInsets.zero
+        } else {
+            selectAttractionTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+        }
+        selectAttractionTableView.scrollIndicatorInsets = selectAttractionTableView.contentInset
+        
+        //        let selectedRange = resultsTableView.selectedRange
+        //        resultsTableView.scrollRangeToVisible(selectedRange)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -16,7 +16,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var usersList: UserCreatedLists!
     var userCreatedListsRef: DatabaseReference!
     var editToggle = false
-    var allParksList = [ParksList]()
+    var allParksList = [ParksModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
