@@ -47,6 +47,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
     @IBOutlet weak var bottomOfOverlayView: NSLayoutConstraint!
     @IBOutlet weak var parkPartnerView: UIView!
     @IBOutlet weak var partnerStack: UIStackView!
+    @IBOutlet weak var partnerLabel: UILabel!
     @IBOutlet weak var greyLine: UIView!
     
     
@@ -230,7 +231,32 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
             lengthLabel.text = "\(length!) ft"
             durrationLabel.text = duration
         }
+        
+        if selectedRide.ridePartner != "" {
+            print("the org URL is \(selectedRide.ridePartner!)")
+            let fullURL = selectedRide.ridePartner!
+            let characters = Array(fullURL)
+            var startOffset = 0
+            var endOffset = 0
+            var findEnd = false
+            for i in 0..<characters.count{
+                if characters[i] == "w" && characters[i+1] == "w" && findEnd == false{
+                    startOffset = i
+                    findEnd = true
+                }
+                if characters[i] == "/" && findEnd == true {
+                    endOffset = i
+                    break;
+                }
+            }
 
+            let start = fullURL.index(fullURL.startIndex, offsetBy: startOffset)
+            let end = fullURL.index(fullURL.endIndex, offsetBy: endOffset-characters.count) //-6
+            let range = start..<end
+            let website = String(fullURL[range])
+            partnerLabel.text = "about this attraction at \(website)"
+        }
+        
         switch selectedRide.rideType {
         case -1:
             typeString = "Unknown"
@@ -297,11 +323,12 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
         }
         if selectedRide.ridePartner == "" {
             partnerStack.isHidden = true
-            maxFromTop += 30
+            maxFromTop += 23 //when the size was 45, this was 30
             print("mac from top is: \(maxFromTop)")
         }
         else {
             partnerStack.isHidden = false
+            maxFromTop -= 15
         }
         
         let currHeightOfScroll = CGFloat(scrollView.frame.height)
@@ -611,6 +638,14 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
              self.performSegue(withIdentifier: "expandPhoto", sender: self)
         }
     }
+    
+    @IBAction func openParkPartners(_ sender: Any) {
+        let photoLinkSite = selectedRide.ridePartner
+        let safariVC = SFSafariViewController(url: NSURL(string: photoLinkSite!)! as URL)
+        safariVC.delegate = self
+        self.present(safariVC, animated: true, completion: nil)
+    }
+    
     
     @IBAction func tapToExit(_ sender: UITapGestureRecognizer) {
         print ("Tap")
