@@ -13,16 +13,25 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     @IBOutlet weak var listTableView: UITableView!
     @IBOutlet weak var listNameLabel: UILabel!
+    
+    let screenSize = UIScreen.main.bounds
     var usersList: UserCreatedLists!
     var userCreatedListsRef: DatabaseReference!
     var editToggle = false
     var allParksList = [ParksModel]()
+    var darkenBackground=UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         listTableView.delegate = self
         listTableView.dataSource = self
         listNameLabel.text = usersList.listName
+        
+        darkenBackground=UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height))
+        darkenBackground.backgroundColor = UIColor.black
+        darkenBackground.alpha = 0.0
+        darkenBackground.isUserInteractionEnabled = true
+        self.view.addSubview(darkenBackground)
     
         // Do any additional setup after loading the view.
     }
@@ -89,6 +98,36 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             "listEntryRideID": usersList.listEntryRideID
             ])
         listTableView.reloadData()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let attractionDetailsVC = storyBoard.instantiateViewController(withIdentifier: "attractionDetails") as! AttractionsDetailsViewController
+        
+        
+        //let selectedRide = usersList![indexPath.row]
+        let selectedRide = AttractionsModel(name: "Shekra", rideID: 136, parkID: 175, rideType: 1, yearOpen: 2015, yearClosed: 0, active: 1, isCheck: true, isFavorite: true, isIgnored: false, numberOfTimesRidden: 1, dateFirstRidden: Date(), dateLastRidden: Date(), scoreCard: 0, manufacturer: "B and M", previousNames: "", model: "", height: 200, speed: 69, length: 1000, duration: 421, photoArtist: "Walter", photoLink: "https://flic.kr/p/25jnLuf", photoCC: "CC 2.0", modifyBy: "", ridePartner: "")
+        
+        attractionDetailsVC.selectedRide = selectedRide
+        //attractionDetailsVC.userAttractionDatabase = userAttractionDatabase
+        //attractionDetailsVC.titleName = titleName
+        //attractionDetailsVC.favoiteParkList = favoiteParkList
+        attractionDetailsVC.isfiltering = false
+        attractionDetailsVC.userID = "test123"
+        UIView.animate(withDuration: 0.2, animations: {
+            self.darkenBackground.alpha =  0.20
+        })
+        attractionDetailsVC.modalPresentationStyle = .overCurrentContext
+        self.present(attractionDetailsVC, animated: true, completion: nil)
+
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
+    
+    @IBAction func unwindToUsersListView(sender: UIStoryboardSegue) {
+        print("back in list")
+        UIView.animate(withDuration: 0.2, animations: {
+            self.darkenBackground.alpha =  0.0
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
