@@ -114,6 +114,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //attractionDetailsVC.favoiteParkList = favoiteParkList
         attractionDetailsVC.isfiltering = false
         attractionDetailsVC.userID = "test123"
+        attractionDetailsVC.fromListVC = true
+        
         UIView.animate(withDuration: 0.2, animations: {
             self.darkenBackground.alpha =  0.20
         })
@@ -123,12 +125,6 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.deselectRow(at: indexPath, animated: false)
     }
     
-    @IBAction func unwindToUsersListView(sender: UIStoryboardSegue) {
-        print("back in list")
-        UIView.animate(withDuration: 0.2, animations: {
-            self.darkenBackground.alpha =  0.0
-        })
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -151,6 +147,12 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 "listEntryRideID": usersList.listEntryRideID
                 ])
             listTableView.reloadData()
+        }
+        if segue.source is AttractionsDetailsViewController {
+            print("back in list")
+            UIView.animate(withDuration: 0.2, animations: {
+                self.darkenBackground.alpha =  0.0
+            })
         }
     
     }

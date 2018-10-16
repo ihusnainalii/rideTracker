@@ -2231,7 +2231,6 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                         <connections>
                                                                             <action selector="pressDownBar:" destination="S7M-68-41E" eventType="touchUpInside" id="xBE-AU-b2j"/>
-                                                                            <segue destination="091-aH-31t" kind="unwind" identifier="unwindToAttractions" unwindAction="unwindToAttractionsViewWithSender:" id="Bi7-Or-A18"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
@@ -2999,6 +2998,8 @@
                         <outlet property="yearClosedStack" destination="dFt-sE-CiM" id="3bL-3b-De9"/>
                         <outlet property="yearOpenLabel" destination="IiB-xY-fV2" id="bdz-g1-EUc"/>
                         <segue destination="ZsW-iu-bfU" kind="presentation" identifier="expandPhoto" modalPresentationStyle="overCurrentContext" id="DiK-fp-YFR"/>
+                        <segue destination="091-aH-31t" kind="unwind" identifier="unwindToList" unwindAction="unwindToListViewWithSegue:" id="OHE-j8-scT"/>
+                        <segue destination="091-aH-31t" kind="unwind" identifier="unwindToAttractions" unwindAction="unwindToAttractionsViewWithSender:" id="IjC-Pa-tT0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dic-VF-lMM" userLabel="First Responder" sceneMemberID="firstResponder"/>

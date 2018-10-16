@@ -34,6 +34,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
     var copyrightType = ""
     var copyrightLinkText = ""
     var insets = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
+    var fromListVC = false
 
     @IBOutlet weak var ccTypeButton: UIButton!
     let screenSize = UIScreen.main.bounds
@@ -513,6 +514,11 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
         UIView.animate(withDuration: 0.2, animations: { //Animate Here
             // self.view.layoutIfNeeded()
         }, completion: nil)
+        if fromListVC{
+            self.performSegue(withIdentifier: "unwindToList", sender: self)
+        } else{
+            self.performSegue(withIdentifier: "unwindToAttractions", sender: self)
+        }
     }
     
     @IBAction func didSaveModifyDate(_ sender: Any) {
@@ -653,7 +659,12 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
             print ("Animating")
             // self.view.layoutIfNeeded()
         }, completion: nil)
-        self.performSegue(withIdentifier: "unwindToAttractions", sender: self)
+        if fromListVC{
+            self.performSegue(withIdentifier: "unwindToList", sender: self)
+        } else{
+            self.performSegue(withIdentifier: "unwindToAttractions", sender: self)
+        }
+        
          self.dismiss(animated: true, completion: nil)
     }
     
@@ -671,7 +682,12 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
         }
         else if sender.state == UIGestureRecognizer.State.ended || sender.state == UIGestureRecognizer.State.cancelled {
             if touchPoint.y - initialToucnPoint.y > 50 {
-                self.performSegue(withIdentifier: "unwindToAttractions", sender: self)
+                if fromListVC{
+                    self.performSegue(withIdentifier: "unwindToList", sender: self)
+                } else{
+                    self.performSegue(withIdentifier: "unwindToAttractions", sender: self)
+                }
+                
                 self.dismiss(animated: true, completion: nil)
 
                
