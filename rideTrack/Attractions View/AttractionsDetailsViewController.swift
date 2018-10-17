@@ -34,6 +34,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
     var copyrightType = ""
     var copyrightLinkText = ""
     var insets = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
+    var needsPhoto = true
     var fromListVC = false
 
     @IBOutlet weak var ccTypeButton: UIButton!
@@ -355,6 +356,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
         imageRef.getData(maxSize: 1*1000*1000) { (data, error) in
             if error == nil {
                 print("image found")
+                self.needsPhoto = false
                 if self.selectedRide.photoLink != "" {
                     self.CCView.isHidden = false
                     self.imageSection.isHidden = false
@@ -725,6 +727,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
             newVC.selectedAttraction = selectedRide
             newVC.parkName = titleName
             newVC.userID = userID
+            newVC.needsPhoto = needsPhoto
             print("Seguaing now: ride name is ", selectedRide.name!)
             
         }
