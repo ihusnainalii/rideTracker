@@ -19,6 +19,7 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     var savedParks = [ParksList]()
     var SuggestPark = ParksModel()
     var userName = ""
+    var searchForPark = SearchForPark()
 
     //A list of parks searched for, to display in results table
     var searchedParksList: [ParksModel]!
@@ -71,33 +72,8 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     @IBAction func didUpdateText(_ sender: Any) {
         searchedParksList.removeAll()
         
-        var searchedString = searchTextFeild.text!.replacingOccurrences(of: "’", with: "'", options: .literal, range: nil)
-        print(searchedString)
-        if searchedString.last == " "{
-            searchedString.removeLast()
-        }
-        if searchedString == ""{
-            searchedParksList = parkArray
-        }
-        
-        for i in 0..<parkArray.count {
-            park = parkArray[i]
-            firstEntry = true
-            if (park.name.lowercased().range(of: searchedString.lowercased()) != nil){
-                searchedParksList.append(park)
-                firstEntry = false
-            }
-
-            //Not allow you to add duplicates
-            if (park.city.lowercased().range(of: searchedString.lowercased()) != nil) && firstEntry{
-                searchedParksList.append(park)
-                firstEntry = false
-            }
-            if (park.country.lowercased().range(of: searchedString.lowercased()) != nil) && firstEntry{
-                searchedParksList.append(park)
-                firstEntry = false
-            }
-        }
+        let searchedString = searchTextFeild.text!.replacingOccurrences(of: "’", with: "'", options: .literal, range: nil)
+        searchedParksList = searchForPark.searchParks(searchString: searchedString, parkArray: parkArray)
         searchedParksList.append(SuggestPark) //add option to suggest park at bottom
         self.resultsTableView.reloadData()
     }
@@ -221,3 +197,40 @@ class ParkSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     
 }
 
+
+class SearchForPark{
+    func searchParks(searchString: String, parkArray: [ParksModel]) -> [ParksModel]{
+        var searchedString = searchString
+        var park = ParksModel()
+        var searchedParksList: [ParksModel] = []
+        var firstEntry = true
+        
+        if searchedString.last == " "{
+            searchedString.removeLast()
+        }
+        if searchedString == ""{
+            searchedParksList = parkArray
+        }
+        
+        for i in 0..<parkArray.count {
+            park = parkArray[i]
+            firstEntry = true
+            if (park.name.lowercased().range(of: searchedString.lowercased()) != nil){
+                searchedParksList.append(park)
+                firstEntry = false
+            }
+            
+            //Not allow you to add duplicates
+            if (park.city.lowercased().range(of: searchedString.lowercased()) != nil) && firstEntry{
+                searchedParksList.append(park)
+                firstEntry = false
+            }
+            if (park.country.lowercased().range(of: searchedString.lowercased()) != nil) && firstEntry{
+                searchedParksList.append(park)
+                firstEntry = false
+            }
+        }
+        return searchedParksList
+    }
+    
+}

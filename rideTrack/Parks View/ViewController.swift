@@ -764,7 +764,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             //let allListVC = segue.destination as! AllListsViewController
             let navVC = segue.destination as? UINavigationController
             let allListVC = navVC?.viewControllers.first as! AllListsViewController
-            allListVC.allParksList = allParksList
+            allListVC.allParksList = arrayOfAllParks
         }
     }
     

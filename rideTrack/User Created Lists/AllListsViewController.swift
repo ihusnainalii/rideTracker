@@ -14,7 +14,7 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var allListsTableView: UITableView!
     
     var usersLists = [UserCreatedLists]()
-    var allParksList = [ParksList]()
+    var allParksList = [ParksModel]()
     var userCreatedListsRef: DatabaseReference!
     var user: User!
     
