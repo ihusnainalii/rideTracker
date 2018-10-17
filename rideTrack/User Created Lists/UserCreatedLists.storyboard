@@ -19,18 +19,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1gO-9F-zKx">
-                                <rect key="frame" x="16" y="28" width="46" height="30"/>
+                                <rect key="frame" x="16" y="44" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
                                     <segue destination="D1r-M1-Dj2" kind="unwind" unwindAction="unwindToParkListWithSegue:" id="2h9-g6-b0W"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aCX-PE-qR4">
-                                <rect key="frame" x="325" y="32" width="22" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="didTapAddNewList:" destination="3Fp-Fv-tKK" eventType="touchUpInside" id="smS-OA-Wf4"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fDE-Xt-N10">
@@ -68,6 +61,13 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aCX-PE-qR4">
+                                <rect key="frame" x="325" y="48" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="didTapAddNewList:" destination="3Fp-Fv-tKK" eventType="touchUpInside" id="smS-OA-Wf4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -151,14 +151,19 @@
                                 <rect key="frame" x="294" y="59" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
-                                    <segue destination="SQa-nB-TbZ" kind="presentation" identifier="toAddNewAttraction" id="rNd-6F-vqd"/>
+                                    <segue destination="SQa-nB-TbZ" kind="show" identifier="toAddNewAttraction" id="rNd-6F-vqd"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="MLh-Hk-bye">
+                                <rect key="frame" x="257" y="60" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="V02-bL-cY7"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="MLh-Hk-bye" id="IGa-hf-8hI"/>
                         <outlet property="listNameLabel" destination="pLN-GD-Qut" id="FFh-w9-N4w"/>
                         <outlet property="listTableView" destination="xq8-P7-3fL" id="80k-rO-kEi"/>
                     </connections>
@@ -244,7 +249,7 @@
         <!--Select Attraction View Controller-->
         <scene sceneID="eaz-aB-Vrr">
             <objects>
-                <viewController id="E7B-Kv-gKt" customClass="SelectAttractionViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="toListView" id="E7B-Kv-gKt" customClass="SelectAttractionViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2U5-R9-hi4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -287,7 +292,6 @@
                                         <connections>
                                             <outlet property="attractionNameLabel" destination="ffF-On-z6W" id="DLY-GB-kNn"/>
                                             <outlet property="rideTypeLabel" destination="7Ga-tO-TOv" id="7hH-9p-glI"/>
-                                            <segue destination="6RE-di-ux2" kind="unwind" identifier="addNewAttractionToList" unwindAction="unwindToListViewWithSegue:" id="nEs-Gc-tNy"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -309,6 +313,7 @@
                     <connections>
                         <outlet property="searchAttractionsTextFeidl" destination="KjH-5x-SCH" id="hYI-tT-4Rs"/>
                         <outlet property="selectAttractionTableView" destination="Qyr-rd-lGI" id="WSf-9l-wOH"/>
+                        <segue destination="6RE-di-ux2" kind="unwind" identifier="toListView" unwindAction="unwindToListViewWithSegue:" id="0Qy-7Y-qlb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vul-IJ-V9c" userLabel="First Responder" sceneMemberID="firstResponder"/>

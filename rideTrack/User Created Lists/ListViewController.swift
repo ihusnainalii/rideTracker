@@ -9,10 +9,11 @@
 import UIKit
 import Firebase
 
-class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataModelProtocol {
 
     @IBOutlet weak var listTableView: UITableView!
     @IBOutlet weak var listNameLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     let screenSize = UIScreen.main.bounds
     var usersList: UserCreatedLists!
@@ -20,6 +21,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var editToggle = false
     var allParksList = [ParksModel]()
     var darkenBackground=UIView()
+    var userName = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +33,12 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         darkenBackground.backgroundColor = UIColor.black
         darkenBackground.alpha = 0.0
         darkenBackground.isUserInteractionEnabled = true
+        
+        activityIndicator.stopAnimating()
+        
         self.view.addSubview(darkenBackground)
     
+        
         // Do any additional setup after loading the view.
     }
     
@@ -45,6 +51,31 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             editToggle = false
             listTableView.isEditing = false
         }
+        
+    }
+    
+    func itemsDownloaded(items: NSArray, returnPath: String) {
+        if items.count == 1{
+            let selectedAttractionDetails = items[0] as! AttractionsModel
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let attractionDetailsVC = storyBoard.instantiateViewController(withIdentifier: "attractionDetails") as! AttractionsDetailsViewController
+            
+            attractionDetailsVC.selectedRide = selectedAttractionDetails
+            attractionDetailsVC.isfiltering = false
+            attractionDetailsVC.userID = userName
+            attractionDetailsVC.fromListVC = true
+            
+            UIView.animate(withDuration: 0.2, animations: {
+                self.darkenBackground.alpha =  0.20
+            })
+            attractionDetailsVC.modalPresentationStyle = .overCurrentContext
+            self.present(attractionDetailsVC, animated: true, completion: nil)
+            activityIndicator.stopAnimating()
+        }
+        else{
+            print("ERROR: More than one attraction was returned")
+        }
+        
         
     }
     
@@ -101,26 +132,14 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let attractionDetailsVC = storyBoard.instantiateViewController(withIdentifier: "attractionDetails") as! AttractionsDetailsViewController
         
+        activityIndicator.startAnimating()
         
-        //let selectedRide = usersList![indexPath.row]
-        let selectedRide = AttractionsModel(name: "Shekra", rideID: 136, parkID: 175, rideType: 1, yearOpen: 2015, yearClosed: 0, active: 1, isCheck: true, isFavorite: true, isIgnored: false, numberOfTimesRidden: 1, dateFirstRidden: Date(), dateLastRidden: Date(), scoreCard: 0, manufacturer: "B and M", previousNames: "", model: "", height: 200, speed: 69, length: 1000, duration: 421, photoArtist: "Walter", photoLink: "https://flic.kr/p/25jnLuf", photoCC: "CC 2.0", modifyBy: "", ridePartner: "")
-        
-        attractionDetailsVC.selectedRide = selectedRide
-        //attractionDetailsVC.userAttractionDatabase = userAttractionDatabase
-        //attractionDetailsVC.titleName = titleName
-        //attractionDetailsVC.favoiteParkList = favoiteParkList
-        attractionDetailsVC.isfiltering = false
-        attractionDetailsVC.userID = "test123"
-        attractionDetailsVC.fromListVC = true
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            self.darkenBackground.alpha =  0.20
-        })
-        attractionDetailsVC.modalPresentationStyle = .overCurrentContext
-        self.present(attractionDetailsVC, animated: true, completion: nil)
+        let selectedRideID = usersList.listEntryRideID[indexPath.row]
+        let urlPath = "http://www.beingpositioned.com/theparksman/getAttractionDetails.php?rideID=\(selectedRideID)"
+        let dataModel = DataModel()
+        dataModel.delegate = self
+        dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
 
         tableView.deselectRow(at: indexPath, animated: false)
     }
@@ -139,6 +158,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if let sourceViewController = segue.source as? SelectAttractionViewController, let
             newAttraction = sourceViewController.selectedAttraction{
             
+            if checkIfNewAttraction(newAttraction: newAttraction){
             //Add new attraction to list
             usersList.listEntryNames.append(newAttraction.name)
             usersList.listEntryRideID.append(newAttraction.rideID)
@@ -147,6 +167,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 "listEntryRideID": usersList.listEntryRideID
                 ])
             listTableView.reloadData()
+            }
         }
         if segue.source is AttractionsDetailsViewController {
             print("back in list")
@@ -155,6 +176,16 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             })
         }
     
+    }
+    
+    func checkIfNewAttraction(newAttraction: AttractionsModel) -> Bool {
+        var isNewPark = true
+        for i in 0..<usersList.listEntryRideID.count{
+            if newAttraction.rideID == usersList.listEntryRideID[i]{
+                isNewPark = false
+            }
+        }
+        return isNewPark
     }
     
 }

@@ -97,6 +97,12 @@ class SelectAttractionViewController: UIViewController, UITableViewDataSource, U
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedAttraction = searchAttractionList[indexPath.row]
+        self.performSegue(withIdentifier: "toListView", sender: self)
+       
+    }
+    
     func convertRideTypeID(rideTypeID: Int) -> String {
         switch rideTypeID {
         case -1:

@@ -765,6 +765,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let navVC = segue.destination as? UINavigationController
             let allListVC = navVC?.viewControllers.first as! AllListsViewController
             allListVC.allParksList = arrayOfAllParks
+            allListVC.userName = userName
         }
     }
     
@@ -1097,6 +1098,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         darkenBackground.alpha = 0.0
         darkenBackground.isUserInteractionEnabled = true
         self.view.addSubview(darkenBackground)
+        
     }
     
     @IBAction func didTapExpandAllParks(_ sender: Any) {

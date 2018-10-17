@@ -17,6 +17,8 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
     var allParksList = [ParksModel]()
     var userCreatedListsRef: DatabaseReference!
     var user: User!
+    var userName = ""
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,7 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        //UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().tintColor = UIColor.blue
         
         
         Auth.auth().addStateDidChangeListener { auth, user in
@@ -100,17 +102,18 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
             let selectedIndex = allListsTableView.indexPathForSelectedRow?.row
             listVC.usersList = usersLists[selectedIndex!]
             listVC.allParksList = allParksList
+            listVC.userName = userName
         }
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        //self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        //self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
 }
