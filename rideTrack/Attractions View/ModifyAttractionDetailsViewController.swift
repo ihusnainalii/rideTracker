@@ -7,8 +7,8 @@
 //
 
 import UIKit
-
-class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, DataModelProtocol, UITextViewDelegate {
+import Firebase
+class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, DataModelProtocol, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     
 
@@ -31,17 +31,15 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
     
     
     
+    @IBOutlet weak var submitPhotoStack: UIStackView!
     @IBOutlet weak var durationButton: UIButton!
     @IBOutlet weak var donePickDuration: UIButton!
     @IBOutlet weak var durationPickerView: UIView!
     @IBOutlet weak var durationPicker: UIPickerView!
-    @IBOutlet weak var defunctTop: NSLayoutConstraint!
-    @IBOutlet weak var openingHieght: NSLayoutConstraint!
+
     @IBOutlet weak var closingStack: UIStackView!
     
-    @IBOutlet weak var viewHeight: NSLayoutConstraint!
     @IBOutlet weak var scrollViewWidth: NSLayoutConstraint!
-    @IBOutlet weak var topScoreCardConst: NSLayoutConstraint!
     let screenSize = UIScreen.main.bounds
 
     var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
@@ -53,19 +51,18 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
     var seconds = 0
     var durationInSeconds = 0
     var userID = ""
-    
+    var needsPhoto = true
+    var submittedImage: UIImage!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print("Modifying: ",selectedAttraction.name!)
 
-        openingHieght.constant = 30
         rideTypePicker.isHidden = true
         typeButton.setTitle(convertRideTypeID(rideTypeID: selectedAttraction.rideType!), for: .normal)
         
-        topScoreCardConst.constant = 0
         durationPickerView.isHidden = true
-        viewHeight.constant = 700
         nameField.text = selectedAttraction.name
         self.rideTypePicker.delegate = self
         self.rideTypePicker.dataSource = self
@@ -99,12 +96,10 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         if selectedAttraction.active == 1 {
             extinctSwitch.isOn = false
             closingStack.isHidden = true
-            defunctTop.constant = 0
         }
         else {
             extinctSwitch.isOn = true
             closingStack.isHidden = false
-            defunctTop.constant = 40
         }
         if selectedAttraction.hasScoreCard == 1 {
             scoreSwitch.isOn = true
@@ -131,6 +126,8 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         if selectedAttraction.speed == 0 {
             speedField.text = ""
         }
+        if needsPhoto {submitPhotoStack.isHidden = false}
+        else {submitPhotoStack.isHidden = true}
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
@@ -270,17 +267,52 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         if extinctSwitch.isOn {
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
             self.closingStack.isHidden = false
-            self.defunctTop.constant = 40
             self.view.layoutIfNeeded()
             }, completion: nil)
         }
         else {
             UIView.animate(withDuration: 0.3, animations: { //Animate Here
                 self.closingStack.isHidden = true
-                self.defunctTop.constant = 0
                 self.view.layoutIfNeeded()
             }, completion: nil)
         }
+    }
+    @IBAction func libraryAction(_ sender: Any) {
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary;
+            imagePicker.allowsEditing = true
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func cameraAction(_ sender: Any) {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.allowsEditing = false
+            imagePicker.sourceType = UIImagePickerController.SourceType.camera
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        else {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.allowsEditing = false
+            imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            submittedImage = image
+            print("image recieved")
+        }
+        else {
+            print ("ERROR")
+        }
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func submitButton(_ sender: Any) {
@@ -386,7 +418,31 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             }))
             self.present(alert, animated: true, completion: nil)
         }
-       
+       //******************submit photo to firebase
+        if submittedImage != nil {
+            //let database = Database.database().reference()
+            let storage = Storage.storage().reference()
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpeg"
+            
+            let tempImageREf = storage.child("UserSubmit/\(selectedAttraction.rideID!).jpg")
+            
+//            let uploadTask = tempImageREf.putFile(from: localFile, metadata: nil) { metadata, error in
+//                guard let metadata = metadata else {
+//                    // Uh-oh, an error occurred!
+//                    return
+//                }
+           // tempImageREf.putData(submittedImage, metadata: metadata)
+            tempImageREf.putData(submittedImage.jpegData(compressionQuality: 0.25)!, metadata: metadata) { (Data, Error) in
+                if Error == nil { print("success")}
+                else { print("ERROR") }
+                }
+            }
+        urlPath = "http://www.beingpositioned.com/theparksman/submitPhotoUpload.php?rideID=\(self.selectedAttraction.rideID!)&photoArtist=\(self.userID)&rideName=\(self.selectedAttraction.name!)&parkName=\(parkName)"
+        print(urlPath)
+        let dataModel = DataModel()
+        dataModel.delegate = self
+        dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
     }
     
     
@@ -411,16 +467,12 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         done = textFieldShouldReturn(heightField)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
             self.durationPickerView.isHidden = false
-            self.topScoreCardConst.constant = 150
-            self.viewHeight.constant += 150
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
     
     @IBAction func donePickDuration(_ sender: Any) {
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
-            self.topScoreCardConst.constant = 0
-            self.viewHeight.constant -= 150
             self.durationPickerView.isHidden = true
             self.view.layoutIfNeeded()
         }, completion: nil)
@@ -432,11 +484,9 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
     }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if openingHieght.constant == 150 {
+        if self.rideTypePicker.isHidden == false {
             UIView.animate(withDuration: 0.3, animations: { //Animate Here
                 self.rideTypePicker.isHidden = true
-                self.openingHieght.constant = 30
-                self.viewHeight.constant -= 150
                 self.view.layoutIfNeeded()
             }, completion: nil)
         }
@@ -447,11 +497,9 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             notesView.text = ""
             notesView.textColor = UIColor.black
         }
-        if openingHieght.constant == 150 {
+        if self.rideTypePicker.isHidden == false {
             UIView.animate(withDuration: 0.3, animations: { //Animate Here
                 self.rideTypePicker.isHidden = true
-                self.openingHieght.constant = 30
-                self.viewHeight.constant -= 150
                 self.view.layoutIfNeeded()
             }, completion: nil)
         }
@@ -459,19 +507,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
     @IBAction func typeButton(_ sender: Any) {
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
             self.rideTypePicker.isHidden = false
-            self.openingHieght.constant = 150
-            self.viewHeight.constant += 150
             self.view.layoutIfNeeded()
         }, completion: nil)    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
