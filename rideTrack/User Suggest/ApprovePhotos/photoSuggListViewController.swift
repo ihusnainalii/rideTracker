@@ -56,7 +56,8 @@ class photoSuggListViewController: UIViewController, UITableViewDataSource, UITa
         tableView.deselectRow(at: indexPath, animated: true)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+       
+        return 60// return UITableView.automaticDimension
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -71,5 +72,8 @@ class photoSuggListViewController: UIViewController, UITableViewDataSource, UITa
             photoVC.parkID = selectedPhoto.parkID!
             photoVC.userName = selectedPhoto.userName!
         }
+    }
+    @IBAction func unwindFromcancelButton(sender: UIStoryboardSegue) {
+        print ("back from cancel")
     }
 }

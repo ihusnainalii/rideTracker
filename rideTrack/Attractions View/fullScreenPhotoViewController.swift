@@ -51,7 +51,10 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate, SFS
         }
         
         imageView.image = attractionImage
-        backgroundView.backgroundColor = UIColor.white.withAlphaComponent(1)
+        backgroundView.backgroundColor = UIColor.black.withAlphaComponent(1)
+       // backgroundView.frame.size.height = screenSize.height*3
+        backgroundView.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height*2)
+
   
         if self.selectedRide.photoLink != "" {
             self.ccLable.setTitle("\(String(describing: self.selectedRide.photoCC!))", for: .normal)
@@ -61,19 +64,21 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate, SFS
             }
             self.photoAuthorNameLabel.text = "by \(self.selectedRide.photoArtist!)/"
         }
-        else {
-            photoAuthorNameLabel.text = ""
-           
+        else if self.selectedRide.photoArtist == "Self"{
+            photoAuthorNameLabel.isHidden = true
+            ccLable.isHidden = true
+            
         }
-     
-        
-        //imageView.frame = CGRect(x: screenSize.width/4, y: screenSize.height/4, width: smallWidth, height: smallHieght)
-            let width = self.attractionImage.size.width
-            let widthCons = width/screenWidth
-            normHieght = self.attractionImage.size.height/widthCons //gets width to match up when height is 150
-            normWidth = screenWidth
-            self.imageWidth.constant = normWidth
-            self.imageHeight.constant = normHieght
+        else if self.selectedRide.photoCC == ""{ //for user submited photos
+            self.photoAuthorNameLabel.text = "submitted by \(self.selectedRide.photoArtist!)/"
+            self.ccLable.isHidden = true
+        }
+        else {
+            print("this shouldnt happen, but just in case, it will display everythnig")
+            self.photoAuthorNameLabel.text = " by \(self.selectedRide.photoArtist!)/"
+            self.ccLable.isHidden = true
+        }
+
         imageView.layer.cornerRadius = 0
         imageView.clipsToBounds = true
 
@@ -96,25 +101,23 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate, SFS
     }
     
     @IBAction func panToExit(_ sender: UIPanGestureRecognizer) {
-       // print ("working")
         let touchPoint = (sender as AnyObject).location(in: self.view?.window)
 
         if (sender as AnyObject).state == UIGestureRecognizer.State.began && scrollView.zoomScale == 1{
             initialToucnPoint = touchPoint
-            // print ("begun")
         }
         else if sender.state == UIGestureRecognizer.State.changed && scrollView.zoomScale == 1 {
             if touchPoint.y - initialToucnPoint.y > 0 {
-                self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
+                //self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
+                self.imageView.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.imageView.frame.size.width, height: self.imageView.frame.size.height)
             }
             if touchPoint.y >= 150 && scrollView.zoomScale == 1{
                     UIView.animate(withDuration: 0.3, animations: { //Animate Here
-                self.backgroundView.backgroundColor = UIColor.white.withAlphaComponent(0)
-                self.imageView.frame = CGRect(x: self.screenSize.width/4, y: self.screenSize.height/4, width: self.smallWidth, height: self.smallHieght)
-                self.imageView.layer.cornerRadius = 30
-                self.imageView.clipsToBounds = true
-                self.doneButton.isHidden = true
-                // self.view.layoutIfNeeded()
+                       // print("\(touchPoint.y/self.phoneSize.height) percent")
+                        self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(1-touchPoint.y/self.phoneSize.height)
+                        self.imageView.layer.cornerRadius = 30
+                        self.imageView.clipsToBounds = true
+                        self.doneButton.isHidden = true
             }, completion: nil)
             }
             
@@ -123,27 +126,20 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate, SFS
             if touchPoint.y - initialToucnPoint.y > 50 && scrollView.zoomScale == 1 {
                 self.performSegue(withIdentifier: "unwindToDetails", sender: self)
                 self.dismiss(animated: true, completion: nil)
-//            } else {
             } else if scrollView.zoomScale == 1 { //retrun
                 UIView.animate(withDuration: 0.3, animations: {
-                    self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
-                    print("returning back here")
-                        self.backgroundView.backgroundColor = UIColor.white.withAlphaComponent(1)
+                        self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(1)
                         self.doneButton.isHidden = false
-                        self.imageView.frame = CGRect(x: self.widthLocX, y: self.heightLocY, width: self.normWidth, height: self.normHieght)
-                    //self.imageWidth.constant = self.normWidth
-                    //self.imageHeight.constant = self.normHieght
                         self.imageView.layer.cornerRadius = 0
                         self.imageView.clipsToBounds = true
                         // self.view.layoutIfNeeded()
                     }, completion: nil)
-                //})
             }
         }
     }
     @IBAction func doneButtonPressed(_ sender: Any) {
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
-            self.backgroundView.backgroundColor = UIColor.white.withAlphaComponent(0)
+            self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0)
             self.imageView.frame = CGRect(x: self.screenSize.width/4, y: self.screenSize.height/4, width: self.smallWidth, height: self.smallHieght)
             self.imageView.layer.cornerRadius = 30
             self.imageView.clipsToBounds = true
@@ -154,10 +150,12 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate, SFS
     }
     
     @IBAction func didPressPhotoLink(_ sender: Any) {
-        let photoLinkSite = selectedRide.photoLink
-        let safariVC = SFSafariViewController(url: NSURL(string: photoLinkSite!)! as URL)
-        safariVC.delegate = self
-        self.present(safariVC, animated: true, completion: nil)
+        if selectedRide.photoCC != "" {
+            let photoLinkSite = selectedRide.photoLink
+            let safariVC = SFSafariViewController(url: NSURL(string: photoLinkSite!)! as URL)
+            safariVC.delegate = self
+            self.present(safariVC, animated: true, completion: nil)
+        }
     }
     
     @IBAction func didPressCCLink(_ sender: Any) {
@@ -181,14 +179,4 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate, SFS
         safariVC.delegate = self
         self.present(safariVC, animated: true, completion: nil)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

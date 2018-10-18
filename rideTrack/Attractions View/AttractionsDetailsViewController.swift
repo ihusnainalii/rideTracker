@@ -373,11 +373,19 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
                     self.CCView.isHidden = true
                     self.imageSection.isHidden = false
                 }
-                else {
-                    print("WE HAVE A PHOTO WITHOUT CC INFO!!!, the picture will not be shown")
-                    self.CCView.isHidden = true
-                    self.imageSection.isHidden = true
-                    showImage = false
+                else if self.selectedRide.photoCC == ""{ //for user submited photos
+                    self.CCView.isHidden = false
+                    self.imageSection.isHidden = false
+                    self.photoAuthorName.text = "submitted by \(self.selectedRide.photoArtist!)/"
+                    self.ccTypeButton.isHidden = true
+                    showImage = true
+                }
+                    else {
+                        print("this shouldnt happen, but just in case, it will display everythnig")
+                    self.CCView.isHidden = false
+                    self.imageSection.isHidden = false
+                    self.photoAuthorName.text = " by \(self.selectedRide.photoArtist!)/"
+                    self.ccTypeButton.isHidden = true
                 }
                 if showImage {
                     self.uiImageView.layer.cornerRadius = 30
@@ -565,10 +573,12 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
     
     
     @IBAction func didPressPhotoLink(_ sender: Any) {
-        let photoLinkSite = selectedRide.photoLink
-        let safariVC = SFSafariViewController(url: NSURL(string: photoLinkSite!)! as URL)
-        safariVC.delegate = self
-        self.present(safariVC, animated: true, completion: nil)
+        if selectedRide.photoLink != "" {
+            let photoLinkSite = selectedRide.photoLink
+            let safariVC = SFSafariViewController(url: NSURL(string: photoLinkSite!)! as URL)
+            safariVC.delegate = self
+            self.present(safariVC, animated: true, completion: nil)
+        }
     }
     
     @IBAction func didPressCCLink(_ sender: Any) {

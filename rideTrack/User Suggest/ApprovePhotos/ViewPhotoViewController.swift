@@ -15,11 +15,14 @@ class ViewPhotoViewController: UIViewController {
     @IBOutlet weak var parkNameLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var imageHeight: NSLayoutConstraint!
+   // @IBOutlet weak var imageWidth: NSLayoutConstraint!
     
     var rideName = ""
     var parkName = ""
     var userName = ""
-    
+    var attractionImage: UIImage!
+
     var rideID = 0
     var parkID = 0
     override func viewDidLoad() {
@@ -32,6 +35,13 @@ class ViewPhotoViewController: UIViewController {
         imageRef.getData(maxSize: 1*1000*1000) { (data, error) in
             if error == nil {
                 print("image found")
+                self.attractionImage = UIImage(data: data!)
+                let height = self.attractionImage.size.height
+                let heightCons = height/250.0
+                let width = self.attractionImage.size.width/heightCons //gets width to match up when height is 150
+               // self.imageWidth.constant = width
+                //self.imageHeight.constant = 250
+                
                 self.imageView.image = UIImage(data: data!)
 
             }
