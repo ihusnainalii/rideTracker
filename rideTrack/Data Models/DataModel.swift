@@ -103,17 +103,17 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 tempMan = jsonElement["Manufacturer"] as! String
                 attraction.manufacturer = tempMan.replacingOccurrences(of: "!A?", with: "&")
                 attraction.isCheck = false
-                attraction.previousNames = jsonElement["FormerNames"] as! String
-                attraction.model = jsonElement["model"] as! String
+                attraction.previousNames = (jsonElement["FormerNames"] as! String)
+                attraction.model = (jsonElement["model"] as! String)
                 attraction.height = Int (jsonElement["height"] as! String)
                 attraction.speed = Int (jsonElement["maxSpeed"] as! String)
                 attraction.length = Int (jsonElement["length"] as! String)
                 attraction.duration = Int (jsonElement["attractionDuration"] as! String)
-                attraction.photoArtist = jsonElement["photoArtist"] as! String
-                attraction.photoLink = jsonElement["photoLink"] as! String
-                attraction.photoCC = jsonElement["CCType"] as! String
-                attraction.ridePartner = jsonElement["attractionLink"] as! String
-                attraction.modifyBy = jsonElement["modifyBy"] as! String
+                attraction.photoArtist = (jsonElement["photoArtist"] as! String)
+                attraction.photoLink = (jsonElement["photoLink"] as! String)
+                attraction.photoCC = (jsonElement["CCType"] as! String)
+                attraction.ridePartner = (jsonElement["attractionLink"] as! String)
+                attraction.modifyBy = (jsonElement["modifyBy"] as! String)
                 dataBaseData.add(attraction)
             }
             if dataBase == "Suggest" {
@@ -165,6 +165,15 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 suggPark.website = (jsonElement["website"] as! String)
                 suggPark.tempID = Int(jsonElement["idKey"] as! String)
                 dataBaseData.add(suggPark)
+            }
+            if dataBase == "PhotoSuggest"{
+                let suggPhoto = approveSuggPhotoModel()
+                suggPhoto.rideID = Int(jsonElement["rideID"] as! String)
+                suggPhoto.userName = (jsonElement["photoArtist"] as! String)
+                suggPhoto.rideName = (jsonElement["rideName"] as! String)
+                suggPhoto.ParkName = (jsonElement["parkName"] as! String)
+                suggPhoto.parkID = Int(jsonElement["parkID"] as! String)
+                dataBaseData.add(suggPhoto)
             }
         }
         DispatchQueue.main.async(execute: { () -> Void in

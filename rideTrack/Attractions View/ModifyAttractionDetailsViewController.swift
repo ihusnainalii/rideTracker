@@ -438,7 +438,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
                 else { print("ERROR") }
                 }
             }
-        urlPath = "http://www.beingpositioned.com/theparksman/submitPhotoUpload.php?rideID=\(self.selectedAttraction.rideID!)&photoArtist=\(self.userID)&rideName=\(self.selectedAttraction.name!)&parkName=\(parkName)"
+        urlPath = "http://www.beingpositioned.com/theparksman/submitPhotoUpload.php?rideID=\(self.selectedAttraction.rideID!)&parkID=\(self.selectedAttraction.parkID!)&photoArtist=\(self.userID)&rideName=\(self.selectedAttraction.name!)&parkName=\(parkName)"
         print(urlPath)
         let dataModel = DataModel()
         dataModel.delegate = self

@@ -21,7 +21,6 @@
 		5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */; };
 		5F2EEC4F210510150036B47A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4E210510150036B47A /* SignUpViewController.swift */; };
 		5F44F7152132FB50006E6005 /* ParkInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F44F7142132FB50006E6005 /* ParkInfoViewController.swift */; };
-		5F5C595221779C9800F00609 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F5C595121779C9800F00609 /* GoogleService-Info.plist */; };
 		5F636B5D2138B1A100D2B922 /* StatsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B5C2138B1A100D2B922 /* StatsContainerViewController.swift */; };
 		5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F636B5E2139C09500D2B922 /* StatsStoryboard.storyboard */; };
 		5F636B612139CD9B00D2B922 /* OverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B602139CD9B00D2B922 /* OverViewController.swift */; };
@@ -82,6 +81,11 @@
 		98AD7F7520A91A5C00540AB3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F6B20A91A5B00540AB3 /* ViewController.swift */; };
 		98AD7F7620A91A5C00540AB3 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F6C20A91A5B00540AB3 /* DataModel.swift */; };
 		98AD7F7720A91A5C00540AB3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */; };
+		98C000F42177DD3400B01F58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 98C000F32177DD3400B01F58 /* GoogleService-Info.plist */; };
+		98C000F82177DF6200B01F58 /* suggPhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C000F72177DF6200B01F58 /* suggPhotosTableViewCell.swift */; };
+		98C000FB2177E2C100B01F58 /* approveSuggPhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C000FA2177E2C100B01F58 /* approveSuggPhotoModel.swift */; };
+		98C000FD2177F10100B01F58 /* photoSuggListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C000FC2177F10100B01F58 /* photoSuggListViewController.swift */; };
+		98C000FF217810AB00B01F58 /* ViewPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C000FE217810AB00B01F58 /* ViewPhotoViewController.swift */; };
 		98C28A9B20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9A20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift */; };
 		98C28A9D20EBD90900C7229E /* ApproveSuggestAttracionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9C20EBD90900C7229E /* ApproveSuggestAttracionModel.swift */; };
 		98C28A9F20EBE9CE00C7229E /* SuggestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9E20EBE9CE00C7229E /* SuggestTableViewCell.swift */; };
@@ -128,7 +132,6 @@
 		5F2EEC4E210510150036B47A /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		5F2EEC53210512E70036B47A /* rideTrack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = rideTrack.entitlements; sourceTree = "<group>"; };
 		5F44F7142132FB50006E6005 /* ParkInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkInfoViewController.swift; sourceTree = "<group>"; };
-		5F5C595121779C9800F00609 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5F636B5C2138B1A100D2B922 /* StatsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsContainerViewController.swift; sourceTree = "<group>"; };
 		5F636B5E2139C09500D2B922 /* StatsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = StatsStoryboard.storyboard; sourceTree = "<group>"; };
 		5F636B602139CD9B00D2B922 /* OverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +198,11 @@
 		98AD7F6C20A91A5B00540AB3 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98AD7F6E20A91A5C00540AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		98C000F32177DD3400B01F58 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		98C000F72177DF6200B01F58 /* suggPhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = suggPhotosTableViewCell.swift; sourceTree = "<group>"; };
+		98C000FA2177E2C100B01F58 /* approveSuggPhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = approveSuggPhotoModel.swift; sourceTree = "<group>"; };
+		98C000FC2177F10100B01F58 /* photoSuggListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoSuggListViewController.swift; sourceTree = "<group>"; };
+		98C000FE217810AB00B01F58 /* ViewPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPhotoViewController.swift; sourceTree = "<group>"; };
 		98C28A9A20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionstoApproveListViewController.swift; sourceTree = "<group>"; };
 		98C28A9C20EBD90900C7229E /* ApproveSuggestAttracionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveSuggestAttracionModel.swift; sourceTree = "<group>"; };
 		98C28A9E20EBE9CE00C7229E /* SuggestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestTableViewCell.swift; sourceTree = "<group>"; };
@@ -354,6 +362,7 @@
 			isa = PBXGroup;
 			children = (
 				988A1A362170EA92004CF3A8 /* SelectTypeViewController.swift */,
+				98C000F92177DF6C00B01F58 /* ApprovePhotos */,
 				98AD7F6620A91A5A00540AB3 /* SuggestRideViewController.swift */,
 				98F17C64216AABFB0009BE91 /* SuggestParkViewController.swift */,
 				988A1A402171316C004CF3A8 /* SuggestMapViewController.swift */,
@@ -421,7 +430,7 @@
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
-				5F5C595121779C9800F00609 /* GoogleService-Info.plist */,
+				98C000F32177DD3400B01F58 /* GoogleService-Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
@@ -447,6 +456,17 @@
 				98AD7F4220A91A2D00540AB3 /* Info.plist */,
 			);
 			path = rideTrackUITests;
+			sourceTree = "<group>";
+		};
+		98C000F92177DF6C00B01F58 /* ApprovePhotos */ = {
+			isa = PBXGroup;
+			children = (
+				98C000FA2177E2C100B01F58 /* approveSuggPhotoModel.swift */,
+				98C000FC2177F10100B01F58 /* photoSuggListViewController.swift */,
+				98C000F72177DF6200B01F58 /* suggPhotosTableViewCell.swift */,
+				98C000FE217810AB00B01F58 /* ViewPhotoViewController.swift */,
+			);
+			path = ApprovePhotos;
 			sourceTree = "<group>";
 		};
 		98F17C63216AAA9A0009BE91 /* ApproveAttractions */ = {
@@ -609,7 +629,7 @@
 				988A1A352170E885004CF3A8 /* ApproveSuggestions.storyboard in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
-				5F5C595221779C9800F00609 /* GoogleService-Info.plist in Resources */,
+				98C000F42177DD3400B01F58 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,6 +735,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98C000F82177DF6200B01F58 /* suggPhotosTableViewCell.swift in Sources */,
 				5F44F7152132FB50006E6005 /* ParkInfoViewController.swift in Sources */,
 				5F2EEC4F210510150036B47A /* SignUpViewController.swift in Sources */,
 				5F088964212487BC0065BBF1 /* Stats.swift in Sources */,
@@ -723,6 +744,7 @@
 				9845395720BC8D8C00C0E36C /* AttractionsDetailsViewController.swift in Sources */,
 				5F21419620F18087009A2E3A /* SearchMyParksView.swift in Sources */,
 				987CCCB9212E081D00D11825 /* fullScreenPhotoViewController.swift in Sources */,
+				98C000FB2177E2C100B01F58 /* approveSuggPhotoModel.swift in Sources */,
 				5F16C52920BCF3F700E525EF /* ParkListData.swift in Sources */,
 				98AD7F7720A91A5C00540AB3 /* AppDelegate.swift in Sources */,
 				5FD613DD210A2B90008D4122 /* IgnoreList.swift in Sources */,
@@ -733,6 +755,7 @@
 				5FA9901F2172618E00F76025 /* SelectParkTableViewCell.swift in Sources */,
 				5FA9901B21725BC800F76025 /* SelectParkViewController.swift in Sources */,
 				5F964AE0217153A400989DB4 /* UserCreatedLists.swift in Sources */,
+				98C000FF217810AB00B01F58 /* ViewPhotoViewController.swift in Sources */,
 				982E097620F54957007F2D02 /* ApproveModifyAttractionViewController.swift in Sources */,
 				5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */,
 				5FA9901D21725BDA00F76025 /* SelectAttractionViewController.swift in Sources */,
@@ -748,6 +771,7 @@
 				5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */,
 				5FF0BBBB20CF62C300213DF8 /* ScoreCardViewController.swift in Sources */,
 				5F636B5D2138B1A100D2B922 /* StatsContainerViewController.swift in Sources */,
+				98C000FD2177F10100B01F58 /* photoSuggListViewController.swift in Sources */,
 				5FF0BBBE20CF639100213DF8 /* ScoreCardTableViewCell.swift in Sources */,
 				5F202C5D20EB257700FFE408 /* ParkSettingsViewController.swift in Sources */,
 				98AD7F7220A91A5C00540AB3 /* UserAttraction.swift in Sources */,
