@@ -2943,11 +2943,6 @@
                             <constraint firstItem="cJr-Oe-NCN" firstAttribute="trailing" secondItem="QL7-61-DhJ" secondAttribute="trailing" id="oLP-CG-Aop"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cJr-Oe-NCN"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="KpE-N1-tqN"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="CCView" destination="aHX-0E-RQI" id="CBv-Yz-bi2"/>
@@ -2997,7 +2992,7 @@
                         <outlet property="yearCloseText" destination="GUi-Yi-uzO" id="x2I-Cf-tKs"/>
                         <outlet property="yearClosedStack" destination="dFt-sE-CiM" id="3bL-3b-De9"/>
                         <outlet property="yearOpenLabel" destination="IiB-xY-fV2" id="bdz-g1-EUc"/>
-                        <segue destination="ZsW-iu-bfU" kind="presentation" identifier="expandPhoto" modalPresentationStyle="overCurrentContext" id="DiK-fp-YFR"/>
+                        <segue destination="ZsW-iu-bfU" kind="presentation" identifier="expandPhoto" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="DiK-fp-YFR"/>
                         <segue destination="091-aH-31t" kind="unwind" identifier="unwindToList" unwindAction="unwindToListViewWithSegue:" id="OHE-j8-scT"/>
                         <segue destination="091-aH-31t" kind="unwind" identifier="unwindToAttractions" unwindAction="unwindToAttractionsViewWithSender:" id="IjC-Pa-tT0"/>
                     </connections>
@@ -3025,10 +3020,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="15" translatesAutoresizingMaskIntoConstraints="NO" id="MpI-aW-phH">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" maximumZoomScale="15" translatesAutoresizingMaskIntoConstraints="NO" id="MpI-aW-phH">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cSu-fd-58Z">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cSu-fd-58Z">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <gestureRecognizers/>
                                         <constraints>

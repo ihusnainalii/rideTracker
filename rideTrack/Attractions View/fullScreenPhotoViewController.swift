@@ -42,8 +42,7 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate, SFS
     
     var initialToucnPoint : CGPoint = CGPoint(x: 0, y: 0)
     override func viewDidLoad() {
-        print ("Hieght is \(phoneSize.height)")
-
+        imageWidth.constant = screenSize.width
         super.viewDidLoad()
         
         if phoneSize.width == 320 {
@@ -109,14 +108,14 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate, SFS
         else if sender.state == UIGestureRecognizer.State.changed && scrollView.zoomScale == 1 {
             if touchPoint.y - initialToucnPoint.y > 0 {
                 //self.view.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
-                self.imageView.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.imageView.frame.size.width, height: self.imageView.frame.size.height)
+               self.imageView.frame = CGRect(x: 0, y: touchPoint.y - initialToucnPoint.y, width: self.imageView.frame.size.width, height: self.imageView.frame.size.height)
             }
             if touchPoint.y >= 150 && scrollView.zoomScale == 1{
+                var percent = ((touchPoint.y+self.initialToucnPoint.y)/touchPoint.y)-1
                     UIView.animate(withDuration: 0.3, animations: { //Animate Here
-                       // print("\(touchPoint.y/self.phoneSize.height) percent")
-                        self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(1-touchPoint.y/self.phoneSize.height)
-                        self.imageView.layer.cornerRadius = 30
-                        self.imageView.clipsToBounds = true
+                        self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(percent)
+                        //self.imageView.layer.cornerRadius = 30
+                        //self.imageView.clipsToBounds = true
                         self.doneButton.isHidden = true
             }, completion: nil)
             }
@@ -124,14 +123,17 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate, SFS
         }
         else if sender.state == UIGestureRecognizer.State.ended || sender.state == UIGestureRecognizer.State.cancelled && scrollView.zoomScale == 1 {
             if touchPoint.y - initialToucnPoint.y > 50 && scrollView.zoomScale == 1 {
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0)
+                }, completion: nil)
                 self.performSegue(withIdentifier: "unwindToDetails", sender: self)
                 self.dismiss(animated: true, completion: nil)
             } else if scrollView.zoomScale == 1 { //retrun
                 UIView.animate(withDuration: 0.3, animations: {
                         self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(1)
                         self.doneButton.isHidden = false
-                        self.imageView.layer.cornerRadius = 0
-                        self.imageView.clipsToBounds = true
+                        //self.imageView.layer.cornerRadius = 0
+                        //self.imageView.clipsToBounds = true
                         // self.view.layoutIfNeeded()
                     }, completion: nil)
             }

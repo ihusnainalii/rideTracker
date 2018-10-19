@@ -57,6 +57,7 @@
 		5FFCB804210579C80054D84D /* AttractionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB803210579C80054D84D /* AttractionList.swift */; };
 		5FFCB8062106783E0054D84D /* MigrateToFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB8052106783E0054D84D /* MigrateToFirebase.swift */; };
 		63F5557255818849EA859AF8 /* Pods_rideTrackUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E0561EFAB1926F46BC87BF9 /* Pods_rideTrackUITests.framework */; };
+		982C41392179570C00B5C8A7 /* FullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982C41382179570C00B5C8A7 /* FullScreenViewController.swift */; };
 		982E097620F54957007F2D02 /* ApproveModifyAttractionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E097520F54957007F2D02 /* ApproveModifyAttractionViewController.swift */; };
 		982E097820F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E097720F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift */; };
 		9845395720BC8D8C00C0E36C /* AttractionsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */; };
@@ -167,6 +168,7 @@
 		5FFCB803210579C80054D84D /* AttractionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionList.swift; sourceTree = "<group>"; };
 		5FFCB8052106783E0054D84D /* MigrateToFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrateToFirebase.swift; sourceTree = "<group>"; };
 		8C99B437187F22079E71285D /* Pods-rideTrack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrack.release.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrack/Pods-rideTrack.release.xcconfig"; sourceTree = "<group>"; };
+		982C41382179570C00B5C8A7 /* FullScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenViewController.swift; sourceTree = "<group>"; };
 		982E097520F54957007F2D02 /* ApproveModifyAttractionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveModifyAttractionViewController.swift; sourceTree = "<group>"; };
 		982E097720F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyAttractionDetailsViewController.swift; sourceTree = "<group>"; };
 		9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionsDetailsViewController.swift; sourceTree = "<group>"; };
@@ -462,6 +464,7 @@
 				98C000FC2177F10100B01F58 /* photoSuggListViewController.swift */,
 				98C000F72177DF6200B01F58 /* suggPhotosTableViewCell.swift */,
 				98C000FE217810AB00B01F58 /* ViewPhotoViewController.swift */,
+				982C41382179570C00B5C8A7 /* FullScreenViewController.swift */,
 			);
 			path = ApprovePhotos;
 			sourceTree = "<group>";
@@ -770,6 +773,7 @@
 				98C000FD2177F10100B01F58 /* photoSuggListViewController.swift in Sources */,
 				5FF0BBBE20CF639100213DF8 /* ScoreCardTableViewCell.swift in Sources */,
 				5F202C5D20EB257700FFE408 /* ParkSettingsViewController.swift in Sources */,
+				982C41392179570C00B5C8A7 /* FullScreenViewController.swift in Sources */,
 				98AD7F7220A91A5C00540AB3 /* UserAttraction.swift in Sources */,
 				5FFCB8062106783E0054D84D /* MigrateToFirebase.swift in Sources */,
 				5F636B612139CD9B00D2B922 /* OverViewController.swift in Sources */,

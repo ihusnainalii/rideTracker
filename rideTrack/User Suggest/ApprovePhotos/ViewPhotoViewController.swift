@@ -49,7 +49,25 @@ class ViewPhotoViewController: UIViewController {
                 print("image not found at \(self.rideID)")
             }
         }
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewPhotoViewController.imageTapped(gesture:)))
+        imageView.addGestureRecognizer(tapGesture)
+        imageView.isUserInteractionEnabled = true
         // Do any additional setup after loading the view.
     }
-    
+    @objc func imageTapped(gesture: UIGestureRecognizer) {
+        if (gesture.view as? UIImageView) != nil {
+            print("Image Tapped")
+            self.performSegue(withIdentifier: "ToFullScreen", sender: self)
+        }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ToFullScreen"{
+            print("fullscreen")
+            let photoVC = segue.destination as! FullScreenViewController
+            photoVC.attractionImage = attractionImage
+        }
+    }
+    @IBAction func unwindFromcancelButton(sender: UIStoryboardSegue) {
+        print ("back from cancel")
+    }
 }
