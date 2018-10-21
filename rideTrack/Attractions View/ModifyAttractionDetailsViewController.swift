@@ -28,6 +28,9 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
     @IBOutlet weak var heightField: UITextField!
     @IBOutlet weak var speedField: UITextField!
     @IBOutlet weak var lengthField: UITextField!
+    @IBOutlet weak var cameraButton: UIView!
+    @IBOutlet weak var libraryButton: UIView!
+    @IBOutlet weak var uploadedFileLabel: UILabel!
     
     
     
@@ -308,6 +311,9 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             submittedImage = image
             print("image recieved")
+            self.uploadedFileLabel.isHidden = false
+            self.libraryButton.isHidden = true
+            self.cameraButton.isHidden = true
         }
         else {
             print ("ERROR")
@@ -349,6 +355,9 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             }
             else  {
                 changes += "\(rideName!) at \(parkName) "
+            }
+            if submittedImage != nil {
+                changes += "photo added "
             }
             if selectedAttraction.rideType != rideType {
                 changes += "type changed from \(selectedAttraction.rideType!) to \(rideType) "
@@ -423,7 +432,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             //let database = Database.database().reference()
             let storage = Storage.storage().reference()
             let metadata = StorageMetadata()
-            metadata.contentType = "image/jpeg"
+            metadata.contentType = "image/jpg"
             
             let tempImageREf = storage.child("UserSubmit/\(selectedAttraction.rideID!).jpg")
             
@@ -437,12 +446,12 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
                 if Error == nil { print("success")}
                 else { print("ERROR") }
                 }
-            }
         urlPath = "http://www.beingpositioned.com/theparksman/submitPhotoUpload.php?rideID=\(self.selectedAttraction.rideID!)&parkID=\(self.selectedAttraction.parkID!)&photoArtist=\(self.userID)&rideName=\(self.selectedAttraction.name!)&parkName=\(parkName)"
         print(urlPath)
         let dataModel = DataModel()
         dataModel.delegate = self
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+        }
     }
     
     

@@ -373,17 +373,18 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
                     self.CCView.isHidden = true
                     self.imageSection.isHidden = false
                 }
-                else if self.selectedRide.photoCC == ""{ //for user submited photos
+                else if self.selectedRide.photoCC == "" && self.selectedRide.photoArtist != ""{ //for user submited photos
                     self.CCView.isHidden = false
                     self.imageSection.isHidden = false
-                    self.photoAuthorName.text = "submitted by \(self.selectedRide.photoArtist!)/"
+                    self.photoAuthorName.text = "submitted by \(self.selectedRide.photoArtist!)"
                     self.ccTypeButton.isHidden = true
+                     maxFromTop -= 25
                     showImage = true
                 }
                     else {
-                        print("this shouldnt happen, but just in case, it will display everythnig")
+                        print("this shouldnt happen, so it will display nothing")
                     self.CCView.isHidden = false
-                    self.imageSection.isHidden = false
+                    self.imageSection.isHidden = true
                     self.photoAuthorName.text = " by \(self.selectedRide.photoArtist!)/"
                     self.ccTypeButton.isHidden = true
                 }

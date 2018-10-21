@@ -13,13 +13,12 @@ class photoSuggListViewController: UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var submitedPhotosTableView: UITableView!
     
     var listOfSuggestions = [approveSuggPhotoModel]()
-    var selectedPark: approveSuggPhotoModel = approveSuggPhotoModel()
+    var selectedPhoto: approveSuggPhotoModel = approveSuggPhotoModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let urlPath = "http://www.beingpositioned.com/theparksman/photoSuggDownload.php"
-        print(urlPath)
         let dataModel = DataModel()
         dataModel.delegate = self
         dataModel.downloadData(urlPath: urlPath, dataBase: "PhotoSuggest", returnPath: "allParks")
@@ -64,16 +63,27 @@ class photoSuggListViewController: UIViewController, UITableViewDataSource, UITa
         if segue.identifier == "toViewPhoto"{
             print("going to approve")
             let selectedIndex = (submitedPhotosTableView.indexPathForSelectedRow?.row)!
-            let selectedPhoto = listOfSuggestions[selectedIndex]
+            selectedPhoto = listOfSuggestions[selectedIndex]
             let photoVC = segue.destination as! ViewPhotoViewController
             photoVC.rideName = selectedPhoto.rideName!
             photoVC.parkName = selectedPhoto.ParkName!
             photoVC.rideID = selectedPhoto.rideID!
             photoVC.parkID = selectedPhoto.parkID!
             photoVC.userName = selectedPhoto.userName!
+            photoVC.tempID = selectedPhoto.tempID!
         }
     }
     @IBAction func unwindFromcancelButton(sender: UIStoryboardSegue) {
         print ("back from cancel")
+    }
+    @IBAction func unwindApprovePhoto(sender: UIStoryboardSegue) {
+        print("back to list of photo suggestions with old tempId of \(selectedPhoto.tempID!)")
+        for i in 0..<self.listOfSuggestions.count {
+            if self.listOfSuggestions[i].tempID! == selectedPhoto.tempID! {
+                self.listOfSuggestions.remove(at: i)
+                break
+            }
+        }
+        submitedPhotosTableView.reloadData()
     }
 }

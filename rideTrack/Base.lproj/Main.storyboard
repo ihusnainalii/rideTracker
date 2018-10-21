@@ -3279,6 +3279,16 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo Saved: To finish, tap Submit above" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1E-Ru-9vh">
+                                                        <rect key="frame" x="270" y="0.0" width="150" height="40"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="150" id="tud-Br-Ffr"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kP2-2X-ROL" userLabel="LibraryButton">
                                                         <rect key="frame" x="270" y="0.0" width="40" height="40"/>
                                                         <subviews>
@@ -3881,6 +3891,7 @@
                     </view>
                     <size key="freeformSize" width="375" height="1100"/>
                     <connections>
+                        <outlet property="cameraButton" destination="c6J-cK-i9l" id="OIT-Ez-r2s"/>
                         <outlet property="closingField" destination="S2Z-BX-Wp2" id="oDU-4o-OGk"/>
                         <outlet property="closingStack" destination="WrL-PE-K1m" id="zwW-9n-pNn"/>
                         <outlet property="donePickDuration" destination="ktn-m7-5y9" id="OPW-3V-u8W"/>
@@ -3891,6 +3902,7 @@
                         <outlet property="formerNameField" destination="uhA-TX-ktA" id="QGZ-8s-du9"/>
                         <outlet property="heightField" destination="aBs-m0-nph" id="HBv-22-B9f"/>
                         <outlet property="lengthField" destination="MWj-6G-ezP" id="y6Z-Wt-lBe"/>
+                        <outlet property="libraryButton" destination="kP2-2X-ROL" id="Mk2-vi-tOx"/>
                         <outlet property="manufacturingField" destination="e58-Wu-FrS" id="cgq-Qb-b9e"/>
                         <outlet property="modelField" destination="YbP-mQ-KAO" id="gQi-ON-Uj9"/>
                         <outlet property="nameField" destination="0Fz-yv-2AG" id="A4Z-Ul-qw8"/>
@@ -3903,6 +3915,7 @@
                         <outlet property="speedField" destination="0AI-oc-kwj" id="s7d-tO-vEc"/>
                         <outlet property="submitPhotoStack" destination="1ba-QN-IqA" id="naj-sa-Vho"/>
                         <outlet property="typeButton" destination="Xi5-qJ-j1M" id="7h9-wP-0uf"/>
+                        <outlet property="uploadedFileLabel" destination="x1E-Ru-9vh" id="Kha-T3-z2c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="olt-hM-pnN" userLabel="First Responder" sceneMemberID="firstResponder"/>

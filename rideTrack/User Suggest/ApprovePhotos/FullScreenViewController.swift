@@ -8,8 +8,9 @@
 
 import UIKit
 
-class FullScreenViewController: UIViewController {
+class FullScreenViewController: UIViewController, UIScrollViewDelegate {
 
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageWidth: NSLayoutConstraint!
     var attractionImage: UIImage!
@@ -19,8 +20,12 @@ class FullScreenViewController: UIViewController {
         super.viewDidLoad()
         imageView.image = attractionImage
         imageWidth.constant = screenSize.width
+        scrollView.minimumZoomScale = 1
+        scrollView.maximumZoomScale = 6
         // Do any additional setup after loading the view.
     }
-    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
 
 }
