@@ -12,13 +12,15 @@ import Firebase
 class AllListsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var allListsTableView: UITableView!
+    @IBOutlet weak var tableViewBackground: UIView!
+    @IBOutlet weak var editButton: UIButton!
     
     var usersLists = [UserCreatedLists]()
     var allParksList = [ParksModel]()
     var userCreatedListsRef: DatabaseReference!
     var user: User!
     var userName = ""
-
+    var editMode = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +31,14 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        UINavigationBar.appearance().tintColor = UIColor.blue
+        UINavigationBar.appearance().tintColor = UIColor.white
         
+        tableViewBackground.layer.cornerRadius = 7
+        tableViewBackground.layer.shadowOpacity = 0.3
+        tableViewBackground.layer.shadowOffset = CGSize.zero
+        tableViewBackground.layer.shadowRadius = 5
+        tableViewBackground.layer.backgroundColor = UIColor.white.cgColor
+ 
         
         Auth.auth().addStateDidChangeListener { auth, user in
             guard let user = user else { return }
@@ -58,7 +66,7 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
         let newListAlert = UIAlertController(title: "Create a new list", message: "Enter the name of your new list below", preferredStyle: UIAlertController.Style.alert)
         let userInput = UIAlertAction(title: "Create List", style: .default) { (alertAction) in
             let textField = newListAlert.textFields![0] as UITextField
-            textField.autocapitalizationType = .words
+            
             if textField.text != ""{
                 //let newList = UserCreatedLists(listName: textField.text!, listData: ["TEST", "123"])
                 let newList = UserCreatedLists(listName: textField.text!, listData: ["TEST", "123"], listEntryRideID: [43, 52])
@@ -73,6 +81,7 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         newListAlert.addTextField { (textField) in
             textField.placeholder = "List Name"
+            textField.autocapitalizationType = .words
         }
         newListAlert.addAction(userInput)
         newListAlert.addAction(cancel)
@@ -95,6 +104,16 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let listItem = self.usersLists[indexPath.row]
+            listItem.ref?.removeValue()
+            
+            //allListsTableView.deleteRows(at: [indexPath], with: .left)
+            //allListsTableView.reloadData()
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "toList"{
@@ -107,13 +126,31 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    
+    @IBAction func didTapEdit(_ sender: Any) {
+        if editMode{
+            editMode = false
+            allListsTableView.isEditing = false
+            editButton.setTitle("Edit", for: .normal)
+        } else{
+            editMode = true
+            allListsTableView.isEditing = true
+            editButton.setTitle("Done", for: .normal)
+        }
+        
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
-        //self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        //self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
 }

@@ -27,6 +27,7 @@ class SelectParkViewController: UIViewController, UITableViewDelegate, UITableVi
         parkSearchTextFeild.delegate = self
         allParksList.sort { $0.name < $1.name }
         searchedParksList = allParksList
+        print("All list array is \(allParksList.count)")
         
         // Do any additional setup after loading the view.
         let notificationCenter = NotificationCenter.default
@@ -48,6 +49,10 @@ class SelectParkViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchedParksList.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
