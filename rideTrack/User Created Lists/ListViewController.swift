@@ -14,6 +14,9 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var listTableView: UITableView!
     @IBOutlet weak var listNameLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var tableBackgroundView: UIView!
+    @IBOutlet weak var addAttractionButton: UIButton!
     
     let screenSize = UIScreen.main.bounds
     var usersList: UserCreatedLists!
@@ -36,6 +39,16 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         activityIndicator.stopAnimating()
         
+        tableBackgroundView.layer.cornerRadius = 7
+        tableBackgroundView.layer.shadowOpacity = 0.3
+        tableBackgroundView.layer.shadowOffset = CGSize.zero
+        tableBackgroundView.layer.shadowRadius = 5
+        tableBackgroundView.layer.backgroundColor = UIColor.white.cgColor
+        
+        addAttractionButton.layer.shadowOpacity = 0.5
+        addAttractionButton.layer.shadowOffset = CGSize.zero
+        addAttractionButton .layer.shadowRadius = 12
+        
         self.view.addSubview(darkenBackground)
     
         
@@ -47,9 +60,11 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if !editToggle{
             editToggle = true
             listTableView.isEditing = true
+            editButton.setTitle("Done", for: .normal)
         } else{
             editToggle = false
             listTableView.isEditing = false
+            editButton.setTitle("Edit", for: .normal)
         }
         
     }
