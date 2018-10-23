@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SelectAttractionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, DataModelProtocol {
 
@@ -17,6 +18,11 @@ class SelectAttractionViewController: UIViewController, UITableViewDataSource, U
     var selectedAttraction: AttractionsModel!
     var selectedPark: ParksModel!
     var searchAttractionList = [AttractionsModel]()
+    var userCreatedListsRef: DatabaseReference!
+    var user: User!
+    
+    var firstItemInList = false
+    var listName = ""
     
 
     override func viewDidLoad() {
@@ -25,8 +31,13 @@ class SelectAttractionViewController: UIViewController, UITableViewDataSource, U
         selectAttractionTableView.dataSource = self
         selectAttractionTableView.delegate = self
         searchAttractionsTextFeidl.delegate = self
-        
-        
+        Auth.auth().addStateDidChangeListener { auth, user in
+            guard let user = user else { return }
+            self.user = User(authData: user)
+        }
+        let userID = Auth.auth().currentUser
+        let id = userID?.uid
+        self.userCreatedListsRef = Database.database().reference(withPath: "user-created-list/\(id!)")
 
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -99,8 +110,18 @@ class SelectAttractionViewController: UIViewController, UITableViewDataSource, U
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedAttraction = searchAttractionList[indexPath.row]
-        self.performSegue(withIdentifier: "toListView", sender: self)
-       
+        
+        if firstItemInList{
+            let newList = UserCreatedLists(listName: listName, listData: [selectedAttraction.name], listEntryRideID: [selectedAttraction.rideID])
+            
+            let newListRef = self.userCreatedListsRef.child(String(listName))
+            newListRef.setValue(newList.toAnyObject())
+            self.performSegue(withIdentifier: "toAllLists", sender: self)
+        } else{
+            self.performSegue(withIdentifier: "toListView", sender: self)
+        }
+        
+        
     }
     
     func convertRideTypeID(rideTypeID: Int) -> String {

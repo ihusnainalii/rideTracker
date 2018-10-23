@@ -87,7 +87,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5r-gF-4fv">
-                                                            <rect key="frame" x="15" y="11" width="198" height="35"/>
+                                                            <rect key="frame" x="15" y="11" width="303" height="35"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="35" id="0Tq-GR-4BI"/>
                                                             </constraints>
@@ -138,12 +138,13 @@
                         <outlet property="allListsTableView" destination="fDE-Xt-N10" id="KOf-Ay-5Qr"/>
                         <outlet property="editButton" destination="Qj2-rM-1bU" id="6nD-gn-aWk"/>
                         <outlet property="tableViewBackground" destination="kcI-Yz-90u" id="3E9-Z8-ZMH"/>
+                        <segue destination="SQa-nB-TbZ" kind="show" identifier="selectPark" id="6L8-71-S5d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0ww-cK-dno" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="D1r-M1-Dj2" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="885.60000000000002" y="109.29535232383809"/>
+            <point key="canvasLocation" x="767" y="107"/>
         </scene>
         <!--List View Controller-->
         <scene sceneID="R7C-mv-QtL">
@@ -213,7 +214,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="List Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wFE-4J-dYo">
-                                                            <rect key="frame" x="37" y="11.5" width="266" height="21"/>
+                                                            <rect key="frame" x="37" y="11.5" width="281" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -221,7 +222,7 @@
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="wFE-4J-dYo" firstAttribute="centerY" secondItem="VSm-g8-qzC" secondAttribute="centerY" id="Ae4-LZ-xz2"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="wFE-4J-dYo" secondAttribute="trailing" constant="15" id="WkD-Q3-e9E"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="wFE-4J-dYo" secondAttribute="trailing" id="WkD-Q3-e9E"/>
                                                         <constraint firstItem="pxM-v9-KCk" firstAttribute="centerY" secondItem="VSm-g8-qzC" secondAttribute="centerY" id="c4w-Cs-e1f"/>
                                                         <constraint firstItem="pxM-v9-KCk" firstAttribute="leading" secondItem="VSm-g8-qzC" secondAttribute="leading" constant="10" id="jcR-FK-twf"/>
                                                         <constraint firstItem="wFE-4J-dYo" firstAttribute="leading" secondItem="pxM-v9-KCk" secondAttribute="trailing" id="ynh-CM-JNe"/>
@@ -480,6 +481,7 @@
                         <outlet property="searchAttractionsTextFeidl" destination="KjH-5x-SCH" id="hYI-tT-4Rs"/>
                         <outlet property="selectAttractionTableView" destination="Qyr-rd-lGI" id="WSf-9l-wOH"/>
                         <segue destination="6RE-di-ux2" kind="unwind" identifier="toListView" unwindAction="unwindToListViewWithSegue:" id="0Qy-7Y-qlb"/>
+                        <segue destination="6RE-di-ux2" kind="unwind" identifier="toAllLists" unwindAction="unwindToAllListsWithSegue:" id="Awo-Md-9p0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vul-IJ-V9c" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -510,4 +512,7 @@
         <image name="Plus button" width="72" height="72"/>
         <image name="White plus button" width="96" height="96"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="2AM-TP-JtF"/>
+    </inferredMetricsTieBreakers>
 </document>

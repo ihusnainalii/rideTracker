@@ -17,6 +17,9 @@ class SelectParkViewController: UIViewController, UITableViewDelegate, UITableVi
     var searchedParksList: [ParksModel]!
     var allParksList = [ParksModel]()
     var searchForPark = SearchForPark()
+    
+    var newList = false
+    var listName = ""
 
     
     override func viewDidLoad() {
@@ -86,6 +89,10 @@ class SelectParkViewController: UIViewController, UITableViewDelegate, UITableVi
             let selectAttractionVC = segue.destination as! SelectAttractionViewController
             let selectedIndex = allParkTableView.indexPathForSelectedRow?.row
             selectAttractionVC.selectedPark = searchedParksList[selectedIndex!]
+            if newList{
+                selectAttractionVC.firstItemInList = newList
+                selectAttractionVC.listName = listName
+            }
            
         }
         

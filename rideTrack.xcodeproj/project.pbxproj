@@ -14,7 +14,6 @@
 		5F16C51D20BB92FC00E525EF /* AttractionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16C51C20BB92FC00E525EF /* AttractionsTableViewCell.swift */; };
 		5F16C52520BCE89200E525EF /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */; };
 		5F16C52920BCF3F700E525EF /* ParkListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16C52820BCF3F700E525EF /* ParkListData.swift */; };
-		5F1D0A2A217C290300BCED7F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F1D0A29217C290300BCED7F /* GoogleService-Info.plist */; };
 		5F202C5B20E6E8AF00FFE408 /* NeverClearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F202C5A20E6E8AF00FFE408 /* NeverClearView.swift */; };
 		5F202C5D20EB257700FFE408 /* ParkSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F202C5C20EB257700FFE408 /* ParkSettingsViewController.swift */; };
 		5F21419620F18087009A2E3A /* SearchMyParksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F21419520F18087009A2E3A /* SearchMyParksView.swift */; };
@@ -29,6 +28,7 @@
 		5F636B652139CDB500D2B922 /* RideTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B642139CDB500D2B922 /* RideTypeViewController.swift */; };
 		5F636B67213B3E3A00D2B922 /* RideTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B66213B3E3A00D2B922 /* RideTypeTableViewCell.swift */; };
 		5F636B6B213C60AD00D2B922 /* TopLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B6A213C60AD00D2B922 /* TopLists.swift */; };
+		5F7BC757217F9007005FFFC7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F7BC756217F9007005FFFC7 /* GoogleService-Info.plist */; };
 		5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */; };
 		5F8E5CB7213E1D6300C80FB1 /* UserName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8E5CB6213E1D6300C80FB1 /* UserName.swift */; };
 		5F964AE0217153A400989DB4 /* UserCreatedLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F964ADF217153A400989DB4 /* UserCreatedLists.swift */; };
@@ -125,7 +125,6 @@
 		5F16C51C20BB92FC00E525EF /* AttractionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionsTableViewCell.swift; sourceTree = "<group>"; };
 		5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		5F16C52820BCF3F700E525EF /* ParkListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkListData.swift; sourceTree = "<group>"; };
-		5F1D0A29217C290300BCED7F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5F202C5A20E6E8AF00FFE408 /* NeverClearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeverClearView.swift; sourceTree = "<group>"; };
 		5F202C5C20EB257700FFE408 /* ParkSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkSettingsViewController.swift; sourceTree = "<group>"; };
 		5F21419520F18087009A2E3A /* SearchMyParksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMyParksView.swift; sourceTree = "<group>"; };
@@ -141,6 +140,7 @@
 		5F636B642139CDB500D2B922 /* RideTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideTypeViewController.swift; sourceTree = "<group>"; };
 		5F636B66213B3E3A00D2B922 /* RideTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideTypeTableViewCell.swift; sourceTree = "<group>"; };
 		5F636B6A213C60AD00D2B922 /* TopLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLists.swift; sourceTree = "<group>"; };
+		5F7BC756217F9007005FFFC7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSmallerLayout.swift; sourceTree = "<group>"; };
 		5F8E5CB6213E1D6300C80FB1 /* UserName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserName.swift; sourceTree = "<group>"; };
 		5F964ADF217153A400989DB4 /* UserCreatedLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCreatedLists.swift; sourceTree = "<group>"; };
@@ -432,7 +432,7 @@
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
-				5F1D0A29217C290300BCED7F /* GoogleService-Info.plist */,
+				5F7BC756217F9007005FFFC7 /* GoogleService-Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
@@ -632,7 +632,7 @@
 				988A1A352170E885004CF3A8 /* ApproveSuggestions.storyboard in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
-				5F1D0A2A217C290300BCED7F /* GoogleService-Info.plist in Resources */,
+				5F7BC757217F9007005FFFC7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,6 +22,9 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
     var userName = ""
     var editMode = false
     
+    var newList = false
+    var newListTitle = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,11 +71,15 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
             let textField = newListAlert.textFields![0] as UITextField
             
             if textField.text != ""{
-                //let newList = UserCreatedLists(listName: textField.text!, listData: ["TEST", "123"])
-                let newList = UserCreatedLists(listName: textField.text!, listData: ["TEST", "123"], listEntryRideID: [43, 52])
                 
-                let newListRef = self.userCreatedListsRef.child(String(textField.text!))
-                newListRef.setValue(newList.toAnyObject())
+                self.newListTitle = textField.text!
+                self.newList = true
+                self.performSegue(withIdentifier: "selectPark", sender: self)
+                
+                //let newList = UserCreatedLists(listName: textField.text!, listData: ["TEST", "123"], listEntryRideID: [43, 52])
+                
+                //let newListRef = self.userCreatedListsRef.child(String(textField.text!))
+                //newListRef.setValue(newList.toAnyObject())
             }
             
         }
@@ -123,6 +130,12 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
             listVC.allParksList = allParksList
             listVC.userName = userName
         }
+        if segue.identifier == "selectPark"{
+            let selectParkVC = segue.destination as! SelectParkViewController
+            selectParkVC.newList = true
+            selectParkVC.listName = newListTitle
+            selectParkVC.allParksList = allParksList
+        }
         
     }
     
@@ -143,6 +156,10 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
     }
+    @IBAction func unwindToAllLists(segue:UIStoryboardSegue) {
+    
+        
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
@@ -154,3 +171,4 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
 }
+
