@@ -13,54 +13,54 @@
         <!--Select Type View Controller-->
         <scene sceneID="NHw-LW-6jT">
             <objects>
-                <viewController storyboardIdentifier="ApproveSuggestionsVC" id="Xgb-qx-5kZ" customClass="SelectTypeViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Xgb-qx-5kZ" customClass="SelectTypeViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cEz-Yj-yA4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D8C-Bv-jDR">
-                                <rect key="frame" x="138" y="182" width="99" height="30"/>
+                                <rect key="frame" x="138" y="226" width="99" height="30"/>
                                 <state key="normal" title="Approve Parks"/>
                                 <connections>
                                     <segue destination="Bts-NK-uc1" kind="show" id="fHC-FF-6eK"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpz-Lc-4DA">
-                                <rect key="frame" x="323" y="25" width="37" height="30"/>
+                                <rect key="frame" x="323" y="69" width="37" height="30"/>
                                 <state key="normal" title="Done"/>
                                 <connections>
                                     <segue destination="iO4-FK-Gxi" kind="unwind" unwindAction="unwindToSettingsViewWithSender:" id="L4T-Es-8NQ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nLm-wM-6qp">
-                                <rect key="frame" x="119" y="122" width="137" height="30"/>
+                                <rect key="frame" x="119" y="166" width="137" height="30"/>
                                 <state key="normal" title="Approve Attractions"/>
                                 <connections>
                                     <segue destination="CXh-SS-6QI" kind="show" id="v9G-oE-rTG"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Approve User Suggestions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzM-Mj-cBh">
-                                <rect key="frame" x="15" y="25" width="267" height="27"/>
+                                <rect key="frame" x="15" y="69" width="267" height="27"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OUd-b2-TCE">
-                                <rect key="frame" x="132.5" y="242" width="110" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y2t-K8-a6O">
+                                <rect key="frame" x="132.5" y="286" width="110" height="30"/>
                                 <state key="normal" title="Approve Photos"/>
                                 <connections>
-                                    <segue destination="8ST-RP-oKd" kind="show" id="fdL-rV-KXZ"/>
+                                    <segue destination="8ST-RP-oKd" kind="show" id="0DW-FK-zc0"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="y2t-K8-a6O" firstAttribute="top" secondItem="D8C-Bv-jDR" secondAttribute="bottom" constant="30" id="3Ue-FB-Dxa"/>
                             <constraint firstItem="nLm-wM-6qp" firstAttribute="centerX" secondItem="cEz-Yj-yA4" secondAttribute="centerX" id="GLP-CJ-HKu"/>
-                            <constraint firstItem="OUd-b2-TCE" firstAttribute="centerX" secondItem="cEz-Yj-yA4" secondAttribute="centerX" id="Jpi-ux-tKb"/>
                             <constraint firstItem="D8C-Bv-jDR" firstAttribute="top" secondItem="nLm-wM-6qp" secondAttribute="bottom" constant="30" id="LJ1-ld-JbW"/>
                             <constraint firstItem="D8C-Bv-jDR" firstAttribute="centerX" secondItem="cEz-Yj-yA4" secondAttribute="centerX" id="SaT-7u-I5n"/>
+                            <constraint firstItem="y2t-K8-a6O" firstAttribute="centerX" secondItem="cEz-Yj-yA4" secondAttribute="centerX" id="WQd-5A-j9n"/>
                             <constraint firstItem="hzM-Mj-cBh" firstAttribute="top" secondItem="ugm-EI-IKU" secondAttribute="top" constant="5" id="dYE-q8-tu0"/>
-                            <constraint firstItem="OUd-b2-TCE" firstAttribute="top" secondItem="D8C-Bv-jDR" secondAttribute="bottom" constant="30" id="oCB-N4-oVD"/>
                             <constraint firstItem="ugm-EI-IKU" firstAttribute="trailing" secondItem="hpz-Lc-4DA" secondAttribute="trailing" constant="15" id="peV-gB-Nsp"/>
                             <constraint firstItem="hzM-Mj-cBh" firstAttribute="leading" secondItem="ugm-EI-IKU" secondAttribute="leading" constant="15" id="rlu-EY-Jip"/>
                             <constraint firstItem="nLm-wM-6qp" firstAttribute="top" secondItem="hzM-Mj-cBh" secondAttribute="bottom" constant="70" id="rxh-VP-Pzj"/>
@@ -69,13 +69,14 @@
                         <viewLayoutGuide key="safeArea" id="ugm-EI-IKU"/>
                     </view>
                     <navigationItem key="navigationItem" id="F5N-id-qVo"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kHh-l9-cUd" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="iO4-FK-Gxi" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1119" y="2142"/>
+            <point key="canvasLocation" x="-748" y="2125"/>
         </scene>
-        <!--Park Sugg List View Controller-->
+        <!--Suggested Parks-->
         <scene sceneID="s0F-di-jHl">
             <objects>
                 <viewController id="Bts-NK-uc1" customClass="ParkSuggListViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
@@ -83,14 +84,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Suggested Parks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CWI-ui-7z7">
-                                <rect key="frame" x="16" y="28" width="200" height="32"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZMe-c2-fiO">
-                                <rect key="frame" x="0.0" y="68" width="375" height="599"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SuggestedParks" id="lvq-Zc-g5q">
@@ -106,37 +101,26 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aF5-6D-50f">
-                                <rect key="frame" x="321" y="28" width="34" height="30"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <segue destination="xkX-lD-76B" kind="unwind" unwindAction="unwindApproveTypeWithSender:" id="k7c-PE-iIH"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="ZMe-c2-fiO" firstAttribute="top" secondItem="CWI-ui-7z7" secondAttribute="bottom" constant="8" id="Dhr-7W-wFj"/>
-                            <constraint firstItem="Nvh-w3-wOY" firstAttribute="trailing" secondItem="aF5-6D-50f" secondAttribute="trailing" constant="20" id="XK1-Re-KVf"/>
-                            <constraint firstItem="CWI-ui-7z7" firstAttribute="leading" secondItem="Nvh-w3-wOY" secondAttribute="leading" constant="16" id="cO8-Ik-Fuf"/>
+                            <constraint firstItem="ZMe-c2-fiO" firstAttribute="top" secondItem="Nvh-w3-wOY" secondAttribute="top" id="cRE-sY-pln"/>
                             <constraint firstItem="Nvh-w3-wOY" firstAttribute="bottom" secondItem="ZMe-c2-fiO" secondAttribute="bottom" id="d6l-RP-cCa"/>
-                            <constraint firstItem="aF5-6D-50f" firstAttribute="top" secondItem="Nvh-w3-wOY" secondAttribute="top" constant="8" id="dkB-oE-y2b"/>
-                            <constraint firstItem="CWI-ui-7z7" firstAttribute="top" secondItem="Nvh-w3-wOY" secondAttribute="top" constant="8" id="qRF-dE-rhi"/>
                             <constraint firstItem="Nvh-w3-wOY" firstAttribute="trailing" secondItem="ZMe-c2-fiO" secondAttribute="trailing" id="r96-bz-Qyt"/>
                             <constraint firstItem="ZMe-c2-fiO" firstAttribute="leading" secondItem="Nvh-w3-wOY" secondAttribute="leading" id="xnb-mC-Dww"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Nvh-w3-wOY"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Suggested Parks" id="9aa-O1-Sgv"/>
                     <connections>
                         <outlet property="suggestedParkTableView" destination="ZMe-c2-fiO" id="npN-Rr-u9I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a94-MB-Az4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="xkX-lD-76B" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-7" y="2169"/>
+            <point key="canvasLocation" x="470" y="2166"/>
         </scene>
-        <!--Photo Sugg List View Controller-->
+        <!--Submitted Photos-->
         <scene sceneID="fc3-UD-kzN">
             <objects>
                 <viewController id="8ST-RP-oKd" customClass="photoSuggListViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
@@ -144,21 +128,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avx-Uv-KtR">
-                                <rect key="frame" x="321" y="28" width="34" height="30"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <segue destination="TrM-tc-Wna" kind="unwind" unwindAction="unwindApproveTypeWithSender:" id="LVr-lu-JC2"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Submitted Photos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAQ-8x-YMN">
-                                <rect key="frame" x="16" y="28" width="211.5" height="31.5"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0JF-GR-k6T">
-                                <rect key="frame" x="0.0" y="79.5" width="375" height="587.5"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="submitedPhotos" rowHeight="60" id="nmk-vW-M1W" userLabel="submitedPhotos" customClass="suggPhotosTableViewCell" customModule="rideTrack" customModuleProvider="target">
@@ -200,26 +171,23 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="5Ci-MH-mWQ" firstAttribute="trailing" secondItem="0JF-GR-k6T" secondAttribute="trailing" id="36q-Fn-92i"/>
-                            <constraint firstItem="5Ci-MH-mWQ" firstAttribute="trailing" secondItem="avx-Uv-KtR" secondAttribute="trailing" constant="20" id="7nm-NA-TqL"/>
-                            <constraint firstItem="0JF-GR-k6T" firstAttribute="top" secondItem="CAQ-8x-YMN" secondAttribute="bottom" constant="20" id="FSf-Aj-hG4"/>
                             <constraint firstItem="0JF-GR-k6T" firstAttribute="leading" secondItem="5Ci-MH-mWQ" secondAttribute="leading" id="Qmf-SS-eQJ"/>
-                            <constraint firstItem="CAQ-8x-YMN" firstAttribute="top" secondItem="5Ci-MH-mWQ" secondAttribute="top" constant="8" id="TAF-0J-WIB"/>
+                            <constraint firstItem="0JF-GR-k6T" firstAttribute="top" secondItem="5Ci-MH-mWQ" secondAttribute="top" id="VpT-w0-Hz1"/>
                             <constraint firstItem="5Ci-MH-mWQ" firstAttribute="bottom" secondItem="0JF-GR-k6T" secondAttribute="bottom" id="gP7-h8-qKC"/>
-                            <constraint firstItem="CAQ-8x-YMN" firstAttribute="leading" secondItem="5Ci-MH-mWQ" secondAttribute="leading" constant="16" id="nTV-3e-9H8"/>
-                            <constraint firstItem="avx-Uv-KtR" firstAttribute="top" secondItem="5Ci-MH-mWQ" secondAttribute="top" constant="8" id="tIq-S3-nWi"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5Ci-MH-mWQ"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Submitted Photos" id="tg0-GW-K0X"/>
                     <connections>
+                        <outlet property="navigationView" destination="tg0-GW-K0X" id="wwt-JU-KqF"/>
                         <outlet property="submitedPhotosTableView" destination="0JF-GR-k6T" id="s2H-Dy-WW0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3e8-I0-y0V" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="TrM-tc-Wna" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-7" y="2918"/>
+            <point key="canvasLocation" x="470" y="2919"/>
         </scene>
-        <!--View Photo View Controller-->
+        <!--Approve Photo-->
         <scene sceneID="Tof-Xb-uCG">
             <objects>
                 <viewController id="m5Q-yg-9dn" customClass="ViewPhotoViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
@@ -228,7 +196,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attraction:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNg-qu-3VJ">
-                                <rect key="frame" x="15" y="63" width="110" height="27"/>
+                                <rect key="frame" x="15" y="74" width="110" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="110" id="eiv-A1-0CS"/>
                                 </constraints>
@@ -237,7 +205,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Park:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oef-NT-R9V">
-                                <rect key="frame" x="15" y="105" width="55" height="27"/>
+                                <rect key="frame" x="15" y="116" width="55" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="55" id="MZt-GS-F0R"/>
                                 </constraints>
@@ -246,19 +214,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ride" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="nqr-NY-XfN">
-                                <rect key="frame" x="127" y="67" width="243" height="21"/>
+                                <rect key="frame" x="127" y="79" width="243" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Park" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="l4F-7d-5S9">
-                                <rect key="frame" x="72" y="110" width="298" height="21"/>
+                                <rect key="frame" x="72" y="122" width="298" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mIc-ms-kr0">
-                                <rect key="frame" x="15" y="162" width="345" height="360"/>
+                                <rect key="frame" x="15" y="173" width="345" height="360"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" button="YES" image="YES"/>
                                 </accessibility>
@@ -266,13 +234,6 @@
                                     <constraint firstAttribute="height" constant="360" id="3Aj-e2-Zgk"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4J5-Vb-a8a">
-                                <rect key="frame" x="311" y="20" width="48" height="30"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <segue destination="yqs-CY-5ge" kind="unwind" unwindAction="unwindFromcancelButtonWithSender:" id="4QW-7D-Xmi"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="atd-Ml-ED6">
                                 <rect key="frame" x="255" y="608" width="58" height="30"/>
                                 <state key="normal" title="Approve"/>
@@ -295,42 +256,33 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Approve Photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vg3-mU-GQp">
-                                <rect key="frame" x="16" y="25" width="158" height="29"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="OLI-bs-73D" firstAttribute="trailing" secondItem="mIc-ms-kr0" secondAttribute="trailing" constant="15" id="0RI-8t-SKo"/>
                             <constraint firstItem="OLI-bs-73D" firstAttribute="bottom" secondItem="udM-bo-Qem" secondAttribute="bottom" constant="29" id="44t-st-jd1"/>
                             <constraint firstItem="UNg-qu-3VJ" firstAttribute="leading" secondItem="OLI-bs-73D" secondAttribute="leading" constant="15" id="5jF-J3-mVU"/>
-                            <constraint firstItem="OLI-bs-73D" firstAttribute="trailing" secondItem="4J5-Vb-a8a" secondAttribute="trailing" constant="16" id="8jW-RP-lXr"/>
                             <constraint firstItem="OLI-bs-73D" firstAttribute="bottom" secondItem="yhL-Ie-Qlv" secondAttribute="bottom" constant="70" id="DWi-bj-FJW"/>
-                            <constraint firstItem="vg3-mU-GQp" firstAttribute="leading" secondItem="OLI-bs-73D" secondAttribute="leading" constant="16" id="DbP-ck-WiL"/>
                             <constraint firstItem="l4F-7d-5S9" firstAttribute="top" secondItem="nqr-NY-XfN" secondAttribute="bottom" constant="22" id="IbY-yq-TOd"/>
                             <constraint firstItem="OLI-bs-73D" firstAttribute="bottom" secondItem="atd-Ml-ED6" secondAttribute="bottom" constant="29" id="JRL-wN-hMh"/>
                             <constraint firstItem="mIc-ms-kr0" firstAttribute="leading" secondItem="OLI-bs-73D" secondAttribute="leading" constant="15" id="MEt-P1-Fe3"/>
                             <constraint firstItem="mIc-ms-kr0" firstAttribute="centerX" secondItem="paA-bj-OxZ" secondAttribute="centerX" id="Nps-qx-Lxg"/>
                             <constraint firstItem="mIc-ms-kr0" firstAttribute="top" secondItem="oef-NT-R9V" secondAttribute="bottom" constant="30" id="Osd-yd-eSD"/>
-                            <constraint firstItem="vg3-mU-GQp" firstAttribute="top" secondItem="OLI-bs-73D" secondAttribute="top" constant="5" id="Rcj-Of-VHi"/>
                             <constraint firstItem="OLI-bs-73D" firstAttribute="trailing" secondItem="l4F-7d-5S9" secondAttribute="trailing" constant="5" id="S4V-uQ-Jar"/>
-                            <constraint firstItem="nqr-NY-XfN" firstAttribute="top" secondItem="OLI-bs-73D" secondAttribute="top" constant="47" id="Wt1-tp-Dne"/>
+                            <constraint firstItem="nqr-NY-XfN" firstAttribute="top" secondItem="OLI-bs-73D" secondAttribute="top" constant="15" id="Wt1-tp-Dne"/>
                             <constraint firstItem="OLI-bs-73D" firstAttribute="trailing" secondItem="nqr-NY-XfN" secondAttribute="trailing" constant="5" id="YK4-0j-mxB"/>
+                            <constraint firstItem="UNg-qu-3VJ" firstAttribute="top" secondItem="OLI-bs-73D" secondAttribute="top" constant="10" id="Zfm-9Z-Tl0"/>
                             <constraint firstItem="oef-NT-R9V" firstAttribute="leading" secondItem="OLI-bs-73D" secondAttribute="leading" constant="15" id="e08-Fe-HUP"/>
-                            <constraint firstItem="UNg-qu-3VJ" firstAttribute="top" secondItem="vg3-mU-GQp" secondAttribute="bottom" constant="9" id="hQk-Pi-exb"/>
                             <constraint firstItem="OLI-bs-73D" firstAttribute="trailing" secondItem="atd-Ml-ED6" secondAttribute="trailing" constant="62" id="if5-ax-xkc"/>
                             <constraint firstItem="l4F-7d-5S9" firstAttribute="leading" secondItem="oef-NT-R9V" secondAttribute="trailing" constant="2" id="pHn-3w-h4s"/>
                             <constraint firstItem="oef-NT-R9V" firstAttribute="top" secondItem="UNg-qu-3VJ" secondAttribute="bottom" constant="15" id="qpO-YK-fFl"/>
-                            <constraint firstItem="4J5-Vb-a8a" firstAttribute="top" secondItem="OLI-bs-73D" secondAttribute="top" id="tGj-QJ-S9Z"/>
                             <constraint firstItem="nqr-NY-XfN" firstAttribute="leading" secondItem="UNg-qu-3VJ" secondAttribute="trailing" constant="2" id="wY1-Fq-fO2"/>
                             <constraint firstItem="udM-bo-Qem" firstAttribute="leading" secondItem="OLI-bs-73D" secondAttribute="leading" constant="62" id="zFx-0l-5wi"/>
                             <constraint firstItem="yhL-Ie-Qlv" firstAttribute="centerX" secondItem="paA-bj-OxZ" secondAttribute="centerX" id="zyK-D4-aey"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OLI-bs-73D"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Approve Photo" id="u4e-oR-ieB"/>
                     <connections>
                         <outlet property="imageHeight" destination="3Aj-e2-Zgk" id="V8b-VJ-EXq"/>
                         <outlet property="imageView" destination="mIc-ms-kr0" id="ucV-5E-W1C"/>
@@ -344,7 +296,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NA5-ap-9Fz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="yqs-CY-5ge" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="871" y="2918"/>
+            <point key="canvasLocation" x="1346" y="2919"/>
         </scene>
         <!--Full Screen View Controller-->
         <scene sceneID="vIg-dQ-BNt">
@@ -355,10 +307,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQq-k9-hRi">
-                                <rect key="frame" x="0.0" y="50" width="375" height="617"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iZM-fL-0VM">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="617"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="375" id="7KE-Ia-bS2"/>
                                         </constraints>
@@ -376,22 +328,13 @@
                                     <outlet property="delegate" destination="xJ3-Kk-aa6" id="YZH-PT-lSb"/>
                                 </connections>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DP2-O2-jX3">
-                                <rect key="frame" x="326" y="20" width="34" height="30"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <segue destination="dh6-GT-u5Q" kind="unwind" unwindAction="unwindFromcancelButtonWithSender:" id="KVG-pT-Hsg"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="QJH-h4-w2D" firstAttribute="trailing" secondItem="DP2-O2-jX3" secondAttribute="trailing" constant="15" id="0Ia-5a-D7P"/>
                             <constraint firstItem="QJH-h4-w2D" firstAttribute="trailing" secondItem="yQq-k9-hRi" secondAttribute="trailing" id="CW4-OX-0V7"/>
-                            <constraint firstItem="DP2-O2-jX3" firstAttribute="top" secondItem="QJH-h4-w2D" secondAttribute="top" id="Dhn-wL-wCu"/>
                             <constraint firstItem="yQq-k9-hRi" firstAttribute="leading" secondItem="QJH-h4-w2D" secondAttribute="leading" id="E1Z-b8-9Uo"/>
                             <constraint firstItem="QJH-h4-w2D" firstAttribute="bottom" secondItem="yQq-k9-hRi" secondAttribute="bottom" id="Ga4-z0-71g"/>
-                            <constraint firstItem="yQq-k9-hRi" firstAttribute="top" secondItem="QJH-h4-w2D" secondAttribute="top" constant="30" id="XnY-IR-n5G"/>
+                            <constraint firstItem="yQq-k9-hRi" firstAttribute="top" secondItem="QJH-h4-w2D" secondAttribute="top" id="XnY-IR-n5G"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="QJH-h4-w2D"/>
                     </view>
@@ -402,11 +345,10 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fAZ-Ce-EJX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="dh6-GT-u5Q" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1644" y="2917.6911544227887"/>
+            <point key="canvasLocation" x="2121" y="2919"/>
         </scene>
-        <!--Approve Park View Controller-->
+        <!--Approve Suggested Park-->
         <scene sceneID="TYl-Hd-mGg">
             <objects>
                 <viewController id="B3b-nD-NVy" customClass="ApproveParkViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
@@ -414,12 +356,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="697"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Approve Suggested Park" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zRH-Us-wtR">
-                                <rect key="frame" x="10" y="25" width="263.5" height="29"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UDP-WF-Rki">
                                 <rect key="frame" x="0.0" y="64" width="375" height="585"/>
                                 <subviews>
@@ -929,31 +865,21 @@
                                     <action selector="approveParkPressed:" destination="B3b-nD-NVy" eventType="touchUpInside" id="6Ec-ER-6wz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGm-R5-TAk">
-                                <rect key="frame" x="312" y="22" width="48" height="30"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <segue destination="Sg9-oX-hCy" kind="unwind" unwindAction="unwindFromcancelButtonWithSender:" id="kQU-GZ-Qpu"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="dhi-xc-6VD" firstAttribute="leading" secondItem="NpV-9Y-U2d" secondAttribute="leading" constant="45" id="2kD-WY-r4u"/>
-                            <constraint firstItem="nGm-R5-TAk" firstAttribute="top" secondItem="NpV-9Y-U2d" secondAttribute="top" constant="2" id="54z-GE-FkZ"/>
                             <constraint firstItem="dhi-xc-6VD" firstAttribute="top" secondItem="UDP-WF-Rki" secondAttribute="bottom" constant="8" id="Gb6-QG-xrU"/>
                             <constraint firstItem="NpV-9Y-U2d" firstAttribute="bottom" secondItem="UDP-WF-Rki" secondAttribute="bottom" constant="48" id="M9Z-iX-J6V"/>
+                            <constraint firstItem="UDP-WF-Rki" firstAttribute="top" secondItem="NpV-9Y-U2d" secondAttribute="top" id="Nnr-ba-Wrm"/>
                             <constraint firstItem="NpV-9Y-U2d" firstAttribute="trailing" secondItem="0ME-Ws-6H1" secondAttribute="trailing" constant="45" id="Uvm-pW-bAv"/>
-                            <constraint firstItem="UDP-WF-Rki" firstAttribute="top" secondItem="zRH-Us-wtR" secondAttribute="bottom" constant="10" id="VfY-UN-xKe"/>
-                            <constraint firstItem="NpV-9Y-U2d" firstAttribute="trailing" secondItem="nGm-R5-TAk" secondAttribute="trailing" constant="15" id="fHw-hb-3pz"/>
                             <constraint firstItem="UDP-WF-Rki" firstAttribute="trailing" secondItem="NpV-9Y-U2d" secondAttribute="trailing" id="fTz-7d-sXh"/>
                             <constraint firstItem="UDP-WF-Rki" firstAttribute="leading" secondItem="NpV-9Y-U2d" secondAttribute="leading" id="kun-ld-qbY"/>
-                            <constraint firstItem="zRH-Us-wtR" firstAttribute="leading" secondItem="NpV-9Y-U2d" secondAttribute="leading" constant="10" id="nPj-9W-EGb"/>
-                            <constraint firstItem="zRH-Us-wtR" firstAttribute="top" secondItem="NpV-9Y-U2d" secondAttribute="top" constant="5" id="u7I-vg-Ihb"/>
                             <constraint firstItem="0ME-Ws-6H1" firstAttribute="top" secondItem="UDP-WF-Rki" secondAttribute="bottom" constant="8" id="wK4-Ox-tdx"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NpV-9Y-U2d"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Approve Suggested Park" id="3wc-Hq-Ept"/>
                     <size key="freeformSize" width="375" height="697"/>
                     <connections>
                         <outlet property="cityField" destination="fVE-du-Bj9" id="Zja-2K-MGg"/>
@@ -977,9 +903,9 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eML-Ib-8Nu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Sg9-oX-hCy" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="844" y="2169"/>
+            <point key="canvasLocation" x="1321" y="2166"/>
         </scene>
-        <!--Suggestionsto Approve List View Controller-->
+        <!--Suggested Attractions-->
         <scene sceneID="6G3-r5-Qnj">
             <objects>
                 <viewController id="CXh-SS-6QI" customClass="SuggestionstoApproveListViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
@@ -988,7 +914,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wSg-lu-8f7">
-                                <rect key="frame" x="0.0" y="71" width="375" height="596"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="suggestCell" rowHeight="122" id="QQq-f5-ga5" customClass="SuggestTableViewCell" customModule="rideTrack" customModuleProvider="target">
@@ -1114,41 +1040,24 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hEF-Fy-YVv">
-                                <rect key="frame" x="321" y="28" width="34" height="30"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <segue destination="0YO-2h-68Z" kind="unwind" unwindAction="unwindApproveTypeWithSender:" id="brI-Jz-tp6"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Suggested Attractions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffq-1w-AnL">
-                                <rect key="frame" x="16" y="29" width="274" height="32"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="ffq-1w-AnL" firstAttribute="top" secondItem="vpq-kW-ByT" secondAttribute="top" constant="9" id="ElQ-Wb-Fjj"/>
-                            <constraint firstItem="hEF-Fy-YVv" firstAttribute="top" secondItem="vpq-kW-ByT" secondAttribute="top" constant="8" id="G7K-na-I2e"/>
                             <constraint firstItem="wSg-lu-8f7" firstAttribute="bottom" secondItem="vpq-kW-ByT" secondAttribute="bottom" id="UFR-5e-TPf"/>
                             <constraint firstItem="wSg-lu-8f7" firstAttribute="leading" secondItem="vpq-kW-ByT" secondAttribute="leading" id="a7E-mM-d8I"/>
                             <constraint firstItem="wSg-lu-8f7" firstAttribute="trailing" secondItem="vpq-kW-ByT" secondAttribute="trailing" id="cE2-vZ-qck"/>
-                            <constraint firstItem="ffq-1w-AnL" firstAttribute="leading" secondItem="vpq-kW-ByT" secondAttribute="leading" constant="16" id="dr1-rM-48W"/>
-                            <constraint firstItem="vpq-kW-ByT" firstAttribute="trailing" secondItem="hEF-Fy-YVv" secondAttribute="trailing" constant="20" id="f7L-xo-jHJ"/>
-                            <constraint firstItem="wSg-lu-8f7" firstAttribute="top" secondItem="ffq-1w-AnL" secondAttribute="bottom" constant="10" id="oV5-x1-Ksr"/>
+                            <constraint firstItem="wSg-lu-8f7" firstAttribute="top" secondItem="vpq-kW-ByT" secondAttribute="top" id="oc6-Zp-YGC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vpq-kW-ByT"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Suggested Attractions" id="b5a-tu-MWo"/>
                     <connections>
                         <outlet property="ApproveAttractionTableView" destination="wSg-lu-8f7" id="PNR-Xk-UaI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="drn-yv-M9h" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="0YO-2h-68Z" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-7" y="1348"/>
+            <point key="canvasLocation" x="470" y="1392"/>
         </scene>
         <!--Suggest Details View Controller-->
         <scene sceneID="26t-5l-jaa">
@@ -1518,7 +1427,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nog-OG-lEH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Zwl-f1-Wi8" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="844" y="1348"/>
+            <point key="canvasLocation" x="1321" y="1392"/>
         </scene>
         <!--Approve Modify Attraction View Controller-->
         <scene sceneID="4Oc-WA-R98">
@@ -2318,7 +2227,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b6t-eT-rLM" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="fa7-I9-0x9" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1604" y="1343"/>
+            <point key="canvasLocation" x="2081" y="1387"/>
         </scene>
         <!--Approve Park Map View Controller-->
         <scene sceneID="teo-0h-Xuj">
@@ -2389,6 +2298,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9KI-z7-zJv"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="3XK-Kx-sZb" id="lnB-hk-1VX"/>
                         <outlet property="saveButton" destination="OC4-H4-RQ7" id="jki-ag-eKT"/>
@@ -2404,7 +2314,26 @@
                 </pongPressGestureRecognizer>
                 <exit id="WlZ-8V-i5z" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1644" y="2169"/>
+            <point key="canvasLocation" x="2121" y="2166"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Gfi-XY-IbE">
+            <objects>
+                <navigationController storyboardIdentifier="ApproveSuggestionsVC" automaticallyAdjustsScrollViewInsets="NO" hidesBarsWhenVerticallyCompact="YES" id="fjz-7R-u3T" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="rF8-Ji-ZLf">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Xgb-qx-5kZ" kind="relationship" relationship="rootViewController" id="SkM-hk-u2E"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kXE-gt-nMH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1546" y="2125"/>
         </scene>
     </scenes>
     <resources>

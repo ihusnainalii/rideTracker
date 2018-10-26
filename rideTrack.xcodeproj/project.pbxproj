@@ -28,7 +28,6 @@
 		5F636B652139CDB500D2B922 /* RideTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B642139CDB500D2B922 /* RideTypeViewController.swift */; };
 		5F636B67213B3E3A00D2B922 /* RideTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B66213B3E3A00D2B922 /* RideTypeTableViewCell.swift */; };
 		5F636B6B213C60AD00D2B922 /* TopLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B6A213C60AD00D2B922 /* TopLists.swift */; };
-		5F7BC757217F9007005FFFC7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F7BC756217F9007005FFFC7 /* GoogleService-Info.plist */; };
 		5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */; };
 		5F8E5CB7213E1D6300C80FB1 /* UserName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8E5CB6213E1D6300C80FB1 /* UserName.swift */; };
 		5F964AE0217153A400989DB4 /* UserCreatedLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F964ADF217153A400989DB4 /* UserCreatedLists.swift */; };
@@ -61,10 +60,10 @@
 		982C41392179570C00B5C8A7 /* FullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982C41382179570C00B5C8A7 /* FullScreenViewController.swift */; };
 		982E097620F54957007F2D02 /* ApproveModifyAttractionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E097520F54957007F2D02 /* ApproveModifyAttractionViewController.swift */; };
 		982E097820F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E097720F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift */; };
+		9832E68F2182952600289677 /* ApproveSuggestions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9832E6912182952600289677 /* ApproveSuggestions.storyboard */; };
 		9845395720BC8D8C00C0E36C /* AttractionsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */; };
 		987028F420B7897E00DC3B73 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987028F320B7897E00DC3B73 /* SettingsViewController.swift */; };
 		987CCCB9212E081D00D11825 /* fullScreenPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987CCCB8212E081D00D11825 /* fullScreenPhotoViewController.swift */; };
-		988A1A352170E885004CF3A8 /* ApproveSuggestions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 988A1A342170E885004CF3A8 /* ApproveSuggestions.storyboard */; };
 		988A1A372170EA92004CF3A8 /* SelectTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A1A362170EA92004CF3A8 /* SelectTypeViewController.swift */; };
 		988A1A392170EEDB004CF3A8 /* ParkSuggListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A1A382170EEDB004CF3A8 /* ParkSuggListViewController.swift */; };
 		988A1A3B2170F036004CF3A8 /* approveSuggParksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A1A3A2170F036004CF3A8 /* approveSuggParksModel.swift */; };
@@ -140,7 +139,6 @@
 		5F636B642139CDB500D2B922 /* RideTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideTypeViewController.swift; sourceTree = "<group>"; };
 		5F636B66213B3E3A00D2B922 /* RideTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideTypeTableViewCell.swift; sourceTree = "<group>"; };
 		5F636B6A213C60AD00D2B922 /* TopLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLists.swift; sourceTree = "<group>"; };
-		5F7BC756217F9007005FFFC7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSmallerLayout.swift; sourceTree = "<group>"; };
 		5F8E5CB6213E1D6300C80FB1 /* UserName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserName.swift; sourceTree = "<group>"; };
 		5F964ADF217153A400989DB4 /* UserCreatedLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCreatedLists.swift; sourceTree = "<group>"; };
@@ -173,10 +171,10 @@
 		982C41382179570C00B5C8A7 /* FullScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenViewController.swift; sourceTree = "<group>"; };
 		982E097520F54957007F2D02 /* ApproveModifyAttractionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveModifyAttractionViewController.swift; sourceTree = "<group>"; };
 		982E097720F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyAttractionDetailsViewController.swift; sourceTree = "<group>"; };
+		9832E6902182952600289677 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ApproveSuggestions.storyboard; sourceTree = "<group>"; };
 		9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionsDetailsViewController.swift; sourceTree = "<group>"; };
 		987028F320B7897E00DC3B73 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		987CCCB8212E081D00D11825 /* fullScreenPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fullScreenPhotoViewController.swift; sourceTree = "<group>"; };
-		988A1A342170E885004CF3A8 /* ApproveSuggestions.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ApproveSuggestions.storyboard; sourceTree = "<group>"; };
 		988A1A362170EA92004CF3A8 /* SelectTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTypeViewController.swift; sourceTree = "<group>"; };
 		988A1A382170EEDB004CF3A8 /* ParkSuggListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkSuggListViewController.swift; sourceTree = "<group>"; };
 		988A1A3A2170F036004CF3A8 /* approveSuggParksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = approveSuggParksModel.swift; sourceTree = "<group>"; };
@@ -370,7 +368,7 @@
 				988A1A402171316C004CF3A8 /* SuggestMapViewController.swift */,
 				988A1A422171318B004CF3A8 /* ApproveParks */,
 				98F17C63216AAA9A0009BE91 /* ApproveAttractions */,
-				988A1A342170E885004CF3A8 /* ApproveSuggestions.storyboard */,
+				9832E6912182952600289677 /* ApproveSuggestions.storyboard */,
 			);
 			path = "User Suggest";
 			sourceTree = "<group>";
@@ -432,7 +430,6 @@
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
-				5F7BC756217F9007005FFFC7 /* GoogleService-Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
@@ -629,10 +626,9 @@
 				5FF1ECB020B5271800BE1609 /* LaunchScreen.storyboard in Resources */,
 				5FE9F81020DB45030012B98C /* Media.xcassets in Resources */,
 				5F964AE9217158CE00989DB4 /* UserCreatedLists.storyboard in Resources */,
-				988A1A352170E885004CF3A8 /* ApproveSuggestions.storyboard in Resources */,
+				9832E68F2182952600289677 /* ApproveSuggestions.storyboard in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
-				5F7BC757217F9007005FFFC7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -863,6 +859,14 @@
 				5FF1ECAE20B5271800BE1609 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		9832E6912182952600289677 /* ApproveSuggestions.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9832E6902182952600289677 /* Base */,
+			);
+			name = ApproveSuggestions.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

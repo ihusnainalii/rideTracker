@@ -383,11 +383,13 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
                 }
                     else {
                         print("this shouldnt happen, so it will display nothing")
-                    self.CCView.isHidden = false
+                    self.CCView.isHidden = true
+                    showImage = false
                     self.imageSection.isHidden = true
                     self.photoAuthorName.text = " by \(self.selectedRide.photoArtist!)/"
                     self.ccTypeButton.isHidden = true
                 }
+                print("Max height is \(maxFromTop)")
                 if showImage {
                     self.uiImageView.layer.cornerRadius = 30
                     self.uiImageView.layer.masksToBounds = true

@@ -12,7 +12,11 @@ class SelectTypeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"back", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        UINavigationBar.appearance().tintColor = UIColor.blue
         // Do any additional setup after loading the view.
     }
     @IBAction func unwindApproveType(sender: UIStoryboardSegue) {

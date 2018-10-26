@@ -10,6 +10,8 @@ import UIKit
 
 class photoSuggListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataModelProtocol {
     
+    @IBOutlet weak var navigationView: UINavigationItem!
+    
     @IBOutlet weak var submitedPhotosTableView: UITableView!
     
     var listOfSuggestions = [approveSuggPhotoModel]()
@@ -85,5 +87,12 @@ class photoSuggListViewController: UIViewController, UITableViewDataSource, UITa
             }
         }
         submitedPhotosTableView.reloadData()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+     //   self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.navigationItem.leftBarButtonItem?.tintColor = UIColor.blue
+        self.navigationController?.navigationItem.leftBarButtonItem?.title = "Back"
+
     }
 }
