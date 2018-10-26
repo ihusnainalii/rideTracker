@@ -144,7 +144,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0ww-cK-dno" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="D1r-M1-Dj2" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="767" y="107"/>
+            <point key="canvasLocation" x="910" y="107"/>
         </scene>
         <!--List View Controller-->
         <scene sceneID="R7C-mv-QtL">
@@ -365,7 +365,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Fky-cl-bga" firstAttribute="bottom" secondItem="WFP-Gp-8Pi" secondAttribute="bottom" id="CeW-90-gCV"/>
+                            <constraint firstItem="Fky-cl-bga" firstAttribute="bottom" secondItem="8vZ-gS-Y9V" secondAttribute="bottom" id="CeW-90-gCV"/>
                             <constraint firstItem="ewf-hY-B6v" firstAttribute="top" secondItem="8vZ-gS-Y9V" secondAttribute="top" id="HIB-4Y-FOU"/>
                             <constraint firstItem="ewf-hY-B6v" firstAttribute="trailing" secondItem="WFP-Gp-8Pi" secondAttribute="trailing" id="Nqz-BQ-xI9"/>
                             <constraint firstItem="Fky-cl-bga" firstAttribute="top" secondItem="ewf-hY-B6v" secondAttribute="bottom" id="RBE-Ml-bOQ"/>
@@ -444,8 +444,8 @@
                                             <action selector="didUpdateText:" destination="E7B-Kv-gKt" eventType="editingChanged" id="NDZ-CW-HPM"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select An attraction" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eVP-Et-tY5">
-                                        <rect key="frame" x="78" y="30" width="219" height="30"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select An attraction" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="eVP-Et-tY5">
+                                        <rect key="frame" x="60" y="30" width="255" height="30"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -454,10 +454,12 @@
                                 <color key="backgroundColor" red="0.30588235289999999" green="0.64705882349999999" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="KjH-5x-SCH" firstAttribute="leading" secondItem="QZo-01-FCT" secondAttribute="leading" constant="8" id="8aW-n1-aQ1"/>
+                                    <constraint firstAttribute="trailing" secondItem="eVP-Et-tY5" secondAttribute="trailing" constant="60" id="AzR-Aj-fhx"/>
                                     <constraint firstAttribute="trailing" secondItem="KjH-5x-SCH" secondAttribute="trailing" constant="8" id="bgh-yb-ZpS"/>
                                     <constraint firstItem="KjH-5x-SCH" firstAttribute="top" secondItem="eVP-Et-tY5" secondAttribute="bottom" constant="8" id="kFh-Nd-q8D"/>
                                     <constraint firstAttribute="bottom" secondItem="KjH-5x-SCH" secondAttribute="bottom" constant="8" id="s4p-2K-GYR"/>
                                     <constraint firstItem="eVP-Et-tY5" firstAttribute="top" secondItem="QZo-01-FCT" secondAttribute="top" constant="30" id="sKu-K3-B0R"/>
+                                    <constraint firstItem="eVP-Et-tY5" firstAttribute="leading" secondItem="QZo-01-FCT" secondAttribute="leading" constant="60" id="wVD-ne-wmj"/>
                                     <constraint firstItem="eVP-Et-tY5" firstAttribute="centerX" secondItem="QZo-01-FCT" secondAttribute="centerX" id="zey-jo-wyk"/>
                                 </constraints>
                             </view>
@@ -467,12 +469,9 @@
                             <constraint firstItem="QZo-01-FCT" firstAttribute="leading" secondItem="Tqz-Lz-z9O" secondAttribute="leading" id="1hg-nG-PDj"/>
                             <constraint firstItem="Qyr-rd-lGI" firstAttribute="top" secondItem="QZo-01-FCT" secondAttribute="bottom" id="JW7-JC-6K7"/>
                             <constraint firstItem="QZo-01-FCT" firstAttribute="trailing" secondItem="Tqz-Lz-z9O" secondAttribute="trailing" id="Q0R-4d-Bu7"/>
-                            <constraint firstItem="Qyr-rd-lGI" firstAttribute="bottom" secondItem="Tqz-Lz-z9O" secondAttribute="bottom" id="RRq-tY-Els"/>
+                            <constraint firstItem="Qyr-rd-lGI" firstAttribute="bottom" secondItem="2U5-R9-hi4" secondAttribute="bottom" id="RRq-tY-Els"/>
                             <constraint firstItem="Qyr-rd-lGI" firstAttribute="trailing" secondItem="Tqz-Lz-z9O" secondAttribute="trailing" id="X5I-fA-r5M"/>
-                            <constraint firstItem="Qyr-rd-lGI" firstAttribute="bottom" secondItem="Tqz-Lz-z9O" secondAttribute="bottom" id="iOi-Vh-o75"/>
                             <constraint firstItem="Qyr-rd-lGI" firstAttribute="leading" secondItem="Tqz-Lz-z9O" secondAttribute="leading" id="jLl-37-3kI"/>
-                            <constraint firstItem="Qyr-rd-lGI" firstAttribute="trailing" secondItem="Tqz-Lz-z9O" secondAttribute="trailing" id="m0K-Em-Lse"/>
-                            <constraint firstItem="Qyr-rd-lGI" firstAttribute="leading" secondItem="Tqz-Lz-z9O" secondAttribute="leading" id="sEe-Zt-auu"/>
                             <constraint firstItem="QZo-01-FCT" firstAttribute="top" secondItem="2U5-R9-hi4" secondAttribute="top" id="vxd-Iz-Xrg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Tqz-Lz-z9O"/>
@@ -513,6 +512,6 @@
         <image name="White plus button" width="96" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2AM-TP-JtF"/>
+        <segue reference="6L8-71-S5d"/>
     </inferredMetricsTieBreakers>
 </document>

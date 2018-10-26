@@ -24,6 +24,7 @@ class SelectAttractionViewController: UIViewController, UITableViewDataSource, U
     var firstItemInList = false
     var listName = ""
     
+     let screenSize = UIScreen.main.bounds
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,6 +106,11 @@ class SelectAttractionViewController: UIViewController, UITableViewDataSource, U
         let cell = tableView.dequeueReusableCell(withIdentifier: "selectAttraction", for: indexPath) as! SelectAttractionTableViewCell
         cell.attractionNameLabel.text = searchAttractionList[indexPath.row].name
         cell.rideTypeLabel.text = convertRideTypeID(rideTypeID: searchAttractionList[indexPath.row].rideType)
+        
+        if screenSize.width == 320.0{
+            ConfigureSmallerLayout().listselectAttractionCellLayout(selectAttractionCell: cell)
+        }
+        
         return cell
     }
     

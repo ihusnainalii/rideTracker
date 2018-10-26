@@ -33,6 +33,16 @@ class ConfigureSmallerLayout{
         allParksCell.fractionViewWidth.constant = 64.5
         allParksCell.fractionViewHeight.constant = 25.8
     }
+   
+    func listselectParkCellLayout(selectParkCell: SelectParkTableViewCell){
+        selectParkCell.parkNameLabel.font = selectParkCell.parkNameLabel.font.withSize(17.0)
+        selectParkCell.locationLabel.font = selectParkCell.locationLabel.font.withSize(12.0)
+    }
+   
+    func listselectAttractionCellLayout(selectAttractionCell: SelectAttractionTableViewCell){
+        selectAttractionCell.attractionNameLabel.font = selectAttractionCell.attractionNameLabel.font.withSize(17.0)
+        selectAttractionCell.rideTypeLabel.font = selectAttractionCell.rideTypeLabel.font.withSize(12.0)
+    }
     
     func configureParksView(parksView: ViewController){
         parksView.favoritesHeightMax = 140.0

@@ -14,6 +14,8 @@ class SelectParkViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var allParkTableView: UITableView!
     @IBOutlet weak var parkSearchTextFeild: UITextField!
     
+     let screenSize = UIScreen.main.bounds
+    
     var searchedParksList: [ParksModel]!
     var allParksList = [ParksModel]()
     var searchForPark = SearchForPark()
@@ -62,6 +64,9 @@ class SelectParkViewController: UIViewController, UITableViewDelegate, UITableVi
         let cell = tableView.dequeueReusableCell(withIdentifier: "selectPark", for: indexPath) as! SelectParkTableViewCell
         cell.parkNameLabel.text = searchedParksList[indexPath.row].name
         cell.locationLabel.text = searchedParksList[indexPath.row].city
+        if screenSize.width == 320.0{
+            ConfigureSmallerLayout().listselectParkCellLayout(selectParkCell: cell)
+        }
         return cell
 
     }
