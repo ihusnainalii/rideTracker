@@ -1542,8 +1542,8 @@
         <!--ApproveSuggestionsVC-->
         <scene sceneID="Td7-CC-n96">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="49K-q5-Mir" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewControllerPlaceholder storyboardName="ApproveSuggestions" referencedIdentifier="ApproveSuggestionsVC" id="v5D-iY-SOU" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="49K-q5-Mir" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="985" y="1498"/>
         </scene>
@@ -3060,13 +3060,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by NAME/" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cer-QV-ITA">
-                                <rect key="frame" x="150.5" y="640" width="64" height="17"/>
+                                <rect key="frame" x="61" y="640" width="64" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MyA-A6-Pxc">
-                                <rect key="frame" x="40" y="634" width="105.5" height="30"/>
+                                <rect key="frame" x="15" y="634" width="41" height="30"/>
                                 <color key="tintColor" red="0.69092049870000005" green="0.69092049870000005" blue="0.69092049870000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal">
                                     <attributedString key="attributedTitle">
@@ -3084,7 +3084,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VcV-Qq-vMa">
-                                <rect key="frame" x="219.5" y="633" width="135.5" height="30"/>
+                                <rect key="frame" x="130" y="633" width="42" height="30"/>
                                 <state key="normal" title="CC by">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -3107,16 +3107,14 @@
                             <constraint firstItem="MpI-aW-phH" firstAttribute="trailing" secondItem="YVe-N0-Caq" secondAttribute="trailing" id="E8D-2C-orF"/>
                             <constraint firstItem="SNx-af-cdT" firstAttribute="top" secondItem="cRC-GC-qeJ" secondAttribute="top" constant="627" id="GWT-Dg-5aA"/>
                             <constraint firstItem="SNx-af-cdT" firstAttribute="centerX" secondItem="cRC-GC-qeJ" secondAttribute="centerX" id="K8W-of-fxD"/>
-                            <constraint firstItem="Cer-QV-ITA" firstAttribute="centerX" secondItem="cRC-GC-qeJ" secondAttribute="centerX" constant="-5" id="MYy-1e-Eie"/>
                             <constraint firstAttribute="bottom" secondItem="MpI-aW-phH" secondAttribute="bottom" id="MmP-bR-QpN"/>
                             <constraint firstItem="SNx-af-cdT" firstAttribute="bottom" secondItem="YVe-N0-Caq" secondAttribute="bottom" id="Ok5-1o-O0p"/>
-                            <constraint firstItem="MyA-A6-Pxc" firstAttribute="leading" secondItem="YVe-N0-Caq" secondAttribute="leading" constant="40" id="PBh-KB-Af5"/>
+                            <constraint firstItem="MyA-A6-Pxc" firstAttribute="leading" secondItem="YVe-N0-Caq" secondAttribute="leading" constant="15" id="PBh-KB-Af5"/>
                             <constraint firstItem="MpI-aW-phH" firstAttribute="top" secondItem="cRC-GC-qeJ" secondAttribute="top" id="Rrw-T2-YNL"/>
                             <constraint firstItem="tQu-Ex-HRs" firstAttribute="top" secondItem="YVe-N0-Caq" secondAttribute="top" constant="5" id="YcZ-a0-ROO"/>
                             <constraint firstItem="Cer-QV-ITA" firstAttribute="bottom" secondItem="YVe-N0-Caq" secondAttribute="bottom" constant="-10" id="Yp5-Bb-pTe"/>
                             <constraint firstItem="YVe-N0-Caq" firstAttribute="bottom" secondItem="VcV-Qq-vMa" secondAttribute="bottom" constant="4" id="j6g-gy-ke1"/>
                             <constraint firstItem="MpI-aW-phH" firstAttribute="leading" secondItem="YVe-N0-Caq" secondAttribute="leading" id="mjl-bw-LP9"/>
-                            <constraint firstItem="YVe-N0-Caq" firstAttribute="trailing" secondItem="VcV-Qq-vMa" secondAttribute="trailing" constant="20" id="ndh-F8-fbZ"/>
                             <constraint firstItem="SNx-af-cdT" firstAttribute="leading" secondItem="YVe-N0-Caq" secondAttribute="leading" constant="67" id="zgH-AE-eYl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="YVe-N0-Caq"/>
@@ -3129,11 +3127,11 @@
                     <connections>
                         <outlet property="backgroundView" destination="cRC-GC-qeJ" id="6gA-W8-Esz"/>
                         <outlet property="ccLable" destination="VcV-Qq-vMa" id="ClV-5M-mr4"/>
-                        <outlet property="copyrightCenter" destination="MYy-1e-Eie" id="KDr-rT-S3y"/>
                         <outlet property="doneButton" destination="tQu-Ex-HRs" id="vAv-Gf-OO6"/>
                         <outlet property="imageView" destination="cSu-fd-58Z" id="IWN-d1-zNW"/>
                         <outlet property="imageWidth" destination="ey9-75-ZdR" id="p1T-AE-t8g"/>
                         <outlet property="photoAuthorNameLabel" destination="Cer-QV-ITA" id="DA5-jn-sH6"/>
+                        <outlet property="photoButton" destination="MyA-A6-Pxc" id="3xU-JT-IMQ"/>
                         <outlet property="scrollView" destination="MpI-aW-phH" id="fDZ-EV-kPo"/>
                         <segue destination="Lk2-9X-eUL" kind="unwind" identifier="unwindToDetails" unwindAction="unwindToDetailsViewWithSender:" id="88a-3w-9TQ"/>
                     </connections>
@@ -4114,7 +4112,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c4C-Et-YsM" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="2j4-58-alU" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2984.8000000000002" y="1785.1574212893554"/>
+            <point key="canvasLocation" x="3105" y="1785"/>
         </scene>
         <!--Park Settings View Controller-->
         <scene sceneID="7Q5-cN-EYA">
@@ -5663,11 +5661,11 @@
         <image name="Green settings" width="96" height="96"/>
         <image name="Info-green" width="96" height="96"/>
         <image name="List icon" width="96" height="96"/>
-        <image name="Modify Button" width="48" height="48"/>
+        <image name="Modify Button" width="96" height="96"/>
         <image name="PhotoLibrary" width="24" height="24"/>
         <image name="Plus Attraction" width="48" height="48"/>
         <image name="Plus button" width="72" height="72"/>
-        <image name="ScoreCard button" width="48" height="48"/>
+        <image name="ScoreCard button" width="96" height="96"/>
         <image name="Screen Shot 2018-06-24 at 12.52.26 PM" width="670" height="1196"/>
         <image name="Search" width="31" height="31"/>
         <image name="Settings icon" width="96" height="96"/>

@@ -13,6 +13,7 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate, SFS
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet var backgroundView: UIView!
     
+    @IBOutlet weak var photoButton: UIButton!
     @IBOutlet weak var ccLable: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     var attractionImage: UIImage!
@@ -63,19 +64,25 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate, SFS
             }
             self.photoAuthorNameLabel.text = "by \(self.selectedRide.photoArtist!)/"
         }
+        else if self.selectedRide.photoCC != "" {
+            self.ccLable.setTitle("\(String(describing: self.selectedRide.photoCC!))", for: .normal)
+            self.photoAuthorNameLabel.text = "by \(self.selectedRide.photoArtist!)/"
+        }
         else if self.selectedRide.photoArtist == "Self"{
             photoAuthorNameLabel.isHidden = true
             ccLable.isHidden = true
+            photoButton.isHidden = true
             
         }
-        else if self.selectedRide.photoCC == ""{ //for user submited photos
-            self.photoAuthorNameLabel.text = "submitted by \(self.selectedRide.photoArtist!)/"
+        else if self.selectedRide.photoCC == "" && self.selectedRide.photoArtist != ""{ //for user submited photos
+            self.photoAuthorNameLabel.text = "submitted by \(self.selectedRide.photoArtist!)"
             self.ccLable.isHidden = true
         }
         else {
             print("this shouldnt happen, but just in case, it will display everythnig")
-            self.photoAuthorNameLabel.text = " by \(self.selectedRide.photoArtist!)/"
-            self.ccLable.isHidden = true
+            photoAuthorNameLabel.isHidden = true
+            ccLable.isHidden = true
+            photoButton.isHidden = true
         }
 
         imageView.layer.cornerRadius = 0
@@ -152,7 +159,7 @@ class fullScreenPhotoViewController: UIViewController, UIScrollViewDelegate, SFS
     }
     
     @IBAction func didPressPhotoLink(_ sender: Any) {
-        if selectedRide.photoCC != "" {
+        if selectedRide.photoLink != "" {
             let photoLinkSite = selectedRide.photoLink
             let safariVC = SFSafariViewController(url: NSURL(string: photoLinkSite!)! as URL)
             safariVC.delegate = self

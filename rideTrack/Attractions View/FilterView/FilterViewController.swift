@@ -72,25 +72,32 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if (hasHaptic != 0) {
             generator.impactOccurred()
         }
+        print("selected Row")
         let cell = tableView.cellForRow(at: indexPath) as! FilterTableViewCell
         var checked = false
        // let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath) as! FilterTableViewCell
+        var typeNum = 0
         print("Selecting type \(cell.rideTypeLabel.text!)")
-        if cell.selectButton.image == #imageLiteral(resourceName: "Check Button"){
+        for i in 0..<(typeFilter.count) {
+            if cell.rideTypeLabel.text! == typeFilter[i]{
+                typeNum = i
+                checked = true
+                break
+            }
+        }
+     //   if cell.selectButton.image == #imageLiteral(resourceName: "Check Button"){
+        if !checked {
             print("HERE!")
             cell.selectButton.image = #imageLiteral(resourceName: "green check")
             typeFilter.append(cell.rideTypeLabel.text!)
             checked = true
         }
-        if !checked {
-        for i in 0..<(typeFilter.count) {
-                    if cell.rideTypeLabel.text! == typeFilter[i]{
-                        cell.selectButton.image = #imageLiteral(resourceName: "Check Button")
-                        typeFilter.remove(at: i)
-                        break
-                    }
-                }
-        }
+        else {
+            print("not checked")
+            cell.selectButton.image = #imageLiteral(resourceName: "Check Button")
+            typeFilter.remove(at: typeNum)
+            }
+        
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

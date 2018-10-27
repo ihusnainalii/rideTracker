@@ -369,6 +369,14 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
                     maxFromTop -= 25
 
                 }
+                else if self.selectedRide.photoCC != "" {
+                    self.CCView.isHidden = false
+                    self.imageSection.isHidden = false
+                    self.ccTypeButton.setTitle("\(String(describing: self.selectedRide.photoCC!))", for: .normal)
+                    self.photoAuthorName.text = "by \(self.selectedRide.photoArtist!)/"
+                    maxFromTop -= 25
+
+                }
                 else if self.selectedRide.photoArtist == "Self"{
                     self.CCView.isHidden = true
                     self.imageSection.isHidden = false
