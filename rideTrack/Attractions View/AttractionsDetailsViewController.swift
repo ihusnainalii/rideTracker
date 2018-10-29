@@ -256,7 +256,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
             let end = fullURL.index(fullURL.endIndex, offsetBy: endOffset-characters.count) //-6
             let range = start..<end
             let website = String(fullURL[range])
-            partnerLabel.text = "about this attraction at \(website)"
+            partnerLabel.text = "via \(website)"
         }
         
         switch selectedRide.rideType {

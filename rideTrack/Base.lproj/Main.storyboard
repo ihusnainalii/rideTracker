@@ -1500,6 +1500,12 @@
                                     <action selector="didTapFAQ:" destination="yIe-5s-JbS" eventType="touchUpInside" id="ORl-ax-ICs"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYr-AL-RbB">
+                                <rect key="frame" x="159" y="653.5" width="57.5" height="13.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" red="0.69092049870000005" green="0.69092049870000005" blue="0.69092049870000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -1515,8 +1521,10 @@
                             <constraint firstItem="n5x-99-Ie6" firstAttribute="leading" secondItem="2XR-Pj-Woa" secondAttribute="leadingMargin" id="ILQ-lO-CSq"/>
                             <constraint firstItem="cju-sr-LTz" firstAttribute="top" secondItem="PSj-xF-Xbv" secondAttribute="bottom" constant="31.5" id="Jfi-zv-Ynr"/>
                             <constraint firstItem="2Id-GT-tVB" firstAttribute="centerX" secondItem="2XR-Pj-Woa" secondAttribute="centerX" id="LbC-y3-a6W"/>
+                            <constraint firstItem="hYr-AL-RbB" firstAttribute="bottom" secondItem="zul-pj-D7d" secondAttribute="bottom" id="MnW-BP-ett"/>
                             <constraint firstItem="2Id-GT-tVB" firstAttribute="top" secondItem="cju-sr-LTz" secondAttribute="bottom" constant="70" id="TPo-zZ-c9i"/>
                             <constraint firstItem="oyp-NS-2Gg" firstAttribute="centerX" secondItem="2XR-Pj-Woa" secondAttribute="centerX" id="YLr-rk-m6m"/>
+                            <constraint firstItem="hYr-AL-RbB" firstAttribute="centerX" secondItem="2XR-Pj-Woa" secondAttribute="centerX" id="aOr-xM-5Sd"/>
                             <constraint firstItem="zul-pj-D7d" firstAttribute="trailing" secondItem="IQU-RJ-HOO" secondAttribute="trailing" constant="46" id="bvl-Ol-dKd"/>
                             <constraint firstItem="oxu-PM-AdC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2XR-Pj-Woa" secondAttribute="leading" constant="20" symbolic="YES" id="fbx-WD-AbL"/>
                             <constraint firstItem="dAU-uf-to2" firstAttribute="top" secondItem="oyp-NS-2Gg" secondAttribute="bottom" constant="5" id="gEi-Fk-PMf"/>
@@ -2744,7 +2752,7 @@
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="about this attraction at" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Ajo-vc-xtB">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="via" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Ajo-vc-xtB">
                                                                 <rect key="frame" x="5" y="21.5" width="235" height="14"/>
                                                                 <fontDescription key="fontDescription" name=".SFNSText" family=".SF NS Text" pointSize="12"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
