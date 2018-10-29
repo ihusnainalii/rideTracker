@@ -34,6 +34,15 @@ class SelectParkViewController: UIViewController, UITableViewDelegate, UITableVi
         searchedParksList = allParksList
         print("All list array is \(allParksList.count)")
         
+        self.navigationItem.title = "Select A Park"
+        let attrs = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 25, weight: .medium)
+        ]
+        
+        UINavigationBar.appearance().titleTextAttributes = attrs
+
+        
         // Do any additional setup after loading the view.
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)

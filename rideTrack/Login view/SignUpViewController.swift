@@ -8,14 +8,14 @@
 
 import UIKit
 import Firebase
+import SafariServices
 
-class SignUpViewController: UIViewController, UITextFieldDelegate {
+class SignUpViewController: UIViewController, UITextFieldDelegate, SFSafariViewControllerDelegate {
     
-    @IBOutlet weak var privacyLink: UITextView!
-    @IBOutlet weak var termsOfServiceLink: UITextView!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var userNameFeild: UITextField!
+    @IBOutlet weak var backgroundView: UIView!
     
     var privacyLinkText = "https://www.theparksman.com/logride-privacy-policy/"
     var termsOfServiceLinktext = "https://www.theparksman.com/logride-terms-and-conditions/"
@@ -23,28 +23,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let linkAttributes: [NSAttributedString.Key: Any] = [
-            .link: NSURL(string: termsOfServiceLinktext)!,
-            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue
-        ]
-        let attributedString = NSMutableAttributedString(string: "Terms and Conditions")
-        attributedString.setAttributes(linkAttributes, range: NSMakeRange(0, 20))
-        termsOfServiceLink.isEditable = false
-        termsOfServiceLink.attributedText = attributedString
-        termsOfServiceLink.font = .systemFont(ofSize: 15)
-        termsOfServiceLink.textAlignment = .center
-        
-        
-        let linkAttributes2: [NSAttributedString.Key: Any] = [
-            .link: NSURL(string: privacyLinkText)!,
-            .foregroundColor: UIColor.lightGray, .underlineStyle: NSUnderlineStyle.single.rawValue
-        ]
-        let attributedString2 = NSMutableAttributedString(string: "Privacy Policy")
-        attributedString2.setAttributes(linkAttributes2, range: NSMakeRange(0, 14))
-        privacyLink.isEditable = false
-        privacyLink.attributedText = attributedString2
-        privacyLink.font = .systemFont(ofSize: 15)
-        privacyLink.textAlignment = .center
+
         Auth.auth().addStateDidChangeListener() { auth, user in
             if user != nil {
                 self.performSegue(withIdentifier: "SignInFromSignUp", sender: nil)
@@ -52,6 +31,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
         emailField.delegate = self
         passwordField.delegate = self
+        
+        backgroundView.layer.cornerRadius = 7
+        backgroundView.layer.shadowOpacity = 0.3
+        backgroundView.layer.shadowOffset = CGSize.zero
+        backgroundView.layer.shadowRadius = 5
+        backgroundView.layer.backgroundColor = UIColor.white.cgColor
     }
     
     @IBAction func didTapSignUp(_ sender: UIButton) {
@@ -104,4 +89,18 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         return false
     }
     
+    @IBAction func tapTermsAndService(_ sender: Any) {
+        let safariVC = SFSafariViewController(url: NSURL(string: termsOfServiceLinktext)! as URL)
+        safariVC.delegate = self
+        self.present(safariVC, animated: true, completion: nil)
+    }
+    @IBAction func tapPrivacyPolicy(_ sender: Any) {
+        let safariVC = SFSafariViewController(url: NSURL(string: privacyLinkText)! as URL)
+        safariVC.delegate = self
+        self.present(safariVC, animated: true, completion: nil)
+    }
+    
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        controller.dismiss(animated: true, completion: nil)
+    }
 }

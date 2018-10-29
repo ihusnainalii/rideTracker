@@ -65,6 +65,14 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         rideTypePicker.isHidden = true
         typeButton.setTitle(convertRideTypeID(rideTypeID: selectedAttraction.rideType!), for: .normal)
         
+        
+        UINavigationBar.appearance().tintColor = UIColor.blue
+        let attrs = [
+            NSAttributedString.Key.foregroundColor: UIColor.black
+        ]
+        UINavigationBar.appearance().titleTextAttributes = attrs
+        
+        
         durationPickerView.isHidden = true
         nameField.text = selectedAttraction.name
         self.rideTypePicker.delegate = self

@@ -21,6 +21,7 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
     var user: User!
     var userName = ""
     var editMode = false
+    var appGreen = UIColor(red: 81/255.0, green: 164/255.0, blue: 76/255.0, alpha: 1.0)
     
     var newList = false
     var newListTitle = ""
@@ -35,6 +36,16 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().backgroundColor = appGreen
+        
+        let attrs = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 25, weight: .medium)
+        ]
+        
+        UINavigationBar.appearance().titleTextAttributes = attrs
+        
+
         
         tableViewBackground.layer.cornerRadius = 7
         tableViewBackground.layer.shadowOpacity = 0.3

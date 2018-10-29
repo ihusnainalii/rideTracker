@@ -12,7 +12,6 @@ import Firebase
 class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataModelProtocol {
 
     @IBOutlet weak var listTableView: UITableView!
-    @IBOutlet weak var listNameLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var tableBackgroundView: UIView!
@@ -30,8 +29,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
         listTableView.delegate = self
         listTableView.dataSource = self
-        listNameLabel.text = usersList.listName
-        
+        self.navigationItem.title = usersList.listName
+        editButton.setTitle("Edit", for: .normal)
         darkenBackground=UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height))
         darkenBackground.backgroundColor = UIColor.black
         darkenBackground.alpha = 0.0

@@ -539,6 +539,8 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
             self.performSegue(withIdentifier: "unwindToList", sender: self)
         } else{
             self.performSegue(withIdentifier: "unwindToAttractions", sender: self)
+            //self.navigationController?.setNavigationBarHidden(true, animated: true)
+
         }
     }
     
@@ -775,6 +777,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
     
     @IBAction func unwindToDetailsView(sender: UIStoryboardSegue) {
         print("Back to attractions view")
+        
     }
     @IBAction func unwindToAttractionsView(sender: UIStoryboardSegue) {
         print("Back to attractions view down here")

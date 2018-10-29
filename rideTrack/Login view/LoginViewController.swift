@@ -14,9 +14,23 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak var circleLogo: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        backgroundView.layer.cornerRadius = 7
+        backgroundView.layer.shadowOpacity = 0.3
+        backgroundView.layer.shadowOffset = CGSize.zero
+        backgroundView.layer.shadowRadius = 5
+        backgroundView.layer.backgroundColor = UIColor.white.cgColor
+        
+        circleLogo.layer.cornerRadius = 7
+        circleLogo.layer.shadowOpacity = 0.3
+        circleLogo.layer.shadowOffset = CGSize.zero
+        circleLogo.layer.shadowRadius = 5
+        
         Auth.auth().addStateDidChangeListener() { auth, user in
             if user != nil {
                 self.performSegue(withIdentifier: "SignInFromLogin", sender: nil)

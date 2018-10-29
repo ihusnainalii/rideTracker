@@ -39,8 +39,9 @@ class ParkInfoViewController: UIViewController {
         configureView()
         initialLocation = CLLocation(latitude: parksData.latitude, longitude: parksData.longitude)
         centerMapOnLocation(location: initialLocation)
-        if UIScreen.main.bounds.height == 812.0{
-            parkNameTopConstrant.constant = 29
+        print(UIScreen.main.bounds.height)
+        if UIScreen.main.bounds.height == 812.0 || UIScreen.main.bounds.height == 896.0 {
+            parkNameTopConstrant.constant = 36
         }
         // Do any additional setup after loading the view.
     }

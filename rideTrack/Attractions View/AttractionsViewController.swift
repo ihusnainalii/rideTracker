@@ -139,6 +139,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().backgroundColor = UIColor.clear
         
         notificationView.layer.shadowOffset = CGSize.zero
         notificationView.layer.shadowRadius = 5
@@ -1259,6 +1260,10 @@ print ("selected Index is \(selectedIndex!)")
             let rideDetailsVC = sender.source as! AttractionsDetailsViewController
             isfiltering = rideDetailsVC.isfiltering
         }
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        UINavigationBar.appearance().tintColor = UIColor.white
+        
         print("Back to attractions view")
         if sender.source is FilterViewController || (sender.source is AttractionsDetailsViewController && isfiltering){
             searchController.isActive = true
@@ -1346,7 +1351,7 @@ print ("selected Index is \(selectedIndex!)")
     func animateInNotifcationView(){
         notificationViewBottomConstrant.constant = -2
         //Configure for iPhone X
-        if screenSize.height == 812{
+        if screenSize.height == 812 || UIScreen.main.bounds.height == 896.0{
             self.notificationViewHeight.constant = 85
         }
         UIView.animate(withDuration: 0.4, animations: ({
@@ -1418,12 +1423,12 @@ extension AttractionsViewController: UISearchBarDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        //self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
 }

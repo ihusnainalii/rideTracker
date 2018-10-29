@@ -56,8 +56,8 @@ class ParkSettingsViewController: UIViewController {
         defunctSwitch.isOn = showDefunct
         submitAttractionButton.layer.cornerRadius = 7
         
-        if UIScreen.main.bounds.height == 812.0{
-            parkNameTopConstrant.constant = 29
+        if UIScreen.main.bounds.height == 812.0 || UIScreen.main.bounds.height == 896.0{
+            parkNameTopConstrant.constant = 36
         }
         // Do any additional setup after loading the view.
     }

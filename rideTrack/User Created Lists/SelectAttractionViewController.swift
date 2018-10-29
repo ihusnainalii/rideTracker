@@ -32,6 +32,15 @@ class SelectAttractionViewController: UIViewController, UITableViewDataSource, U
         selectAttractionTableView.dataSource = self
         selectAttractionTableView.delegate = self
         searchAttractionsTextFeidl.delegate = self
+        
+        self.navigationItem.title = "Select An Attraction"
+        let attrs = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 25, weight: .medium)
+        ]
+        
+        UINavigationBar.appearance().titleTextAttributes = attrs
+        
         Auth.auth().addStateDidChangeListener { auth, user in
             guard let user = user else { return }
             self.user = User(authData: user)

@@ -79,6 +79,12 @@ class SettingsViewController: UIViewController, UITextViewDelegate, SFSafariView
         self.present(safariVC, animated: true, completion: nil)
     }
     
+    @IBAction func didTapFAQ(_ sender: Any) {
+        let safariVC = SFSafariViewController(url: NSURL(string: "https://www.theparksman.com/logride-faq/")! as URL)
+        safariVC.delegate = self
+        self.present(safariVC, animated: true, completion: nil)
+    }
+    
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         controller.dismiss(animated: true, completion: nil)
     }

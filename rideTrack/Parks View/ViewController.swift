@@ -894,7 +894,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 self.currentLocationViewBottomConstraint.constant = -4
                 //If iPhone X, make the locationView heigher
                 print (screenSize.height)
-                if screenSize.height == 812{
+                if screenSize.height == 812 || UIScreen.main.bounds.height == 896.0{
                     self.locationViewHeight.constant = 85
                 }
                 
