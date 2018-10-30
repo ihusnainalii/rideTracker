@@ -33,6 +33,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var notificationViewBottomConstrant: NSLayoutConstraint!
     @IBOutlet weak var notificationViewText: UILabel!
     @IBOutlet weak var notificationViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var notificationTitle: UILabel!
     
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var seachBar: UISearchBar!
@@ -92,6 +93,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var filteredAttractions = [AttractionsModel]()
     var userRef: DatabaseReference!
 
+    var firstCheckin = false
+    var numberOfCheckins = 0
+    var lastVisit = 0.0
     
     var attractionListRef: DatabaseReference!
     var parksListRef: DatabaseReference!
@@ -270,6 +274,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.attractionsTableView.contentInset = insets
         searchController.searchBar.inputAccessoryView = toolBarView
        // searchController.inputAccessoryView = toolBarView
+        
+        
+        if firstCheckin{
+            welcomeBackNotification()
+        }
         
     }
 
@@ -548,6 +557,30 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         cell.numberOfRidesLabel.text = ""
     }
     
+    func welcomeBackNotification() {
+        
+        
+        var numberPrefix = "th"
+        if numberOfCheckins == 1{
+            numberPrefix = "st"
+        } else {
+            animateInNotifcationView()
+            if numberOfCheckins == 2{
+                numberPrefix = "nd"
+            
+            } else if numberOfCheckins == 3{
+                numberPrefix = "rd"
+            }
+            notificationTitle.text = "Welcome back!"
+            let lastVisitDate = Date(timeIntervalSince1970: lastVisit)
+            notificationViewText.text = "This is your \(numberOfCheckins)\(numberPrefix) time at \(parkData.name!). Your last visit was \(dateFormatter(date: lastVisitDate))"
+        }
+        
+       
+        DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
+            self.animateAwayNotificationView()
+        }
+    }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         var CurrtableView: [AttractionsModel]
         if isFiltering() {
@@ -1352,7 +1385,7 @@ print ("selected Index is \(selectedIndex!)")
         notificationViewBottomConstrant.constant = -2
         //Configure for iPhone X
         if screenSize.height == 812 || UIScreen.main.bounds.height == 896.0{
-            self.notificationViewHeight.constant = 85
+            //self.notificationViewHeight.constant = 85
         }
         UIView.animate(withDuration: 0.4, animations: ({
             self.view.layoutIfNeeded()
@@ -1360,10 +1393,10 @@ print ("selected Index is \(selectedIndex!)")
     }
     
     func animateAwayNotificationView() {
-        notificationViewBottomConstrant.constant = -64
+        notificationViewBottomConstrant.constant = -75
         //Configure for iPhone X
-        if screenSize.height == 812{
-            self.notificationViewHeight.constant = 59
+        if screenSize.height == 812 || UIScreen.main.bounds.height == 896.0{
+            //self.notificationViewHeight.constant = 59
         }
         UIView.animate(withDuration: 0.4, animations: ({
             self.view.layoutIfNeeded()
@@ -1383,7 +1416,14 @@ print ("selected Index is \(selectedIndex!)")
         return foundID
     }
     
-    
+    func dateFormatter(date: Date) -> String {
+        //let date = Date(timeIntervalSince1970: Double (timeToFormat))
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "MMMM d, yyyy" //took off  h:mm Specify your format that you want
+        let strDate = dateFormatter.string(from: date)
+        return strDate
+    }
     
     func updateAttraction(){
 

@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>6</string>
+	<string>7</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -39,8 +39,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>LogRide uses your camera so that you can take a picture of an attractions</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>LogRide uses your location to suggest attractions when you are visiting a park.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>LogRide uses your photo library so that you can submit photos of attractions</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -53,10 +57,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>LogRide uses your camera so that you can take a picture of an attractions</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>LogRide uses your photo library so that you can submit photos of attractions</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

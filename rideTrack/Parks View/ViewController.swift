@@ -79,6 +79,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var arrayOfAllParks = [ParksModel]()
     var userName = ""
     
+    var firstCheckin = false
+    var numberOfCheckinsToDisplay = 0
+    var lastVisit = 0.0
+    
     var savedMyParksForSearch = [ParksList]()
     var isSearchingMyParks = false
     var firstItemsToFavorites = true
@@ -704,6 +708,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             
             let arrayOfAllParksIndex = getParkModelINdexFromAllParks(parkID: selectedPark.parkID)
             
+            if firstCheckin{
+                firstCheckin = false
+                attractionVC.firstCheckin = true
+                attractionVC.numberOfCheckins = numberOfCheckinsToDisplay
+                attractionVC.lastVisit = lastVisit
+            }
+            
             print ("The park is ", selectedPark.name)
             attractionVC.showExtinct = selectedPark.showDefunct
             attractionVC.parksViewController = self
@@ -955,6 +966,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 var calendar = NSCalendar.current
                 calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
                 let midnight = calendar.startOfDay(for: Date())
+                
+                firstCheckin = true
+                numberOfCheckinsToDisplay = selectedPark.numberOfCheckIns + 1
+                lastVisit = selectedPark.lastDayVisited
                 
                 let parkItem = allParksList[selectedParkIndex]
                 parkItem.ref?.updateChildValues([

@@ -82,10 +82,10 @@ class TopListsViewController: UIViewController {
             park5.text = topParks[4].name
             
             checkIn1.text = String(topParks[0].numberOfCheckIns)
-            checkIn2.text = String(topParks[2].numberOfCheckIns)
-            checkIn3.text = String(topParks[3].numberOfCheckIns)
-            checkIn4.text = String(topParks[4].numberOfCheckIns)
-            checkIn5.text = String(topParks[5].numberOfCheckIns)
+            checkIn2.text = String(topParks[1].numberOfCheckIns)
+            checkIn3.text = String(topParks[2].numberOfCheckIns)
+            checkIn4.text = String(topParks[3].numberOfCheckIns)
+            checkIn5.text = String(topParks[4].numberOfCheckIns)
             
         }
     }

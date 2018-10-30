@@ -1689,7 +1689,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cFg-8l-Dke">
-                                                    <rect key="frame" x="0.0" y="97" width="375" height="463"/>
+                                                    <rect key="frame" x="0.0" y="97" width="375" height="459"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <prototypes>
                                                         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="rideCell" rowHeight="54" id="NuC-H2-735" customClass="AttractionsTableViewCell" customModule="rideTrack" customModuleProvider="target">
@@ -1813,7 +1813,7 @@
                                                     <sections/>
                                                 </tableView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="38e-4o-Tmr">
-                                                    <rect key="frame" x="0.0" y="560" width="375" height="59"/>
+                                                    <rect key="frame" x="0.0" y="556" width="375" height="63"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This park has grown!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0z-sB-mWe">
                                                             <rect key="frame" x="5" y="4" width="164" height="21"/>
@@ -1830,12 +1830,12 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="6P9-dl-lmE" secondAttribute="bottom" constant="15" id="8FP-U2-REC"/>
                                                         <constraint firstItem="6P9-dl-lmE" firstAttribute="leading" secondItem="38e-4o-Tmr" secondAttribute="leading" constant="5" id="Czv-Uj-lVH"/>
                                                         <constraint firstItem="Q0z-sB-mWe" firstAttribute="top" secondItem="38e-4o-Tmr" secondAttribute="top" constant="4" id="VWf-JE-U5R"/>
                                                         <constraint firstItem="6P9-dl-lmE" firstAttribute="top" secondItem="Q0z-sB-mWe" secondAttribute="bottom" constant="6" id="jp0-mD-wSe"/>
                                                         <constraint firstAttribute="trailing" secondItem="6P9-dl-lmE" secondAttribute="trailing" constant="5" id="pIc-Z6-kn4"/>
                                                         <constraint firstItem="Q0z-sB-mWe" firstAttribute="leading" secondItem="38e-4o-Tmr" secondAttribute="leading" constant="5" id="sL2-Ga-nFU"/>
-                                                        <constraint firstAttribute="height" constant="59" id="yqK-t3-CB4"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -1906,9 +1906,9 @@
                         <outlet property="emptyParkInstructionsLabel" destination="QUX-K1-VXu" id="AV1-qi-ht2"/>
                         <outlet property="extinctText" destination="BWZ-6M-pEa" id="mdI-YO-5DS"/>
                         <outlet property="filterButton" destination="tn5-vw-GaZ" id="Emw-TD-f3r"/>
+                        <outlet property="notificationTitle" destination="Q0z-sB-mWe" id="s3f-Vj-8ag"/>
                         <outlet property="notificationView" destination="38e-4o-Tmr" id="cTZ-0b-arc"/>
                         <outlet property="notificationViewBottomConstrant" destination="lJp-zQ-hDh" id="l3o-eq-5bH"/>
-                        <outlet property="notificationViewHeight" destination="yqK-t3-CB4" id="SLg-hL-g9E"/>
                         <outlet property="notificationViewText" destination="6P9-dl-lmE" id="5NQ-zY-iLk"/>
                         <outlet property="parkLabel" destination="uVR-cf-Ne8" id="AeQ-bv-7ml"/>
                         <outlet property="progressBar" destination="rKa-vC-Lf2" id="uwW-Gj-q4m"/>
