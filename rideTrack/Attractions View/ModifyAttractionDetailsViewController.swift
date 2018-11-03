@@ -56,6 +56,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
     var userID = ""
     var needsPhoto = true
     var submittedImage: UIImage!
+    var onlySubmitPhoto = true;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -417,9 +418,11 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             dataModel.delegate = self
             dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
             dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
-            self.performSegue(withIdentifier: "backToDetails", sender: self)
+            if onlySubmitPhoto == false {
+                self.performSegue(withIdentifier: "backToDetails", sender: self)
+            }
     }
-        else {
+        else if onlySubmitPhoto == false {
             let tempNotes = notesView.text.replacingOccurrences(of: " ", with: "_")
             let notes = String (tempNotes.filter { !" \n".contains($0) })
             
@@ -430,6 +433,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
                 dataModel.delegate = self
                 dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
                 self.performSegue(withIdentifier: "backToDetails", sender: self)
+
             }))
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
             }))
@@ -443,13 +447,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             metadata.contentType = "image/jpg"
             
             let tempImageREf = storage.child("UserSubmit/\(selectedAttraction.rideID!).jpg")
-            
-//            let uploadTask = tempImageREf.putFile(from: localFile, metadata: nil) { metadata, error in
-//                guard let metadata = metadata else {
-//                    // Uh-oh, an error occurred!
-//                    return
-//                }
-           // tempImageREf.putData(submittedImage, metadata: metadata)
+
             tempImageREf.putData(submittedImage.jpegData(compressionQuality: 0.25)!, metadata: metadata) { (Data, Error) in
                 if Error == nil { print("success")}
                 else { print("ERROR") }
@@ -459,6 +457,9 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         let dataModel = DataModel()
         dataModel.delegate = self
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+            if onlySubmitPhoto == true {
+                self.performSegue(withIdentifier: "backToDetails", sender: self)
+            }
         }
     }
     
@@ -501,6 +502,8 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
     }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        onlySubmitPhoto = false;
+        print("edited somthing")
         if self.rideTypePicker.isHidden == false {
             UIView.animate(withDuration: 0.3, animations: { //Animate Here
                 self.rideTypePicker.isHidden = true
@@ -509,7 +512,8 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         }
     }
     func textViewDidBeginEditing(_ textView: UITextView) {
-        print ("Made it here!")
+        onlySubmitPhoto = false;
+        print("edited somthing")
         if notesView.text == "Notes/Citations"{
             notesView.text = ""
             notesView.textColor = UIColor.black
