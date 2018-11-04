@@ -353,7 +353,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
         let storage = Storage.storage().reference()
         var showImage = true
         let imageRef = storage.child("\(selectedRide.parkID!)/\(selectedRide.rideID!).jpg")
-        imageRef.getData(maxSize: 1*1000*1000) { (data, error) in
+        imageRef.getData(maxSize: 1*5000*5000) { (data, error) in
             if error == nil {
                 print("image found")
                 self.needsPhoto = false

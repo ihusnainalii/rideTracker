@@ -36,7 +36,7 @@ class ViewPhotoViewController: UIViewController, DataModelProtocol {
         userNameLabel.text = "submited by \(userName)"
         let storage = Storage.storage().reference()
         let imageRef = storage.child("UserSubmit/\(rideID).jpg")
-        imageRef.getData(maxSize: 1*1000*1000) { (data, error) in
+        imageRef.getData(maxSize: 1*5000*5000) { (data, error) in
             if error == nil {
                 print("image found")
                 self.attractionImage = UIImage(data: data!)

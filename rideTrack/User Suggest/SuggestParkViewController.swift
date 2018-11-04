@@ -75,13 +75,16 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
     @IBAction func pressedSubmit(_ sender: Any) {
         parkName = parkNameField.text!
         let open = openField.text!
-        let closed = closedField.text!
+        var closed = closedField.text!
         cityState = "\(cityField.text!), \(stateField.text!)"
         country = countryField.text!
         oldName = previousNamesField.text!
         URLtext = websiteField.text!
         if defuntSwitch.isOn { defunct = 1 }
-        else {defunct = 0}
+        else {
+            defunct = 0
+            closed = String(0);
+        }
         if seasonalSwitch.isOn {seasonal = 1}
         else {seasonal = 0}
         let dataModel = DataModel()
