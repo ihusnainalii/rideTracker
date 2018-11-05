@@ -303,6 +303,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
         let rHeight: Int = lroundf(Float(rideNameLabel.sizeThatFits(textSize).height))
         let charSize: Int = lroundf(Float(rideNameLabel.font.pointSize))
         let numLines = rHeight / charSize
+        print("num lines is \(rHeight) / \(charSize)" )
         
         print("screen size is: \(screenSize.height)")
         if screenSize.height > 700 {
@@ -310,7 +311,8 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
         }
         else if screenSize.height == 568 {
             print("iphone 5 size")
-            maxFromTop = 100 //80
+            maxFromTop = 100 //100 worked //80
+            rideNameLabel.font = rideNameLabel.font.withSize(22)
         }
         else {
             maxFromTop = 190//170 //200
@@ -412,6 +414,9 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
                         self.imageWidth.constant = width
                         self.imageHeight.constant = 150
                     self.uiImageView.image = UIImage(data: data!) //UIImage(data: data!)
+                    if self.screenSize.height == 568 {
+                        maxFromTop += 30 //for iphone 5 screen size 
+                    }
 
         
                   //  self.upperViewHeight.constant = (150)
