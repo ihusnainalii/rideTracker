@@ -127,7 +127,9 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
         modifyAttractionButton.layer.shadowOffset = CGSize.zero
         modifyAttractionButton.layer.shadowRadius = 5
         modifyAttractionButton.layer.shadowOpacity = 0.3
-        
+        if fromListVC {
+            modifyAttractionButton.isHidden = true
+        }
         CCView.isHidden = true
         
         self.imageSection.isHidden = true
