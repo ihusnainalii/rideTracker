@@ -117,6 +117,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var ignoreListRef: DatabaseReference!
     
     override func viewDidLoad() {
+        Analytics.logEvent("view_park", parameters: ["parkName": parkData.name])
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)

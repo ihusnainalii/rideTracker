@@ -951,6 +951,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         if checkIfNewPark(newPark: closestPark){
             print("new park")
             addNewParkToList(newPark: closestPark, newCheckin: true)
+            Analytics.logEvent("check_into_park", parameters: nil)
         } else{
             print("old")
         }

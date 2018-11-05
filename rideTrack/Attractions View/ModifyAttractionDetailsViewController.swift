@@ -418,6 +418,8 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
                 changes += " length is \(lengthField.text!)"
             }
             
+            Analytics.logEvent("attraction_modification_suggested", parameters: nil)
+            
             let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(userID)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
             print(urlPath3)
             let dataModel = DataModel()

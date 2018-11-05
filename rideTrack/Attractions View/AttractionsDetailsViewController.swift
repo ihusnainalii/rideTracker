@@ -105,6 +105,7 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Analytics.logEvent("view_attraction", parameters: ["attractionName": selectedRide.name])
         Auth.auth().addStateDidChangeListener { auth, user in
             guard let user = user else { return }
             self.user = User(authData: user)

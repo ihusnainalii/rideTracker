@@ -30,6 +30,7 @@
 		5F636B6B213C60AD00D2B922 /* TopLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B6A213C60AD00D2B922 /* TopLists.swift */; };
 		5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */; };
 		5F8E5CB7213E1D6300C80FB1 /* UserName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8E5CB6213E1D6300C80FB1 /* UserName.swift */; };
+		5F91F7C8218FBD7900585E00 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F91F7C7218FBD7900585E00 /* GoogleService-Info.plist */; };
 		5F964AE0217153A400989DB4 /* UserCreatedLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F964ADF217153A400989DB4 /* UserCreatedLists.swift */; };
 		5F964AE52171549200989DB4 /* AllListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F964AE42171549200989DB4 /* AllListsViewController.swift */; };
 		5F964AE9217158CE00989DB4 /* UserCreatedLists.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F964AE8217158CE00989DB4 /* UserCreatedLists.storyboard */; };
@@ -69,7 +70,6 @@
 		988A1A3B2170F036004CF3A8 /* approveSuggParksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A1A3A2170F036004CF3A8 /* approveSuggParksModel.swift */; };
 		988A1A3D21710B07004CF3A8 /* ApproveParkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A1A3C21710B07004CF3A8 /* ApproveParkViewController.swift */; };
 		988A1A412171316C004CF3A8 /* SuggestMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A1A402171316C004CF3A8 /* SuggestMapViewController.swift */; };
-		988D94DD218F458500E181AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 988D94DC218F458500E181AB /* GoogleService-Info.plist */; };
 		98A9A8552109207E00B3C36E /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A9A8542109207E00B3C36E /* FilterTableViewCell.swift */; };
 		98A9A857210A28E600B3C36E /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A9A856210A28E600B3C36E /* FilterViewController.swift */; };
 		98AD7F3620A91A2D00540AB3 /* rideTrackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F3520A91A2D00540AB3 /* rideTrackTests.swift */; };
@@ -142,6 +142,7 @@
 		5F636B6A213C60AD00D2B922 /* TopLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLists.swift; sourceTree = "<group>"; };
 		5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSmallerLayout.swift; sourceTree = "<group>"; };
 		5F8E5CB6213E1D6300C80FB1 /* UserName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserName.swift; sourceTree = "<group>"; };
+		5F91F7C7218FBD7900585E00 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5F964ADF217153A400989DB4 /* UserCreatedLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCreatedLists.swift; sourceTree = "<group>"; };
 		5F964AE42171549200989DB4 /* AllListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListsViewController.swift; sourceTree = "<group>"; };
 		5F964AE8217158CE00989DB4 /* UserCreatedLists.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UserCreatedLists.storyboard; sourceTree = "<group>"; };
@@ -181,7 +182,6 @@
 		988A1A3A2170F036004CF3A8 /* approveSuggParksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = approveSuggParksModel.swift; sourceTree = "<group>"; };
 		988A1A3C21710B07004CF3A8 /* ApproveParkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveParkViewController.swift; sourceTree = "<group>"; };
 		988A1A402171316C004CF3A8 /* SuggestMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestMapViewController.swift; sourceTree = "<group>"; };
-		988D94DC218F458500E181AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		98A9A8542109207E00B3C36E /* FilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
 		98A9A856210A28E600B3C36E /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		98AD7F1A20A91A2B00540AB3 /* rideTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rideTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -432,9 +432,9 @@
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
+				5F91F7C7218FBD7900585E00 /* GoogleService-Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
-				988D94DC218F458500E181AB /* GoogleService-Info.plist */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
 				98AD7F6E20A91A5C00540AB3 /* Info.plist */,
 				5FE9F80F20DB45030012B98C /* Media.xcassets */,
@@ -632,7 +632,7 @@
 				9832E68F2182952600289677 /* ApproveSuggestions.storyboard in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
-				988D94DD218F458500E181AB /* GoogleService-Info.plist in Resources */,
+				5F91F7C8218FBD7900585E00 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

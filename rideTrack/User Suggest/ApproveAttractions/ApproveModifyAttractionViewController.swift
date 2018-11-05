@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, DataModelProtocol {
     
@@ -271,6 +272,7 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
     }
     
     @IBAction func deleteButton(_ sender: Any) {
+        Analytics.logEvent("attraction_modification_deleted", parameters: nil)
         let dataModel = DataModel()
         dataModel.delegate = self
         let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(suggestedAttraction.id!)"
@@ -285,6 +287,7 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
     
     
     @IBAction func submitButton(_ sender: Any) {
+        Analytics.logEvent("attraction_modification_approved", parameters: nil)
         let rideName = nameField.text
         let parkID = originalAttraction.parkID!
         let yearOpen = openField.text!

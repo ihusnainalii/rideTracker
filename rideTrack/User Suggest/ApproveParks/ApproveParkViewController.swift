@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataModelProtocol {
     
@@ -78,6 +79,7 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
     }
     
     @IBAction func deleteButtonPressed(_ sender: Any) {
+        Analytics.logEvent("new_park_deleted", parameters: nil)
         let dataModel = DataModel()
         dataModel.delegate = self
         
@@ -87,6 +89,7 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
 
     }
     @IBAction func approveParkPressed(_ sender: Any) {
+        Analytics.logEvent("new_park_approved", parameters: nil)
         let dataModel = DataModel()
         dataModel.delegate = self
         let name = nameField.text

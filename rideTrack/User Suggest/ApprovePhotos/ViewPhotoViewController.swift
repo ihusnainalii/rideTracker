@@ -65,6 +65,7 @@ class ViewPhotoViewController: UIViewController, DataModelProtocol {
         }
     }
     @IBAction func approveButtonTapped(_ sender: Any) {
+        Analytics.logEvent("new_photo_approved", parameters: nil)
         let dataModel = DataModel()
         dataModel.delegate = self
         let urlPath = "http://www.beingpositioned.com/theparksman/addPhotoToAttraction.php?id=\(rideID)&photoArtist=\(userName)"
@@ -99,6 +100,7 @@ class ViewPhotoViewController: UIViewController, DataModelProtocol {
     }
     
     func deletePhotoFromList () {
+        Analytics.logEvent("new_photo_deleted", parameters: nil)
         let dataModel = DataModel()
         dataModel.delegate = self
         let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromPhotoSuggest.php?tempID=\(tempID)"

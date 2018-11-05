@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource,UITableViewDataSource, UITableViewDelegate, DataModelProtocol{
 
@@ -223,6 +224,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     
     
     @IBAction func submitButton(_ sender: Any) {
+        Analytics.logEvent("new_attraction_approved", parameters: nil)
         let rideName = nameTextField.text
         let parkID = selectedAttraction.parkID!
         let yearOpen = openTextField.text!
@@ -260,6 +262,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     
     
     @IBAction func deleteButton(_ sender: Any) {
+        Analytics.logEvent("new_attraction_deleted", parameters: nil)
         let dataModel = DataModel()
         dataModel.delegate = self
         print ("The ID is ", selectedAttraction.id)

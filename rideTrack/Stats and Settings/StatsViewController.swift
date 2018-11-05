@@ -81,6 +81,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
     
     
     override func viewDidLoad() {
+        Analytics.logEvent("view_stats", parameters: nil)
         super.viewDidLoad()
         Auth.auth().addStateDidChangeListener { auth, user in
             guard let user = user else { return }

@@ -127,6 +127,7 @@ class SelectAttractionViewController: UIViewController, UITableViewDataSource, U
         selectedAttraction = searchAttractionList[indexPath.row]
         
         if firstItemInList{
+            Analytics.logEvent("creat_new_list", parameters: ["listName": listName])
             let newList = UserCreatedLists(listName: listName, listData: [selectedAttraction.name], listEntryRideID: [selectedAttraction.rideID])
             
             let newListRef = self.userCreatedListsRef.child(String(listName))

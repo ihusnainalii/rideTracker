@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import Firebase
 
 class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -225,6 +226,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 self.isAdmin = 1
                 UserDefaults.standard.set(self.isAdmin, forKey: "isAdmin")
                 self.performSegue(withIdentifier: "unwindToDetailsView", sender: self)
+                Analytics.logEvent("new_admin", parameters:["adnimUserName": self.userName])
             })
             let removeAdminAction = UIAlertAction(title: "Remove Admin Status", style: .default, handler: { (action) -> Void in
                 self.isAdmin = 0
@@ -297,6 +299,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                     self.performSegue(withIdentifier: "unwindToDetailsView", sender: self)
                    // self.performSegue(withIdentifier: "unwindToDetailsView", sender: self)
                 }
+                Analytics.logEvent("new_attraction_suggested", parameters: nil)
                 ThankAlertController.addAction(action)
                 self.present(ThankAlertController, animated: true, completion:nil)
                 

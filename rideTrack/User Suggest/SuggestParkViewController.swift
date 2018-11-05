@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, DataModelProtocol {
     
@@ -93,7 +94,7 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
         
         let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
             let urlPath = "http://www.beingpositioned.com/theparksman/suggestParkUploadtoApprove.php?name=\(self.parkName)&type=\(self.type)&city=\(self.cityState)&count=\(self.country)&lat=\(self.lat)&long=\(self.long)&open=\(open)&closed=\(closed)&defunct=\(self.defunct)&prevName=\(self.oldName)&seasonal=\(self.seasonal)&website=\(self.URLtext)&userName=\(self.userName)"
-            
+            Analytics.logEvent("new_park_suggested", parameters: nil)
             print (urlPath)
             dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
                 let ThankAlertController = UIAlertController(title: "Thank You", message: "Thank you for your submission. We will review it and add it to the database.", preferredStyle: .alert)

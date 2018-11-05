@@ -28,7 +28,7 @@ class AllListsViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        Analytics.logEvent("view_all_lists", parameters: nil)
         allListsTableView.delegate = self
         allListsTableView.dataSource = self
         
