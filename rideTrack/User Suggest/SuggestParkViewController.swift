@@ -49,7 +49,7 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
         super.viewDidLoad()
 
         scrollWidth.constant = screenSize.width
-        parkTypeData = ["","Theme Park", "Amusement Park","Zoo", "Kiddie Park", "Family Entertainment Center, Resort & Casino"]
+        parkTypeData = ["","Theme Park", "Amusement Park","Zoo", "Kiddie Park", "Family Entertainment Center", "Resort & Casino"]
         parkNameField.delegate = self
         typePicker.delegate = self
         typePicker.dataSource = self
