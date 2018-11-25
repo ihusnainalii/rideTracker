@@ -21,7 +21,6 @@ class UserAttractionProvider: NSObject {
     var numberOfTimesRidden: Int!
     var dateFirstRidden: Date!
     var dateLastRidden: Date!
-    
 //    var favorite: Bool!
 //    var numberOfRides: Int!
 //    var numberOfCheckedRides: Int!

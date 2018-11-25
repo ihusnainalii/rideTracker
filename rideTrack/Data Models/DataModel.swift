@@ -107,7 +107,10 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.model = (jsonElement["model"] as! String)
                 attraction.height = Int (jsonElement["height"] as! String)
                 attraction.speed = Int (jsonElement["maxSpeed"] as! String)
-                attraction.length = Int (jsonElement["length"] as! String)
+                var test = 0;
+                test = Int (jsonElement["length"] as! String)!
+                attraction.length = test
+                //print(test)
                 attraction.duration = Int (jsonElement["attractionDuration"] as! String)
                 attraction.photoArtist = (jsonElement["photoArtist"] as! String)
                 attraction.photoLink = (jsonElement["photoLink"] as! String)
