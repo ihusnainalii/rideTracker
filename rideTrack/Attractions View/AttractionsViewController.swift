@@ -49,6 +49,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var segueWithTableViewSelect = false
     var insets = UIEdgeInsets(top: -4.5, left: 0, bottom: 5.5, right: 0)
     
+    var firstTimeDownload = true
+    
     @IBOutlet weak var typesFiltered: UILabel!
     
     
@@ -186,7 +188,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         // print ("There are ", feedItems.count, " attactions in park ", parkID)
         dataModel.delegate = self
         
-        dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
+        
         //ignore = ignoreList.array(forKey: "SavedIgnoreListArray")  as? [Int] ?? [Int]()
         
         // Do any additional setup after loading the view, typically from a nib.
@@ -245,7 +247,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
             self.userAttractionDatabase = newAttractions
-            
+            print("FIREBASE DOWNLOAD")
+            if self.firstTimeDownload{
+                
+                dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
+                self.firstTimeDownload = false
+            }
             //self.attractionsTableView.reloadData()
         })
         
@@ -285,6 +292,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
+        print("ITEMS DOWNLOAD")
         savedItems = items
         suggestButton.isUserInteractionEnabled = true
         activityIndicator.stopAnimating()

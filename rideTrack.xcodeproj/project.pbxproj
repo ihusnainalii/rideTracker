@@ -52,6 +52,7 @@
 		5FF1ECAA20B526EB00BE1609 /* RideTrack.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */; };
 		5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF1ECAB20B5271800BE1609 /* Main.storyboard */; };
 		5FF1ECB020B5271800BE1609 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */; };
+		5FF55EB621ADF72100E29186 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5FF55EB521ADF72100E29186 /* GoogleService-Info.plist */; };
 		5FFCB7FF21055E400054D84D /* ParksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB7FE21055E400054D84D /* ParksList.swift */; };
 		5FFCB80121055E470054D84D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB80021055E470054D84D /* User.swift */; };
 		5FFCB804210579C80054D84D /* AttractionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB803210579C80054D84D /* AttractionList.swift */; };
@@ -89,7 +90,6 @@
 		98C28A9B20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9A20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift */; };
 		98C28A9D20EBD90900C7229E /* ApproveSuggestAttracionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9C20EBD90900C7229E /* ApproveSuggestAttracionModel.swift */; };
 		98C28A9F20EBE9CE00C7229E /* SuggestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9E20EBE9CE00C7229E /* SuggestTableViewCell.swift */; };
-		98D47FEC21ADF530004D22F6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 98D47FEB21ADF530004D22F6 /* GoogleService-Info.plist */; };
 		98D7A7022172767E008A4E35 /* ApproveParkMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D7A7012172767E008A4E35 /* ApproveParkMapViewController.swift */; };
 		98F17C65216AABFB0009BE91 /* SuggestParkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F17C64216AABFB0009BE91 /* SuggestParkViewController.swift */; };
 		98F24F5120EFE35200A42C7E /* SuggestDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F24F5020EFE35200A42C7E /* SuggestDetailsViewController.swift */; };
@@ -164,6 +164,7 @@
 		5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RideTrack.xcdatamodel; sourceTree = "<group>"; };
 		5FF1ECAC20B5271800BE1609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5FF1ECAE20B5271800BE1609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5FF55EB521ADF72100E29186 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5FFCB7FE21055E400054D84D /* ParksList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParksList.swift; sourceTree = "<group>"; };
 		5FFCB80021055E470054D84D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5FFCB803210579C80054D84D /* AttractionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionList.swift; sourceTree = "<group>"; };
@@ -207,7 +208,6 @@
 		98C28A9A20EBD81E00C7229E /* SuggestionstoApproveListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionstoApproveListViewController.swift; sourceTree = "<group>"; };
 		98C28A9C20EBD90900C7229E /* ApproveSuggestAttracionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveSuggestAttracionModel.swift; sourceTree = "<group>"; };
 		98C28A9E20EBE9CE00C7229E /* SuggestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestTableViewCell.swift; sourceTree = "<group>"; };
-		98D47FEB21ADF530004D22F6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		98D7A7012172767E008A4E35 /* ApproveParkMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveParkMapViewController.swift; sourceTree = "<group>"; };
 		98F17C64216AABFB0009BE91 /* SuggestParkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestParkViewController.swift; sourceTree = "<group>"; };
 		98F24F5020EFE35200A42C7E /* SuggestDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDetailsViewController.swift; sourceTree = "<group>"; };
@@ -432,9 +432,9 @@
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
+				5FF55EB521ADF72100E29186 /* GoogleService-Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
-				98D47FEB21ADF530004D22F6 /* GoogleService-Info.plist */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
 				98AD7F6E20A91A5C00540AB3 /* Info.plist */,
 				5FE9F80F20DB45030012B98C /* Media.xcassets */,
@@ -632,7 +632,7 @@
 				9832E68F2182952600289677 /* ApproveSuggestions.storyboard in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
-				98D47FEC21ADF530004D22F6 /* GoogleService-Info.plist in Resources */,
+				5FF55EB621ADF72100E29186 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
