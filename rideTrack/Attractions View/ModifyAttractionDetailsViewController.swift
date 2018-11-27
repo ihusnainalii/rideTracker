@@ -353,6 +353,9 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         if rideType == 0 {
             rideType = selectedAttraction.rideType
         }
+        if durationInSeconds == 0 {
+            durationInSeconds = selectedAttraction.duration
+        }
         let tempName = rideName!.replacingOccurrences(of: "&", with: "!A?")
         let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
         

@@ -1,4 +1,4 @@
-//
+////
 //  AttractionsViewController.swift
 //  Ride Track
 //
@@ -298,8 +298,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 self.emptyParkInstructionsLabel.alpha = 1.0
                 self.attractionsTableView.alpha = 0.0
             }))
-        }
             
+            
+        }
         else {
             if ignore.count == 0 {
                 print("About to start")
@@ -307,7 +308,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                     attractionListForTable[i].isIgnored = false
                 } //setting the rides to be ignored
             }
-            
             if (userAttractionDatabase != nil){
                 userNumExtinct = 0
                 totalNumExtinct = 0
@@ -401,7 +401,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         //            totalNumExtinct = attractionListForTable.count
         //
         //        }
-        
         if totalExtinctCount == attractionListForTable.count{
             print("All EXTINCT!")
             showExtinct = true
@@ -1436,7 +1435,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         //        let userID = Auth.auth().currentUser
         //        let id = userID?.uid
-        
         attractionListRef.observeSingleEvent(of: .value, with: { snapshot in
             print("OBSERVING UPDATE ATTRACTIONS AFTER SEGUING FROM PARK INFO. This should not run any other time")
             var attractions: [AttractionList] = []
