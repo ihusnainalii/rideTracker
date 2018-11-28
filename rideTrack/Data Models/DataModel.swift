@@ -5,7 +5,6 @@
 //  Created by Mark Lawrence on 4/14/18.
 //  Copyright © 2018 Mark Lawrence. All rights reserved.
 //
-
 import UIKit
 
 protocol DataModelProtocol: class {
@@ -13,7 +12,7 @@ protocol DataModelProtocol: class {
 }
 
 class DataModel: NSObject, URLSessionDataDelegate {
-
+    
     weak var delegate: DataModelProtocol!
     var data = Data()
     
@@ -21,31 +20,39 @@ class DataModel: NSObject, URLSessionDataDelegate {
     func downloadData(urlPath: String, dataBase: String, returnPath: String) {
         let encoded = urlPath.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)
         
-//        if let encoded = urlPath.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),
-//            let url = URL(string: encoded)
-//        {
-//            print(url)
-//            print("We are here")
-//        }
-//
+        //        if let encoded = urlPath.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),
+        //            let url = URL(string: encoded)
+        //        {
+        //            print(url)
+        //            print("We are here")
+        //        }
+        //
         
-        let url: URL = URL(string: encoded!)! 
-        let defaultSessions = Foundation.URLSession(configuration: URLSessionConfiguration.default)
-        let task = defaultSessions.dataTask(with: url) { (data, response, error)
+        let url: URL = URL(string: encoded!)!
+        //let defaultSessions = Foundation.URLSession(configuration: URLSessionConfiguration.default)
+        
+        let config = URLSessionConfiguration.default
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        config.urlCache = nil
+        
+        let session = URLSession.init(configuration: config)
+        
+        let task = session.dataTask(with: url) { (data, response, error)
             in
             if dataBase == "upload"{
                 print ("uplaod")
                 
             }
             else {
-            if error != nil{
-                print("Failed to download data")
-            }
-            else{
-                print("Data Downloaded")
-                //Able to download data from database, now need to parse it
-                self.parseJSON(data!, dataBase: dataBase, returnPath: returnPath)
-            }
+                if error != nil{
+                    print("Failed to download data")
+                }
+                else{
+                    print("Data Downloaded")
+                    print(data!)
+                    //Able to download data from database, now need to parse it
+                    self.parseJSON(data!, dataBase: dataBase, returnPath: returnPath)
+                }
             }
         }
         task.resume()
@@ -59,7 +66,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
         } catch let error as NSError {
             print(error)
         }
-    
+        
         var jsonElement = NSDictionary()
         let dataBaseData = NSMutableArray()
         
@@ -107,10 +114,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.model = (jsonElement["model"] as! String)
                 attraction.height = Int (jsonElement["height"] as! String)
                 attraction.speed = Int (jsonElement["maxSpeed"] as! String)
-                var test = 0;
-                test = Int (jsonElement["length"] as! String)!
-                attraction.length = test
-                //print(test)
+                attraction.length = Int (jsonElement["length"] as! String)
                 attraction.duration = Int (jsonElement["attractionDuration"] as! String)
                 attraction.photoArtist = (jsonElement["photoArtist"] as! String)
                 attraction.photoLink = (jsonElement["photoLink"] as! String)

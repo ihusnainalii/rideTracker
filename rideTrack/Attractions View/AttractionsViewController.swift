@@ -184,6 +184,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         parkID = parkData.parkID
         print(parkID)
         let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(parkID)"
+       print(urlPath)
         let dataModel = DataModel()
         // print ("There are ", feedItems.count, " attactions in park ", parkID)
         dataModel.delegate = self
@@ -299,7 +300,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         for i in 0..<items.count{
             attractionListForTable.append(items[i] as! AttractionsModel)
         }
-        
+        print("items download\(items.count)")
         if (items.count == 0){
             print ("this park is empty")
             UIView.animate(withDuration: 0.5, animations: ({
@@ -310,12 +311,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             
         }
         else {
-            if ignore.count == 0 {
-                print("About to start")
-                for i in 0..<attractionListForTable.count{
-                    attractionListForTable[i].isIgnored = false
-                } //setting the rides to be ignored
-            }
+//            if ignore.count == 0 {
+//                print("About to start")
+//                for i in 0..<attractionListForTable.count{
+//                    attractionListForTable[i].isIgnored = false
+//                } //setting the rides to be ignored
+//            }
             if (userAttractionDatabase != nil){
                 userNumExtinct = 0
                 totalNumExtinct = 0
@@ -398,6 +399,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                     }
                 }
             }
+            print("items download bottom \(attractionListForTable.count)")
         }
         //Hide EXTINCT ATTRACTIONS
         //This would work to show defunct attractions for closed parks, but the progress bar gets messed up and treats all attractions as current attractions
