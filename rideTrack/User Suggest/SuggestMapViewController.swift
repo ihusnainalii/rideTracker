@@ -19,8 +19,7 @@ class SuggestMapViewController: UIViewController, UISearchBarDelegate {
     var is3DTouchAvailable: Bool {
         return view.traitCollection.forceTouchCapability == .available
     }
-    var generator: UIImpactFeedbackGenerator!
-    var popupGenerator: UIImpactFeedbackGenerator!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()

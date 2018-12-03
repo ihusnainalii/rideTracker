@@ -29,7 +29,12 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             popupGenerator.prepare()
             generator.prepare()
         }
-        hasHaptic = UIDevice.current.value(forKey: "_feedbackSupportLevel") as! Int
+        if self.traitCollection.forceTouchCapability == .available {
+            hasHaptic = UIDevice.current.value(forKey: "_feedbackSupportLevel") as! Int
+        } else {
+            hasHaptic = 0
+
+        }
         filterView.layer.cornerRadius = 10.0
         filterView.backgroundColor = UIColor.white
         self.filterTableView.delegate = self

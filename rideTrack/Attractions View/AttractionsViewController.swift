@@ -126,7 +126,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         print("Show incrementor is \(parkData.incrementorEnabled)")
         super.viewDidLoad()
-        hasHaptic = UIDevice.current.value(forKey: "_feedbackSupportLevel") as! Int
+       
+        if self.traitCollection.forceTouchCapability == .available {
+             hasHaptic = UIDevice.current.value(forKey: "_feedbackSupportLevel") as! Int
+        } else {
+            hasHaptic = 0
+        }
         print ("has haptic is ", hasHaptic)
         suggestButton.isUserInteractionEnabled = false
         emptyParkInstructionsLabel.alpha = 0.0
