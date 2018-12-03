@@ -338,17 +338,14 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         var active = 1
         if extinctSwitch.isOn {
             active = 0
-            onlySubmitPhoto = false
         }
         else {
             yearClosed = String(0)
-            onlySubmitPhoto = false
         }
         let manufacturer = manufacturingField.text!
         var scoreCard = 0
         if scoreSwitch.isOn {
             scoreCard = 1
-            onlySubmitPhoto = false
         }
         if rideType == 0 {
             rideType = selectedAttraction.rideType
@@ -360,7 +357,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
         
         var urlPath = ""
-        if isAdmin == 1{
+        if isAdmin == 1 {
             var modifiedBy = ""
             modifiedBy = selectedAttraction.modifyBy!
 
