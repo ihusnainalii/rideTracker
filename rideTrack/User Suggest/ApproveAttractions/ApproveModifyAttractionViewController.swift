@@ -318,10 +318,19 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
         else {
         modifiedBy = "\(originalAttraction.modifyBy!), \(userName)"
         }
+        var notes = ""
+        if originalAttraction.notes! == "" {
+            notes = suggestedAttraction.notes!
+        }
+        else {
+            notes = originalAttraction.notes!
+            notes += suggestedAttraction.notes!
+        }
+        
         print("changed by: \(modifiedBy)")
         
         
-        let urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(originalAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationField.text!)&modifyBy=\(modifiedBy)"  //uploads to main list
+        let urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction(NEW).php?id=\(originalAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationField.text!)&notes=\(notes)&modifyBy=\(modifiedBy)"  //uploads to main list
         print (urlPath)
         let changes = getChangedDetails()
         let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(userName)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log

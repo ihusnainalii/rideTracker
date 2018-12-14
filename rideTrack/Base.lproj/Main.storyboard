@@ -2016,7 +2016,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Park Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EgR-o0-Zs1">
-                                        <rect key="frame" x="15" y="22" width="345" height="30"/>
+                                        <rect key="frame" x="30" y="22" width="315" height="30"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2030,11 +2030,11 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.32941177490000001" green="0.63921570780000003" blue="0.31372550129999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="EgR-o0-Zs1" firstAttribute="leading" secondItem="oMb-EE-yoQ" secondAttribute="leading" constant="15" id="Bf7-D6-0u6"/>
+                                    <constraint firstItem="EgR-o0-Zs1" firstAttribute="leading" secondItem="oMb-EE-yoQ" secondAttribute="leading" constant="30" id="Bf7-D6-0u6"/>
                                     <constraint firstItem="WP7-PA-P4g" firstAttribute="top" secondItem="EgR-o0-Zs1" secondAttribute="bottom" constant="3" id="HQ3-5i-aLd"/>
                                     <constraint firstAttribute="trailing" secondItem="WP7-PA-P4g" secondAttribute="trailing" constant="8" id="Q26-UT-sXl"/>
                                     <constraint firstAttribute="bottom" secondItem="WP7-PA-P4g" secondAttribute="bottom" constant="5" id="a9V-aH-dGN"/>
-                                    <constraint firstAttribute="trailing" secondItem="EgR-o0-Zs1" secondAttribute="trailing" constant="15" id="keq-zg-GkQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="EgR-o0-Zs1" secondAttribute="trailing" constant="30" id="keq-zg-GkQ"/>
                                     <constraint firstItem="EgR-o0-Zs1" firstAttribute="top" secondItem="oMb-EE-yoQ" secondAttribute="top" constant="22" id="s5O-D6-9cN"/>
                                     <constraint firstItem="WP7-PA-P4g" firstAttribute="leading" secondItem="oMb-EE-yoQ" secondAttribute="leading" constant="8" id="uBt-dk-rg5"/>
                                 </constraints>
@@ -3158,7 +3158,7 @@
             <objects>
                 <viewController id="kVq-ZJ-GQe" customClass="ModifyAttractionDetailsViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SsL-dj-wJC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1140"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wPY-3T-3bX">
@@ -3172,10 +3172,10 @@
                                 </connections>
                             </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fUd-NG-TfB">
-                                <rect key="frame" x="0.0" y="70" width="375" height="1070"/>
+                                <rect key="frame" x="0.0" y="70" width="375" height="1030"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="UTj-LS-Hda">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1070"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1030"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Onj-ak-Sxi">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
@@ -3845,12 +3845,12 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IpD-gD-LwR" userLabel="Bottom">
-                                                <rect key="frame" x="0.0" y="1020" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="1020" width="375" height="10"/>
                                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                             </view>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="1070" id="Gaw-cK-KxK"/>
+                                            <constraint firstAttribute="height" constant="1030" id="Gaw-cK-KxK"/>
                                             <constraint firstAttribute="width" constant="375" id="JMV-Ej-tld"/>
                                         </constraints>
                                     </stackView>
@@ -3894,7 +3894,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FhQ-uJ-72f"/>
                     </view>
-                    <size key="freeformSize" width="375" height="1140"/>
+                    <size key="freeformSize" width="375" height="1100"/>
                     <connections>
                         <outlet property="cameraButton" destination="c6J-cK-i9l" id="OIT-Ez-r2s"/>
                         <outlet property="closingField" destination="S2Z-BX-Wp2" id="oDU-4o-OGk"/>
@@ -4133,7 +4133,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Park Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nee-Ik-lVn">
-                                        <rect key="frame" x="15" y="22" width="345" height="30"/>
+                                        <rect key="frame" x="30" y="22" width="315" height="30"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -4150,10 +4150,10 @@
                                     <constraint firstItem="Nee-Ik-lVn" firstAttribute="top" secondItem="EcL-5g-hTv" secondAttribute="top" constant="22" id="CMZ-g5-8rD"/>
                                     <constraint firstItem="uQB-BI-mZr" firstAttribute="leading" secondItem="EcL-5g-hTv" secondAttribute="leading" constant="8" id="MVi-qp-IwN"/>
                                     <constraint firstItem="uQB-BI-mZr" firstAttribute="top" secondItem="Nee-Ik-lVn" secondAttribute="bottom" constant="3" id="Xeg-nw-gTJ"/>
-                                    <constraint firstAttribute="trailing" secondItem="Nee-Ik-lVn" secondAttribute="trailing" constant="15" id="Ynv-0S-UwY"/>
+                                    <constraint firstAttribute="trailing" secondItem="Nee-Ik-lVn" secondAttribute="trailing" constant="30" id="Ynv-0S-UwY"/>
                                     <constraint firstAttribute="bottom" secondItem="uQB-BI-mZr" secondAttribute="bottom" constant="5" id="aJx-Nb-eMc"/>
                                     <constraint firstAttribute="trailing" secondItem="uQB-BI-mZr" secondAttribute="trailing" constant="8" id="cPe-dl-aT3"/>
-                                    <constraint firstItem="Nee-Ik-lVn" firstAttribute="leading" secondItem="EcL-5g-hTv" secondAttribute="leading" constant="15" id="kNZ-35-Bk3"/>
+                                    <constraint firstItem="Nee-Ik-lVn" firstAttribute="leading" secondItem="EcL-5g-hTv" secondAttribute="leading" constant="30" id="kNZ-35-Bk3"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eta-AH-qOv">

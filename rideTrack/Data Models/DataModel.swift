@@ -121,6 +121,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.photoCC = (jsonElement["CCType"] as! String)
                 attraction.ridePartner = (jsonElement["attractionLink"] as! String)
                 attraction.modifyBy = (jsonElement["modifyBy"] as! String)
+                attraction.notes = (jsonElement["Notes"] as! String)
                 dataBaseData.add(attraction)
             }
             if dataBase == "Suggest" {

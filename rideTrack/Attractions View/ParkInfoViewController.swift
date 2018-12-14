@@ -70,6 +70,9 @@ class ParkInfoViewController: UIViewController {
             yearClosedLabel.text = String(parksData.yearClosed)
             statusLabel.text = "Closed"
         }
+        if parksData.type == "UNSURE" {
+            parkTypeLabel.isHidden = true
+        }
         addShadowAndRoundRec(uiView: infoView)
         addShadowAndRoundRec(uiView: mapBackgroundView)
     }
