@@ -20,6 +20,7 @@
 		5F24DA0A2130A92800C2D2CC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F24DA092130A92800C2D2CC /* MapViewController.swift */; };
 		5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */; };
 		5F2EEC4F210510150036B47A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4E210510150036B47A /* SignUpViewController.swift */; };
+		5F3A8F4321C409E2006DAC98 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F3A8F4221C409E2006DAC98 /* GoogleService-Info.plist */; };
 		5F44F7152132FB50006E6005 /* ParkInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F44F7142132FB50006E6005 /* ParkInfoViewController.swift */; };
 		5F636B5D2138B1A100D2B922 /* StatsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B5C2138B1A100D2B922 /* StatsContainerViewController.swift */; };
 		5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F636B5E2139C09500D2B922 /* StatsStoryboard.storyboard */; };
@@ -57,7 +58,6 @@
 		5FFCB804210579C80054D84D /* AttractionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB803210579C80054D84D /* AttractionList.swift */; };
 		5FFCB8062106783E0054D84D /* MigrateToFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB8052106783E0054D84D /* MigrateToFirebase.swift */; };
 		63F5557255818849EA859AF8 /* Pods_rideTrackUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E0561EFAB1926F46BC87BF9 /* Pods_rideTrackUITests.framework */; };
-		981E525221C3F4FC006969C2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 981E525121C3F4FC006969C2 /* GoogleService-Info.plist */; };
 		982C41392179570C00B5C8A7 /* FullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982C41382179570C00B5C8A7 /* FullScreenViewController.swift */; };
 		982E097620F54957007F2D02 /* ApproveModifyAttractionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E097520F54957007F2D02 /* ApproveModifyAttractionViewController.swift */; };
 		982E097820F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E097720F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift */; };
@@ -132,6 +132,7 @@
 		5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5F2EEC4E210510150036B47A /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		5F2EEC53210512E70036B47A /* rideTrack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = rideTrack.entitlements; sourceTree = "<group>"; };
+		5F3A8F4221C409E2006DAC98 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5F44F7142132FB50006E6005 /* ParkInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkInfoViewController.swift; sourceTree = "<group>"; };
 		5F636B5C2138B1A100D2B922 /* StatsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsContainerViewController.swift; sourceTree = "<group>"; };
 		5F636B5E2139C09500D2B922 /* StatsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = StatsStoryboard.storyboard; sourceTree = "<group>"; };
@@ -169,7 +170,6 @@
 		5FFCB803210579C80054D84D /* AttractionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionList.swift; sourceTree = "<group>"; };
 		5FFCB8052106783E0054D84D /* MigrateToFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrateToFirebase.swift; sourceTree = "<group>"; };
 		8C99B437187F22079E71285D /* Pods-rideTrack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrack.release.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrack/Pods-rideTrack.release.xcconfig"; sourceTree = "<group>"; };
-		981E525121C3F4FC006969C2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		982C41382179570C00B5C8A7 /* FullScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenViewController.swift; sourceTree = "<group>"; };
 		982E097520F54957007F2D02 /* ApproveModifyAttractionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveModifyAttractionViewController.swift; sourceTree = "<group>"; };
 		982E097720F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyAttractionDetailsViewController.swift; sourceTree = "<group>"; };
@@ -432,9 +432,9 @@
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
+				5F3A8F4221C409E2006DAC98 /* GoogleService-Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
-				981E525121C3F4FC006969C2 /* GoogleService-Info.plist */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
 				98AD7F6E20A91A5C00540AB3 /* Info.plist */,
 				5FE9F80F20DB45030012B98C /* Media.xcassets */,
@@ -632,7 +632,7 @@
 				9832E68F2182952600289677 /* ApproveSuggestions.storyboard in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
-				981E525221C3F4FC006969C2 /* GoogleService-Info.plist in Resources */,
+				5F3A8F4321C409E2006DAC98 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
