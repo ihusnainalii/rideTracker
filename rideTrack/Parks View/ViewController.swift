@@ -86,6 +86,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var savedMyParksForSearch = [ParksList]()
     var isSearchingMyParks = false
     var firstItemsToFavorites = true
+    var itemsAlreadyDownloaded = false
     
     var simulateLocation = UserDefaults.standard.integer(forKey: "simulateLocation")
     
@@ -265,7 +266,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             //Gets all the parks from the database, sets up the favoritesList and allMyParksList
         else{
             arrayOfAllParks = items as! [ParksModel]
-            
+            itemsAlreadyDownloaded = true
             favoritesViewHeightBeforeAnimating = favoritesViewHeightConstrant.constant
 
             
@@ -1171,11 +1172,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         return allParksIndex
     }
 
-    
+
     @objc func appMovedToForeground(){
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
-        print("Checking location")
+        if itemsAlreadyDownloaded{
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestLocation()
+            print("Checking location")
+        }
     }
 
 }
