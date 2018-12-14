@@ -155,6 +155,10 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
         }
         else {
             yearCloseLabel.text = String (selectedRide.yearClosed)
+            if selectedRide.yearClosed == 0 {
+                yearCloseLabel.text = "Unknown"
+            }
+
         }
         if selectedRide.isCheck{
             FirstdateModifyButton.setTitle(dateFormatter(date: selectedRide.dateFirstRidden), for: .normal)
