@@ -20,6 +20,7 @@
 		5F24DA0A2130A92800C2D2CC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F24DA092130A92800C2D2CC /* MapViewController.swift */; };
 		5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */; };
 		5F2EEC4F210510150036B47A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4E210510150036B47A /* SignUpViewController.swift */; };
+		5F3A8F4121C3F4A9006DAC98 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F3A8F4021C3F4A8006DAC98 /* GoogleService-Info.plist */; };
 		5F44F7152132FB50006E6005 /* ParkInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F44F7142132FB50006E6005 /* ParkInfoViewController.swift */; };
 		5F636B5D2138B1A100D2B922 /* StatsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B5C2138B1A100D2B922 /* StatsContainerViewController.swift */; };
 		5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F636B5E2139C09500D2B922 /* StatsStoryboard.storyboard */; };
@@ -52,7 +53,6 @@
 		5FF1ECAA20B526EB00BE1609 /* RideTrack.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */; };
 		5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF1ECAB20B5271800BE1609 /* Main.storyboard */; };
 		5FF1ECB020B5271800BE1609 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */; };
-		5FF55EB621ADF72100E29186 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5FF55EB521ADF72100E29186 /* GoogleService-Info.plist */; };
 		5FFCB7FF21055E400054D84D /* ParksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB7FE21055E400054D84D /* ParksList.swift */; };
 		5FFCB80121055E470054D84D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB80021055E470054D84D /* User.swift */; };
 		5FFCB804210579C80054D84D /* AttractionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB803210579C80054D84D /* AttractionList.swift */; };
@@ -132,6 +132,7 @@
 		5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5F2EEC4E210510150036B47A /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		5F2EEC53210512E70036B47A /* rideTrack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = rideTrack.entitlements; sourceTree = "<group>"; };
+		5F3A8F4021C3F4A8006DAC98 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5F44F7142132FB50006E6005 /* ParkInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkInfoViewController.swift; sourceTree = "<group>"; };
 		5F636B5C2138B1A100D2B922 /* StatsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsContainerViewController.swift; sourceTree = "<group>"; };
 		5F636B5E2139C09500D2B922 /* StatsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = StatsStoryboard.storyboard; sourceTree = "<group>"; };
@@ -164,7 +165,6 @@
 		5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RideTrack.xcdatamodel; sourceTree = "<group>"; };
 		5FF1ECAC20B5271800BE1609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5FF1ECAE20B5271800BE1609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		5FF55EB521ADF72100E29186 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5FFCB7FE21055E400054D84D /* ParksList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParksList.swift; sourceTree = "<group>"; };
 		5FFCB80021055E470054D84D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5FFCB803210579C80054D84D /* AttractionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionList.swift; sourceTree = "<group>"; };
@@ -432,7 +432,7 @@
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
-				5FF55EB521ADF72100E29186 /* GoogleService-Info.plist */,
+				5F3A8F4021C3F4A8006DAC98 /* GoogleService-Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
@@ -632,7 +632,7 @@
 				9832E68F2182952600289677 /* ApproveSuggestions.storyboard in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
-				5FF55EB621ADF72100E29186 /* GoogleService-Info.plist in Resources */,
+				5F3A8F4121C3F4A9006DAC98 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

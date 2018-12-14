@@ -94,6 +94,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var currentLocationPark: ParksList!
     
     let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
+    let checkInButtonColor = UIColor(red: 37/255.0, green: 103/255.0, blue: 251/255.0, alpha: 1.0)
     let favoritesGreen = UIColor(red: 40/255.0, green: 119/255.0, blue: 72/255.0, alpha: 1.0)
     
     var favoritesViewHeightBeforeAnimating: CGFloat!
@@ -127,11 +128,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         settingsButton.isUserInteractionEnabled = false
         
   
-
-        
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(appMovedToForeground), name: NSNotification.Name.UIApplication.willEnterForegroundNotification, object: nil)
+
+
+        
+        
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
         self.allParksTableView.contentInset = insets
         
@@ -594,6 +599,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             newPark.ridesRidden = 0
             newPark.incrementorEnabled = false
             
+            Analytics.logEvent("add_new_park", parameters: ["parkName": newPark.name])
+
+            
             //Animate in the all parks table veiw when adding the first park
             if allParksList.count == 0{
                 UIView.animate(withDuration: 0.6, animations: {
@@ -890,6 +898,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                         viewAttractionLocationButton.backgroundColor = settingsColor
                         viewAttractionLocationButton.setTitle("View Attractions", for: .normal)
                         viewAttractionLocationButton.setTitleColor(.black, for: .normal)
+                    } else {
+                        viewAttractionLocationButton.backgroundColor = checkInButtonColor
+                        viewAttractionLocationButton.setTitle("Check In", for: .normal)
+                        viewAttractionLocationButton.setTitleColor(.white, for: .normal)
                     }
                 }
                 
@@ -904,7 +916,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 self.searchRideButtonHeightConstraint.constant = 50
                 self.currentLocationViewBottomConstraint.constant = -4
                 //If iPhone X, make the locationView heigher
-                print (screenSize.height)
                 if screenSize.height == 812 || UIScreen.main.bounds.height == 896.0{
                     self.locationViewHeight.constant = 85
                 }
@@ -951,7 +962,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         if checkIfNewPark(newPark: closestPark){
             print("new park")
             addNewParkToList(newPark: closestPark, newCheckin: true)
-            Analytics.logEvent("check_into_park", parameters: nil)
+            Analytics.logEvent("check_into_park", parameters: ["parkName": closestPark])
         } else{
             print("old")
         }
@@ -1160,8 +1171,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         return allParksIndex
     }
 
-  
     
-    
+    @objc func appMovedToForeground(){
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+        print("Checking location")
+    }
+
 }
 

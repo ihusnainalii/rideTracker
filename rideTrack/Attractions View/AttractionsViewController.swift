@@ -579,8 +579,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func welcomeBackNotification() {
-        
-        
         var numberPrefix = "th"
         if numberOfCheckins == 1{
             numberPrefix = "st"
@@ -983,6 +981,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         CurrtableViewList[indexPath.row].numberOfTimesRidden = 1
         CurrtableViewList[indexPath.row].dateFirstRidden = Date()
         CurrtableViewList[indexPath.row].dateLastRidden = Date()
+        
+        Analytics.logEvent("add_new_attraction", parameters: ["attractionName": CurrtableViewList[indexPath.row].name])
         
         let newRideID = CurrtableViewList[indexPath.row].rideID
         let newCheck = AttractionList(rideID: newRideID!, numberOfTimesRidden: 1, firstRideDate: Date().timeIntervalSince1970, lastRideDate: Date().timeIntervalSince1970)
