@@ -52,12 +52,12 @@
 		5FF1ECAA20B526EB00BE1609 /* RideTrack.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */; };
 		5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF1ECAB20B5271800BE1609 /* Main.storyboard */; };
 		5FF1ECB020B5271800BE1609 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */; };
-		5FF55EB621ADF72100E29186 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5FF55EB521ADF72100E29186 /* GoogleService-Info.plist */; };
 		5FFCB7FF21055E400054D84D /* ParksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB7FE21055E400054D84D /* ParksList.swift */; };
 		5FFCB80121055E470054D84D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB80021055E470054D84D /* User.swift */; };
 		5FFCB804210579C80054D84D /* AttractionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB803210579C80054D84D /* AttractionList.swift */; };
 		5FFCB8062106783E0054D84D /* MigrateToFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB8052106783E0054D84D /* MigrateToFirebase.swift */; };
 		63F5557255818849EA859AF8 /* Pods_rideTrackUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E0561EFAB1926F46BC87BF9 /* Pods_rideTrackUITests.framework */; };
+		981E525221C3F4FC006969C2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 981E525121C3F4FC006969C2 /* GoogleService-Info.plist */; };
 		982C41392179570C00B5C8A7 /* FullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982C41382179570C00B5C8A7 /* FullScreenViewController.swift */; };
 		982E097620F54957007F2D02 /* ApproveModifyAttractionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E097520F54957007F2D02 /* ApproveModifyAttractionViewController.swift */; };
 		982E097820F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E097720F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift */; };
@@ -164,12 +164,12 @@
 		5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RideTrack.xcdatamodel; sourceTree = "<group>"; };
 		5FF1ECAC20B5271800BE1609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5FF1ECAE20B5271800BE1609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		5FF55EB521ADF72100E29186 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5FFCB7FE21055E400054D84D /* ParksList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParksList.swift; sourceTree = "<group>"; };
 		5FFCB80021055E470054D84D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5FFCB803210579C80054D84D /* AttractionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionList.swift; sourceTree = "<group>"; };
 		5FFCB8052106783E0054D84D /* MigrateToFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrateToFirebase.swift; sourceTree = "<group>"; };
 		8C99B437187F22079E71285D /* Pods-rideTrack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrack.release.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrack/Pods-rideTrack.release.xcconfig"; sourceTree = "<group>"; };
+		981E525121C3F4FC006969C2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		982C41382179570C00B5C8A7 /* FullScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenViewController.swift; sourceTree = "<group>"; };
 		982E097520F54957007F2D02 /* ApproveModifyAttractionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveModifyAttractionViewController.swift; sourceTree = "<group>"; };
 		982E097720F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyAttractionDetailsViewController.swift; sourceTree = "<group>"; };
@@ -432,9 +432,9 @@
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
-				5FF55EB521ADF72100E29186 /* GoogleService-Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
+				981E525121C3F4FC006969C2 /* GoogleService-Info.plist */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
 				98AD7F6E20A91A5C00540AB3 /* Info.plist */,
 				5FE9F80F20DB45030012B98C /* Media.xcassets */,
@@ -632,7 +632,7 @@
 				9832E68F2182952600289677 /* ApproveSuggestions.storyboard in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
-				5FF55EB621ADF72100E29186 /* GoogleService-Info.plist in Resources */,
+				981E525221C3F4FC006969C2 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
