@@ -14,8 +14,7 @@ import FirebaseDatabase
 class AttractionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, DataModelProtocol, AttractionsTableViewCellDelegate{
     
     
-    
-    
+ 
     @IBOutlet weak var attractionsTableView: UITableView!
     @IBOutlet weak var parkLabel: UILabel!
     @IBOutlet weak var NumCompleteLabel: UILabel!
@@ -109,6 +108,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var favoriteListRef: DatabaseReference!
     var scoreCardRef: DatabaseReference!
     var userNameRef: DatabaseReference!
+    var dayInParkRef: DatabaseReference!
+
+    var checkedIntoPark = false
+    
     var user: User!
     var loginEmail = ""
     var userName = ""
@@ -211,6 +214,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         let userID = Auth.auth().currentUser
         id = (userID?.uid)!
         loginEmail = (userID?.email)!
+        self.dayInParkRef = Database.database().reference(withPath: "day-in-park/\(id)/todays-attractions")
+
         userNameRef = Database.database().reference(withPath:"users/details/\(id)/userName") ///userName
         attractionListRef = Database.database().reference(withPath: "attractions-list/\(id)/\(parkData.parkID!)")
         parksListRef = Database.database().reference(withPath: "all-parks-list/\(id)/\(String(parkData.parkID))")
@@ -1044,6 +1049,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         let newCheck = AttractionList(rideID: newRideID!, numberOfTimesRidden: 1, firstRideDate: Date().timeIntervalSince1970, lastRideDate: Date().timeIntervalSince1970)
         let newAttractionRef = self.attractionListRef.child(String(newRideID!))
         newAttractionRef.setValue(newCheck.toAnyObject())
+       
+        if checkedIntoPark{
+            let newDayInParkAttractionRef = self.dayInParkRef.child(String(newRideID!))
+            newDayInParkAttractionRef.setValue(newCheck.toAnyObject())
+        }
         
         let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
         
@@ -1187,6 +1197,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
             let newIncrement = CurrtableViewList[indexPath.row].numberOfTimesRidden + 1
             saveIncrementRideCount(rideID:  CurrtableViewList[indexPath.row].rideID, incrementTo: newIncrement, postive: true)
+           
+            
             CurrtableViewList[indexPath.row].numberOfTimesRidden = newIncrement
             CurrtableViewList[indexPath.row].dateLastRidden = Date()
             
@@ -1214,6 +1226,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 "numberOfTimesRidden": incrementTo,
                 "lastRideDate": Date().timeIntervalSince1970
                 ])
+            if checkedIntoPark{
+                let newExperienceToday = AttractionList(rideID: rideID, numberOfTimesRidden: 1, firstRideDate: 0, lastRideDate: Date().timeIntervalSince1970)
+                let newDayInParkAttractionRef = self.dayInParkRef.child(String(rideID))
+                newDayInParkAttractionRef.setValue(newExperienceToday.toAnyObject())
+            }
         } else{
             attractionItem.ref?.updateChildValues([
                 "numberOfTimesRidden": incrementTo
