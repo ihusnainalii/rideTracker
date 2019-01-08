@@ -112,9 +112,9 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.isCheck = false
                 attraction.previousNames = (jsonElement["FormerNames"] as! String)
                 attraction.model = (jsonElement["model"] as! String)
-                attraction.height = Int (jsonElement["height"] as! String)
-                attraction.speed = Int (jsonElement["maxSpeed"] as! String)
-                attraction.length = Int (jsonElement["length"] as! String)
+                attraction.height = Double (jsonElement["height"] as! String)
+                attraction.speed = Double (jsonElement["maxSpeed"] as! String)
+                attraction.length = Double (jsonElement["length"] as! String)
                 attraction.duration = Int (jsonElement["attractionDuration"] as! String)
                 attraction.photoArtist = (jsonElement["photoArtist"] as! String)
                 attraction.photoLink = (jsonElement["photoLink"] as! String)
@@ -122,6 +122,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.ridePartner = (jsonElement["attractionLink"] as! String)
                 attraction.modifyBy = (jsonElement["modifyBy"] as! String)
                 attraction.notes = (jsonElement["Notes"] as! String)
+                attraction.seasonal = Int(jsonElement["Seasonal"] as! String)
                 dataBaseData.add(attraction)
             }
             if dataBase == "Suggest" {

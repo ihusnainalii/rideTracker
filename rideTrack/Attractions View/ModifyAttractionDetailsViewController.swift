@@ -405,16 +405,16 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             if selectedAttraction.previousNames != formerNameField.text! {
                 changes += "former names inclue \(formerNameField.text!)"
             }
-            if selectedAttraction.height != Int(heightField.text!) {
+            if selectedAttraction.height != Double(heightField.text!) {
                 changes += " height is now \(heightField.text!)ft"
             }
-            if selectedAttraction.speed != Int(speedField.text!){
+            if selectedAttraction.speed != Double(speedField.text!){
                 changes += " speed is \(speedField.text!)mph"
             }
             if selectedAttraction.duration != Int(durationInSeconds) {
                 changes += " duration is \(durationInSeconds)s"
             }
-            if selectedAttraction.length != Int(lengthField.text!) {
+            if selectedAttraction.length != Double(lengthField.text!) {
                 changes += " length is \(lengthField.text!)"
             }
             

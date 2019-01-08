@@ -27,9 +27,9 @@ class AttractionsModel: NSObject {
     var manufacturer: String!
     var previousNames: String!
     var model: String!
-    var height: Int!
-    var speed: Int!
-    var length: Int!
+    var height: Double!
+    var speed: Double!
+    var length: Double!
     var duration: Int!
     var photoArtist: String!
     var photoLink: String!
@@ -37,13 +37,14 @@ class AttractionsModel: NSObject {
     var modifyBy: String!
     var ridePartner: String!
     var notes: String!
+    var seasonal: Int!
      
     
     override init() {
         
     }
     
-    init(name: String, rideID: Int, parkID: Int, rideType: Int, yearOpen: Int, yearClosed: Int, active: Int, isCheck: Bool, isFavorite: Bool, isIgnored: Bool, numberOfTimesRidden: Int, dateFirstRidden: Date, dateLastRidden: Date, scoreCard: Int, manufacturer: String, previousNames: String, model: String, height: Int, speed: Int, length: Int, duration: Int, photoArtist: String, photoLink: String, photoCC: String,modifyBy: String, ridePartner: String, notes: String) {
+    init(name: String, rideID: Int, parkID: Int, rideType: Int, yearOpen: Int, yearClosed: Int, active: Int, isCheck: Bool, isFavorite: Bool, isIgnored: Bool, numberOfTimesRidden: Int, dateFirstRidden: Date, dateLastRidden: Date, scoreCard: Int, manufacturer: String, previousNames: String, model: String, height: Double, speed: Double, length: Double, duration: Int, photoArtist: String, photoLink: String, photoCC: String,modifyBy: String, ridePartner: String, notes: String, seasonal: Int) {
         self.name = name
         self.rideID = rideID
         self.parkID = parkID
@@ -71,6 +72,7 @@ class AttractionsModel: NSObject {
         self.modifyBy = modifyBy
         self.ridePartner = ridePartner
         self.notes = notes
+        self.seasonal = seasonal
     
     }
     

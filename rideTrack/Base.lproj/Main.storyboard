@@ -1631,10 +1631,16 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seasonal: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JiQ-ix-UAM">
+                                                            <rect key="frame" x="10" y="78" width="79.5" height="18"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                         <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" text="Defunct: 0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BWZ-6M-pEa" userLabel="Extinct Complete Label">
-                                                            <rect key="frame" x="286" y="77" width="81" height="20"/>
-                                                            <nil key="textColor"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <rect key="frame" x="290" y="78" width="77" height="18"/>
+                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <textInputTraits key="textInputTraits"/>
                                                         </textField>
                                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6J7-gI-0Jk">
@@ -1653,12 +1659,14 @@
                                                         <constraint firstAttribute="trailing" secondItem="BWZ-6M-pEa" secondAttribute="trailing" constant="8" id="RWj-6o-WEm"/>
                                                         <constraint firstAttribute="bottom" secondItem="rKa-vC-Lf2" secondAttribute="bottom" constant="9" id="RcK-fO-2GQ"/>
                                                         <constraint firstAttribute="trailing" secondItem="uVR-cf-Ne8" secondAttribute="trailing" constant="5" id="Yjk-Oc-h6H"/>
+                                                        <constraint firstItem="JiQ-ix-UAM" firstAttribute="centerY" secondItem="lfq-1a-KsT" secondAttribute="centerY" id="ZgQ-2J-yVL"/>
                                                         <constraint firstItem="rKa-vC-Lf2" firstAttribute="top" secondItem="uVR-cf-Ne8" secondAttribute="bottom" constant="15" id="bpM-bS-Znm"/>
                                                         <constraint firstItem="MqX-V1-51p" firstAttribute="centerX" secondItem="Ww5-cA-KWO" secondAttribute="centerX" id="dcd-Jz-Xqc"/>
                                                         <constraint firstItem="fqB-3X-RMS" firstAttribute="top" secondItem="Ww5-cA-KWO" secondAttribute="top" constant="8" id="e59-A6-yqV"/>
                                                         <constraint firstItem="9b6-HB-NGD" firstAttribute="top" secondItem="Ww5-cA-KWO" secondAttribute="top" constant="8" id="ecP-ih-NAX"/>
                                                         <constraint firstItem="uVR-cf-Ne8" firstAttribute="top" secondItem="MqX-V1-51p" secondAttribute="bottom" constant="-3" id="fG4-Hx-jd2"/>
                                                         <constraint firstItem="9b6-HB-NGD" firstAttribute="leading" secondItem="Ww5-cA-KWO" secondAttribute="leading" constant="15" id="gqI-Ge-Car"/>
+                                                        <constraint firstItem="JiQ-ix-UAM" firstAttribute="leading" secondItem="Ww5-cA-KWO" secondAttribute="leading" constant="10" id="ktV-9S-6Ng"/>
                                                         <constraint firstItem="lfq-1a-KsT" firstAttribute="top" secondItem="uVR-cf-Ne8" secondAttribute="bottom" constant="6" id="mOt-pV-GoB"/>
                                                         <constraint firstItem="BWZ-6M-pEa" firstAttribute="centerY" secondItem="lfq-1a-KsT" secondAttribute="centerY" id="t6o-mV-jMM"/>
                                                         <constraint firstItem="MqX-V1-51p" firstAttribute="top" secondItem="Ww5-cA-KWO" secondAttribute="top" constant="4" id="xQA-EV-ncv"/>
@@ -1898,6 +1906,7 @@
                         <outlet property="parkLabel" destination="uVR-cf-Ne8" id="AeQ-bv-7ml"/>
                         <outlet property="progressBar" destination="rKa-vC-Lf2" id="uwW-Gj-q4m"/>
                         <outlet property="rectangleView" destination="qGY-Pc-WCD" id="81w-5E-zKt"/>
+                        <outlet property="seasonalText" destination="JiQ-ix-UAM" id="7KD-us-0cu"/>
                         <outlet property="suggestButton" destination="fqB-3X-RMS" id="An5-z6-Qob"/>
                         <outlet property="toolBarView" destination="Sii-yL-1kR" id="bMH-x9-iFI"/>
                         <outlet property="topView" destination="Ww5-cA-KWO" id="XJv-dH-f1c"/>

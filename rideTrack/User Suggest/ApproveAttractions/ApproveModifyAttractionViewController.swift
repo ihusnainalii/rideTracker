@@ -413,16 +413,16 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
         if originalAttraction.previousNames != formerNameField.text! {
             changes += "former names inclue \(formerNameField.text!)"
         }
-        if originalAttraction.height != Int(heightField.text!) {
+        if originalAttraction.height != Double(heightField.text!) {
             changes += " height is now \(heightField.text!)ft"
         }
-        if originalAttraction.speed != Int(speedField.text!){
+        if originalAttraction.speed != Double(speedField.text!){
             changes += " speed is \(speedField.text!)mph"
         }
         if originalAttraction.duration != Int(durationField.text!) {
             changes += " duration is \(String(describing: durationField.text))s"
         }
-        if originalAttraction.length != Int(lengthField.text!) {
+        if originalAttraction.length != Double(lengthField.text!) {
             changes += " length is \(lengthField.text!)"
         }
         return changes
