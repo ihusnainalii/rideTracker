@@ -72,6 +72,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var savedItems: NSArray!
     var parkData: ParksModel!
     var showExtinct = false
+    var showSeasonal = false
     var isIgnored = false
     
     //From the datamigration tool:
@@ -357,7 +358,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                     }
                     else{
                         //The user does not have any data stored for any of the rest of the rides in this park. Can this be replaced with a break?
-                        allAttractionsList[i].numberOfTimesRidden = 2
+                        allAttractionsList[i].numberOfTimesRidden = 0
                     }
                     
                     if allAttractionsList[i].numberOfTimesRidden == nil{
@@ -377,18 +378,16 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                         }
                         
                         if ignore[j].rideID == allAttractionsList[i].rideID{
-                            //print ("still here!")
                             allAttractionsList[i].isIgnored = true
                             numIgnore += 1
                             break
                         }
                         else {
-                            //print("at the else")
                             allAttractionsList[i].isIgnored = false
                         }
                         
                     }
-                    if allAttractionsList[i].active == 0 {//&& allAttractionsList[i].seasonal == 0 { //&& showExtinct
+                    if allAttractionsList[i].active == 0 && allAttractionsList[i].seasonal == 0{// { //&& showExtinct
                         extinctAttractionList.append(allAttractionsList[i])
                     }
                     if allAttractionsList[i].active == 1 {
@@ -407,19 +406,41 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             print("All EXTINCT!")
             showExtinct = true
         }
-        
+        //only show extinct attractions you have been on!
         var countRemove = 0
             for i in 0..<extinctAttractionList.count{ //sizeOfList
-                if (extinctAttractionList[i-countRemove].isCheck){
-                    numExtinct += 1}
-                if ((extinctAttractionList[i - countRemove]).active == 0 && !showExtinct && (extinctAttractionList[i - countRemove]).isCheck == false){
+                if (extinctAttractionList[i-countRemove].isCheck){ numExtinct += 1}
+                if (!showExtinct && (extinctAttractionList[i - countRemove]).isCheck == false){
                     extinctAttractionList.remove(at: i-countRemove)
                     countRemove = countRemove+1
                    // continue
                 }
             }
+        //sounds num Seasonal and only show seasonal attractions you have been on!
+            countRemove = 0
+            for i in 0..<seasonalAttractionList.count{ //sizeOfList
+                if seasonalAttractionList[i].isCheck { numSeasonal += 1 }
 
+                if ((seasonalAttractionList[i - countRemove]).seasonal == 1 && !showSeasonal && (seasonalAttractionList[i - countRemove]).isCheck == false){
+                    seasonalAttractionList.remove(at: i-countRemove)
+                    countRemove = countRemove+1
+                }
+            }
 
+        print("num extinct is: \(numExtinct)")
+        if showExtinct || numExtinct >= 1 {
+            extinctText.isHidden = false
+            extinctText.text = "Defunct: \(numExtinct)"
+        }
+        else{ extinctText.isHidden = true }
+        if showSeasonal || numSeasonal >= 1 {
+            seasonalText.isHidden = false
+            seasonalText.text = "Seasonal: \(numSeasonal)"
+        }
+        else { seasonalText.isHidden = true }
+
+        NumCompleteLabel.isHidden = false
+        
         //If user wants to show extinct, sort so that the active rides are on top of the list
         if allAttractionsList.count != 1{
             //Need both steps to sort name alphabetically and by active or not
@@ -427,21 +448,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             activeAttractionList.sort{ $0.name < $1.name }
             seasonalAttractionList.sort{ $0.name < $1.name }
             extinctAttractionList.sort{ $0.name < $1.name }
-
+            
         }
-        print("num extinct is: \(numExtinct)")
-        if showExtinct || numExtinct >= 1 {
-            extinctText.isHidden = false
-            extinctText.text = "Defunct: \(numExtinct)"
-        }
-        else{
-            extinctText.isHidden = true
-        }
-        numSeasonal = seasonalAttractionList.count
-        seasonalText.text = "Seasonal: \(numSeasonal)"
-
-        NumCompleteLabel.isHidden = false
-        
         
         if (self.activeAttractionList.count-numIgnore) > parkData.totalRides && segueWithTableViewSelect{
             let numberOfNewParks = activeAttractionList.count-numIgnore-parkData.totalRides
@@ -488,9 +496,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         case 0:
             return 30
         case 1:
-            return 30
+            if showSeasonal || numSeasonal >= 1 { return 30}
+            else {return 0}
         default:
-            return 30
+            if showExtinct || numExtinct >= 1 { return 30}
+            else {return 0}
         }
     }
 
@@ -1250,6 +1260,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             settingsVC.parksData = parkData
             settingsVC.favoiteParkList = favoiteParkList
             settingsVC.showDefunct = showExtinct
+            settingsVC.showSeasonal = showSeasonal
             settingsVC.attractionViewController = self
             settingsVC.userName = userName
         }
@@ -1442,6 +1453,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     func updateViewFromSettings(parkDetailVC: ParkSettingsViewController){
         print("BACK FROM SETTINGS")
         showExtinct = parkDetailVC.showDefunct
+        showSeasonal = parkDetailVC.showSeasonal
         allAttractionsList.removeAll()
         userAttractionDatabase.removeAll()
         activeAttractionList.removeAll() //clear lists to remove duplicates
@@ -1450,6 +1462,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         numRidesRiden = 0
         numExtinct = 0
         numIgnore = 0
+        numSeasonal = 0
         updateAttraction()
         attractionsTableView.reloadData()
     }
