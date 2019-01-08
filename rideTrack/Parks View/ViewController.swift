@@ -80,6 +80,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var userName = ""
     
     var firstCheckin = false
+    var checkedIntoPark = false
     var numberOfCheckinsToDisplay = 0
     var lastVisit = 0.0
     
@@ -106,7 +107,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var parksListRef: DatabaseReference!
     var favoritesListRef: DatabaseReference!
     var statsListRef: DatabaseReference!
+    var dayInParkRef: DatabaseReference!
     var user: User!
+    
     
     override func viewDidLoad() {
         configureViewDidLoad()
@@ -149,6 +152,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         let id = userID?.uid
         self.userNameRef = Database.database().reference(withPath:"users/details/\(id!)/userName") ///userName
         self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)")
+        self.dayInParkRef = Database.database().reference(withPath: "day-in-park")
         self.favoritesListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)")
         
         userNameRef.observe(.value, with: { snapshot in
@@ -626,6 +630,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             newParkRef.setValue(newParkModel.toAnyObject())
             
             
+           
+            
+            
             //allParksList.insert(newPark, at: 0)
             
             let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
@@ -722,6 +729,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 attractionVC.firstCheckin = true
                 attractionVC.numberOfCheckins = numberOfCheckinsToDisplay
                 attractionVC.lastVisit = lastVisit
+                attractionVC.firstCheckin = firstCheckin
             }
             
             print ("The park is ", selectedPark.name)
@@ -732,7 +740,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             attractionVC.parkData.totalRides = selectedPark.totalRides
             attractionVC.parkData.incrementorEnabled = selectedPark.incrementorEnabled
             attractionVC.favoiteParkList = favoiteParkList
-            
+            attractionVC.checkedIntoPark = checkedIntoPark
+            checkedIntoPark = false
             
             //If the name of the park has changed, update the name in Parks-list
             if arrayOfAllParks[arrayOfAllParksIndex].name != selectedPark.name{
@@ -969,7 +978,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         
         
-        
+        checkedIntoPark = true
         segueWithTableViewSelect = false
         let selectedParkIndex = findIndexInAllParksList(parkID: closestPark.parkID)
 
@@ -981,6 +990,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 let midnight = calendar.startOfDay(for: Date())
                 
                 firstCheckin = true
+                
                 numberOfCheckinsToDisplay = selectedPark.numberOfCheckIns + 1
                 lastVisit = selectedPark.lastDayVisited
                 
@@ -990,6 +1000,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                     "checkedInToday": true,
                     "numberOfCheckIns": selectedPark.numberOfCheckIns + 1
                     ])
+                let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, maxHeight: 0, totalTrackLength: 0, lastRideTime: 0, topSpeed: 0, scoreCardHighest: 0, numberOfVisitsToThePark: selectedPark.numberOfCheckIns+1, nameOfFirstExperiences:[], oldestRide: "", newestRide: "")
+                let startDayInParkRef = self.dayInParkRef.child(String(user.uid))
+                startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
             }
     
         
