@@ -903,6 +903,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                             "checkedInToday": false
                             ])
                         
+            
+                        
                     }
                     if currentLocationPark.checkedInToday{
                         viewAttractionLocationButton.backgroundColor = settingsColor

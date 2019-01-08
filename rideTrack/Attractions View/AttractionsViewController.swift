@@ -847,7 +847,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
                 CurrtableViewList[indexPath.row].numberOfTimesRidden = newIncrement
                 CurrtableViewList[indexPath.row].dateLastRidden = Date()
-                self.saveIncrementRideCount(rideID: CurrtableViewList[indexPath.row].rideID, incrementTo: newIncrement, postive: true)
+                self.saveIncrementRideCount(rideID: CurrtableViewList[indexPath.row].rideID, incrementTo: newIncrement, postive: true, rideName: CurrtableViewList[indexPath.row].name)
                 cell.rideCellSquare.isUserInteractionEnabled = true
                 cell.extendedTappableCheckView.isUserInteractionEnabled = true
                 
@@ -1107,7 +1107,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         else{
             let newIncrement = CurrtableViewList[indexPath.row].numberOfTimesRidden - 1
-            saveIncrementRideCount(rideID:  CurrtableViewList[indexPath.row].rideID, incrementTo: newIncrement, postive: false)
+            saveIncrementRideCount(rideID:  CurrtableViewList[indexPath.row].rideID, incrementTo: newIncrement, postive: false, rideName: CurrtableViewList[indexPath.row].name)
             CurrtableViewList[indexPath.row].numberOfTimesRidden = newIncrement
             let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
             cell.numberOfRidesLabel.text = String(newIncrement)
@@ -1186,7 +1186,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             }
             let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
             let newIncrement = CurrtableViewList[indexPath.row].numberOfTimesRidden + 1
-            saveIncrementRideCount(rideID:  CurrtableViewList[indexPath.row].rideID, incrementTo: newIncrement, postive: true)
+            saveIncrementRideCount(rideID:  CurrtableViewList[indexPath.row].rideID, incrementTo: newIncrement, postive: true, rideName: CurrtableViewList[indexPath.row].name)
            
             
             CurrtableViewList[indexPath.row].numberOfTimesRidden = newIncrement
@@ -1207,7 +1207,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         // Dispose of any resources that can be recreated.
     }
     
-    func saveIncrementRideCount(rideID: Int, incrementTo: Int, postive: Bool){
+    func saveIncrementRideCount(rideID: Int, incrementTo: Int, postive: Bool, rideName: String){
         let attractionIndex = getUserAttractionDatabaseIndex(rideID: rideID)
         let attractionItem = userAttractionDatabase[attractionIndex]
         
@@ -1217,9 +1217,22 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 "lastRideDate": Date().timeIntervalSince1970
                 ])
             if checkedIntoPark{
-                let newExperienceToday = AttractionList(rideID: rideID, numberOfTimesRidden: 1, firstRideDate: 0, lastRideDate: Date().timeIntervalSince1970)
-                let newDayInParkAttractionRef = self.dayInParkRef.child(String(rideID))
-                newDayInParkAttractionRef.setValue(newExperienceToday.toAnyObject())
+               
+                dayInParkRef.child(String(rideID)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    let value = snapshot.value as? NSDictionary
+                    let numberOfExperiencesToday = value?["numberOfTimesRidden"] as? Int ?? 0
+                    print(value)
+
+                    let newExperienceToday = DayInParkAttractionList(rideID: rideID, numberOfTimesRidden: numberOfExperiencesToday+1, firstRideDate: 0, lastRideDate: Date().timeIntervalSince1970, rideName: rideName)
+
+                    let newDayInParkAttractionRef = self.dayInParkRef.child(String(rideID))
+                    newDayInParkAttractionRef.setValue(newExperienceToday.toAnyObject())
+    
+                }) { (error) in
+                    print(error.localizedDescription)
+                }
+                
+               
             }
         } else{
             attractionItem.ref?.updateChildValues([
