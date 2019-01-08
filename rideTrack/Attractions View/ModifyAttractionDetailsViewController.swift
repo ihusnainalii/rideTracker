@@ -21,6 +21,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
     @IBOutlet weak var manufacturingField: UITextField!
     @IBOutlet weak var scoreSwitch: UISwitch!
     @IBOutlet weak var extinctSwitch: UISwitch!
+    @IBOutlet weak var seasonalSwitch: UISwitch!
     @IBOutlet weak var typeButton: UIButton!
     
     @IBOutlet weak var formerNameField: UITextField!
@@ -57,7 +58,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
     var needsPhoto = true
     var submittedImage: UIImage!
     var onlySubmitPhoto = true;
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -113,6 +114,10 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             extinctSwitch.isOn = true
             closingStack.isHidden = false
         }
+        if selectedAttraction.seasonal == 1 {
+            seasonalSwitch.isOn = true
+        }
+        else {seasonalSwitch.isOn = false}
         if selectedAttraction.hasScoreCard == 1 {
             scoreSwitch.isOn = true
         }
@@ -336,8 +341,12 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         let yearOpen = openingField.text!
         var yearClosed = closingField.text!
         var active = 1
+        var seasonal = 0
         if extinctSwitch.isOn {
             active = 0
+        }
+        if seasonalSwitch.isOn {
+            seasonal = 1
         }
         else {
             yearClosed = String(0)
@@ -361,7 +370,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             var modifiedBy = ""
             modifiedBy = selectedAttraction.modifyBy!
 
-        urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction.php?id=\(selectedAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&modifyBy=\(modifiedBy)" //uploads to main list
+            urlPath = "http://www.beingpositioned.com/theparksman/ActivePhpFiles/modifyAttractionV1.php?id=\(selectedAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&seasonal=\(seasonal)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&notes=&modifyBy=\(modifiedBy)" //uploads to main list
         print (urlPath)
             
             var changes = "MODIFY: "

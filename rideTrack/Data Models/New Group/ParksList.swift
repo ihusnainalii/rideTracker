@@ -24,11 +24,12 @@ struct ParksList {
     var totalRides: Int!
     var incrementorEnabled: Bool!
     var showDefunct: Bool!
+    var showSeasonal: Bool!
     var numberOfCheckIns: Int!
     var lastDayVisited: Double!
     var checkedInToday: Bool!
     
-    init(parkID: Int, favorite: Bool, ridesRidden: Int, totalRides: Int, incrementorEnabled: Bool, name: String, location: String, showDefunct: Bool, numberOfCheckIns: Int, lastDayVisited: Double, checkedInToday: Bool, key: String = "") {
+    init(parkID: Int, favorite: Bool, ridesRidden: Int, totalRides: Int, incrementorEnabled: Bool, name: String, location: String, showDefunct: Bool, showSeasonal: Bool, numberOfCheckIns: Int, lastDayVisited: Double, checkedInToday: Bool, key: String = "") {
         self.ref = nil
         self.key = key
         self.parkID = parkID
@@ -39,6 +40,7 @@ struct ParksList {
         self.name = name
         self.location = location
         self.showDefunct = showDefunct
+        self.showSeasonal = showSeasonal
         self.numberOfCheckIns = numberOfCheckIns
         self.lastDayVisited = lastDayVisited
         self.checkedInToday = checkedInToday
@@ -58,9 +60,15 @@ struct ParksList {
                 return nil
         }
         var showDefunct = false
+        var showSeasonal = false
         if let showDefunctCheck = value["showDefunct"] as? Bool{
             showDefunct = showDefunctCheck
         }
+        
+        if let showSeasonalCheck = value["showSeasonal"] as? Bool{
+            showSeasonal = showSeasonalCheck
+        }
+        
         var numberOfCheckIns = 0
         if let numberOfCheckInsCheck = value["numberOfCheckIns"] as? Int{
             numberOfCheckIns = numberOfCheckInsCheck
@@ -84,6 +92,7 @@ struct ParksList {
         self.name = name
         self.location = location
         self.showDefunct = showDefunct
+        self.showSeasonal = showSeasonal
         self.numberOfCheckIns = numberOfCheckIns
         self.lastDayVisited = lastDayVisited
         self.checkedInToday = checkedInToday
@@ -98,6 +107,7 @@ struct ParksList {
             "name": name,
             "location": location,
             "showDefunct": showDefunct,
+            "showSeasonal": showSeasonal,
             "numberOfCheckIns": numberOfCheckIns,
             "lastDayVisited": lastDayVisited,
             "checkedInToday": checkedInToday,

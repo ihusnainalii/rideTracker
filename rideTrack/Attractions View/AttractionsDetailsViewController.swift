@@ -153,6 +153,10 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
             yearCloseText.isHidden = true
             //yearClosedStack.isHidden = true
         }
+        else if selectedRide.seasonal == 1 {
+            yearCloseLabel.text = "Seasonal"
+            yearCloseText.isHidden = true
+        }
         else {
             yearCloseLabel.text = String (selectedRide.yearClosed)
             if selectedRide.yearClosed == 0 {

@@ -18,6 +18,7 @@ class ParkSettingsViewController: UIViewController {
     @IBOutlet weak var parkNameLabel: UILabel!
     @IBOutlet weak var incrementorSwitch: UISwitch!
     @IBOutlet weak var defunctSwitch: UISwitch!
+    @IBOutlet weak var seasonalSwitch: UISwitch!
     @IBOutlet weak var navBar: UIView!
     @IBOutlet weak var settingsView: UIView!
     @IBOutlet weak var parkNameTopConstrant: NSLayoutConstraint!
@@ -28,6 +29,7 @@ class ParkSettingsViewController: UIViewController {
     var parksData: ParksModel!
     var favoiteParkList = [ParksList]()
     var showDefunct = false
+    var showSeasonal = false
     var userName = ""
     var attractionViewController: AttractionsViewController!
     
@@ -42,7 +44,7 @@ class ParkSettingsViewController: UIViewController {
             self.user = User(authData: user)
         }
         
-        
+        print("show defunct is currently: \(showDefunct)")
        
         let userID = Auth.auth().currentUser
         let id = userID?.uid
@@ -52,8 +54,11 @@ class ParkSettingsViewController: UIViewController {
         self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)/\(String(parksData.parkID))")
         self.favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)/\(String(parksData.parkID))")
         configueLayout()
+        print("show defunct is now: \(showDefunct)")
+
         incrementorSwitch.isOn = parksData.incrementorEnabled
         defunctSwitch.isOn = showDefunct
+        seasonalSwitch.isOn = showSeasonal
         submitAttractionButton.layer.cornerRadius = 7
         
         if UIScreen.main.bounds.height == 812.0 || UIScreen.main.bounds.height == 896.0{
@@ -108,6 +113,15 @@ class ParkSettingsViewController: UIViewController {
             favoriteListRef.updateChildValues([
                 "showDefunct": showDefunct
                 ])
+        }
+    }
+    
+    @IBAction func didToggleSeasonalSwitch(_ sender: Any) {
+        showSeasonal = seasonalSwitch.isOn
+        parksListRef.updateChildValues(["showSeasonal": showSeasonal])
+        let favoriteIndex = findIndexFavoritesList(parkID: parksData.parkID)
+        if favoriteIndex != -1 {
+            favoriteListRef.updateChildValues(["showSeasonal": showSeasonal])
         }
     }
     

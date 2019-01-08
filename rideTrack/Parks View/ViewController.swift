@@ -620,7 +620,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 dayVisited = midnight.timeIntervalSince1970
                 checkInToday = true
             }
-            let newParkModel = ParksList(parkID: newPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: newPark.name, location: newPark.city, showDefunct: false, numberOfCheckIns: checkins, lastDayVisited: dayVisited, checkedInToday: checkInToday)
+            let newParkModel = ParksList(parkID: newPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: newPark.name, location: newPark.city, showDefunct: false, showSeasonal: false, numberOfCheckIns: checkins, lastDayVisited: dayVisited, checkedInToday: checkInToday)
     
             let newParkRef = self.parksListRef.child(String(newParkModel.parkID))
             newParkRef.setValue(newParkModel.toAnyObject())
@@ -726,6 +726,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             
             print ("The park is ", selectedPark.name)
             attractionVC.showExtinct = selectedPark.showDefunct
+            attractionVC.showSeasonal = selectedPark.showSeasonal
             attractionVC.parksViewController = self
             attractionVC.segueWithTableViewSelect = segueWithTableViewSelect
             attractionVC.parkData = arrayOfAllParks[arrayOfAllParksIndex]
