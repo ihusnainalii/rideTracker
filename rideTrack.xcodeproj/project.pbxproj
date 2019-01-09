@@ -84,6 +84,7 @@
 		98AD7F7520A91A5C00540AB3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F6B20A91A5B00540AB3 /* ViewController.swift */; };
 		98AD7F7620A91A5C00540AB3 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F6C20A91A5B00540AB3 /* DataModel.swift */; };
 		98AD7F7720A91A5C00540AB3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */; };
+		98AF929321E669800095B55B /* suggestParkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AF929221E669800095B55B /* suggestParkTableViewCell.swift */; };
 		98C000F82177DF6200B01F58 /* suggPhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C000F72177DF6200B01F58 /* suggPhotosTableViewCell.swift */; };
 		98C000FB2177E2C100B01F58 /* approveSuggPhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C000FA2177E2C100B01F58 /* approveSuggPhotoModel.swift */; };
 		98C000FD2177F10100B01F58 /* photoSuggListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C000FC2177F10100B01F58 /* photoSuggListViewController.swift */; };
@@ -204,6 +205,7 @@
 		98AD7F6C20A91A5B00540AB3 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		98AD7F6D20A91A5B00540AB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98AD7F6E20A91A5C00540AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		98AF929221E669800095B55B /* suggestParkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = suggestParkTableViewCell.swift; sourceTree = "<group>"; };
 		98C000F72177DF6200B01F58 /* suggPhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = suggPhotosTableViewCell.swift; sourceTree = "<group>"; };
 		98C000FA2177E2C100B01F58 /* approveSuggPhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = approveSuggPhotoModel.swift; sourceTree = "<group>"; };
 		98C000FC2177F10100B01F58 /* photoSuggListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoSuggListViewController.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 				988A1A382170EEDB004CF3A8 /* ParkSuggListViewController.swift */,
 				988A1A3C21710B07004CF3A8 /* ApproveParkViewController.swift */,
 				988A1A3A2170F036004CF3A8 /* approveSuggParksModel.swift */,
+				98AF929221E669800095B55B /* suggestParkTableViewCell.swift */,
 			);
 			path = ApproveParks;
 			sourceTree = "<group>";
@@ -814,6 +817,7 @@
 				5F0AEB0C2110B43F0019D607 /* ExpandParksViews.swift in Sources */,
 				98D7A7022172767E008A4E35 /* ApproveParkMapViewController.swift in Sources */,
 				988A1A3D21710B07004CF3A8 /* ApproveParkViewController.swift in Sources */,
+				98AF929321E669800095B55B /* suggestParkTableViewCell.swift in Sources */,
 				98F17C65216AABFB0009BE91 /* SuggestParkViewController.swift in Sources */,
 				98F24F5120EFE35200A42C7E /* SuggestDetailsViewController.swift in Sources */,
 				5F202C5B20E6E8AF00FFE408 /* NeverClearView.swift in Sources */,

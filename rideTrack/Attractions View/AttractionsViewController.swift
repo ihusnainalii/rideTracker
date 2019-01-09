@@ -419,7 +419,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         //sounds num Seasonal and only show seasonal attractions you have been on!
             countRemove = 0
             for i in 0..<seasonalAttractionList.count{ //sizeOfList
-                if seasonalAttractionList[i].isCheck { numSeasonal += 1 }
+                if seasonalAttractionList[i-countRemove].isCheck { numSeasonal += 1 }
 
                 if ((seasonalAttractionList[i - countRemove]).seasonal == 1 && !showSeasonal && (seasonalAttractionList[i - countRemove]).isCheck == false){
                     seasonalAttractionList.remove(at: i-countRemove)

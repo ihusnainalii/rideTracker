@@ -24,12 +24,13 @@ class ApproveSuggParksModel: NSObject {
     var website: String!
     var userName: String!
     var tempID: Int!
+    var date: String!
     
     override init() {
         
     }
     
-    init(name: String, type: String, city: String, country: String, latitude: Double, longitude: Double, open: Int, closed: Int, defunct: Int, prevName: String, seasonal: Int, website: String, userName: String, tempID: Int) {
+    init(name: String, type: String, city: String, country: String, latitude: Double, longitude: Double, open: Int, closed: Int, defunct: Int, prevName: String, seasonal: Int, website: String, userName: String, tempID: Int, date: String) {
         
         self.name = name
         self.type = type
@@ -45,6 +46,7 @@ class ApproveSuggParksModel: NSObject {
         self.website = website
         self.userName = userName
         self.tempID = tempID
+        self.date = date
     }
     override var description: String {
         return "park: \(name)"

@@ -3471,7 +3471,7 @@
                                                             <constraint firstAttribute="width" constant="51" id="g96-YN-ROZ"/>
                                                         </constraints>
                                                         <connections>
-                                                            <action selector="defunctSwitch:" destination="kVq-ZJ-GQe" eventType="valueChanged" id="EPs-LP-wSm"/>
+                                                            <action selector="defunctSwitchPressed:" destination="kVq-ZJ-GQe" eventType="valueChanged" id="xJh-rp-kJe"/>
                                                         </connections>
                                                     </switch>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HUa-3k-rrq">
@@ -3509,6 +3509,9 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="51" id="SLL-jk-B0w"/>
                                                         </constraints>
+                                                        <connections>
+                                                            <action selector="seasonalSwitchPressed:" destination="kVq-ZJ-GQe" eventType="valueChanged" id="9rW-OT-qbL"/>
+                                                        </connections>
                                                     </switch>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCy-IM-7qG">
                                                         <rect key="frame" x="365" y="0.0" width="10" height="40"/>
@@ -3859,6 +3862,9 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="51" id="bbq-n9-vLK"/>
                                                         </constraints>
+                                                        <connections>
+                                                            <action selector="scoreSwitchPressed:" destination="kVq-ZJ-GQe" eventType="valueChanged" id="GzR-xj-6bT"/>
+                                                        </connections>
                                                     </switch>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DXG-W2-wbn">
                                                         <rect key="frame" x="365" y="0.0" width="10" height="40"/>

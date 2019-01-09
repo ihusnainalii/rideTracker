@@ -283,18 +283,18 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
         let parkID = originalAttraction.parkID!
         let yearOpen = openField.text!
         let yearClosed = closeField.text!
-        
-        var active = 1
-        if extinctSwitch.isOn{
-            active = 0
-        }
         let manufacturer = manufacturerField.text!
-        if scoreCardSwtich.isOn {
-            scoreCard = 1
-        }
-        if rideType == 0 {
-            rideType = suggestedAttraction.type
-        }
+
+        var active = 1
+        if extinctSwitch.isOn{ active = 0}
+        
+        var seasonal = 0
+        if seasonalSwitch.isOn{seasonal = 1}
+        
+        if scoreCardSwtich.isOn { scoreCard = 1 }
+        
+        if rideType == 0 { rideType = suggestedAttraction.type }
+        
         let tempName = rideName!.replacingOccurrences(of: "&", with: "!A?")
         let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
         var modifiedBy = ""
@@ -321,7 +321,7 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
         print("changed by: \(modifiedBy)")
         
         
-        let urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction(NEW).php?id=\(originalAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationField.text!)&notes=\(notes)&modifyBy=\(modifiedBy)"  //uploads to main list
+        let urlPath = "http://www.beingpositioned.com/theparksman/ActivePhpFiles/modifyAttractionV1.php?id=\(originalAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&seasonal=\(seasonal)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationField.text!)&notes=\(notes)&modifyBy=\(modifiedBy)"  //uploads to main list
         print (urlPath)
         let changes = getChangedDetails()
         let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(userName)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
@@ -350,21 +350,17 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
         lengthField.text = String(originalAttraction.length)
         speedField.text = String(originalAttraction.speed)
         durationField.text = String(originalAttraction.duration)
-        if originalAttraction.active == 1{
-            extinctSwitch.isOn = false
-        }
-        else {
-            extinctSwitch.isOn = true
-        }
-        if originalAttraction.hasScoreCard == 1 {
-            scoreCardSwtich.isOn = true
-        }
-        else {
-            scoreCardSwtich.isOn = false
-        }
-
         
+        if originalAttraction.active == 1{ extinctSwitch.isOn = false}
+        else { extinctSwitch.isOn = true }
+
+        if originalAttraction.hasScoreCard == 1 { scoreCardSwtich.isOn = true }
+        else { scoreCardSwtich.isOn = false }
+        
+        if originalAttraction.seasonal == 1 {seasonalSwitch.isOn = true}
+        else {seasonalSwitch.isOn = false}
     }
+    
     func getChangedDetails() ->String {
         var changes = "MODIFY: "
         if originalAttraction.name != nameField.text {

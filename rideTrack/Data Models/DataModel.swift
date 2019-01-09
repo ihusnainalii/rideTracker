@@ -156,6 +156,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.duration = Int(jsonElement["attractionDuration"] as! String)
                 attraction.userName = jsonElement["userEmail"] as? String
                 attraction.dateAdded = jsonElement["DateTime_Created"] as? String
+                attraction.key = Int(jsonElement["id"] as! String)
                 dataBaseData.add(attraction)
                 print ("Ride name is: ", attraction.rideName!)
             }
@@ -175,6 +176,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 suggPark.userName = (jsonElement["userName"] as! String)
                 suggPark.website = (jsonElement["website"] as! String)
                 suggPark.tempID = Int(jsonElement["idKey"] as! String)
+                suggPark.date = (jsonElement["DateTime_Created"] as! String)
                 dataBaseData.add(suggPark)
             }
             if dataBase == "PhotoSuggest"{

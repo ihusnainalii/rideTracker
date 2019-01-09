@@ -34,16 +34,26 @@ class ParkSuggListViewController: UIViewController, UITableViewDataSource, UITab
         for i in 0..<arrayOfParks.count{
             listOfSuggestions.append(arrayOfParks[i])
         }
+        listOfSuggestions.sort{ $0.name < $1.name }
         self.suggestedParkTableView.reloadData()
    }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        return listOfSuggestions.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SuggestedParks", for: indexPath)
-        cell.textLabel?.text = listOfSuggestions[indexPath.row].name
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SuggestedParks", for: indexPath) as! suggestParkTableViewCell
+        cell.parkNameLabel.text = listOfSuggestions[indexPath.row].name
+        var location = "\(listOfSuggestions[indexPath.row].city!), \(listOfSuggestions[indexPath.row].country!)"
+        let tempDate = listOfSuggestions[indexPath.row].date
+        let justDate = tempDate!.prefix(10)
+        cell.locationLabel.text = location
+        cell.usernameLabel.text = listOfSuggestions[indexPath.row].userName
+        cell.dateLabel.text = String(justDate)
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

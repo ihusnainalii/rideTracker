@@ -41,6 +41,8 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     @IBOutlet weak var speedTextField: UITextField!
     @IBOutlet weak var durrationTextField: UITextField!
     @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var notesField: UITextView!
+    @IBOutlet weak var seasonalSwitch: UISwitch!
     @IBOutlet weak var constraintContentHeight: NSLayoutConstraint!
     
     @IBOutlet weak var formerNameTextField: UITextField!
@@ -69,6 +71,8 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         speedTextField.delegate = self
         durrationTextField.delegate = self
         formerNameTextField.delegate = self
+        notesField.delegate = self
+        
         parkNameLabel.text = selectedAttraction.parkName
         nameTextField.text = selectedAttraction.rideName
         pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
@@ -83,22 +87,21 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         durrationTextField.text = String( selectedAttraction.duration)
         emailLabel.text = selectedAttraction.userName
         formerNameTextField.text = selectedAttraction.formerNames
-        if selectedAttraction.active == 1 {
-            extinctSwitch.isOn = false
-        }
-        else {
-            extinctSwitch.isOn = true
-        }
-        if selectedAttraction.scoreCard == 0{
-            scoreCardSwitch.isOn = false
-        }
-        else {
-            scoreCardSwitch.isOn = true
-        }
+        if selectedAttraction.active == 1 { extinctSwitch.isOn = false }
+        else { extinctSwitch.isOn = true }
+        
+        if selectedAttraction.scoreCard == 0{ scoreCardSwitch.isOn = false }
+        else { scoreCardSwitch.isOn = true}
+        
+        if selectedAttraction.seasonal == 1 {seasonalSwitch.isOn = true}
+        else {seasonalSwitch.isOn = false }
+        
         typeSwitcher.selectRow((Int(selectedAttraction.type!)), inComponent: 0, animated: true)
         //typeSwitcher.selectRow(, inComponent: 0, animated: true)
         // Do any additional setup after loading the view.
         scrollWidth.constant = screenSize.width
+        
+        notesField.text = selectedAttraction.notes
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -229,22 +232,21 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         let parkID = selectedAttraction.parkID!
         let yearOpen = openTextField.text!
         let yearClosed = closedTextField.text!
+        var seasonal = 0
         var active = 1
-        if rideType == 0{
-            rideType = Int(selectedAttraction.type)
-        }
-        if extinctSwitch.isOn{
-             active = 0
-        }
+        if rideType == 0{ rideType = Int(selectedAttraction.type) }
+        
+        if extinctSwitch.isOn{ active = 0 }
+        if seasonalSwitch.isOn{seasonal = 1}
+        
         let manufacturer = manufacturerTextField.text!
         var scoreCard = 0
-        if scoreCardSwitch.isOn {
-            scoreCard = 1
-        }
+        if scoreCardSwitch.isOn { scoreCard = 1 }
+        
         let tempName = rideName!.replacingOccurrences(of: "&", with: "!A?")
         let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
         
-        let urlPath = "http://www.beingpositioned.com/theparksman/uploadToAttractionDB(NEW).php?name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameTextField.text!)&model=\(self.modelTextField.text!)&height=\(self.heightTextField.text!)&maxSpeed=\(self.speedTextField.text!)&length=\(self.lengthTextField.text!)&duration=\(self.durrationTextField.text!)&notes=\(selectedAttraction.notes!)&userID=\(selectedAttraction.userName!)" //uploads to main list
+        let urlPath = "http://www.beingpositioned.com/theparksman/ActivePhpFiles/uploadToAttractionDBV1.php?name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&seasonal=\(seasonal)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameTextField.text!)&model=\(self.modelTextField.text!)&height=\(self.heightTextField.text!)&maxSpeed=\(self.speedTextField.text!)&length=\(self.lengthTextField.text!)&duration=\(self.durrationTextField.text!)&notes=\(selectedAttraction.notes!)&userID=\(selectedAttraction.userName!)" //uploads to main list
         
         
         let changes = "NEW RIDE: \(rideName!) at \(parkNameLabel.text!) opened in \(yearOpen) and is type \(rideType)"

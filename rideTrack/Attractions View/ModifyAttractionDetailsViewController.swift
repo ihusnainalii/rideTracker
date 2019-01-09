@@ -529,7 +529,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
         }
     }
     func textViewDidBeginEditing(_ textView: UITextView) {
-        onlySubmitPhoto = false;
+        onlySubmitPhoto = false
         print("edited somthing")
         if notesView.text == "Notes/Citations"{
             notesView.text = ""
@@ -542,6 +542,16 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             }, completion: nil)
         }
     }
+    @IBAction func defunctSwitchPressed(_ sender: Any) {
+        onlySubmitPhoto = false
+    }
+    @IBAction func seasonalSwitchPressed(_ sender: Any) {
+        onlySubmitPhoto = false
+    }
+    @IBAction func scoreSwitchPressed(_ sender: Any) {
+        onlySubmitPhoto = false
+    }
+    
     @IBAction func typeButton(_ sender: Any) {
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
             self.rideTypePicker.isHidden = false
