@@ -20,6 +20,7 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
     @IBOutlet weak var suggestedNotes: UILabel!
     @IBOutlet weak var suggestedOpen: UILabel!
     @IBOutlet weak var suggestedExtinct: UILabel!
+    @IBOutlet weak var suggestedSeasonal: UILabel!
     @IBOutlet weak var suggestScoreCard: UILabel!
     @IBOutlet weak var suggestModel: UILabel!
     @IBOutlet weak var suggestFormerName: UILabel!
@@ -34,6 +35,7 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
     @IBOutlet weak var originalClose: UILabel!
     @IBOutlet weak var originalMan: UILabel!
     @IBOutlet weak var originalExtinct: UILabel!
+    @IBOutlet weak var originalSeasonal: UILabel!
     @IBOutlet weak var origianalScoreCard: UILabel!
     @IBOutlet weak var originalModel: UILabel!
     @IBOutlet weak var originalFormerName: UILabel!
@@ -58,6 +60,7 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
     @IBOutlet weak var speedField: UITextField!
     @IBOutlet weak var durationField: UITextField!
     @IBOutlet weak var parkNameLabel: UILabel!
+    @IBOutlet weak var seasonalSwitch: UISwitch!
     
     @IBOutlet weak var topScrollWidth: NSLayoutConstraint!
     @IBOutlet weak var scrollWidth: NSLayoutConstraint!
@@ -93,6 +96,7 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
         suggestHieght.text = String(suggestedAttraction.height)
         suggestLength.text = String(suggestedAttraction.length)
         suggestDuration.text = String(suggestedAttraction.duration)
+        suggestedSeasonal.text = String(suggestedAttraction.seasonal)
         
         nameField.text = suggestedAttraction.rideName
         openField.text = String(suggestedAttraction.YearOpen)
@@ -123,49 +127,36 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
         
         pickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
         rideTypeSwitch.selectRow(Int(suggestedAttraction.type!), inComponent: 0, animated: true)
-        if suggestedAttraction.active == 1{
-            extinctSwitch.isOn = false
-        }
-        else {
-            extinctSwitch.isOn = true
-        }
+       
         scoreCardSwtich.isOn = false
-//        if suggestedAttraction.score == 1 {
-//            scoreCardSwtich.isOn = true
-//        }
-//        else {
-//            scoreCardSwtich.isOn = false
-//        }
-        if originalAttraction.active == 1 {
-            originalExtinct.text = "No"
-        }
-        else {
-            originalExtinct.text = "Yes"
-        }
-        if suggestedAttraction.active == 1 {
-            suggestedExtinct.text = "No"
-        }
-        else {
-            suggestedExtinct.text = "Yes"
-        }
-        if originalAttraction.hasScoreCard == 1 {
-            origianalScoreCard.text = "yes"
-        }
-        else {
-            origianalScoreCard.text = "No"
-        }
-        if suggestedAttraction.scoreCard == 1 {
-            suggestScoreCard.text = "Yes"
-        }
-        else {
-            suggestScoreCard.text = "No"
-        }
-        if suggestedAttraction.scoreCard == 1{
-            scoreCardSwtich.isOn = true
-        }
-        else {
-            scoreCardSwtich.isOn = false
-        }
+        
+        if originalAttraction.seasonal == 1 {originalSeasonal.text = "Yes"}
+        else {originalSeasonal.text = "No"}
+        
+        if suggestedAttraction.seasonal == 1 {suggestedSeasonal.text = "Yes"}
+        else {suggestedSeasonal.text = "No"}
+        
+        if originalAttraction.active == 1 { originalExtinct.text = "No" }
+        else { originalExtinct.text = "Yes"}
+        
+        if suggestedAttraction.active == 1 { suggestedExtinct.text = "No" }
+        else { suggestedExtinct.text = "Yes" }
+        
+        if originalAttraction.hasScoreCard == 1 { origianalScoreCard.text = "yes"}
+        else { origianalScoreCard.text = "No" }
+        
+        if suggestedAttraction.scoreCard == 1 { suggestScoreCard.text = "Yes" }
+        else { suggestScoreCard.text = "No"}
+        
+        if suggestedAttraction.scoreCard == 1{ scoreCardSwtich.isOn = true }
+        else { scoreCardSwtich.isOn = false }
+        
+        if suggestedAttraction.active == 1 {extinctSwitch.isOn = false}
+        else { extinctSwitch.isOn = true }
+        
+        if suggestedAttraction.seasonal == 1 {seasonalSwitch.isOn = true}
+        else {seasonalSwitch.isOn = false}
+        
         if screenSize.width == 320 {
             topScrollWidth.constant = 300
         }
@@ -292,18 +283,18 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
         let parkID = originalAttraction.parkID!
         let yearOpen = openField.text!
         let yearClosed = closeField.text!
-        
-        var active = 1
-        if extinctSwitch.isOn{
-            active = 0
-        }
         let manufacturer = manufacturerField.text!
-        if scoreCardSwtich.isOn {
-            scoreCard = 1
-        }
-        if rideType == 0 {
-            rideType = suggestedAttraction.type
-        }
+
+        var active = 1
+        if extinctSwitch.isOn{ active = 0}
+        
+        var seasonal = 0
+        if seasonalSwitch.isOn{seasonal = 1}
+        
+        if scoreCardSwtich.isOn { scoreCard = 1 }
+        
+        if rideType == 0 { rideType = suggestedAttraction.type }
+        
         let tempName = rideName!.replacingOccurrences(of: "&", with: "!A?")
         let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
         var modifiedBy = ""
@@ -330,7 +321,7 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
         print("changed by: \(modifiedBy)")
         
         
-        let urlPath = "http://www.beingpositioned.com/theparksman/modifyAttraction(NEW).php?id=\(originalAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationField.text!)&notes=\(notes)&modifyBy=\(modifiedBy)"  //uploads to main list
+        let urlPath = "http://www.beingpositioned.com/theparksman/ActivePhpFiles/modifyAttractionV1.php?id=\(originalAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&seasonal=\(seasonal)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationField.text!)&notes=\(notes)&modifyBy=\(modifiedBy)"  //uploads to main list
         print (urlPath)
         let changes = getChangedDetails()
         let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(userName)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
@@ -359,21 +350,17 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
         lengthField.text = String(originalAttraction.length)
         speedField.text = String(originalAttraction.speed)
         durationField.text = String(originalAttraction.duration)
-        if originalAttraction.active == 1{
-            extinctSwitch.isOn = false
-        }
-        else {
-            extinctSwitch.isOn = true
-        }
-        if originalAttraction.hasScoreCard == 1 {
-            scoreCardSwtich.isOn = true
-        }
-        else {
-            scoreCardSwtich.isOn = false
-        }
-
         
+        if originalAttraction.active == 1{ extinctSwitch.isOn = false}
+        else { extinctSwitch.isOn = true }
+
+        if originalAttraction.hasScoreCard == 1 { scoreCardSwtich.isOn = true }
+        else { scoreCardSwtich.isOn = false }
+        
+        if originalAttraction.seasonal == 1 {seasonalSwitch.isOn = true}
+        else {seasonalSwitch.isOn = false}
     }
+    
     func getChangedDetails() ->String {
         var changes = "MODIFY: "
         if originalAttraction.name != nameField.text {

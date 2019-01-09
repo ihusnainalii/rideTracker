@@ -18,6 +18,7 @@ class ApproveSuggestAttracionModel: NSObject {
     var type: Int!
     var parkName: String!
     var active: Int!
+    var seasonal: Int!
     var manufacturer: String!
     var notes: String!
     var id: Int!
@@ -30,12 +31,14 @@ class ApproveSuggestAttracionModel: NSObject {
     var length: Int!
     var duration: Int!
     var userName: String!
+    var dateAdded: String!
+    var key: Int!
 
 override init() {
     
 }
 
-    init(parkID: Int, rideName: String, rideID: Int, YearOpen: Int, YearClose: Int, type: Int, parkName: String, active: Int, manufacturer: String, id: Int, notes: String, modify: Int, scoreCard: Int, formerNames: String, model: String, height: Int, speed: Int, length: Int, duration: Int, userEmail: String) {
+    init(parkID: Int, rideName: String, rideID: Int, YearOpen: Int, YearClose: Int, type: Int, parkName: String, active: Int, seasonal: Int, manufacturer: String, id: Int, notes: String, modify: Int, scoreCard: Int, formerNames: String, model: String, height: Int, speed: Int, length: Int, duration: Int, userEmail: String, dateAdded: String, key: Int) {
     
     self.parkID = parkID
     self.rideName = rideName
@@ -57,6 +60,9 @@ override init() {
     self.length = length
     self.duration = duration
     self.userName = userEmail
+    self.dateAdded = dateAdded
+    self.seasonal = seasonal
+    self.key = key
 }
 override var description: String {
     return "parkID: \(parkID), rideName: \(rideName), Year Open: \(YearOpen), Park name: \(parkName)"        

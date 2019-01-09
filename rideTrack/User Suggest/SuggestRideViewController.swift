@@ -26,10 +26,6 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     @IBOutlet weak var typeDiscription: UITextView!
     
     @IBOutlet weak var closingStack: UIStackView!
-    @IBOutlet weak var yearOpenHeight: NSLayoutConstraint!
-    
-    @IBOutlet weak var defunctTop: NSLayoutConstraint!
-    @IBOutlet weak var viewHeight: NSLayoutConstraint!
     
     @IBOutlet weak var typeLabel: UIButton!
     @IBOutlet weak var parkNameLabel: UILabel!
@@ -42,11 +38,11 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     @IBOutlet weak var manufacturerText: UITextField!
     @IBOutlet weak var notesText: UITextView!
     @IBOutlet weak var scoreCardSwitch: UISwitch!
+    @IBOutlet weak var seasonalSwitch: UISwitch!
     
     @IBOutlet weak var formerNameField: UITextField!
     @IBOutlet weak var lengthField: UITextField!
     @IBOutlet weak var durationButton: UIButton!
-    @IBOutlet weak var scoreCardTopContraint: NSLayoutConstraint!
     @IBOutlet weak var durationPickerView: UIView!
     @IBOutlet weak var speedField: UITextField!
     @IBOutlet weak var heightField: UITextField!
@@ -67,6 +63,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     override func viewDidLoad() {
         super.viewDidLoad()
         scoreCardSwitch.isOn = false
+        seasonalSwitch.isOn = false
         parkNameLabel.text = parkName
         textFieldName.delegate = self
         textFieldOpen.delegate = self
@@ -80,16 +77,13 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         submitButton.isEnabled = false
         
         pickerType.isHidden = true
-        yearOpenHeight.constant = 30
-        viewHeight.constant = 700
+
         self.pickerType.delegate = self
         self.pickerType.dataSource = self
         rideTypePickerData = ["","Roller Coaster", "Water Ride","Childrens Ride", "Flat Ride", "Transport Ride", "Dark Ride", "Explore", "Spectacular", "Show", "Film", "Parade", "Play Area", "Upcharge"]
         activeSwitch.isOn=false
         closingStack.isHidden = true
-        defunctTop.constant = 0
        durationPickerView.isHidden = true
-        scoreCardTopContraint.constant = 0
         durationButton.setTitleColor(UIColor.lightGray, for: .normal)
         durationPicker.delegate = self
         durationPicker.dataSource = self
@@ -203,15 +197,13 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         if (activeSwitch.isOn){
             UIView.animate(withDuration: 0.3, animations: { //Animate Here
                 self.closingStack.isHidden = false
-                self.defunctTop.constant = 40
                 self.view.layoutIfNeeded()
             }, completion: nil)
             print ("CLOSED")
         }
         else {
             UIView.animate(withDuration: 0.3, animations: { //Animate Here
-                self.closingStack.isHidden = false
-                self.defunctTop.constant = 0
+                self.closingStack.isHidden = true
                 self.view.layoutIfNeeded()
             }, completion: nil)
         }
@@ -244,9 +236,11 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         }
         var scoreCard = 0
         //getting values from text fields
-        if scoreCardSwitch.isOn {
-            scoreCard = 1
-        }
+        if scoreCardSwitch.isOn { scoreCard = 1 }
+        
+        var seasonal = 0
+        if seasonalSwitch.isOn {seasonal = 1}
+        
         let parknum = parkID
         let ride = textFieldName.text
         let open = textFieldOpen.text
@@ -287,7 +281,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 let tempName = ride!.replacingOccurrences(of: "&", with: "!A?")
                 let tempMan = manufacturer!.replacingOccurrences(of: "&", with: "!A?")
                 
-                let urlPath = "http://www.beingpositioned.com/theparksman/usersuggestservice(NEW).php?parknum=\(parknum)&ride=\(tempName)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&manufacturer=\(tempMan)&notes=\(notes)&modify=0&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&email=\(self.userName)"
+                let urlPath = "http://www.beingpositioned.com/theparksman/ActivePhpFiles/usersuggestserviceV1.php?parknum=\(parknum)&ride=\(tempName)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&seasonal=\(seasonal)&rideID=\(0)&manufacturer=\(tempMan)&notes=\(notes)&modify=0&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&email=\(self.userName)"
 
                 print (urlPath)
                 Active = 1
@@ -319,8 +313,6 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     @IBAction func typeButton(_ sender: Any) {
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
             self.pickerType.isHidden = false
-            self.yearOpenHeight.constant = 150
-            self.viewHeight.constant = 869
             self.view.layoutIfNeeded()
         }, completion: nil)
        
@@ -340,32 +332,25 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
         done = textFieldShouldReturn(lengthField)
         done = textFieldShouldReturn(heightField)
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
-            self.scoreCardTopContraint.constant = 150
             self.durationPickerView.isHidden = false
-            self.viewHeight.constant += 150
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
     
     @IBAction func closeDurationPicker(_ sender: Any) {
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
-            self.scoreCardTopContraint.constant = 0
             self.durationPickerView.isHidden = true
-            self.viewHeight.constant -= 150
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if yearOpenHeight.constant == 150 {
-            UIView.animate(withDuration: 0.3, animations: { //Animate Here
-                self.yearOpenHeight.constant = 30
-                self.viewHeight.constant = 700
-                self.pickerType.isHidden = true
-                self.view.layoutIfNeeded()
-            }, completion: nil)
-        }
+        UIView.animate(withDuration: 0.3, animations: { //Animate Here
+            self.pickerType.isHidden = true
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textFieldName.text != "" && rideType != 0 {
             submitButton.isEnabled = true
@@ -373,20 +358,14 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if yearOpenHeight.constant == 150 {
-            UIView.animate(withDuration: 0.3, animations: { //Animate Here
-                self.yearOpenHeight.constant = 30
-                self.viewHeight.constant = 700
-                self.pickerType.isHidden = true
-                self.view.layoutIfNeeded()
-            }, completion: nil)
-        }
+            self.pickerType.isHidden = true
         if notesText.text == "Notes/Citations" {
             notesText.text = ""
             notesText.textColor = UIColor.black
         }
 
     }
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         textView.resignFirstResponder()
     }

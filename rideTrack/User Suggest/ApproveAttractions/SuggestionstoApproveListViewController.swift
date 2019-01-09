@@ -40,6 +40,9 @@ class SuggestionstoApproveListViewController: UIViewController, UITableViewDataS
         for i in 0..<arrayOfAllRides.count{
         listOfSuggestions.append(arrayOfAllRides[i])
         }
+     //   listOfSuggestions.sort{ $0.key < $1.key }
+        listOfSuggestions.sort { ($1.parkName, $1.rideName) > ($0.parkName, $0.rideName) }
+
         self.ApproveAttractionTableView.reloadData()
 
     }
@@ -53,20 +56,21 @@ class SuggestionstoApproveListViewController: UIViewController, UITableViewDataS
         let cell = tableView.dequeueReusableCell(withIdentifier: "suggestCell", for: indexPath) as! SuggestTableViewCell
         let item: ApproveSuggestAttracionModel = listOfSuggestions[indexPath.row]
         let typeConvert = convertRideTypeID(rideTypeID: Int(item.type))
+        let tempDate = item.dateAdded
+        let justDate = tempDate!.prefix(10)
         if item.notes == "Notes/Citations" {
             item.notes = ""
         }
         if item.modify == 1{
-            cell.modifyLabel.isHidden = false
+            cell.modifyLabel!.text = "Modify"
         }
         else {
-            cell.modifyLabel.isHidden = true
+            cell.modifyLabel!.text = "New"
         }
         cell.parkNameLabel!.text = item.parkName
         cell.rideNameLabel!.text = item.rideName
-        cell.openLabel!.text = String(item.YearOpen)
-        cell.closeLabel!.text = String(item.YearClose)
-        cell.notesLabel!.text = item.notes
+        cell.userNameLabel!.text = item.userName
+        cell.dateLabel!.text = String(justDate)
         cell.typeLabel!.text = typeConvert
     
         return cell
@@ -76,40 +80,8 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        return 75
     }
-    
-//func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let acceptAction = UIContextualAction(style: .destructive, title: "Accept", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-//        //code to remove from database****
-//            //code to add to main database****
-//            let name = self.listOfSuggestions[indexPath.row].rideName!
-//            let ParkID = self.listOfSuggestions[indexPath.row].parkID!
-//            let type = self.listOfSuggestions[indexPath.row].type!
-//            let yearOpen = self.listOfSuggestions[indexPath.row].YearOpen!
-//            let YearClosed = self.listOfSuggestions[indexPath.row].YearClose!
-//            let Active = self.listOfSuggestions[indexPath.row].active!
-//            let manufacturer = self.listOfSuggestions[indexPath.row].manufacturer!
-//
-//
-//            let urlPath = "http://www.beingpositioned.com/theparksman/uploadToAttractionDB.php?name=\(name)&ParkID=\(ParkID)&type=\(type)&yearOpen=\(yearOpen)&YearClosed=\(YearClosed)&active=\(Active)&manufacturer=\(manufacturer)" //uploads to main list
-//            print (urlPath)
-//            let dataModel = DataModel()
-//            dataModel.delegate = self
-//
-//            let urlPath2 = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(self.listOfSuggestions[indexPath.row].id!)" //deletes from suggested list
-//            dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
-//            dataModel.downloadData(urlPath: urlPath2, dataBase: "upload", returnPath: "upload")
-//
-//            self.listOfSuggestions.remove(at: indexPath.row)
-//            success(true)
-//            self.ApproveAttractionTableView.reloadData()
-//    })
-//    acceptAction.backgroundColor = UIColor.green
-//    let configurations = UISwipeActionsConfiguration(actions: [acceptAction])
-//    configurations.performsFirstActionWithFullSwipe = true
-//    return configurations
-//    }
     
 func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in

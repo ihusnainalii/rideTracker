@@ -11,12 +11,11 @@ import UIKit
 class SuggestTableViewCell: UITableViewCell {
     @IBOutlet weak var rideNameLabel: UILabel!
     @IBOutlet weak var parkNameLabel: UILabel!
-    @IBOutlet weak var notesLabel: UILabel!
-    @IBOutlet weak var openLabel: UILabel!
-    @IBOutlet weak var closeLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
-    
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var modifyLabel: UILabel!
+    
     weak var delegate: SuggestTableViewCellDelegate?
 
     
