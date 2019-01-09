@@ -53,20 +53,21 @@ class SuggestionstoApproveListViewController: UIViewController, UITableViewDataS
         let cell = tableView.dequeueReusableCell(withIdentifier: "suggestCell", for: indexPath) as! SuggestTableViewCell
         let item: ApproveSuggestAttracionModel = listOfSuggestions[indexPath.row]
         let typeConvert = convertRideTypeID(rideTypeID: Int(item.type))
+        let tempDate = item.dateAdded
+        let justDate = tempDate!.prefix(10)
         if item.notes == "Notes/Citations" {
             item.notes = ""
         }
         if item.modify == 1{
-            cell.modifyLabel.isHidden = false
+            cell.modifyLabel!.text = "Modify"
         }
         else {
-            cell.modifyLabel.isHidden = true
+            cell.modifyLabel!.text = "New"
         }
         cell.parkNameLabel!.text = item.parkName
         cell.rideNameLabel!.text = item.rideName
-        cell.openLabel!.text = String(item.YearOpen)
-        cell.closeLabel!.text = String(item.YearClose)
-        cell.notesLabel!.text = item.notes
+        cell.userNameLabel!.text = item.userName
+        cell.dateLabel!.text = String(justDate)
         cell.typeLabel!.text = typeConvert
     
         return cell
@@ -76,7 +77,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        return 75
     }
     
 //func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

@@ -30,7 +30,6 @@
 		5F636B6B213C60AD00D2B922 /* TopLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B6A213C60AD00D2B922 /* TopLists.swift */; };
 		5F6B9A8221E514F100EAA478 /* DayInPark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B9A8121E514F100EAA478 /* DayInPark.swift */; };
 		5F6B9A8421E534DD00EAA478 /* DayInParkAttractionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B9A8321E534DD00EAA478 /* DayInParkAttractionList.swift */; };
-		5F6F3B4C21E4E845005696AC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F6F3B4B21E4E844005696AC /* GoogleService-Info.plist */; };
 		5F7F8D8D20EC80A500C4D488 /* ConfigureSmallerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */; };
 		5F8E5CB7213E1D6300C80FB1 /* UserName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8E5CB6213E1D6300C80FB1 /* UserName.swift */; };
 		5F964AE0217153A400989DB4 /* UserCreatedLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F964ADF217153A400989DB4 /* UserCreatedLists.swift */; };
@@ -93,6 +92,7 @@
 		98C28A9D20EBD90900C7229E /* ApproveSuggestAttracionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9C20EBD90900C7229E /* ApproveSuggestAttracionModel.swift */; };
 		98C28A9F20EBE9CE00C7229E /* SuggestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C28A9E20EBE9CE00C7229E /* SuggestTableViewCell.swift */; };
 		98D7A7022172767E008A4E35 /* ApproveParkMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D7A7012172767E008A4E35 /* ApproveParkMapViewController.swift */; };
+		98EDEC1E21E54E3600C782E5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 98EDEC1D21E54E3600C782E5 /* GoogleService-Info.plist */; };
 		98F17C65216AABFB0009BE91 /* SuggestParkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F17C64216AABFB0009BE91 /* SuggestParkViewController.swift */; };
 		98F24F5120EFE35200A42C7E /* SuggestDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F24F5020EFE35200A42C7E /* SuggestDetailsViewController.swift */; };
 		B0FA1522D4FC83CB07B24B1A /* Pods_rideTrack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB608ACB379A8CD3D52D2DC7 /* Pods_rideTrack.framework */; };
@@ -144,7 +144,6 @@
 		5F636B6A213C60AD00D2B922 /* TopLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLists.swift; sourceTree = "<group>"; };
 		5F6B9A8121E514F100EAA478 /* DayInPark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayInPark.swift; sourceTree = "<group>"; };
 		5F6B9A8321E534DD00EAA478 /* DayInParkAttractionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayInParkAttractionList.swift; sourceTree = "<group>"; };
-		5F6F3B4B21E4E844005696AC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSmallerLayout.swift; sourceTree = "<group>"; };
 		5F8E5CB6213E1D6300C80FB1 /* UserName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserName.swift; sourceTree = "<group>"; };
 		5F964ADF217153A400989DB4 /* UserCreatedLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCreatedLists.swift; sourceTree = "<group>"; };
@@ -213,6 +212,7 @@
 		98C28A9C20EBD90900C7229E /* ApproveSuggestAttracionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveSuggestAttracionModel.swift; sourceTree = "<group>"; };
 		98C28A9E20EBE9CE00C7229E /* SuggestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestTableViewCell.swift; sourceTree = "<group>"; };
 		98D7A7012172767E008A4E35 /* ApproveParkMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveParkMapViewController.swift; sourceTree = "<group>"; };
+		98EDEC1D21E54E3600C782E5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		98F17C64216AABFB0009BE91 /* SuggestParkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestParkViewController.swift; sourceTree = "<group>"; };
 		98F24F5020EFE35200A42C7E /* SuggestDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDetailsViewController.swift; sourceTree = "<group>"; };
 		B21792B8823F950BD12EAEF7 /* Pods-rideTrackUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrackUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrackUITests/Pods-rideTrackUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -438,9 +438,9 @@
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
-				5F6F3B4B21E4E844005696AC /* GoogleService-Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
+				98EDEC1D21E54E3600C782E5 /* GoogleService-Info.plist */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
 				98AD7F6E20A91A5C00540AB3 /* Info.plist */,
 				5FE9F80F20DB45030012B98C /* Media.xcassets */,
@@ -638,7 +638,7 @@
 				9832E68F2182952600289677 /* ApproveSuggestions.storyboard in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
-				5F6F3B4C21E4E845005696AC /* GoogleService-Info.plist in Resources */,
+				98EDEC1E21E54E3600C782E5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

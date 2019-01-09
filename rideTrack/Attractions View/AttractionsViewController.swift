@@ -387,14 +387,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                         }
                         
                     }
-                    if allAttractionsList[i].active == 0 && allAttractionsList[i].seasonal == 0{// { //&& showExtinct
+                    if allAttractionsList[i].active == 0{// { //&& showExtinct
                         extinctAttractionList.append(allAttractionsList[i])
                     }
-                    if allAttractionsList[i].active == 1 {
+                    if allAttractionsList[i].active == 1 && allAttractionsList[i].seasonal == 0{
                         activeAttractionList.append(allAttractionsList[i])
                         totalRidesAtPark = activeAttractionList.count
                     }
-                    if allAttractionsList[i].seasonal == 1 {
+                    if allAttractionsList[i].seasonal == 1  && allAttractionsList[i].active == 1{
                         seasonalAttractionList.append(allAttractionsList[i])
                         print("seasonal!")
                     }
