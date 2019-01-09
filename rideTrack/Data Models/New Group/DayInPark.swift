@@ -23,14 +23,14 @@ struct DayInPark {
     var topSpeed: Double!
     var scoreCardHighest: Int!
     var numberOfVisitsToThePark: Int!
-    var nameOfFirstExperiences: [String?]
+    //var nameOfFirstExperiences: [String?]
     var oldestRide: String!
     var newestRide: String!
     
     
     
     
-    init(checkInTime: Double, maxHeight: Double, totalTrackLength: Double, lastRideTime: Double, topSpeed: Double, scoreCardHighest: Int, numberOfVisitsToThePark: Int!, nameOfFirstExperiences: [String], oldestRide: String, newestRide: String, key: String = "") {
+    init(checkInTime: Double, maxHeight: Double, totalTrackLength: Double, lastRideTime: Double, topSpeed: Double, scoreCardHighest: Int, numberOfVisitsToThePark: Int!, oldestRide: String, newestRide: String, key: String = "") {
         self.ref = nil
         self.key = key
         
@@ -41,7 +41,7 @@ struct DayInPark {
         self.topSpeed = topSpeed
         self.scoreCardHighest = scoreCardHighest
         self.numberOfVisitsToThePark = numberOfVisitsToThePark
-        self.nameOfFirstExperiences = nameOfFirstExperiences
+        //self.nameOfFirstExperiences = nameOfFirstExperiences
         self.oldestRide = oldestRide
         self.newestRide = newestRide
         
@@ -57,7 +57,7 @@ struct DayInPark {
             let topSpeed = value["topSpeed"] as? Double,
             let scoreCardHighest = value["scoreCardHighest"] as? Int,
             let numberOfVisitsToThePark = value["numberOfVisitsToThePark"] as? Int,
-            let nameOfFirstExperiences = value["nameOfFirstExperiences"] as? [String],
+            //let nameOfFirstExperiences = value["nameOfFirstExperiences"] as? [String],
             let oldestRide = value["oldestRide"] as? String,
             let newestRide = value["newestRide"] as? String else {
                 return nil
@@ -73,7 +73,7 @@ struct DayInPark {
         self.topSpeed = topSpeed
         self.scoreCardHighest = scoreCardHighest
         self.numberOfVisitsToThePark = numberOfVisitsToThePark
-        self.nameOfFirstExperiences = nameOfFirstExperiences
+        //self.nameOfFirstExperiences = nameOfFirstExperiences
         self.oldestRide = oldestRide
         self.newestRide = newestRide
     }
@@ -87,7 +87,7 @@ struct DayInPark {
             "topSpeed": topSpeed,
             "scoreCardHighest": scoreCardHighest,
             "numberOfVisitsToThePark": numberOfVisitsToThePark,
-            "nameOfFirstExperiences": nameOfFirstExperiences,
+            //"nameOfFirstExperiences": nameOfFirstExperiences,
             "oldestRide": oldestRide,
             "newestRide": newestRide
         ]

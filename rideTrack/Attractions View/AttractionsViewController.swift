@@ -61,6 +61,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var activeAttractionList = [AttractionsModel]()
     var seasonalAttractionList = [AttractionsModel]()
     var extinctAttractionList = [AttractionsModel]()
+    var dayInParkStats: DayInPark!
     
     var numRidesRiden = 0
     var totalRidesAtPark = 0
@@ -109,7 +110,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var scoreCardRef: DatabaseReference!
     var userNameRef: DatabaseReference!
     var dayInParkRef: DatabaseReference!
-
+    var dayInParkStatsRef: DatabaseReference!
+    
     var checkedIntoPark = false
     
     var user: User!
@@ -283,6 +285,23 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             print("new ignore at ride ID: \(self.ignore.count)")
             self.ignore = newIgnores
         })
+        
+        if checkedIntoPark{
+            dayInParkStatsRef = Database.database().reference(withPath: "day-in-park/\(id)")
+            dayInParkStatsRef.observe(.value, with: { snapshot in
+                var newStats: [DayInPark] = []
+                for child in snapshot.children {
+                    print(child as? DataSnapshot)
+                    if let snapshot = child as? DataSnapshot,
+                        let statsItem = DayInPark(snapshot: snapshot) {
+                        print("Getting new data")
+                        newStats.append(statsItem)
+                    }
+                }
+                print("STATS")
+                print(newStats[0].maxHeight)
+            })
+        }
         // Setup the Search Controller
         searchController.searchBar.delegate = self
         searchController.delegate = self
@@ -1231,7 +1250,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 dayInParkRef.child(String(rideID)).observeSingleEvent(of: .value, with: { (snapshot) in
                     let value = snapshot.value as? NSDictionary
                     let numberOfExperiencesToday = value?["numberOfTimesRidden"] as? Int ?? 0
-                    print(value)
 
                     let newExperienceToday = DayInParkAttractionList(rideID: rideID, numberOfTimesRidden: numberOfExperiencesToday+1, firstRideDate: 0, lastRideDate: Date().timeIntervalSince1970, rideName: rideName)
 

@@ -152,7 +152,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         let id = userID?.uid
         self.userNameRef = Database.database().reference(withPath:"users/details/\(id!)/userName") ///userName
         self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)")
-        self.dayInParkRef = Database.database().reference(withPath: "day-in-park")
+        self.dayInParkRef = Database.database().reference(withPath: "day-in-park/\(id!)")
         self.favoritesListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)")
         
         userNameRef.observe(.value, with: { snapshot in
@@ -1003,8 +1003,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                     "checkedInToday": true,
                     "numberOfCheckIns": selectedPark.numberOfCheckIns + 1
                     ])
-                let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, maxHeight: 0, totalTrackLength: 0, lastRideTime: 0, topSpeed: 0, scoreCardHighest: 0, numberOfVisitsToThePark: selectedPark.numberOfCheckIns+1, nameOfFirstExperiences:[], oldestRide: "", newestRide: "")
-                let startDayInParkRef = self.dayInParkRef.child(String(user.uid))
+                let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, maxHeight: 0, totalTrackLength: 0, lastRideTime: 0, topSpeed: 0, scoreCardHighest: 0, numberOfVisitsToThePark: selectedPark.numberOfCheckIns+1, oldestRide: "", newestRide: "")
+                let startDayInParkRef = self.dayInParkRef.child(String("todays-stats"))
                 startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
             }
     
