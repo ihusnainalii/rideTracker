@@ -299,7 +299,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                     }
                 }
                 print("STATS")
-                print(newStats[0].maxHeight)
+                if (newStats.count != 0){
+                    print(newStats[0].maxHeight)
+                }
             })
         }
         // Setup the Search Controller

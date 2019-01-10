@@ -903,7 +903,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                         parkItem.ref?.updateChildValues([
                             "checkedInToday": false
                             ])
-                        
+                        //dayInParkRef.removeValue()
             
                         
                     }
@@ -971,11 +971,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     
     @IBAction func showCurrentlLocationPark(_ sender: Any) {
-    
+        var calendar = NSCalendar.current
+        calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
+        let midnight = calendar.startOfDay(for: Date())
+        
         if checkIfNewPark(newPark: closestPark){
             print("new park")
+            dayInParkRef.removeValue()
             addNewParkToList(newPark: closestPark, newCheckin: true)
             Analytics.logEvent("check_into_park", parameters: ["parkName": closestPark])
+            
+            let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, maxHeight: 0, totalTrackLength: 0, lastRideTime: 0, topSpeed: 0, scoreCardHighest: 0, numberOfVisitsToThePark: 1, oldestRide: "", newestRide: "")
+            let startDayInParkRef = self.dayInParkRef.child(String("todays-stats"))
+            startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
         } else{
             print("old")
         }
@@ -984,30 +992,32 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         checkedIntoPark = true
         segueWithTableViewSelect = false
         let selectedParkIndex = findIndexInAllParksList(parkID: closestPark.parkID)
-
-            selectedPark = allParksList[selectedParkIndex]
-            
-            if !selectedPark.checkedInToday{
-                var calendar = NSCalendar.current
-                calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
-                let midnight = calendar.startOfDay(for: Date())
-                
-                firstCheckin = true
-                
-                numberOfCheckinsToDisplay = selectedPark.numberOfCheckIns + 1
-                lastVisit = selectedPark.lastDayVisited
-                
-                let parkItem = allParksList[selectedParkIndex]
-                parkItem.ref?.updateChildValues([
-                    "lastDayVisited": midnight.timeIntervalSince1970,
-                    "checkedInToday": true,
-                    "numberOfCheckIns": selectedPark.numberOfCheckIns + 1
-                    ])
-                let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, maxHeight: 0, totalTrackLength: 0, lastRideTime: 0, topSpeed: 0, scoreCardHighest: 0, numberOfVisitsToThePark: selectedPark.numberOfCheckIns+1, oldestRide: "", newestRide: "")
-                let startDayInParkRef = self.dayInParkRef.child(String("todays-stats"))
-                startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
-            }
     
+        
+        selectedPark = allParksList[selectedParkIndex]
+        print("SELECTED PARK NAME AND INDEX")
+        print(selectedPark.checkedInToday)
+        print(selectedParkIndex)
+        if !selectedPark.checkedInToday{
+    
+            firstCheckin = true
+            dayInParkRef.removeValue()
+            numberOfCheckinsToDisplay = selectedPark.numberOfCheckIns + 1
+            lastVisit = selectedPark.lastDayVisited
+            
+            let parkItem = allParksList[selectedParkIndex]
+            parkItem.ref?.updateChildValues([
+                "lastDayVisited": midnight.timeIntervalSince1970,
+                "checkedInToday": true,
+                "numberOfCheckIns": selectedPark.numberOfCheckIns + 1
+                ])
+            print("Checking in for first time")
+            
+            let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, maxHeight: 0, totalTrackLength: 0, lastRideTime: 0, topSpeed: 0, scoreCardHighest: 0, numberOfVisitsToThePark: selectedPark.numberOfCheckIns+1, oldestRide: "", newestRide: "")
+            let startDayInParkRef = self.dayInParkRef.child(String("todays-stats"))
+            startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
+        }
+        
         
         viewAttractionLocationButton.backgroundColor = settingsColor
         viewAttractionLocationButton.setTitle("View Attractions", for: .normal)
