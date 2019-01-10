@@ -366,7 +366,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
 
                             //The user does have data for this ride
                             allAttractionsList[i].isCheck = true
-                            if allAttractionsList[i].active == 1 {numRidesRiden += 1}
+                            if allAttractionsList[i].active == 1 && allAttractionsList[i].seasonal == 0{
+                                numRidesRiden += 1}
                             
                             allAttractionsList[i].numberOfTimesRidden = userAttractionDatabase[tempUserDataBaseIndex].numberOfTimesRidden
                             
