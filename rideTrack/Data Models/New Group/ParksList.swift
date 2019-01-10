@@ -24,12 +24,13 @@ struct ParksList {
     var totalRides: Int!
     var incrementorEnabled: Bool!
     var showDefunct: Bool!
+    var parkDefunct: Bool!
     var showSeasonal: Bool!
     var numberOfCheckIns: Int!
     var lastDayVisited: Double!
     var checkedInToday: Bool!
     
-    init(parkID: Int, favorite: Bool, ridesRidden: Int, totalRides: Int, incrementorEnabled: Bool, name: String, location: String, showDefunct: Bool, showSeasonal: Bool, numberOfCheckIns: Int, lastDayVisited: Double, checkedInToday: Bool, key: String = "") {
+    init(parkID: Int, favorite: Bool, ridesRidden: Int, totalRides: Int, incrementorEnabled: Bool, name: String, location: String, showDefunct: Bool, parkDefunct: Bool, showSeasonal: Bool, numberOfCheckIns: Int, lastDayVisited: Double, checkedInToday: Bool, key: String = "") {
         self.ref = nil
         self.key = key
         self.parkID = parkID
@@ -40,11 +41,11 @@ struct ParksList {
         self.name = name
         self.location = location
         self.showDefunct = showDefunct
+        self.parkDefunct = parkDefunct
         self.showSeasonal = showSeasonal
         self.numberOfCheckIns = numberOfCheckIns
         self.lastDayVisited = lastDayVisited
         self.checkedInToday = checkedInToday
-    
     }
     
     init?(snapshot: DataSnapshot) {
@@ -60,9 +61,13 @@ struct ParksList {
                 return nil
         }
         var showDefunct = false
+        var parkDefunct = false
         var showSeasonal = false
         if let showDefunctCheck = value["showDefunct"] as? Bool{
             showDefunct = showDefunctCheck
+        }
+        if let parkDefultCheck = value["parkDefunct"] as? Bool {
+            parkDefunct = parkDefultCheck
         }
         
         if let showSeasonalCheck = value["showSeasonal"] as? Bool{
@@ -92,6 +97,7 @@ struct ParksList {
         self.name = name
         self.location = location
         self.showDefunct = showDefunct
+        self.parkDefunct = parkDefunct
         self.showSeasonal = showSeasonal
         self.numberOfCheckIns = numberOfCheckIns
         self.lastDayVisited = lastDayVisited
@@ -107,6 +113,7 @@ struct ParksList {
             "name": name,
             "location": location,
             "showDefunct": showDefunct,
+            "parkDefunct": parkDefunct,
             "showSeasonal": showSeasonal,
             "numberOfCheckIns": numberOfCheckIns,
             "lastDayVisited": lastDayVisited,

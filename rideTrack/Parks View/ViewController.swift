@@ -365,6 +365,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 } else{
                     cell.progressView.backgroundColor = UIColor(red: 74.0/255.0, green: 166.0/255.0, blue: 65.0/255.0, alpha: 1.0)
                 }
+                if parkData.parkDefunct {
+                    print("this park is closed")
+                    cell.progressView.backgroundColor = UIColor.lightGray}
             }
             cell.progressView.frame.size.width = progressToShow
             
@@ -395,6 +398,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 } else{
                     cell.progressView.backgroundColor = UIColor(red: 74.0/255.0, green: 166.0/255.0, blue: 65.0/255.0, alpha: 1.0)
                 }
+                if parkData.parkDefunct {
+                    print("this park is closed")
+                    cell.progressView.backgroundColor = UIColor.lightGray}
             }
             cell.progressView.frame.size.width = progressToShow
             return cell
@@ -624,7 +630,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 dayVisited = midnight.timeIntervalSince1970
                 checkInToday = true
             }
-            let newParkModel = ParksList(parkID: newPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: newPark.name, location: newPark.city, showDefunct: false, showSeasonal: false, numberOfCheckIns: checkins, lastDayVisited: dayVisited, checkedInToday: checkInToday)
+            let newParkModel = ParksList(parkID: newPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: newPark.name, location: newPark.city, showDefunct: false, parkDefunct: false, showSeasonal: false, numberOfCheckIns: checkins, lastDayVisited: dayVisited, checkedInToday: checkInToday)
     
             let newParkRef = self.parksListRef.child(String(newParkModel.parkID))
             newParkRef.setValue(newParkModel.toAnyObject())

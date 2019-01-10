@@ -75,6 +75,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var showExtinct = false
     var showSeasonal = false
     var isIgnored = false
+    var parkDefunct = false
+    
     
     //From the datamigration tool:
     var userAttractionDatabase: [AttractionList]!
@@ -151,6 +153,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         progressBar.progressTintColor = appGreen
         progressBar.trackTintColor = lightGreyBar
         progressBar.transform = progressBar.transform.scaledBy(x: 1, y: 10)
+        
+        if parkDefunct {
+            progressBar.progressTintColor = UIColor.lightGray
+        }
         
         rectangleView.backgroundColor = UIColor.clear
         rectangleView.clipsToBounds = true
@@ -425,7 +431,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         if allAttractionsList.count == (extinctAttractionList.count){
             print("All EXTINCT!")
+            parkDefunct = true
             showExtinct = true
+            parksListRef.updateChildValues([
+                "parkDefunct": parkDefunct
+                ])
         }
         //only show extinct attractions you have been on!
         var countRemove = 0
@@ -487,7 +497,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }
         
-        updatingRideCount(parkID: parkID, userCount: numRidesRiden, totNum: totalRidesAtPark-numIgnore)
+        updatingRideCount(parkID: parkID, user: numRidesRiden, total: totalRidesAtPark-numIgnore)
         
         
         self.attractionsTableView.reloadData()
@@ -495,7 +505,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        if isFiltering(){ return 1 }
+        else { return 3 }
     }
 
 //    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -526,13 +537,16 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch (section) {
-        case 0:
-            return "Active"
-        case 1:
-            return "Seasonal"
-        default:
-            return "Defunct"
+        if isFiltering() {return "Filtering"}
+        else {
+            switch (section) {
+            case 0:
+                return "Active"
+            case 1:
+                return "Seasonal"
+            default:
+                return "Defunct"
+        }
         }
     }
     
@@ -605,22 +619,13 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 configureCellCheck(cell: cell, item: item)
             }
         }
-        switch (indexPath.section) {
-        case 0:
-            cell.backgroundColor = UIColor.clear
-            cell.rideName!.text = activeAttractionList[indexPath.row].name
-            cell.rideTypeLabel.text = convertRideTypeID(rideTypeID: activeAttractionList[indexPath.row].rideType)
-        case 1:
-            cell.backgroundColor = UIColor.clear
-            cell.rideName!.text = seasonalAttractionList[indexPath.row].name
-            cell.rideTypeLabel.text = convertRideTypeID(rideTypeID: seasonalAttractionList[indexPath.row].rideType)
-        case 2:
-                cell.backgroundColor = UIColor.black.withAlphaComponent(0.2)
-                cell.rideName!.text = extinctAttractionList[indexPath.row].name
-                cell.rideTypeLabel.text = convertRideTypeID(rideTypeID: extinctAttractionList[indexPath.row].rideType)
-        default:
-            cell.rideName!.text = activeAttractionList[indexPath.row].name
+        cell.rideName.text = CurrTableView[indexPath.row].name
+        cell.rideTypeLabel.text = convertRideTypeID(rideTypeID: CurrTableView[indexPath.row].rideType)
+        cell.backgroundColor = UIColor.clear
+        if CurrTableView[indexPath.row].active == 0 {
+            cell.backgroundColor = UIColor.black.withAlphaComponent(0.2)
         }
+
 
         //If iPhone 5s
         if screenSize.width == 320.0{
@@ -734,7 +739,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                         cell.attractionButton.setImage(#imageLiteral(resourceName: "Check Button"), for: .normal)
                         cell.rideName?.textColor = UIColor.black
                     }                    
-                    self.updatingRideCount(parkID: self.parkID, userCount: self.numRidesRiden, totNum: self.totalRidesAtPark-self.numIgnore)
+                    self.updatingRideCount(parkID: self.parkID, user: self.numRidesRiden, total: self.totalRidesAtPark-self.numIgnore)
                     success(true)
                     
                 })
@@ -809,11 +814,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func attractionCellTapButton(_ sender: AttractionsTableViewCell) {
         var CurrtableViewList: [AttractionsModel]
+        guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
         if isFiltering() {
             CurrtableViewList = filteredAttractions
         }
-        guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
-        if indexPath.section == 0 {
+        else if indexPath.section == 0 {
             CurrtableViewList = activeAttractionList
         }
         else if indexPath.section == 1 {
@@ -983,6 +988,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }))
     }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        print("resetting table")
+        //isfiltering = false
+        attractionsTableView.reloadData()
+    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if searchController.isActive{
@@ -1002,6 +1012,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             self.searchController.isActive = true
         }
         typesFiltered.text = "Showing all Attractions"
+        attractionsTableView.reloadData()
     }
     
     func welcomeBackNotification() {
@@ -1109,7 +1120,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         print ("you have been on this many rides: ", self.numRidesRiden)
 
         //UPDATE RIDES BEEN ON
-        self.updatingRideCount(parkID: self.parkID, userCount: numRidesRiden, totNum: totalRidesAtPark-numIgnore)
+        self.updatingRideCount(parkID: self.parkID, user: numRidesRiden, total: totalRidesAtPark-numIgnore)
         
         self.extinctText.text = "Defunct: \(numExtinct)"
         self.seasonalText.text = "Seasonal: \(numSeasonal)"
@@ -1135,8 +1146,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         if CurrtableViewList[indexPath.row].numberOfTimesRidden == 1{
             removeAttractionFromList(indexPath: indexPath)
+            print("Should be here")
         }
         else{
+            print("DOWN HERE")
             let newIncrement = CurrtableViewList[indexPath.row].numberOfTimesRidden - 1
             saveIncrementRideCount(rideID:  CurrtableViewList[indexPath.row].rideID, incrementTo: newIncrement, postive: false, rideName: CurrtableViewList[indexPath.row].name)
             CurrtableViewList[indexPath.row].numberOfTimesRidden = newIncrement
@@ -1167,7 +1180,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         CurrtableViewList[indexPath.row].numberOfTimesRidden = 0
         CurrtableViewList[indexPath.row].isCheck = false
         
-        
         self.animateRow = indexPath.row    //"Animate here")
         
         if (CurrtableViewList[indexPath.row]).active == 0 && CurrtableViewList[indexPath.row].seasonal != 1 {
@@ -1178,7 +1190,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         else { numRidesRiden -= 1 }
         //UPDATE RIDES BEEN ON
-        self.updatingRideCount(parkID: self.parkID, userCount: numRidesRiden, totNum: totalRidesAtPark-numIgnore)
+        self.updatingRideCount(parkID: self.parkID, user: numRidesRiden, total: totalRidesAtPark-numIgnore)
         self.extinctText.text = "Defunct: \(numExtinct)"
         self.seasonalText.text = "Seasonal: \(numSeasonal)"
         
@@ -1391,7 +1403,13 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.present(scoreAlert, animated: true, completion:nil)
     }
     
-    func updatingRideCount(parkID: Int, userCount: Int, totNum: Int) {
+    func updatingRideCount(parkID: Int, user: Int, total: Int) {
+        var userCount = user
+        var totNum = total
+        if parkDefunct{
+            userCount = numExtinct
+            totNum = extinctAttractionList.count
+        }
         self.NumCompleteLabel.text = "Progress: \(userCount)/\(totNum)"
         parkData.totalRides = totNum
         parkData.ridesRidden = userCount
@@ -1403,6 +1421,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         else {
             progressBar.progressTintColor = appGreen
+        }
+        if parkDefunct {
+            progressBar.progressTintColor = UIColor.lightGray
         }
         
         parksListRef.updateChildValues([
