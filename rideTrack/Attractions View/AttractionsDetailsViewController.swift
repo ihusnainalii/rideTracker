@@ -147,13 +147,13 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
         else{
             yearOpenLabel.text = String(selectedRide.yearOpen)
         }
-        if selectedRide.active == 1 {
+        if selectedRide.active == 1 && selectedRide.seasonal == 0{
             yearCloseLabel.text = "Currently Operating"
             yearCloseText.font.withSize(10)
             yearCloseText.isHidden = true
             //yearClosedStack.isHidden = true
         }
-        else if selectedRide.seasonal == 1 {
+        else if selectedRide.seasonal == 1 && selectedRide.active == 1{
             yearCloseLabel.text = "Seasonal"
             yearCloseText.isHidden = true
         }
