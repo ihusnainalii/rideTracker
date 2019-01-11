@@ -95,8 +95,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     let lightGreyBar = UIColor(red: 223.0/255.0, green: 223.0/255.0, blue: 223.0/255.0, alpha: 1.0)
     var userAttractions: [NSManagedObject] = []
     
-    var rideID = 0
-    var rideName = ""
+    //var rideID = 0
+    //var rideName = ""
     //var totalNumExtinct = 0
     var hasHaptic = 0
     var filteredAttractions = [AttractionsModel]()
@@ -271,7 +271,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
             self.userAttractionDatabase = newAttractions
-            print("FIREBASE DOWNLOAD")
             if self.firstTimeDownload{
                 
                 dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
@@ -293,22 +292,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         })
         
         if checkedIntoPark{
-            dayInParkStatsRef = Database.database().reference(withPath: "day-in-park/\(id)")
-            dayInParkStatsRef.observe(.value, with: { snapshot in
-                var newStats: [DayInPark] = []
-                for child in snapshot.children {
-                    print(child as? DataSnapshot)
-                    if let snapshot = child as? DataSnapshot,
-                        let statsItem = DayInPark(snapshot: snapshot) {
-                        print("Getting new data")
-                        newStats.append(statsItem)
-                    }
-                }
-                print("STATS")
-                if (newStats.count != 0){
-                    print(newStats[0].maxHeight)
-                }
-            })
+            //User has checked into this park today.
         }
         // Setup the Search Controller
         searchController.searchBar.delegate = self
@@ -325,7 +309,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.attractionsTableView.contentInset = insets
         searchController.searchBar.inputAccessoryView = toolBarView
         // searchController.inputAccessoryView = toolBarView
-        
         
         if firstCheckin{
             welcomeBackNotification()
@@ -550,6 +533,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         }
     }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 30))
+//        headerView.backgroundColor = UIColor.gray
+//        return headerView
+//    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         //Configure for iPhone 5 sizes
@@ -834,11 +822,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 generator.impactOccurred()
             }
             attractionCellNegativeIncrement(indexPath: indexPath, section: indexPath.section)
-        }
-            
-        else if !CurrtableViewList[indexPath.row].isCheck && !CurrtableViewList[indexPath.row].isIgnored{
+        } else if !CurrtableViewList[indexPath.row].isCheck && !CurrtableViewList[indexPath.row].isIgnored{
             addFirstCheckRide(indexPath: indexPath, section: indexPath.section)
-            print("checked here")
         } else if CurrtableViewList[indexPath.row].isCheck && !CurrtableViewList[indexPath.row].isIgnored{
             positiveIncrementCount(indexPath: indexPath, section: indexPath.section)
             print("incremented here")
@@ -884,7 +869,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
                 CurrtableViewList[indexPath.row].numberOfTimesRidden = newIncrement
                 CurrtableViewList[indexPath.row].dateLastRidden = Date()
-                self.saveIncrementRideCount(rideID: CurrtableViewList[indexPath.row].rideID, incrementTo: newIncrement, postive: true, rideName: CurrtableViewList[indexPath.row].name)
+                self.saveIncrementRideCount(rideID: CurrtableViewList[indexPath.row].rideID, incrementTo: newIncrement, postive: true, rideData: CurrtableViewList[indexPath.row])
                 cell.rideCellSquare.isUserInteractionEnabled = true
                 cell.extendedTappableCheckView.isUserInteractionEnabled = true
                 
@@ -1079,13 +1064,17 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         Analytics.logEvent("add_new_attraction", parameters: ["attractionName": CurrtableViewList[indexPath.row].name])
         
         let newRideID = CurrtableViewList[indexPath.row].rideID
+        let rideData = CurrtableViewList[indexPath.row]
         let newCheck = AttractionList(rideID: newRideID!, numberOfTimesRidden: 1, firstRideDate: Date().timeIntervalSince1970, lastRideDate: Date().timeIntervalSince1970)
         let newAttractionRef = self.attractionListRef.child(String(newRideID!))
         newAttractionRef.setValue(newCheck.toAnyObject())
        
         if checkedIntoPark{
-            let newDayInParkAttractionRef = self.dayInParkRef.child(String(newRideID!))
-            newDayInParkAttractionRef.setValue(newCheck.toAnyObject())
+       
+            let newExperienceToday = DayInParkAttractionList(rideID: rideData.rideID, numberOfTimesRiddenToday: 1, rideName: rideData.name, rideType: rideData.rideID, yearOpen: rideData.yearOpen, numberOfTimesRiddenTotal: 1, manufacturer: rideData.manufacturer, height: rideData.height, speed: rideData.speed, length: rideData.length, duration: rideData.duration, scoreCardScore: 0)
+            
+            let newDayInParkAttractionRef = self.dayInParkRef.child(String(rideData.rideID))
+            newDayInParkAttractionRef.setValue(newExperienceToday.toAnyObject())
         }
         
         let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
@@ -1147,12 +1136,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         if CurrtableViewList[indexPath.row].numberOfTimesRidden == 1{
             removeAttractionFromList(indexPath: indexPath)
-            print("Should be here")
+            //print("Should be here")
         }
         else{
             print("DOWN HERE")
             let newIncrement = CurrtableViewList[indexPath.row].numberOfTimesRidden - 1
-            saveIncrementRideCount(rideID:  CurrtableViewList[indexPath.row].rideID, incrementTo: newIncrement, postive: false, rideName: CurrtableViewList[indexPath.row].name)
+            saveIncrementRideCount(rideID:  CurrtableViewList[indexPath.row].rideID, incrementTo: newIncrement, postive: false, rideData: CurrtableViewList[indexPath.row])
             CurrtableViewList[indexPath.row].numberOfTimesRidden = newIncrement
             let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
             cell.numberOfRidesLabel.text = String(newIncrement)
@@ -1230,7 +1219,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             }
             let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
             let newIncrement = CurrtableViewList[indexPath.row].numberOfTimesRidden + 1
-            saveIncrementRideCount(rideID:  CurrtableViewList[indexPath.row].rideID, incrementTo: newIncrement, postive: true, rideName: CurrtableViewList[indexPath.row].name)
+            saveIncrementRideCount(rideID:  CurrtableViewList[indexPath.row].rideID, incrementTo: newIncrement, postive: true, rideData: CurrtableViewList[indexPath.row])
            
             
             CurrtableViewList[indexPath.row].numberOfTimesRidden = newIncrement
@@ -1251,7 +1240,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         // Dispose of any resources that can be recreated.
     }
     
-    func saveIncrementRideCount(rideID: Int, incrementTo: Int, postive: Bool, rideName: String){
+    func saveIncrementRideCount(rideID: Int, incrementTo: Int, postive: Bool, rideData: AttractionsModel){
         let attractionIndex = getUserAttractionDatabaseIndex(rideID: rideID)
         let attractionItem = userAttractionDatabase[attractionIndex]
         
@@ -1264,9 +1253,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                
                 dayInParkRef.child(String(rideID)).observeSingleEvent(of: .value, with: { (snapshot) in
                     let value = snapshot.value as? NSDictionary
-                    let numberOfExperiencesToday = value?["numberOfTimesRidden"] as? Int ?? 0
+                    let numberOfExperiencesToday = value?["numberOfTimesRiddenToday"] as? Int ?? 0
 
-                    let newExperienceToday = DayInParkAttractionList(rideID: rideID, numberOfTimesRidden: numberOfExperiencesToday+1, firstRideDate: 0, lastRideDate: Date().timeIntervalSince1970, rideName: rideName)
+                    let newExperienceToday = DayInParkAttractionList(rideID: rideID, numberOfTimesRiddenToday: numberOfExperiencesToday+1, rideName: rideData.name, rideType: rideData.rideID, yearOpen: rideData.yearOpen, numberOfTimesRiddenTotal: incrementTo, manufacturer: rideData.manufacturer, height: rideData.height, speed: rideData.speed, length: rideData.length, duration: rideData.duration, scoreCardScore: 0)
 
                     let newDayInParkAttractionRef = self.dayInParkRef.child(String(rideID))
                     newDayInParkAttractionRef.setValue(newExperienceToday.toAnyObject())
@@ -1338,8 +1327,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 selectedRide = extinctAttractionList[selectedIndex!]
             }
             
-            rideID = selectedRide.rideID
-            rideName = selectedRide.name
+            let rideID = selectedRide.rideID
+            let rideName = selectedRide.name
             print (rideName)
             detailsVC.selectedRide = selectedRide
             detailsVC.userAttractionDatabase = userAttractionDatabase

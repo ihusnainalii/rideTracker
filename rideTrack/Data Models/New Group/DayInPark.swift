@@ -17,49 +17,25 @@ struct DayInPark {
     let key: String
     
     var checkInTime: Double!
-    var maxHeight: Double!
-    var totalTrackLength: Double!
-    var lastRideTime: Double!
-    var topSpeed: Double!
-    var scoreCardHighest: Int!
     var numberOfVisitsToThePark: Int!
-    //var nameOfFirstExperiences: [String?]
-    var oldestRide: String!
-    var newestRide: String!
+    var parkName: String!
     
     
-    
-    
-    init(checkInTime: Double, maxHeight: Double, totalTrackLength: Double, lastRideTime: Double, topSpeed: Double, scoreCardHighest: Int, numberOfVisitsToThePark: Int!, oldestRide: String, newestRide: String, key: String = "") {
+    init(checkInTime: Double, numberOfVisitsToThePark: Int!, parkName: String, key: String = "") {
         self.ref = nil
         self.key = key
         
         self.checkInTime = checkInTime
-        self.maxHeight = maxHeight
-        self.totalTrackLength = totalTrackLength
-        self.lastRideTime = lastRideTime
-        self.topSpeed = topSpeed
-        self.scoreCardHighest = scoreCardHighest
         self.numberOfVisitsToThePark = numberOfVisitsToThePark
-        //self.nameOfFirstExperiences = nameOfFirstExperiences
-        self.oldestRide = oldestRide
-        self.newestRide = newestRide
-        
+        self.parkName = parkName
     }
     
     init?(snapshot: DataSnapshot) {
         guard
             let value = snapshot.value as? [String: AnyObject],
             let checkInTime = value["checkInTime"] as? Double,
-            let maxHeight = value["maxHeight"] as? Double,
-            let totalTrackLength = value["totalTrackLength"] as? Double,
-            let lastRideTime = value["lastRideTime"] as? Double,
-            let topSpeed = value["topSpeed"] as? Double,
-            let scoreCardHighest = value["scoreCardHighest"] as? Int,
             let numberOfVisitsToThePark = value["numberOfVisitsToThePark"] as? Int,
-            //let nameOfFirstExperiences = value["nameOfFirstExperiences"] as? [String],
-            let oldestRide = value["oldestRide"] as? String,
-            let newestRide = value["newestRide"] as? String else {
+            let parkName = value["parkName"] as? String else {
                 return nil
         }
         
@@ -67,29 +43,15 @@ struct DayInPark {
         self.key = snapshot.key
         
         self.checkInTime = checkInTime
-        self.maxHeight = maxHeight
-        self.totalTrackLength = totalTrackLength
-        self.lastRideTime = lastRideTime
-        self.topSpeed = topSpeed
-        self.scoreCardHighest = scoreCardHighest
         self.numberOfVisitsToThePark = numberOfVisitsToThePark
-        //self.nameOfFirstExperiences = nameOfFirstExperiences
-        self.oldestRide = oldestRide
-        self.newestRide = newestRide
+        self.parkName = parkName
     }
     
     func toAnyObject() -> Any {
         return [
             "checkInTime": checkInTime,
-            "maxHeight": maxHeight,
-            "totalTrackLength": totalTrackLength,
-            "lastRideTime": lastRideTime,
-            "topSpeed": topSpeed,
-            "scoreCardHighest": scoreCardHighest,
             "numberOfVisitsToThePark": numberOfVisitsToThePark,
-            //"nameOfFirstExperiences": nameOfFirstExperiences,
-            "oldestRide": oldestRide,
-            "newestRide": newestRide
+            "parkName": parkName
         ]
     }
 }

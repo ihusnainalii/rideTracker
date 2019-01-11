@@ -17,32 +17,54 @@ struct DayInParkAttractionList {
     let key: String
     
     var rideID: Int!
-    var numberOfTimesRidden: Int!
-    var firstRideDate: Double!
-    var lastRideDate: Double!
+    var numberOfTimesRiddenToday: Int!
     var rideName: String!
     
+    var rideType: Int!
+    var yearOpen: Int!
+    
+    var numberOfTimesRiddenTotal: Int!
+    var manufacturer: String!
+    var height: Double!
+    var speed: Double!
+    var length: Double!
+    var duration: Int!
+    var scoreCardScore: Double!
     
     
-    init(rideID: Int, numberOfTimesRidden: Int, firstRideDate: Double, lastRideDate: Double, rideName: String, key: String = "") {
+    init(rideID: Int, numberOfTimesRiddenToday: Int, rideName: String, rideType: Int, yearOpen: Int, numberOfTimesRiddenTotal: Int!, manufacturer: String, height: Double, speed: Double, length: Double, duration: Int!, scoreCardScore: Double, key: String = "") {
         self.ref = nil
         self.key = key
         
         self.rideID = rideID
-        self.numberOfTimesRidden = numberOfTimesRidden
-        self.firstRideDate = firstRideDate
-        self.lastRideDate = lastRideDate
+        self.numberOfTimesRiddenToday = numberOfTimesRiddenToday
         self.rideName = rideName
+        self.rideType = rideType
+        self.yearOpen = yearOpen
+        self.numberOfTimesRiddenTotal = numberOfTimesRiddenTotal
+        self.manufacturer = manufacturer
+        self.height = height
+        self.speed = speed
+        self.length = length
+        self.duration = duration
+        self.scoreCardScore = scoreCardScore
     }
     
     init?(snapshot: DataSnapshot) {
         guard
             let value = snapshot.value as? [String: AnyObject],
             let rideID = value["rideID"] as? Int,
-            let numberOfTimesRidden = value["numberOfTimesRidden"] as? Int,
-            let firstRideDate = value["firstRideDate"] as? Double,
+            let numberOfTimesRiddenToday = value["numberOfTimesRiddenToday"] as? Int,
             let rideName = value["rideName"] as? String,
-            let lastRideDate = value["lastRideDate"] as? Double else {
+            let rideType = value["rideType"] as? Int,
+            let yearOpen = value["yearOpen"] as? Int,
+            let numberOfTimesRiddenTotal = value["numberOfTimesRiddenTotal"] as? Int,
+            let manufacturer = value["manufacturer"] as? String,
+            let height = value["height"] as? Double,
+            let speed = value["speed"] as? Double,
+            let length = value["length"] as? Double,
+            let duration = value["duration"] as? Int,
+            let scoreCardScore = value["scoreCardScore"] as? Double else {
                 return nil
         }
         
@@ -50,19 +72,33 @@ struct DayInParkAttractionList {
         self.key = snapshot.key
         
         self.rideID = rideID
-        self.numberOfTimesRidden = numberOfTimesRidden
-        self.firstRideDate = firstRideDate
-        self.lastRideDate = lastRideDate
+        self.numberOfTimesRiddenToday = numberOfTimesRiddenToday
         self.rideName = rideName
+        self.rideType = rideType
+        self.yearOpen = yearOpen
+        self.numberOfTimesRiddenTotal = numberOfTimesRiddenTotal
+        self.manufacturer = manufacturer
+        self.height = height
+        self.speed = speed
+        self.length = length
+        self.duration = duration
+        self.scoreCardScore = scoreCardScore
     }
     
     func toAnyObject() -> Any {
         return [
             "rideID": rideID,
-            "numberOfTimesRidden": numberOfTimesRidden,
-            "firstRideDate": firstRideDate,
-            "lastRideDate": lastRideDate,
-            "rideName": rideName
+            "numberOfTimesRiddenToday": numberOfTimesRiddenToday,
+            "rideName": rideName,
+            "rideType": rideType,
+            "yearOpen": yearOpen,
+            "numberOfTimesRiddenTotal": numberOfTimesRiddenTotal,
+            "manufacturer": manufacturer,
+            "height": height,
+            "speed": speed,
+            "length": length,
+            "duration": duration,
+            "scoreCardScor": scoreCardScore
         ]
     }
 }

@@ -54,7 +54,7 @@ class AttractionsTableViewCell: UITableViewCell {
         // Initialization code
     }
     @objc func tapAction() {
-        print("TAPPING NOW")
+        //print("TAPPING NOW")
         delegate?.attractionCellTapButton(self)
     }
     

@@ -175,7 +175,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                     newParks.append(parkItem)
                 }
             }
-            print("Gettings all-parks-list")
             self.allParksList = newParks
             self.allParksTableView.reloadData()
             self.configureAllParksView()
@@ -312,7 +311,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func configureAllParksView(){
         if allParksIsVisible{
-            print("Configuring all parks view")
             var allParksViewTableAlpha: CGFloat = 1.0
             if allParksList.count == 0{
                 allParksViewTableAlpha = 0.0
@@ -735,7 +733,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 attractionVC.firstCheckin = true
                 attractionVC.numberOfCheckins = numberOfCheckinsToDisplay
                 attractionVC.lastVisit = lastVisit
-                attractionVC.firstCheckin = firstCheckin
+                //attractionVC.firstCheckin = firstCheckin
             }
             
             print ("The park is ", selectedPark.name)
@@ -987,7 +985,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             addNewParkToList(newPark: closestPark, newCheckin: true)
             Analytics.logEvent("check_into_park", parameters: ["parkName": closestPark])
             
-            let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, maxHeight: 0, totalTrackLength: 0, lastRideTime: 0, topSpeed: 0, scoreCardHighest: 0, numberOfVisitsToThePark: 1, oldestRide: "", newestRide: "")
+            let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, numberOfVisitsToThePark: 1, parkName: closestPark.name)
             let startDayInParkRef = self.dayInParkRef.child(String("todays-stats"))
             startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
         } else{
@@ -1019,7 +1017,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 ])
             print("Checking in for first time")
             
-            let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, maxHeight: 0, totalTrackLength: 0, lastRideTime: 0, topSpeed: 0, scoreCardHighest: 0, numberOfVisitsToThePark: selectedPark.numberOfCheckIns+1, oldestRide: "", newestRide: "")
+            let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, numberOfVisitsToThePark: selectedPark.numberOfCheckIns+1, parkName: selectedPark.name)
             let startDayInParkRef = self.dayInParkRef.child(String("todays-stats"))
             startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
         }
