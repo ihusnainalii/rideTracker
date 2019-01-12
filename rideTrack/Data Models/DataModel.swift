@@ -150,9 +150,9 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.scoreCard = Int(jsonElement["scoreCard"] as! String)
                 attraction.formerNames = jsonElement["formerNames"] as? String
                 attraction.model = jsonElement["model"] as? String
-                attraction.height = Int(jsonElement["height"] as! String)
-                attraction.speed = Int(jsonElement["maxSpeed"] as! String)
-                attraction.length = Int(jsonElement["length"] as! String)
+                attraction.height = Double(jsonElement["height"] as! String)
+                attraction.speed = Double(jsonElement["maxSpeed"] as! String)
+                attraction.length = Double(jsonElement["length"] as! String)
                 attraction.duration = Int(jsonElement["attractionDuration"] as! String)
                 attraction.userName = jsonElement["userEmail"] as? String
                 attraction.dateAdded = jsonElement["DateTime_Created"] as? String

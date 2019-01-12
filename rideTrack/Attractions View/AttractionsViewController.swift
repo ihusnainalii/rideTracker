@@ -834,17 +834,24 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     func enterAttractionTally(_ sender: AttractionsTableViewCell) {
+        guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
         var CurrtableViewList: [AttractionsModel]
         if isFiltering() {
             CurrtableViewList = filteredAttractions
             searchController.isActive = false
         }
-        else {
-            CurrtableViewList = allAttractionsList
+        else if indexPath.section == 0 {
+            CurrtableViewList = activeAttractionList
         }
+        else if indexPath.section == 1 {
+            CurrtableViewList = seasonalAttractionList
+        }
+        else {
+            CurrtableViewList = extinctAttractionList
+        }
+        
         print ("HERE on LONG")
         var newIncrement = 1
-        guard let indexPath = attractionsTableView.indexPath(for: sender) else { return }
         let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
         cell.rideCellSquare.isUserInteractionEnabled = false
         cell.extendedTappableCheckView.isUserInteractionEnabled = false
@@ -1099,7 +1106,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         self.view.layoutIfNeeded()
         
-        if (CurrtableViewList[indexPath.row]).active == 0 && CurrtableViewList[indexPath.row].seasonal != 1{
+        if (CurrtableViewList[indexPath.row]).active == 0{
             self.numExtinct += 1
         }
         else if CurrtableViewList[indexPath.row].seasonal == 1 {
@@ -1172,13 +1179,14 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         self.animateRow = indexPath.row    //"Animate here")
         
-        if (CurrtableViewList[indexPath.row]).active == 0 && CurrtableViewList[indexPath.row].seasonal != 1 {
+        if (CurrtableViewList[indexPath.row]).active == 0 {
             numExtinct -= 1
         }
-        if CurrtableViewList[indexPath.row].seasonal == 1 {
+        else if CurrtableViewList[indexPath.row].seasonal == 1 {
             numSeasonal -= 1
         }
         else { numRidesRiden -= 1 }
+        
         //UPDATE RIDES BEEN ON
         self.updatingRideCount(parkID: self.parkID, user: numRidesRiden, total: totalRidesAtPark-numIgnore)
         self.extinctText.text = "Defunct: \(numExtinct)"
