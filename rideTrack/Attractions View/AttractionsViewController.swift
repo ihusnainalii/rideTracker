@@ -69,7 +69,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var numExtinct = 0
     var numSeasonal = 0
     
-    var favoiteParkList = [ParksList]()
     var savedItems: NSArray!
     var parkData: ParksModel!
     var showExtinct = false
@@ -108,7 +107,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     
     var attractionListRef: DatabaseReference!
     var parksListRef: DatabaseReference!
-    var favoriteListRef: DatabaseReference!
     var scoreCardRef: DatabaseReference!
     var userNameRef: DatabaseReference!
     var dayInParkRef: DatabaseReference!
@@ -227,7 +225,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         userNameRef = Database.database().reference(withPath:"users/details/\(id)/userName") ///userName
         attractionListRef = Database.database().reference(withPath: "attractions-list/\(id)/\(parkData.parkID!)")
         parksListRef = Database.database().reference(withPath: "all-parks-list/\(id)/\(String(parkData.parkID))")
-        favoriteListRef = Database.database().reference(withPath: "favorite-parks-list/\(id)/\(String(parkData.parkID))")
         ignoreListRef = Database.database().reference(withPath: "ignore-list/\(id)/\(String(parkData.parkID))")
         
         
@@ -1288,7 +1285,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         if segue.identifier == "toParkSettings"{
             let settingsVC = segue.destination as! ParkSettingsViewController
             settingsVC.parksData = parkData
-            settingsVC.favoiteParkList = favoiteParkList
             settingsVC.showDefunct = showExtinct
             settingsVC.showSeasonal = showSeasonal
             settingsVC.attractionViewController = self
@@ -1342,7 +1338,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             detailsVC.userAttractionDatabase = userAttractionDatabase
             comeFromDetails = true
             detailsVC.titleName = titleName
-            detailsVC.favoiteParkList = favoiteParkList
             detailsVC.isfiltering = isfiltering
             detailsVC.userID = userName
             UIView.animate(withDuration: 0.3, animations: ({
@@ -1428,26 +1423,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             "ridesRidden": userCount,
             "totalRides": totNum
             ])
-        let favoriteIndex = findIndexFavoritesList(parkID: parkData.parkID)
-        if favoriteIndex != -1{
-            favoriteListRef.updateChildValues([
-                "ridesRidden": userCount,
-                "totalRides": totNum
-                ])
-        }
-        
     }
-    
-    func findIndexFavoritesList(parkID: Int) -> Int{
-        var favoritesIndex = -1
-        for i in 0..<favoiteParkList.count{
-            if favoiteParkList[i].parkID == parkID{
-                favoritesIndex = i
-                break
-            }
-        }
-        return favoritesIndex
-    }
+
     
     @IBAction func unwindToAttractionsView(sender: UIStoryboardSegue) {
         if sender.source is AttractionsDetailsViewController {

@@ -105,7 +105,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     var userNameRef: DatabaseReference!
     var parksListRef: DatabaseReference!
-    var favoritesListRef: DatabaseReference!
     var statsListRef: DatabaseReference!
     var dayInParkRef: DatabaseReference!
     var user: User!
@@ -153,7 +152,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         self.userNameRef = Database.database().reference(withPath:"users/details/\(id!)/userName") ///userName
         self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)")
         self.dayInParkRef = Database.database().reference(withPath: "day-in-park/\(id!)")
-        self.favoritesListRef = Database.database().reference(withPath: "favorite-parks-list/\(id!)")
         
         userNameRef.observe(.value, with: { snapshot in
             if snapshot.exists(){ //hasChild("testJustin"){
@@ -175,23 +173,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                     newParks.append(parkItem)
                 }
             }
+            
             self.allParksList = newParks
+            self.splitAllParksWithFavoriteList(allParksList: self.allParksList)
             self.allParksTableView.reloadData()
-            self.configureAllParksView()
-        })
-        favoritesListRef.queryOrdered(byChild: "name").observe(.value, with: { snapshot in
-            var newParks: [ParksList] = []
-            for child in snapshot.children {
-                if let snapshot = child as? DataSnapshot,
-                    let parkItem = ParksList(snapshot: snapshot) {
-                    newParks.append(parkItem)
-                }
-            }
-            print("Getting favorite-parks-list")
-            self.favoiteParkList = newParks
             self.favoritesTableView.reloadData()
+            self.configureAllParksView()
             self.configureFavoritesView()
         })
+        
         
         self.statsListRef = Database.database().reference(withPath: "stats-list/\(id!)")
         
@@ -221,6 +211,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         dataModel.downloadData(urlPath: urlPath, dataBase: "parks", returnPath: "allParks")
         
         
+    }
+    
+    func splitAllParksWithFavoriteList(allParksList: [ParksList]){
+        favoiteParkList = []
+        for i in 0..<allParksList.count{
+            if allParksList[i].favorite{
+                favoiteParkList.append(allParksList[i])
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -283,7 +282,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     func configureFavoritesView(){
         if favoritesViewIsVisible{
-            print("Configuring favorites view")
             var favoritesTableAlpha: CGFloat = 1.0
             if favoritesViewIsVisible && !isSearchingMyParks{
                 if !favoritesIsExpanded{
@@ -423,9 +421,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 parkItem.ref?.updateChildValues([
                     "favorite": false
                     ])
-                
-                let favoriteParkItem = self.favoiteParkList[indexPath.row]
-                favoriteParkItem.ref?.removeValue()
+        
                 
                 self.favoiteParkList.remove(at: indexPath.row)
                 
@@ -463,10 +459,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                     
                     parkItem.favorite = true
                     self.allParksList[indexPath.row].favorite = true
-                    let newParkRef = self.favoritesListRef.child(String(parkItem.parkID))
-                    newParkRef.setValue(parkItem.toAnyObject())
                     
-                
                     //Animate the favorites view to appear if the first park is being added to the list
                     if self.favoiteParkList.count == 0{
                         
@@ -537,26 +530,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let index = self.findIndexInAllParksList(parkID: self.favoiteParkList[indexPath.row].parkID)
             self.allParksList[index].favorite = false
             //self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[index], add: false)
-            let favoriteParkItem = self.favoiteParkList[indexPath.row]
-            favoriteParkItem.ref?.removeValue()
+     
             let parkItem = self.allParksList[index]
             parkItem.ref?.updateChildValues([
                 "favorite": false
                 ])
             self.favoiteParkList.remove(at: indexPath.row)
             
-//            //Animate away favorites view to dissappear if the last park is being removed from the list
-//            if self.favoritesViewIsVisible{
-//                if self.favoiteParkList.count == 0{
-//                    //Need to get this value to work for all devices
-//                    self.favoitesHeight = 70
-//                    self.favoritesViewHeightConstrant.constant = self.favoitesHeight
-//                    UIView.animate(withDuration: 0.6, animations: {
-//                        self.favoritesTableView.alpha = 0.0
-//                        self.view.layoutIfNeeded()
-//                    })
-//                }
-//            }
+
             
             self.favoitesHeight = 70
             if self.allParksIsVisible{
@@ -663,15 +644,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         //parksCoreData.deletePark(parkID: parkID)
         print("Make sure the data from Attractions-List-Model gets deleted again ")
         //Check if it is in user's favorites list, if so delete it
-        for i in 0..<favoiteParkList.count{
-            if favoiteParkList[i].parkID == parkID{
-                //favoiteParkList.remove(at: i)
-                //favoritesTableView.deleteRows(at: [IndexPath(row: i, section: 0)], with: .left)
-                let favoriteParkItem = self.favoiteParkList[i]
-                favoriteParkItem.ref?.removeValue()
-                break
-            }
-        }
         let parkItem = allParksList[indexPath]
         parkItem.ref?.removeValue()
         allParksList.remove(at: indexPath)
@@ -744,7 +716,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             attractionVC.parkData = arrayOfAllParks[arrayOfAllParksIndex]
             attractionVC.parkData.totalRides = selectedPark.totalRides
             attractionVC.parkData.incrementorEnabled = selectedPark.incrementorEnabled
-            attractionVC.favoiteParkList = favoiteParkList
             attractionVC.checkedIntoPark = checkedIntoPark
             checkedIntoPark = false
             
@@ -754,13 +725,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 parkItem.ref?.updateChildValues([
                     "name": arrayOfAllParks[arrayOfAllParksIndex].name
                     ])
-                let favoriteIndex = findIndexFavoritesList(parkID: selectedPark.parkID)
-                if favoriteIndex != -1{
-                    let parkItem = favoiteParkList[favoriteIndex]
-                    parkItem.ref?.updateChildValues([
-                        "name": arrayOfAllParks[arrayOfAllParksIndex].name
-                        ])
-                }
             }
             
 
@@ -1180,16 +1144,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
     }
     
-    func findIndexFavoritesList(parkID: Int) -> Int{
-        var favoritesIndex = -1
-        for i in 0..<favoiteParkList.count{
-            if favoiteParkList[i].parkID == parkID{
-                favoritesIndex = i
-                break
-            }
-        }
-        return favoritesIndex
-    }
     
     func findIndexInAllParksList(parkID:Int) -> Int{
         var allParksIndex = -1

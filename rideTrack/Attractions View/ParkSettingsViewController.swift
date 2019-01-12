@@ -27,7 +27,6 @@ class ParkSettingsViewController: UIViewController {
     let settingsColor = UIColor(red: 211/255.0, green: 213/255.0, blue: 215/255.0, alpha: 1.0)
  
     var parksData: ParksModel!
-    var favoiteParkList = [ParksList]()
     var showDefunct = false
     var showSeasonal = false
     var userName = ""
@@ -95,12 +94,7 @@ class ParkSettingsViewController: UIViewController {
         parksListRef.updateChildValues([
             "incrementorEnabled": incrementorSwitch.isOn
             ])
-        let favoriteIndex = findIndexFavoritesList(parkID: parksData.parkID)
-        if favoriteIndex != -1{
-            favoriteListRef.updateChildValues([
-                "incrementorEnabled": incrementorSwitch.isOn
-                ])
-        }
+
     }
     @IBAction func didToggleDefunctSwitch(_ sender: Any) {
         showDefunct = defunctSwitch.isOn
@@ -108,21 +102,11 @@ class ParkSettingsViewController: UIViewController {
         parksListRef.updateChildValues([
             "showDefunct": showDefunct
             ])
-        let favoriteIndex = findIndexFavoritesList(parkID: parksData.parkID)
-        if favoriteIndex != -1{
-            favoriteListRef.updateChildValues([
-                "showDefunct": showDefunct
-                ])
-        }
     }
     
     @IBAction func didToggleSeasonalSwitch(_ sender: Any) {
         showSeasonal = seasonalSwitch.isOn
         parksListRef.updateChildValues(["showSeasonal": showSeasonal])
-        let favoriteIndex = findIndexFavoritesList(parkID: parksData.parkID)
-        if favoriteIndex != -1 {
-            favoriteListRef.updateChildValues(["showSeasonal": showSeasonal])
-        }
     }
     
 //    func centerMapOnLocation(location: CLLocation) {
@@ -133,18 +117,7 @@ class ParkSettingsViewController: UIViewController {
     @IBAction func unwindToDetailsView(sender: UIStoryboardSegue) {
         print("Back to details view")
     }
-    
 
-    func findIndexFavoritesList(parkID: Int) -> Int{
-        var favoritesIndex = -1
-        for i in 0..<favoiteParkList.count{
-            if favoiteParkList[i].parkID == parkID{
-                favoritesIndex = i
-                break
-            }
-        }
-        return favoritesIndex
-    }
     
     // MARK: - Navigation
 
