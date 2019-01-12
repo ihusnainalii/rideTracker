@@ -20,7 +20,6 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
     var modifyDate = Date()
     var comeFromDetails = false
     var userAttractionDatabase: [AttractionList]!
-    var favoiteParkList: [ParksList]!
     var titleName = ""
     var attractionsListRef: DatabaseReference!
     var user: User!
@@ -778,17 +777,6 @@ class AttractionsDetailsViewController: UIViewController, SFSafariViewController
 //            newVC.smallimageXCorr = imageXCorr
 //            newVC.smallimageYCorr = imageYCorr
         }
-    }
-    
-    func findIndexFavoritesList(parkID: Int) -> Int{
-        var favoritesIndex = -1
-        for i in 0..<favoiteParkList.count{
-            if favoiteParkList[i].parkID == parkID{
-                favoritesIndex = i
-                break
-            }
-        }
-        return favoritesIndex
     }
     
     @IBAction func unwindToDetailsView(sender: UIStoryboardSegue) {
