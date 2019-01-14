@@ -1404,6 +1404,14 @@
             </objects>
             <point key="canvasLocation" x="941.60000000000002" y="223.53823088455775"/>
         </scene>
+        <!--ReportCard-->
+        <scene sceneID="GdG-Rh-5BN">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ReportCard" id="aEN-30-wEY" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eig-2I-37v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="774" y="1460"/>
+        </scene>
         <!--Settings View Controller-->
         <scene sceneID="Ev0-Hl-FU5">
             <objects>
@@ -1495,11 +1503,19 @@
                                 <color key="textColor" red="0.69092049870000005" green="0.69092049870000005" blue="0.69092049870000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z0P-zT-nwW">
+                                <rect key="frame" x="145.5" y="384" width="84" height="30"/>
+                                <state key="normal" title="Report Card"/>
+                                <connections>
+                                    <segue destination="aEN-30-wEY" kind="show" identifier="toReportCard" id="Jpc-XX-d2c"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="IQU-RJ-HOO" firstAttribute="leading" secondItem="cju-sr-LTz" secondAttribute="trailing" constant="17" id="2KG-PE-ryZ"/>
                             <constraint firstItem="il6-Cv-7cp" firstAttribute="centerX" secondItem="2XR-Pj-Woa" secondAttribute="centerX" id="3v7-qo-BIO"/>
+                            <constraint firstItem="oyp-NS-2Gg" firstAttribute="top" secondItem="Z0P-zT-nwW" secondAttribute="bottom" constant="-2.5" id="46H-72-eqn"/>
                             <constraint firstItem="n5x-99-Ie6" firstAttribute="top" secondItem="zul-pj-D7d" secondAttribute="top" constant="20" id="5TP-UH-3z0"/>
                             <constraint firstItem="dAU-uf-to2" firstAttribute="centerX" secondItem="2XR-Pj-Woa" secondAttribute="centerX" id="8e9-xH-8O7"/>
                             <constraint firstItem="zul-pj-D7d" firstAttribute="trailing" secondItem="oxu-PM-AdC" secondAttribute="trailing" constant="20" id="D9A-6N-FRT"/>
@@ -1507,6 +1523,7 @@
                             <constraint firstItem="n5x-99-Ie6" firstAttribute="leading" secondItem="2XR-Pj-Woa" secondAttribute="leadingMargin" id="ILQ-lO-CSq"/>
                             <constraint firstItem="2Id-GT-tVB" firstAttribute="centerX" secondItem="2XR-Pj-Woa" secondAttribute="centerX" id="LbC-y3-a6W"/>
                             <constraint firstItem="hYr-AL-RbB" firstAttribute="bottom" secondItem="zul-pj-D7d" secondAttribute="bottom" constant="-5" id="MnW-BP-ett"/>
+                            <constraint firstItem="Z0P-zT-nwW" firstAttribute="centerX" secondItem="2XR-Pj-Woa" secondAttribute="centerX" id="NBe-L6-bHv"/>
                             <constraint firstItem="2Id-GT-tVB" firstAttribute="top" secondItem="cju-sr-LTz" secondAttribute="bottom" constant="56" id="TPo-zZ-c9i"/>
                             <constraint firstItem="oyp-NS-2Gg" firstAttribute="centerX" secondItem="2XR-Pj-Woa" secondAttribute="centerX" id="YLr-rk-m6m"/>
                             <constraint firstItem="hYr-AL-RbB" firstAttribute="centerX" secondItem="2XR-Pj-Woa" secondAttribute="centerX" id="aOr-xM-5Sd"/>
@@ -1547,7 +1564,7 @@
                 <viewControllerPlaceholder storyboardName="ApproveSuggestions" referencedIdentifier="ApproveSuggestionsVC" id="v5D-iY-SOU" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="49K-q5-Mir" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="985" y="1498"/>
+            <point key="canvasLocation" x="1145" y="1460"/>
         </scene>
         <!--Attractions View Controller-->
         <scene sceneID="OSf-k8-4Sg">

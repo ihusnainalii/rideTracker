@@ -26,6 +26,8 @@ class SettingsViewController: UIViewController, UITextViewDelegate, SFSafariView
     @IBOutlet weak var emailLink: UITextView!
     var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
     
+    var userID: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -119,6 +121,12 @@ class SettingsViewController: UIViewController, UITextViewDelegate, SFSafariView
 //            listVC.locationManager.requestWhenInUseAuthorization()
 //            listVC.locationManager.requestLocation()
 //            print("GETTING GPS DATA")
+        }
+        if segue.identifier == "toReportCard"{
+            //I have moved all this to the unwindToParksList in ViewController
+            //            print("back from settings")
+            let reportCardVC = segue.destination as! ReportCardViewController
+            reportCardVC.userID = userID
         }
     }
 }

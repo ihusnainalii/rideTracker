@@ -757,6 +757,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         if segue.identifier == "toSettings"{
             let settingsVC = segue.destination as! SettingsViewController
             settingsVC.simulateLocation = simulateLocation
+            settingsVC.userID = user.uid
         }
         if segue.identifier == "toLists"{
             //let allListVC = segue.destination as! AllListsViewController
@@ -945,12 +946,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         if checkIfNewPark(newPark: closestPark){
             print("new park")
-            dayInParkRef.removeValue()
             addNewParkToList(newPark: closestPark, newCheckin: true)
             Analytics.logEvent("check_into_park", parameters: ["parkName": closestPark])
             
             let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, numberOfVisitsToThePark: 1, parkName: closestPark.name)
-            let startDayInParkRef = self.dayInParkRef.child(String("todays-stats"))
+             let startDayInParkRef = self.dayInParkRef.child(String("\(Int(midnight.timeIntervalSince1970))/todays-stats"))
             startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
         } else{
             print("old")
@@ -969,7 +969,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         if !selectedPark.checkedInToday{
     
             firstCheckin = true
-            dayInParkRef.removeValue()
             numberOfCheckinsToDisplay = selectedPark.numberOfCheckIns + 1
             lastVisit = selectedPark.lastDayVisited
             
@@ -982,7 +981,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             print("Checking in for first time")
             
             let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, numberOfVisitsToThePark: selectedPark.numberOfCheckIns+1, parkName: selectedPark.name)
-            let startDayInParkRef = self.dayInParkRef.child(String("todays-stats"))
+            let startDayInParkRef = self.dayInParkRef.child(String("\(Int(midnight.timeIntervalSince1970))/todays-stats"))
             startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
         }
         

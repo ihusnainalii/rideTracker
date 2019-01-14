@@ -220,7 +220,12 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         let userID = Auth.auth().currentUser
         id = (userID?.uid)!
         loginEmail = (userID?.email)!
-        self.dayInParkRef = Database.database().reference(withPath: "day-in-park/\(id)/todays-attractions")
+        
+        var calendar = NSCalendar.current
+        calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
+        let midnight = calendar.startOfDay(for: Date())
+        
+        self.dayInParkRef = Database.database().reference(withPath: "day-in-park/\(id)/\(Int(midnight.timeIntervalSince1970))/todays-attractions")
 
         userNameRef = Database.database().reference(withPath:"users/details/\(id)/userName") ///userName
         attractionListRef = Database.database().reference(withPath: "attractions-list/\(id)/\(parkData.parkID!)")

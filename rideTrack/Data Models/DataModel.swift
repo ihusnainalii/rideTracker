@@ -49,7 +49,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 }
                 else{
                     print("Data Downloaded")
-                    print(data!)
+                    //print(data!)
                     //Able to download data from database, now need to parse it
                     self.parseJSON(data!, dataBase: dataBase, returnPath: returnPath)
                 }
