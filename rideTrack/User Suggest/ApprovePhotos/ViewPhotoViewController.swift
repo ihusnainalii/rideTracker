@@ -103,7 +103,7 @@ class ViewPhotoViewController: UIViewController, DataModelProtocol {
         Analytics.logEvent("new_photo_deleted", parameters: nil)
         let dataModel = DataModel()
         dataModel.delegate = self
-        let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromPhotoSuggest.php?tempID=\(tempID)"
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=SubmitPhoto&key=keyID&tempID=\(tempID)"
         print(urlPath)
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         

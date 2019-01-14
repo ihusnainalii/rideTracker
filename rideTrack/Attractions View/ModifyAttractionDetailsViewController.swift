@@ -281,6 +281,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
     }
     
     @IBAction func defunctSwitch(_ sender: Any) {
+        onlySubmitPhoto = false
         if extinctSwitch.isOn {
         UIView.animate(withDuration: 0.3, animations: { //Animate Here
             self.closingStack.isHidden = false
@@ -370,7 +371,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             var modifiedBy = ""
             modifiedBy = selectedAttraction.modifyBy!
 
-            urlPath = "http://www.beingpositioned.com/theparksman/ActivePhpFiles/modifyAttractionV1.php?id=\(selectedAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&seasonal=\(seasonal)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&notes=&modifyBy=\(modifiedBy)" //uploads to main list
+            urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/modifyAttraction.php?id=\(selectedAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&seasonal=\(seasonal)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&notes=&modifyBy=\(modifiedBy)" //uploads to main list
         print (urlPath)
             
             var changes = "MODIFY: "
@@ -444,7 +445,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             let notes = String (tempNotes.filter { !" \n".contains($0) })
             
             let alert = UIAlertController(title: "Suggest Modifications to Attraction", message: "Are you sure you want to suggest these modifications to \(rideName!)?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {action in                 urlPath = "http://www.beingpositioned.com/theparksman/ActivePhpFiles/usersuggestserviceV1.php?parknum=\(parkID)&ride=\(tempName)&open=\(yearOpen)&close=\(yearClosed)&type=\(self.rideType)&park=\(self.parkName)&rideID=\(self.selectedAttraction.rideID!)&active=\(active)&seasonal=\(seasonal)&manufacturer=\(tempMan)&notes=\(notes)&modify=1&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&email=\(self.userID)" //removed park Namer and reaplaced with rideID
+            alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {action in                 urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/usersuggestservice.php?parknum=\(parkID)&ride=\(tempName)&open=\(yearOpen)&close=\(yearClosed)&type=\(self.rideType)&park=\(self.parkName)&rideID=\(self.selectedAttraction.rideID!)&active=\(active)&seasonal=\(seasonal)&manufacturer=\(tempMan)&notes=\(notes)&modify=1&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&email=\(self.userID)" //removed park Namer and reaplaced with rideID
                 print(urlPath)
                 let dataModel = DataModel()
                 dataModel.delegate = self
@@ -542,9 +543,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             }, completion: nil)
         }
     }
-    @IBAction func defunctSwitchPressed(_ sender: Any) {
-        onlySubmitPhoto = false
-    }
+
     @IBAction func seasonalSwitchPressed(_ sender: Any) {
         onlySubmitPhoto = false
     }

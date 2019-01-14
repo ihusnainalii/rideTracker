@@ -14,18 +14,20 @@ class approveSuggPhotoModel: NSObject {
     var userName: String!
     var rideName: String!
     var ParkName: String!
+    var date: String!
     var parkID: Int!
     var tempID: Int!
     override init() {
         
     }
     
-    init(rideID: Int, parkID: Int, userName: String, rideName: String, parkName: String, tempID: Int) {
+    init(rideID: Int, parkID: Int, userName: String, rideName: String, parkName: String, date: String, tempID: Int) {
         
         self.rideID = rideID
         self.userName = userName
         self.rideName = rideName
         self.ParkName = parkName
+        self.date = date
         self.parkID = parkID
         self.tempID = tempID
     }

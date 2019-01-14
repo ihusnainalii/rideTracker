@@ -83,7 +83,7 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
         let dataModel = DataModel()
         dataModel.delegate = self
         
-        let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromParkSuggest.php?tempID=\(selectedPark.tempID!)"
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=SuggestPark&key=idKey&tempID=\(selectedPark.tempID!)"
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         self.performSegue(withIdentifier: "toSuggestParksList", sender: self)
 
@@ -111,7 +111,7 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         print(urlPath)
         
-        let urlPath2 = "http://www.beingpositioned.com/theparksman/deleteFromParkSuggest.php?tempID=\(selectedPark.tempID!)" //delete from list
+        let urlPath2 = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=SuggestPark&key=idKey&tempID=\(selectedPark.tempID!)" //delete from list
         dataModel.downloadData(urlPath: urlPath2, dataBase: "upload", returnPath: "upload")
         self.performSegue(withIdentifier: "toSuggestParksList", sender: self)
     }

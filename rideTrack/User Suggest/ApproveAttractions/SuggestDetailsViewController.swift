@@ -150,7 +150,8 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
                     print ("delete")
                     let dataModel = DataModel()
                     dataModel.delegate = self
-                    let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(self.selectedAttraction.id!)"
+                    let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=UserSuggest&key=id&tempID=\(self.selectedAttraction.id!)"
+                    
                     print (urlPath)
                     dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
                     self.performSegue(withIdentifier: "toApproveSuggestions", sender: self)
@@ -246,7 +247,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         let tempName = rideName!.replacingOccurrences(of: "&", with: "!A?")
         let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
         
-        let urlPath = "http://www.beingpositioned.com/theparksman/ActivePhpFiles/uploadToAttractionDBV1.php?name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&seasonal=\(seasonal)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameTextField.text!)&model=\(self.modelTextField.text!)&height=\(self.heightTextField.text!)&maxSpeed=\(self.speedTextField.text!)&length=\(self.lengthTextField.text!)&duration=\(self.durrationTextField.text!)&notes=\(selectedAttraction.notes!)&userID=\(selectedAttraction.userName!)" //uploads to main list
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadToAttractionDB.php?name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&seasonal=\(seasonal)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameTextField.text!)&model=\(self.modelTextField.text!)&height=\(self.heightTextField.text!)&maxSpeed=\(self.speedTextField.text!)&length=\(self.lengthTextField.text!)&duration=\(self.durrationTextField.text!)&notes=\(selectedAttraction.notes!)&userID=\(selectedAttraction.userName!)" //uploads to main list
         
         
         let changes = "NEW RIDE: \(rideName!) at \(parkNameLabel.text!) opened in \(yearOpen) and is type \(rideType)"
@@ -255,7 +256,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         let dataModel = DataModel()
         dataModel.delegate = self
         
-        let urlPath2 = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(selectedAttraction.id!)" //deletes from suggested list
+        let urlPath2 = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=UserSuggest&key=id&tempID=\(self.selectedAttraction.id!)" //deletes from suggested list
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         dataModel.downloadData(urlPath: urlPath2, dataBase: "upload", returnPath: "upload")
         dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
@@ -268,7 +269,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         let dataModel = DataModel()
         dataModel.delegate = self
         print ("The ID is ", selectedAttraction.id)
-        let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(selectedAttraction.id!)"
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=UserSuggest&key=id&tempID=\(self.selectedAttraction.id!)"
         print (urlPath)
         let changes = "NEW RIDE: \(nameTextField.text!) at \(parkNameLabel.text!) opened in \(openTextField.text!) and is type \(rideType)"
         let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(selectedAttraction.userName!)&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log

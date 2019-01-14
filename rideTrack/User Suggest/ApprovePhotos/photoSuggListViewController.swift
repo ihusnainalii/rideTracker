@@ -51,6 +51,10 @@ class photoSuggListViewController: UIViewController, UITableViewDataSource, UITa
         let cell = tableView.dequeueReusableCell(withIdentifier: "submitedPhotos", for: indexPath) as! suggPhotosTableViewCell
         cell.rideNameLabel.text? = listOfSuggestions[indexPath.row].rideName
         cell.parkNameLabel.text? = listOfSuggestions[indexPath.row].ParkName
+        cell.userNameLabel.text = listOfSuggestions[indexPath.row].userName
+        let tempDate = listOfSuggestions[indexPath.row].date
+        let justDate = tempDate!.prefix(10)
+        cell.dateLabel.text = String(justDate)
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -58,7 +62,7 @@ class photoSuggListViewController: UIViewController, UITableViewDataSource, UITa
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
        
-        return 60// return UITableView.automaticDimension
+        return 75// return UITableView.automaticDimension
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

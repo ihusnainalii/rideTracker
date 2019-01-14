@@ -89,7 +89,8 @@ func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRow
             print ("Deleting key ", self.listOfSuggestions[indexPath.row].id!)
             let dataModel = DataModel()
             dataModel.delegate = self
-            let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromUserSuggest.php?number=\(self.listOfSuggestions[indexPath.row].id!)"
+           
+            let urlPath =  "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=UserSuggest&key=id&tempID=\(self.listOfSuggestions[indexPath.row].id!)"
             print (urlPath)
             
             let changes = "NEW RIDE: \(self.listOfSuggestions[indexPath.row].rideName!) opened in \(self.listOfSuggestions[indexPath.row].YearOpen!) and is type \(self.listOfSuggestions[indexPath.row].type!)"
