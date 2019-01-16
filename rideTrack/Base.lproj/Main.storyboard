@@ -1548,6 +1548,7 @@
                     <connections>
                         <outlet property="approveSuggestionsButton" destination="2Id-GT-tVB" id="joX-B9-KAL"/>
                         <outlet property="emailLink" destination="il6-Cv-7cp" id="3Pp-Ib-YUT"/>
+                        <outlet property="reportCardButton" destination="Z0P-zT-nwW" id="uga-z1-rce"/>
                         <outlet property="simulateLocationLabel" destination="cju-sr-LTz" id="0CH-tr-7Fq"/>
                         <outlet property="simulateLocationSwitch" destination="IQU-RJ-HOO" id="oIz-aw-LUu"/>
                         <segue destination="ciy-dd-ZK8" kind="show" identifier="SignOut" id="aLK-ZN-Lc5"/>

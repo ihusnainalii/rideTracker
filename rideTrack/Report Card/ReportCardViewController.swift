@@ -6,17 +6,60 @@
 //
 
 import UIKit
+import Firebase
 
 class ReportCardViewController: UIViewController {
 
+    @IBOutlet weak var dateLabel: UILabel!
+    
     var userID: String!
     var reportCardLogic = ReportCardLogic()
+    var date = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        reportCardLogic.getTodaysStatsSorted(userID: userID)
-        // Do any additional setup after loading the view.
+        //reportCardLogic.getTodaysStatsSorted(userID: userID)
+        
+        var calendar = NSCalendar.current
+        calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
+        let midnight = calendar.startOfDay(for: Date())
+        
+        print(userID!)
+        
+        let dayInParkRef = Database.database().reference(withPath: "day-in-park/\(userID!)")
+        
+        dayInParkRef.observeSingleEvent(of: .value, with: { snapshot in
+            let value = snapshot.value as? NSDictionary
+            for i in 0..<(value?.allKeys.count)!{
+                let date = value?.allKeys[i]
+                print(date!)
+                let dateString = date as! String
+                self.date = Int(dateString)!
+            }
+            self.updateLabels()
+        })
+        
+        
     }
+
+    func updateLabels(){
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "MM-dd-yyyy"
+//        dateFormatter.timeZone = NSTimeZone(name: "UTC") as! TimeZone
+//        //let date: NSDate? = dateFormatter.date(from: "2016-02-29 12:24:26") as! NSDate
+//        let dateToFormat = Date.init(timeIntervalSince1970: TimeInterval(date))
+//
+        
+
+        let dayTimePeriodFormatter = DateFormatter()
+        dayTimePeriodFormatter.dateFormat = "MMMM d, yyyy"
+        dayTimePeriodFormatter.timeZone = NSTimeZone.local
+        
+        let dateString = dayTimePeriodFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(date)))
+        dateLabel.text = dateString
+        //print(date)
+    }
+    
     
 
     /*

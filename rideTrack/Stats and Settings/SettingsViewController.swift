@@ -24,6 +24,7 @@ class SettingsViewController: UIViewController, UITextViewDelegate, SFSafariView
     @IBOutlet weak var approveSuggestionsButton: UIButton!
     @IBOutlet weak var simulateLocationSwitch: UISwitch!
     @IBOutlet weak var emailLink: UITextView!
+    @IBOutlet weak var reportCardButton: UIButton!
     var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
     
     var userID: String!
@@ -43,11 +44,13 @@ class SettingsViewController: UIViewController, UITextViewDelegate, SFSafariView
             simulateLocationLabel.isHidden = false
             simulateLocationSwitch.isHidden = false
             approveSuggestionsButton.isHidden = false
+            reportCardButton.isHidden = false
         }
         else {
             simulateLocationLabel.isHidden = true
             simulateLocationSwitch.isHidden = true
             approveSuggestionsButton.isHidden = true
+            reportCardButton.isHidden = true
         }
         // Do any additional setup after loading the view.
     }
@@ -123,10 +126,11 @@ class SettingsViewController: UIViewController, UITextViewDelegate, SFSafariView
 //            print("GETTING GPS DATA")
         }
         if segue.identifier == "toReportCard"{
+            print("toReportCard with uid \(userID!)")
             //I have moved all this to the unwindToParksList in ViewController
             //            print("back from settings")
             let reportCardVC = segue.destination as! ReportCardViewController
-            reportCardVC.userID = userID
+            reportCardVC.userID = userID!
         }
     }
 }
