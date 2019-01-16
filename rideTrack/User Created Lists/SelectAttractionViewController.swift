@@ -53,7 +53,7 @@ class SelectAttractionViewController: UIViewController, UITableViewDataSource, U
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
-        let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(selectedPark.parkID!)"
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/attractiondbservice.php?parkid=\(selectedPark.parkID!)"
         let dataModel = DataModel()
         dataModel.delegate = self
         

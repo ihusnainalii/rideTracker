@@ -58,7 +58,6 @@
 		5FFA2D4C21EAC63700CF3956 /* ReportCard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FFA2D4B21EAC63700CF3956 /* ReportCard.storyboard */; };
 		5FFA2D5121EAC82000CF3956 /* ReportCardLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA2D5021EAC82000CF3956 /* ReportCardLogic.swift */; };
 		5FFA2D5321EAD4C800CF3956 /* ReportCardData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA2D5221EAD4C800CF3956 /* ReportCardData.swift */; };
-		5FFA2D5521EBF7C300CF3956 /* ReportCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA2D5421EBF7C200CF3956 /* ReportCardViewController.swift */; };
 		5FFCB7FF21055E400054D84D /* ParksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB7FE21055E400054D84D /* ParksList.swift */; };
 		5FFCB80121055E470054D84D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB80021055E470054D84D /* User.swift */; };
 		5FFCB804210579C80054D84D /* AttractionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB803210579C80054D84D /* AttractionList.swift */; };
@@ -100,6 +99,7 @@
 		98D7A7022172767E008A4E35 /* ApproveParkMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D7A7012172767E008A4E35 /* ApproveParkMapViewController.swift */; };
 		98F17C65216AABFB0009BE91 /* SuggestParkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F17C64216AABFB0009BE91 /* SuggestParkViewController.swift */; };
 		98F24F5120EFE35200A42C7E /* SuggestDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F24F5020EFE35200A42C7E /* SuggestDetailsViewController.swift */; };
+		98F80E2F21EEB76200E77769 /* ReportCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F80E2E21EEB76200E77769 /* ReportCardViewController.swift */; };
 		B0FA1522D4FC83CB07B24B1A /* Pods_rideTrack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB608ACB379A8CD3D52D2DC7 /* Pods_rideTrack.framework */; };
 		E6B156FD8C7DB575E3EB5626 /* Pods_rideTrackTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFAC9EC2AA55F3F6961EFE58 /* Pods_rideTrackTests.framework */; };
 /* End PBXBuildFile section */
@@ -177,7 +177,6 @@
 		5FFA2D4B21EAC63700CF3956 /* ReportCard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReportCard.storyboard; sourceTree = "<group>"; };
 		5FFA2D5021EAC82000CF3956 /* ReportCardLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCardLogic.swift; sourceTree = "<group>"; };
 		5FFA2D5221EAD4C800CF3956 /* ReportCardData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCardData.swift; sourceTree = "<group>"; };
-		5FFA2D5421EBF7C200CF3956 /* ReportCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReportCardViewController.swift; path = "/Users/marklawrence/Documents/LogRide/rideTrack/Report Card/ReportCardViewController.swift"; sourceTree = "<absolute>"; };
 		5FFCB7FE21055E400054D84D /* ParksList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParksList.swift; sourceTree = "<group>"; };
 		5FFCB80021055E470054D84D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5FFCB803210579C80054D84D /* AttractionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionList.swift; sourceTree = "<group>"; };
@@ -225,6 +224,7 @@
 		98D7A7012172767E008A4E35 /* ApproveParkMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveParkMapViewController.swift; sourceTree = "<group>"; };
 		98F17C64216AABFB0009BE91 /* SuggestParkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestParkViewController.swift; sourceTree = "<group>"; };
 		98F24F5020EFE35200A42C7E /* SuggestDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDetailsViewController.swift; sourceTree = "<group>"; };
+		98F80E2E21EEB76200E77769 /* ReportCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportCardViewController.swift; sourceTree = "<group>"; };
 		B21792B8823F950BD12EAEF7 /* Pods-rideTrackUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrackUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrackUITests/Pods-rideTrackUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B5146A36BD64CE2A349D869A /* Pods-rideTrackUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrackUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrackUITests/Pods-rideTrackUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C026F64C41D1168D3FC8DB45 /* Pods-rideTrackTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rideTrackTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rideTrackTests/Pods-rideTrackTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -362,7 +362,7 @@
 		5FFA2D4D21EAC63F00CF3956 /* Report Card */ = {
 			isa = PBXGroup;
 			children = (
-				5FFA2D5421EBF7C200CF3956 /* ReportCardViewController.swift */,
+				98F80E2E21EEB76200E77769 /* ReportCardViewController.swift */,
 				5FFA2D5021EAC82000CF3956 /* ReportCardLogic.swift */,
 				5FFA2D4B21EAC63700CF3956 /* ReportCard.storyboard */,
 			);
@@ -810,6 +810,7 @@
 				5FF0BBBE20CF639100213DF8 /* ScoreCardTableViewCell.swift in Sources */,
 				5F6B9A8421E534DD00EAA478 /* DayInParkAttractionList.swift in Sources */,
 				5F202C5D20EB257700FFE408 /* ParkSettingsViewController.swift in Sources */,
+				98F80E2F21EEB76200E77769 /* ReportCardViewController.swift in Sources */,
 				982C41392179570C00B5C8A7 /* FullScreenViewController.swift in Sources */,
 				98AD7F7220A91A5C00540AB3 /* UserAttraction.swift in Sources */,
 				5FFCB8062106783E0054D84D /* MigrateToFirebase.swift in Sources */,
@@ -824,7 +825,6 @@
 				5FE9F81520DDCEF20012B98C /* FavoritesTableViewCell.swift in Sources */,
 				988A1A372170EA92004CF3A8 /* SelectTypeViewController.swift in Sources */,
 				98AD7F7520A91A5C00540AB3 /* ViewController.swift in Sources */,
-				5FFA2D5521EBF7C300CF3956 /* ReportCardViewController.swift in Sources */,
 				5FA990212172677E00F76025 /* SelectAttractionTableViewCell.swift in Sources */,
 				982E097820F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift in Sources */,
 				98AD7F7020A91A5C00540AB3 /* ParksModel.swift in Sources */,

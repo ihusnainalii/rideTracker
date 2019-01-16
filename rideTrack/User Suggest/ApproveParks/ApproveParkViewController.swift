@@ -107,7 +107,7 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
         if defunctSwitch.isOn {defunct = 0}
         if seasonalSwitch.isOn {seasonal = 1}
         
-        let urlPath = "http://www.beingpositioned.com/theparksman/uploadNewPark.php?name=\(name!)&type=\(type!)&city=\(city!)&count=\(country!)&lat=\(lat!)&long=\(long!)&open=\(open!)&closed=\(closed!)&defunct=\(defunct)&prevName=\(prevName!)&seasonal=\(seasonal)&website=\(website!)&userName=\(self.selectedPark.userName!)"
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadNewPark.php?name=\(name!)&type=\(type!)&city=\(city!)&count=\(country!)&lat=\(lat!)&long=\(long!)&open=\(open!)&closed=\(closed!)&defunct=\(defunct)&prevName=\(prevName!)&seasonal=\(seasonal)&website=\(website!)&userName=\(self.selectedPark.userName!)"
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         print(urlPath)
         

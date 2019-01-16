@@ -18,7 +18,7 @@ class ParkSuggListViewController: UIViewController, UITableViewDataSource, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let urlPath = "http://www.beingpositioned.com/theparksman/parkSuggDownload.php"
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/UserSuggestDownloadService.php?listName=SuggestPark"
         let dataModel = DataModel()
         dataModel.delegate = self
         dataModel.downloadData(urlPath: urlPath, dataBase: "ParkSuggest", returnPath: "allParks")

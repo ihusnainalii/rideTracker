@@ -54,7 +54,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         super.viewDidLoad()
         nameTextField.delegate = self
         manufacturerTextField.delegate = self
-        let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(selectedAttraction.parkID!)"
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/attractiondbservice.php?parkid=\(selectedAttraction.parkID!)"
         let dataModel = DataModel()
         dataModel.delegate = self
         dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
@@ -251,7 +251,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         
         
         let changes = "NEW RIDE: \(rideName!) at \(parkNameLabel.text!) opened in \(yearOpen) and is type \(rideType)"
-        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(selectedAttraction.userName!)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
+        let (urlPath3) = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadToDatabaseLog.php? username=\(selectedAttraction.userName!)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
         print (urlPath)
         let dataModel = DataModel()
         dataModel.delegate = self
@@ -272,7 +272,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=UserSuggest&key=id&tempID=\(self.selectedAttraction.id!)"
         print (urlPath)
         let changes = "NEW RIDE: \(nameTextField.text!) at \(parkNameLabel.text!) opened in \(openTextField.text!) and is type \(rideType)"
-        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(selectedAttraction.userName!)&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log
+        let (urlPath3) = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadToDatabaseLog.php? username=\(selectedAttraction.userName!)&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log
 
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")

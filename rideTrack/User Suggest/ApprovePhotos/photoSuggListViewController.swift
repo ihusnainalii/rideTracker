@@ -20,7 +20,7 @@ class photoSuggListViewController: UIViewController, UITableViewDataSource, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let urlPath = "http://www.beingpositioned.com/theparksman/photoSuggDownload.php"
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/UserSuggestDownloadService.php?listName=SubmitPhoto"
         let dataModel = DataModel()
         dataModel.delegate = self
         dataModel.downloadData(urlPath: urlPath, dataBase: "PhotoSuggest", returnPath: "allParks")

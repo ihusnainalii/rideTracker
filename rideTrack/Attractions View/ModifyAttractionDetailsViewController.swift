@@ -430,7 +430,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
             
             Analytics.logEvent("attraction_modification_suggested", parameters: nil)
             
-            let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(userID)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
+            let (urlPath3) = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadToDatabaseLog.php? username=\(userID)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
             print(urlPath3)
             let dataModel = DataModel()
             dataModel.delegate = self
@@ -470,7 +470,7 @@ class ModifyAttractionDetailsViewController: UIViewController, UIPickerViewDataS
                 if Error == nil { print("success")}
                 else { print("ERROR") }
                 }
-        urlPath = "http://www.beingpositioned.com/theparksman/submitPhotoUpload.php?rideID=\(self.selectedAttraction.rideID!)&parkID=\(self.selectedAttraction.parkID!)&photoArtist=\(self.userID)&rideName=\(self.selectedAttraction.name!)&parkName=\(parkName)"
+        urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/submitPhotoUpload.php?rideID=\(self.selectedAttraction.rideID!)&parkID=\(self.selectedAttraction.parkID!)&photoArtist=\(self.userID)&rideName=\(self.selectedAttraction.name!)&parkName=\(parkName)"
         print(urlPath)
         let dataModel = DataModel()
         dataModel.delegate = self

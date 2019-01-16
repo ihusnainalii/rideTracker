@@ -205,7 +205,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         })
     
         
-        let urlPath = "http://www.beingpositioned.com/theparksman/parksdbservice.php"
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/parksdbservice.php"
         let dataModel = DataModel()
         dataModel.delegate = self
         dataModel.downloadData(urlPath: urlPath, dataBase: "parks", returnPath: "allParks")
@@ -626,7 +626,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             //self.parksCoreData.saveNewItemToParkList(parkID: newPark.parkID)
             
             //Get total number of rides, need to call database
-            let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(newPark.parkID!)"
+            let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/attractiondbservice.php?parkid=\(newPark.parkID!)"
             let dataModel = DataModel()
             dataModel.delegate = self
             dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "countNumberOfRides")

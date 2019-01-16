@@ -269,7 +269,7 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
         let urlPath =  "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=UserSuggest&key=id&tempID=\(suggestedAttraction.id!)"
         
         let changes = getChangedDetails()
-        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(userName)&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log
+        let (urlPath3) = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadToDatabaseLog.php? username=\(userName)&changes=\(changes)&status=\("Deleted")" //uploads to suggestion log
         print (urlPath)
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
@@ -324,7 +324,7 @@ class ApproveModifyAttractionViewController: UIViewController, UIPickerViewDeleg
         let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/modifyAttraction.php?id=\(originalAttraction.rideID!)&name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&seasonal=\(seasonal)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationField.text!)&notes=\(notes)&modifyBy=\(modifiedBy)"  //uploads to main list
         print (urlPath)
         let changes = getChangedDetails()
-        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(userName)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
+        let (urlPath3) = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadToDatabaseLog.php? username=\(userName)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
         print(urlPath3)
         let dataModel = DataModel()
         dataModel.delegate = self

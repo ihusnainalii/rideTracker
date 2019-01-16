@@ -93,7 +93,7 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
         let alertController = UIAlertController(title: "Suggest Park", message: "Are you sure you want suggest \(parkName)?", preferredStyle: .alert)
         
         let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
-            let urlPath = "http://www.beingpositioned.com/theparksman/suggestParkUploadtoApprove.php?name=\(self.parkName)&type=\(self.type)&city=\(self.cityState)&count=\(self.country)&lat=\(self.lat)&long=\(self.long)&open=\(open)&closed=\(closed)&defunct=\(self.defunct)&prevName=\(self.oldName)&seasonal=\(self.seasonal)&website=\(self.URLtext)&userName=\(self.userName)"
+            let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/suggestParkUploadtoApprove.php?name=\(self.parkName)&type=\(self.type)&city=\(self.cityState)&count=\(self.country)&lat=\(self.lat)&long=\(self.long)&open=\(open)&closed=\(closed)&defunct=\(self.defunct)&prevName=\(self.oldName)&seasonal=\(self.seasonal)&website=\(self.URLtext)&userName=\(self.userName)"
             Analytics.logEvent("new_park_suggested", parameters: nil)
             print (urlPath)
             dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
