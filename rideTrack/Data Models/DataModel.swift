@@ -187,6 +187,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 suggPhoto.ParkName = (jsonElement["parkName"] as! String)
                 suggPhoto.parkID = Int(jsonElement["parkID"] as! String)
                 suggPhoto.tempID = Int(jsonElement["keyID"] as! String)
+                suggPhoto.date = jsonElement["DateTime_Created"] as! String
                 dataBaseData.add(suggPhoto)
             }
         }

@@ -3489,7 +3489,7 @@
                                                             <constraint firstAttribute="width" constant="51" id="g96-YN-ROZ"/>
                                                         </constraints>
                                                         <connections>
-                                                            <action selector="defunctSwitchPressed:" destination="kVq-ZJ-GQe" eventType="valueChanged" id="xJh-rp-kJe"/>
+                                                            <action selector="defunctSwitch:" destination="kVq-ZJ-GQe" eventType="valueChanged" id="yJZ-IC-4Wb"/>
                                                         </connections>
                                                     </switch>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HUa-3k-rrq">

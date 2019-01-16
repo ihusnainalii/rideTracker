@@ -68,7 +68,7 @@ class ViewPhotoViewController: UIViewController, DataModelProtocol {
         Analytics.logEvent("new_photo_approved", parameters: nil)
         let dataModel = DataModel()
         dataModel.delegate = self
-        let urlPath = "http://www.beingpositioned.com/theparksman/addPhotoToAttraction.php?id=\(rideID)&photoArtist=\(userName)"
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/addPhotoToAttraction.php?id=\(rideID)&photoArtist=\(userName)"
         print(urlPath)
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         
@@ -86,7 +86,7 @@ class ViewPhotoViewController: UIViewController, DataModelProtocol {
             else { print("ERROR adding photo") }
         }
         let changes = "Photo added to \(rideName) at \(parkName)"
-        let (urlPath3) = "http://www.beingpositioned.com/theparksman/uploadToDatabaseLog.php? username=\(userName)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
+        let (urlPath3) = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadToDatabaseLog.php? username=\(userName)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
         dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
         
         deletePhotoFromList()
@@ -103,7 +103,7 @@ class ViewPhotoViewController: UIViewController, DataModelProtocol {
         Analytics.logEvent("new_photo_deleted", parameters: nil)
         let dataModel = DataModel()
         dataModel.delegate = self
-        let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromPhotoSuggest.php?tempID=\(tempID)"
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=SubmitPhoto&key=keyID&tempID=\(tempID)"
         print(urlPath)
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         

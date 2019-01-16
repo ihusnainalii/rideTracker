@@ -140,7 +140,7 @@ class StatsViewController: UIViewController, DataModelProtocol {
                 parksCompleteCount += 1
             }
             
-            let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(allParksList[i].parkID!)"
+            let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/attractiondbservice.php?parkid=\(allParksList[i].parkID!)"
             dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: String(allParksList[i].parkID!))
         }
     }

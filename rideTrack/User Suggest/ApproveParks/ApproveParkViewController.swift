@@ -83,7 +83,7 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
         let dataModel = DataModel()
         dataModel.delegate = self
         
-        let urlPath = "http://www.beingpositioned.com/theparksman/deleteFromParkSuggest.php?tempID=\(selectedPark.tempID!)"
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=SuggestPark&key=idKey&tempID=\(selectedPark.tempID!)"
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         self.performSegue(withIdentifier: "toSuggestParksList", sender: self)
 
@@ -107,11 +107,11 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
         if defunctSwitch.isOn {defunct = 0}
         if seasonalSwitch.isOn {seasonal = 1}
         
-        let urlPath = "http://www.beingpositioned.com/theparksman/uploadNewPark.php?name=\(name!)&type=\(type!)&city=\(city!)&count=\(country!)&lat=\(lat!)&long=\(long!)&open=\(open!)&closed=\(closed!)&defunct=\(defunct)&prevName=\(prevName!)&seasonal=\(seasonal)&website=\(website!)&userName=\(self.selectedPark.userName!)"
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadNewPark.php?name=\(name!)&type=\(type!)&city=\(city!)&count=\(country!)&lat=\(lat!)&long=\(long!)&open=\(open!)&closed=\(closed!)&defunct=\(defunct)&prevName=\(prevName!)&seasonal=\(seasonal)&website=\(website!)&userName=\(self.selectedPark.userName!)"
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         print(urlPath)
         
-        let urlPath2 = "http://www.beingpositioned.com/theparksman/deleteFromParkSuggest.php?tempID=\(selectedPark.tempID!)" //delete from list
+        let urlPath2 = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=SuggestPark&key=idKey&tempID=\(selectedPark.tempID!)" //delete from list
         dataModel.downloadData(urlPath: urlPath2, dataBase: "upload", returnPath: "upload")
         self.performSegue(withIdentifier: "toSuggestParksList", sender: self)
     }

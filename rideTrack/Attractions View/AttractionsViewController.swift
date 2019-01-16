@@ -202,7 +202,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.attractionsTableView.dataSource = self
         parkID = parkData.parkID
         print(parkID)
-        let urlPath = "http://www.beingpositioned.com/theparksman/attractiondbservice.php?parkid=\(parkID)"
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/attractiondbservice.php?parkid=\(parkID)"
        print(urlPath)
         let dataModel = DataModel()
         // print ("There are ", feedItems.count, " attactions in park ", parkID)

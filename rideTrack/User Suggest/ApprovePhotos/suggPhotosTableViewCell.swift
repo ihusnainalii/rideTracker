@@ -12,6 +12,8 @@ class suggPhotosTableViewCell: UITableViewCell {
 
     @IBOutlet weak var rideNameLabel: UILabel!
     @IBOutlet weak var parkNameLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var userNameLabel: UILabel!
     
     weak var delegate: suggPhotosTableViewCellDelegate?
 

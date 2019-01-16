@@ -150,7 +150,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         activityIndicator.startAnimating()
         
         let selectedRideID = usersList.listEntryRideID[indexPath.row]
-        let urlPath = "http://www.beingpositioned.com/theparksman/getAttractionDetails.php?rideID=\(selectedRideID)"
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/getAttractionDetails.php?rideID=\(selectedRideID)"
         let dataModel = DataModel()
         dataModel.delegate = self
         dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")

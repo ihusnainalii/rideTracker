@@ -281,7 +281,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 let tempName = ride!.replacingOccurrences(of: "&", with: "!A?")
                 let tempMan = manufacturer!.replacingOccurrences(of: "&", with: "!A?")
                 
-                let urlPath = "http://www.beingpositioned.com/theparksman/ActivePhpFiles/usersuggestserviceV1.php?parknum=\(parknum)&ride=\(tempName)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&seasonal=\(seasonal)&rideID=\(0)&manufacturer=\(tempMan)&notes=\(notes)&modify=0&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&email=\(self.userName)"
+                let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/usersuggestservice.php?parknum=\(parknum)&ride=\(tempName)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&seasonal=\(seasonal)&rideID=\(0)&manufacturer=\(tempMan)&notes=\(notes)&modify=0&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&email=\(self.userName)"
 
                 print (urlPath)
                 Active = 1
