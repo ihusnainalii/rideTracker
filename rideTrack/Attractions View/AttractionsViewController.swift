@@ -88,10 +88,11 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var selectedAttractionsList: [NSManagedObject] = []
     var totalExtinctCount = 0
     var isfiltering = false
-    let darkGreen = UIColor(red: 40/255.0, green: 119/255.0, blue: 72/255.0, alpha: 1.0)
+    let logoGreen = UIColor(red: 101/255.0, green: 164/255.0, blue: 83/255.0, alpha: 1.0)
     let appGreen = UIColor(red: 98.0/255.0, green: 213.0/255.0, blue: 88.0/255.0, alpha: 1.0)
     let goldBar = UIColor(red: 250/255.0, green: 204/255.0, blue: 73/255.0, alpha: 1.0)
     let lightGreyBar = UIColor(red: 223.0/255.0, green: 223.0/255.0, blue: 223.0/255.0, alpha: 1.0)
+    let sectionBar = UIColor(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
     var userAttractions: [NSManagedObject] = []
     
     //var rideID = 0
@@ -495,29 +496,16 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         else { return 3 }
     }
 
-//    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-//        view.tintColor = UIColor.lightGray
-//        let header = view as! UITableViewHeaderFooterView
-//        header.textLabel?.textColor = UIColor.black
-//        header.alpha = 1.0
-//        switch (section) {
-//        case 0:
-//            header.isHidden = false
-//        case 1:
-//            header.isHidden = false
-//        default:
-//            header.isHidden = false
-//        }
-//    }
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch (section) {
         case 0:
-            return 30
+            return 28
         case 1:
-            if showSeasonal || numSeasonal >= 1 { return 30}
+            if showSeasonal || numSeasonal >= 1 { return 28}
             else {return 0}
         default:
-            if showExtinct || numExtinct >= 1 { return 30}
+            if showExtinct || numExtinct >= 1 { return 28}
             else {return 0}
         }
     }
@@ -535,11 +523,10 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         }
     }
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 30))
-//        headerView.backgroundColor = UIColor.gray
-//        return headerView
-//    }
+
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        (view as! UITableViewHeaderFooterView).backgroundView?.backgroundColor = sectionBar //logoGreen
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         //Configure for iPhone 5 sizes
