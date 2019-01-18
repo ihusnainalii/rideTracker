@@ -30,18 +30,18 @@ class ReportCardViewController: UIViewController {
         
         dayInParkRef.observeSingleEvent(of: .value, with: { snapshot in
             let value = snapshot.value as? NSDictionary
-            //print(value)
-            for i in 0..<(value?.allKeys.count)!{
-                let date = value?.allKeys[i]
-                print(date!)
-                let dateString = date as! String
-                if self.date == 0{
-                    self.date = Int(dateString)!
-                    self.self.reportCardLogic.getTodaysStatsSorted(userID: self.userID, date: self.date)
+            if value != nil{
+                for i in 0..<(value?.allKeys.count)!{
+                    let date = value?.allKeys[i]
+                    print(date!)
+                    let dateString = date as! String
+                    if self.date == 0{
+                        self.date = Int(dateString)!
+                        self.self.reportCardLogic.getTodaysStatsSorted(userID: self.userID, date: self.date)
+                    }
                 }
+                self.updateLabels()
             }
-            
-            self.updateLabels()
         })
         
         
