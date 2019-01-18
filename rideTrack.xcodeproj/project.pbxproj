@@ -57,7 +57,7 @@
 		5FFA2D4821EA3C5500CF3956 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5FFA2D4721EA3C5500CF3956 /* GoogleService-Info.plist */; };
 		5FFA2D4C21EAC63700CF3956 /* ReportCard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FFA2D4B21EAC63700CF3956 /* ReportCard.storyboard */; };
 		5FFA2D5121EAC82000CF3956 /* ReportCardLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA2D5021EAC82000CF3956 /* ReportCardLogic.swift */; };
-		5FFA2D5321EAD4C800CF3956 /* ReportCardData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA2D5221EAD4C800CF3956 /* ReportCardData.swift */; };
+		5FFA2D5321EAD4C800CF3956 /* ReportCardStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA2D5221EAD4C800CF3956 /* ReportCardStats.swift */; };
 		5FFCB7FF21055E400054D84D /* ParksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB7FE21055E400054D84D /* ParksList.swift */; };
 		5FFCB80121055E470054D84D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB80021055E470054D84D /* User.swift */; };
 		5FFCB804210579C80054D84D /* AttractionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFCB803210579C80054D84D /* AttractionList.swift */; };
@@ -176,7 +176,7 @@
 		5FFA2D4721EA3C5500CF3956 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5FFA2D4B21EAC63700CF3956 /* ReportCard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReportCard.storyboard; sourceTree = "<group>"; };
 		5FFA2D5021EAC82000CF3956 /* ReportCardLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCardLogic.swift; sourceTree = "<group>"; };
-		5FFA2D5221EAD4C800CF3956 /* ReportCardData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCardData.swift; sourceTree = "<group>"; };
+		5FFA2D5221EAD4C800CF3956 /* ReportCardStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCardStats.swift; sourceTree = "<group>"; };
 		5FFCB7FE21055E400054D84D /* ParksList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParksList.swift; sourceTree = "<group>"; };
 		5FFCB80021055E470054D84D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5FFCB803210579C80054D84D /* AttractionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionList.swift; sourceTree = "<group>"; };
@@ -288,7 +288,7 @@
 				98AD7F6720A91A5A00540AB3 /* UserAttraction.swift */,
 				5F16C52820BCF3F700E525EF /* ParkListData.swift */,
 				5FF0BBBF20CF652700213DF8 /* ScoreCardModel.swift */,
-				5FFA2D5221EAD4C800CF3956 /* ReportCardData.swift */,
+				5FFA2D5221EAD4C800CF3956 /* ReportCardStats.swift */,
 				5F636B6A213C60AD00D2B922 /* TopLists.swift */,
 			);
 			path = "Data Models";
@@ -781,7 +781,7 @@
 				5F21419620F18087009A2E3A /* SearchMyParksView.swift in Sources */,
 				987CCCB9212E081D00D11825 /* fullScreenPhotoViewController.swift in Sources */,
 				98C000FB2177E2C100B01F58 /* approveSuggPhotoModel.swift in Sources */,
-				5FFA2D5321EAD4C800CF3956 /* ReportCardData.swift in Sources */,
+				5FFA2D5321EAD4C800CF3956 /* ReportCardStats.swift in Sources */,
 				5F16C52920BCF3F700E525EF /* ParkListData.swift in Sources */,
 				98AD7F7720A91A5C00540AB3 /* AppDelegate.swift in Sources */,
 				5FD613DD210A2B90008D4122 /* IgnoreList.swift in Sources */,
