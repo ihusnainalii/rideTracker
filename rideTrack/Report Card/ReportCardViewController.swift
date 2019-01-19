@@ -8,7 +8,9 @@
 import UIKit
 import Firebase
 
-class ReportCardViewController: UIViewController {
+class ReportCardViewController: UIViewController, ReportCardStatsCalculateDelegate {
+    
+    
 
     @IBOutlet weak var dateLabel: UILabel!
     
@@ -24,6 +26,10 @@ class ReportCardViewController: UIViewController {
         calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
         let midnight = calendar.startOfDay(for: Date())
         
+        let reportCardLogic = ReportCardLogic()
+        // print ("There are ", feedItems.count, " attactions in park ", parkID)
+        reportCardLogic.delegate = self
+        
         print(userID!)
         
         let dayInParkRef = Database.database().reference(withPath: "day-in-park/\(userID!)")
@@ -37,16 +43,25 @@ class ReportCardViewController: UIViewController {
                     let dateString = date as! String
                     if self.date == 0{
                         self.date = Int(dateString)!
-                        self.self.reportCardLogic.getTodaysStatsSorted(userID: self.userID, date: self.date)
+                        reportCardLogic.getTodaysStatsSorted(userID: self.userID, date: self.date)
                     }
                 }
-                self.updateLabels()
+                //self.updateLabels()
             }
         })
         
         
     }
 
+    func displayData(stringToDisplay: String) {
+        let dayTimePeriodFormatter = DateFormatter()
+        dayTimePeriodFormatter.dateFormat = "MMMM d, yyyy"
+        dayTimePeriodFormatter.timeZone = NSTimeZone.local
+        
+        let dateString = dayTimePeriodFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(date)))
+        dateLabel.text = "\(dateString)\n"+stringToDisplay
+    }
+    
     func updateLabels(){
 //        let dateFormatter = DateFormatter()
 //        dateFormatter.dateFormat = "MM-dd-yyyy"
@@ -56,12 +71,7 @@ class ReportCardViewController: UIViewController {
 //
         
 
-        let dayTimePeriodFormatter = DateFormatter()
-        dayTimePeriodFormatter.dateFormat = "MMMM d, yyyy"
-        dayTimePeriodFormatter.timeZone = NSTimeZone.local
-        
-        let dateString = dayTimePeriodFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(date)))
-        dateLabel.text = dateString
+       
         //print(date)
     }
     

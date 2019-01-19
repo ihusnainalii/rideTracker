@@ -9,6 +9,10 @@
 import Foundation
 import Firebase
 
+protocol ReportCardStatsCalculateDelegate: class{
+    func displayData(stringToDisplay: String)
+}
+
 class ReportCardLogic {
     
     
@@ -17,6 +21,7 @@ class ReportCardLogic {
     private var statsDownloaded = false
     private var attractionsDownloaded = false
     
+    weak var delegate: ReportCardStatsCalculateDelegate?
     
     func getTodaysStatsSorted(userID: String, date: Int){
         
@@ -89,7 +94,7 @@ class ReportCardLogic {
             }
  */
             
-            reportCardCalculatedStats.totalTrackLength += attraction.length
+            reportCardCalculatedStats.totalTrackLength += Double(Int(attraction.length) * attraction.numberOfTimesRiddenToday)
             reportCardCalculatedStats.numberOfAttractionsExperienced += 1
             reportCardCalculatedStats.uniqueAttractionCount += attraction.numberOfTimesRiddenToday
             reportCardCalculatedStats = sortAttractionIntoRideType(reportCardCalculatedStats: reportCardCalculatedStats, attraction: attraction)
@@ -137,6 +142,10 @@ class ReportCardLogic {
     }
     
     func printTestData(reportCardCalculatedStats: ReportCardStats){
+        let stringToPrint = "Max height: \(reportCardCalculatedStats.maxHeightName!) \(reportCardCalculatedStats.maxHeight!)\n" + "Max Speed: \(reportCardCalculatedStats.maxSpeedName!) \(reportCardCalculatedStats.maxSpeed!)\n" + "Attraction experienced the most: \(reportCardCalculatedStats.attractionExperiencedMostName!) \(reportCardCalculatedStats.attractionExperiencedMostCount!)\n"+"Oldest attraction experienced: \(reportCardCalculatedStats.oldestRideName!) \(reportCardCalculatedStats.oldestRideOpeningYear!)\n"+"Total Track Length: \(reportCardCalculatedStats.totalTrackLength!)\n"+"Total numbers of attractions: \(reportCardCalculatedStats.numberOfAttractionsExperienced!)\n"+"Total unique attraction count: \(reportCardCalculatedStats.uniqueAttractionCount!)\n"+"Attraction experienced Most: \(reportCardCalculatedStats.attractionExperiencedMostName!) \(reportCardCalculatedStats.attractionExperiencedMostCount!)\n"+"Roller Coasters: \(reportCardCalculatedStats.numberOfRollerCoasters!)\n"+"Water rides: \(reportCardCalculatedStats.numberOfWaterRides!)\n"+"Flat ride: \(reportCardCalculatedStats.numberOfFlatRides!)"
+        
+        delegate?.displayData(stringToDisplay: stringToPrint)
+            
         print("Max height: \(reportCardCalculatedStats.maxHeightName!) \(reportCardCalculatedStats.maxHeight!)")
         print("Max Speed: \(reportCardCalculatedStats.maxSpeedName!) \(reportCardCalculatedStats.maxSpeed!)")
         print("Attraction experienced the most: \(reportCardCalculatedStats.attractionExperiencedMostName!) \(reportCardCalculatedStats.attractionExperiencedMostCount!)")
