@@ -18,9 +18,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BfU-B8-Ljr">
-                                <rect key="frame" x="170" y="617" width="34" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BfU-B8-Ljr">
+                                <rect key="frame" x="170.5" y="642" width="34" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="5JE-Es-p55"/>
+                                </constraints>
                                 <state key="normal" title="Back"/>
                                 <connections>
                                     <segue destination="ttM-4f-U27" kind="unwind" unwindAction="unwindToSettingsViewWithSender:" id="mnl-fG-fZa"/>
@@ -33,15 +35,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tgj-8J-sTH">
-                                <rect key="frame" x="16" y="47" width="327" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="tgj-8J-sTH">
+                                <rect key="frame" x="15" y="47" width="345" height="587"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="BfU-B8-Ljr" firstAttribute="centerX" secondItem="AwT-e7-d6M" secondAttribute="centerX" id="Aod-tT-H6q"/>
+                            <constraint firstItem="tgj-8J-sTH" firstAttribute="top" secondItem="BD1-gm-QCo" secondAttribute="top" constant="27" id="Iig-UF-kNb"/>
+                            <constraint firstItem="tgj-8J-sTH" firstAttribute="leading" secondItem="BD1-gm-QCo" secondAttribute="leading" constant="15" id="LoI-kq-eg8"/>
+                            <constraint firstItem="BD1-gm-QCo" firstAttribute="trailing" secondItem="tgj-8J-sTH" secondAttribute="trailing" constant="15" id="P3Y-4r-SMg"/>
+                            <constraint firstItem="BD1-gm-QCo" firstAttribute="bottom" secondItem="BfU-B8-Ljr" secondAttribute="bottom" constant="5" id="bes-Rf-6gH"/>
+                            <constraint firstItem="BfU-B8-Ljr" firstAttribute="top" secondItem="tgj-8J-sTH" secondAttribute="bottom" constant="8" id="sDv-ch-8Kl"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="BD1-gm-QCo"/>
                     </view>
                     <connections>

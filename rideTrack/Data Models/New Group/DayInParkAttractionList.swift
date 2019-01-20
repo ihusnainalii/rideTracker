@@ -51,22 +51,20 @@ struct DayInParkAttractionList {
     }
     
     init?(snapshot: DataSnapshot) {
-        guard
-            let value = snapshot.value as? [String: AnyObject],
-            let rideID = value["rideID"] as? Int,
-            let numberOfTimesRiddenToday = value["numberOfTimesRiddenToday"] as? Int,
-            let rideName = value["rideName"] as? String,
-            let rideType = value["rideType"] as? Int,
-            let yearOpen = value["yearOpen"] as? Int,
-            let numberOfTimesRiddenTotal = value["numberOfTimesRiddenTotal"] as? Int,
-            let manufacturer = value["manufacturer"] as? String,
-            let height = value["height"] as? Double,
-            let speed = value["speed"] as? Double,
-            let length = value["length"] as? Double,
-            let duration = value["duration"] as? Int,
-            let scoreCardScore = value["scoreCardScore"] as? Double else {
-                return nil
-        }
+        
+        let value = snapshot.value as? [String: AnyObject]
+        let rideID = value!["rideID"] as? Int
+        let numberOfTimesRiddenToday = value!["numberOfTimesRiddenToday"] as? Int
+        let rideName = value!["rideName"] as? String
+        let rideType = value!["rideType"] as? Int
+        let yearOpen = value!["yearOpen"] as? Int
+        let numberOfTimesRiddenTotal = value!["numberOfTimesRiddenTotal"] as? Int
+        let manufacturer = value!["manufacturer"] as? String
+        let height = value!["height"] as? Double
+        let speed = value!["speed"] as? Double
+        let length = value!["length"] as? Double
+        let duration = value!["duration"] as? Int
+        let scoreCardScore = value!["scoreCardScore"] as? Double
         
         self.ref = snapshot.ref
         self.key = snapshot.key
@@ -98,7 +96,7 @@ struct DayInParkAttractionList {
             "speed": speed,
             "length": length,
             "duration": duration,
-            "scoreCardScor": scoreCardScore
+            "scoreCardScore": scoreCardScore
         ]
     }
 }

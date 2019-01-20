@@ -1067,7 +1067,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
        
         if checkedIntoPark{
        
-            let newExperienceToday = DayInParkAttractionList(rideID: rideData.rideID, numberOfTimesRiddenToday: 1, rideName: rideData.name, rideType: rideData.rideID, yearOpen: rideData.yearOpen, numberOfTimesRiddenTotal: 1, manufacturer: rideData.manufacturer, height: rideData.height, speed: rideData.speed, length: rideData.length, duration: rideData.duration, scoreCardScore: 0)
+            let newExperienceToday = DayInParkAttractionList(rideID: rideData.rideID, numberOfTimesRiddenToday: 1, rideName: rideData.name, rideType: rideData.rideType, yearOpen: rideData.yearOpen, numberOfTimesRiddenTotal: 1, manufacturer: rideData.manufacturer, height: rideData.height, speed: rideData.speed, length: rideData.length, duration: rideData.duration, scoreCardScore: 0)
             
             let newDayInParkAttractionRef = self.dayInParkRef.child(String(rideData.rideID))
             newDayInParkAttractionRef.setValue(newExperienceToday.toAnyObject())
@@ -1252,7 +1252,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                     let value = snapshot.value as? NSDictionary
                     let numberOfExperiencesToday = value?["numberOfTimesRiddenToday"] as? Int ?? 0
 
-                    let newExperienceToday = DayInParkAttractionList(rideID: rideID, numberOfTimesRiddenToday: numberOfExperiencesToday+1, rideName: rideData.name, rideType: rideData.rideID, yearOpen: rideData.yearOpen, numberOfTimesRiddenTotal: incrementTo, manufacturer: rideData.manufacturer, height: rideData.height, speed: rideData.speed, length: rideData.length, duration: rideData.duration, scoreCardScore: 0)
+                    let newExperienceToday = DayInParkAttractionList(rideID: rideID, numberOfTimesRiddenToday: numberOfExperiencesToday+1, rideName: rideData.name, rideType: rideData.rideType, yearOpen: rideData.yearOpen, numberOfTimesRiddenTotal: incrementTo, manufacturer: rideData.manufacturer, height: rideData.height, speed: rideData.speed, length: rideData.length, duration: rideData.duration, scoreCardScore: 0)
 
                     let newDayInParkAttractionRef = self.dayInParkRef.child(String(rideID))
                     newDayInParkAttractionRef.setValue(newExperienceToday.toAnyObject())
