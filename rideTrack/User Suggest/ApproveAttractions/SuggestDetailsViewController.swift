@@ -238,7 +238,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
 
         let newApprovalRef = self.approvedAttractions.child(selectedAttraction.userID)
         newApprovalRef.setValue(newSuggestedAttraction.toAnyObject())
-  /*
+  
         let rideName = nameTextField.text
         let parkID = selectedAttraction.parkID!
         let yearOpen = openTextField.text!
@@ -263,14 +263,14 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         let changes = "NEW RIDE: \(rideName!) at \(parkNameLabel.text!) opened in \(yearOpen) and is type \(rideType)"
         let (urlPath3) = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadToDatabaseLog.php? username=\(selectedAttraction.userName!)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
        print (urlPath)
- */        let dataModel = DataModel()
+         let dataModel = DataModel()
         dataModel.delegate = self
 
         let urlPath2 = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=UserSuggest&key=id&tempID=\(self.selectedAttraction.id!)" //deletes from suggested list
 
-//        dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+        dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         dataModel.downloadData(urlPath: urlPath2, dataBase: "upload", returnPath: "upload")
-//        dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
+        dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
         self.performSegue(withIdentifier: "toApproveSuggestions", sender: self)
     }
     
