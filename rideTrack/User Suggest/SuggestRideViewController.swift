@@ -22,6 +22,8 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     var seconds = 0
     var minutes = 0
     var userName = ""
+    var userIDNum = ""
+    var token = ""
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var typeDiscription: UITextView!
     
@@ -62,6 +64,17 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let userID = Auth.auth().currentUser
+        userIDNum = (userID?.uid)!
+        InstanceID.instanceID().instanceID { (result, error) in
+            if let error = error {
+                print("Error fetching remote instance ID: \(error)")
+            } else if let result = result {
+                print("Remote instance ID token: \(result.token)")
+                self.token = result.token
+            }
+        }
+        
         scoreCardSwitch.isOn = false
         seasonalSwitch.isOn = false
         parkNameLabel.text = parkName
@@ -281,7 +294,7 @@ class SuggestRideViewController: UIViewController, DataModelProtocol, UITextFiel
                 let tempName = ride!.replacingOccurrences(of: "&", with: "!A?")
                 let tempMan = manufacturer!.replacingOccurrences(of: "&", with: "!A?")
                 
-                let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/usersuggestservice.php?parknum=\(parknum)&ride=\(tempName)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&seasonal=\(seasonal)&rideID=\(0)&manufacturer=\(tempMan)&notes=\(notes)&modify=0&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&email=\(self.userName)"
+                let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/usersuggestservice.php?parknum=\(parknum)&ride=\(tempName)&open=\(open!)&close=\(close!)&type=\(type)&park=\(park)&active=\(Active)&seasonal=\(seasonal)&rideID=\(0)&manufacturer=\(tempMan)&notes=\(notes)&modify=0&scoreCard=\(scoreCard)&formerNames=\(self.formerNameField.text!)&model=\(self.modelField.text!)&height=\(self.heightField.text!)&maxSpeed=\(self.speedField.text!)&length=\(self.lengthField.text!)&duration=\(self.durationInSeconds)&email=\(self.userName)&token=\(self.token)&userID=\(self.userIDNum)"
 
                 print (urlPath)
                 Active = 1

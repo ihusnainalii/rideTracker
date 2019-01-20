@@ -157,6 +157,8 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 attraction.userName = jsonElement["userEmail"] as? String
                 attraction.dateAdded = jsonElement["DateTime_Created"] as? String
                 attraction.key = Int(jsonElement["id"] as! String)
+                attraction.userID = jsonElement["userID"] as? String
+                attraction.token = jsonElement["token"] as? String
                 dataBaseData.add(attraction)
                 print ("Ride name is: ", attraction.rideName!)
             }

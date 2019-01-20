@@ -70,6 +70,7 @@
 		9845395720BC8D8C00C0E36C /* AttractionsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */; };
 		987028F420B7897E00DC3B73 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987028F320B7897E00DC3B73 /* SettingsViewController.swift */; };
 		987CCCB9212E081D00D11825 /* fullScreenPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987CCCB8212E081D00D11825 /* fullScreenPhotoViewController.swift */; };
+		9882CAB221F3B100006C2D7A /* ApprovedSuggestionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9882CAB121F3B100006C2D7A /* ApprovedSuggestionsList.swift */; };
 		988A1A372170EA92004CF3A8 /* SelectTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A1A362170EA92004CF3A8 /* SelectTypeViewController.swift */; };
 		988A1A392170EEDB004CF3A8 /* ParkSuggListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A1A382170EEDB004CF3A8 /* ParkSuggListViewController.swift */; };
 		988A1A3B2170F036004CF3A8 /* approveSuggParksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A1A3A2170F036004CF3A8 /* approveSuggParksModel.swift */; };
@@ -189,6 +190,7 @@
 		9845395620BC8D8C00C0E36C /* AttractionsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionsDetailsViewController.swift; sourceTree = "<group>"; };
 		987028F320B7897E00DC3B73 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		987CCCB8212E081D00D11825 /* fullScreenPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fullScreenPhotoViewController.swift; sourceTree = "<group>"; };
+		9882CAB121F3B100006C2D7A /* ApprovedSuggestionsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovedSuggestionsList.swift; sourceTree = "<group>"; };
 		988A1A362170EA92004CF3A8 /* SelectTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTypeViewController.swift; sourceTree = "<group>"; };
 		988A1A382170EEDB004CF3A8 /* ParkSuggListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkSuggListViewController.swift; sourceTree = "<group>"; };
 		988A1A3A2170F036004CF3A8 /* approveSuggParksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = approveSuggParksModel.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 			isa = PBXGroup;
 			children = (
 				5FFCB7FE21055E400054D84D /* ParksList.swift */,
+				9882CAB121F3B100006C2D7A /* ApprovedSuggestionsList.swift */,
 				5FFCB80021055E470054D84D /* User.swift */,
 				5FFCB803210579C80054D84D /* AttractionList.swift */,
 				5FD613DC210A2B90008D4122 /* IgnoreList.swift */,
@@ -829,6 +832,7 @@
 				98AD7F7520A91A5C00540AB3 /* ViewController.swift in Sources */,
 				5FA990212172677E00F76025 /* SelectAttractionTableViewCell.swift in Sources */,
 				982E097820F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift in Sources */,
+				9882CAB221F3B100006C2D7A /* ApprovedSuggestionsList.swift in Sources */,
 				98AD7F7020A91A5C00540AB3 /* ParksModel.swift in Sources */,
 				988A1A392170EEDB004CF3A8 /* ParkSuggListViewController.swift in Sources */,
 				5F636B632139CDAA00D2B922 /* TopListsViewController.swift in Sources */,
