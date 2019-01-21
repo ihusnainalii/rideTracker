@@ -966,7 +966,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wSg-lu-8f7">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="573"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="suggestCell" rowHeight="75" id="QQq-f5-ga5" customClass="SuggestTableViewCell" customModule="rideTrack" customModuleProvider="target">
@@ -1044,12 +1044,26 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tox-vV-lxh">
+                                <rect key="frame" x="124.5" y="637" width="126" height="30"/>
+                                <state key="normal" title="Send Notifications"/>
+                                <connections>
+                                    <action selector="sendNotification:" destination="CXh-SS-6QI" eventType="touchUpInside" id="UyK-QJ-sX4"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="bIo-CD-hVI">
+                                <rect key="frame" x="177.5" y="642" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="wSg-lu-8f7" firstAttribute="bottom" secondItem="vpq-kW-ByT" secondAttribute="bottom" id="UFR-5e-TPf"/>
+                            <constraint firstItem="tox-vV-lxh" firstAttribute="centerX" secondItem="OwS-ia-e0c" secondAttribute="centerX" id="CZ7-D1-BOu"/>
+                            <constraint firstItem="wSg-lu-8f7" firstAttribute="bottom" secondItem="vpq-kW-ByT" secondAttribute="bottom" constant="-30" id="UFR-5e-TPf"/>
+                            <constraint firstItem="bIo-CD-hVI" firstAttribute="top" secondItem="wSg-lu-8f7" secondAttribute="bottom" constant="5" id="V5n-Rq-dvn"/>
                             <constraint firstItem="wSg-lu-8f7" firstAttribute="leading" secondItem="vpq-kW-ByT" secondAttribute="leading" id="a7E-mM-d8I"/>
+                            <constraint firstItem="bIo-CD-hVI" firstAttribute="centerX" secondItem="OwS-ia-e0c" secondAttribute="centerX" id="aR1-53-90O"/>
                             <constraint firstItem="wSg-lu-8f7" firstAttribute="trailing" secondItem="vpq-kW-ByT" secondAttribute="trailing" id="cE2-vZ-qck"/>
+                            <constraint firstItem="tox-vV-lxh" firstAttribute="top" secondItem="wSg-lu-8f7" secondAttribute="bottom" id="cvY-o5-mco"/>
                             <constraint firstItem="wSg-lu-8f7" firstAttribute="top" secondItem="vpq-kW-ByT" secondAttribute="top" id="oc6-Zp-YGC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vpq-kW-ByT"/>
@@ -1057,6 +1071,8 @@
                     <navigationItem key="navigationItem" title="Suggested Attractions" id="b5a-tu-MWo"/>
                     <connections>
                         <outlet property="ApproveAttractionTableView" destination="wSg-lu-8f7" id="PNR-Xk-UaI"/>
+                        <outlet property="activityIndecator" destination="bIo-CD-hVI" id="9mt-u7-rvh"/>
+                        <outlet property="sendNotificationButton" destination="tox-vV-lxh" id="L0F-zw-kAZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="drn-yv-M9h" userLabel="First Responder" sceneMemberID="firstResponder"/>

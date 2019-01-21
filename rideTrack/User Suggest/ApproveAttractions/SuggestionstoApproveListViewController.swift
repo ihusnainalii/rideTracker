@@ -7,18 +7,32 @@
 //
 
 import UIKit
+import Firebase
 
 class SuggestionstoApproveListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataModelProtocol {
     
     //var feedItems: NSArray = NSArray()
     var listOfSuggestions = [ApproveSuggestAttracionModel]()
-    
+    var approvedAttractions: DatabaseReference!
+    var pendingNotification: DatabaseReference!
+
+    @IBOutlet weak var activityIndecator: UIActivityIndicatorView!
     var selectedAttraction: ApproveSuggestAttracionModel = ApproveSuggestAttracionModel()
     
+    @IBOutlet weak var sendNotificationButton: UIButton!
     @IBOutlet weak var ApproveAttractionTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndecator.isHidden = true
+        approvedAttractions = Database.database().reference(withPath:"approvedSuggestions")
+        pendingNotification = Database.database().reference(withPath:"approvedSuggestions/Attractions/Send") ///userName
+
+        approvedAttractions.observe(.value, with: { snapshot in
+            if snapshot.exists(){ self.sendNotificationButton.isEnabled = true }
+            else {self.sendNotificationButton.isEnabled = false}
+        })
+            
         let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/UserSuggestDownloadService.php?listName=UserSuggest"
         let dataModel = DataModel()
         dataModel.delegate = self
@@ -156,6 +170,19 @@ func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRow
         }
         ApproveAttractionTableView.reloadData()
     }
+    @IBAction func sendNotification(_ sender: Any) {
+        activityIndecator.isHidden = false
+        activityIndecator.startAnimating()
+        approvedAttractions.updateChildValues(["Send": "TRUE"])
+        sendNotificationButton.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+            self.approvedAttractions.removeValue()
+            self.activityIndecator.isHidden = true
+            self.sendNotificationButton.isHidden = false
+        }
+        
+    }
+    
     @IBAction func unwindFromcancelButton(sender: UIStoryboardSegue) {
         print ("back from cancel")
     }

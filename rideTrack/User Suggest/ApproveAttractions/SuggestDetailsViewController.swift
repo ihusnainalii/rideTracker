@@ -22,7 +22,9 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     var listOfAttractionsAtPark = [AttractionsModel]()
     let deleteColor = UIColor(red: 206/255.0, green: 59/255.0, blue: 63/255.0, alpha: 1.0)
     var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
+    var id = ""
     var approvedAttractions: DatabaseReference!
+    var checkIfMultipleAttractions: DatabaseReference!
 
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
@@ -59,9 +61,10 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         let dataModel = DataModel()
         dataModel.delegate = self
         dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
-        
+        let userID = Auth.auth().currentUser
+        id = (userID?.uid)!
         approvedAttractions = Database.database().reference(withPath:"approvedSuggestions/Attractions") ///userName
-        approvedAttractions.removeValue()
+        checkIfMultipleAttractions = Database.database().reference(withPath:"approvedSuggestions/Attractions/\(selectedAttraction.userID!)/Name")
 
         self.typeSwitcher.delegate = self
         self.typeSwitcher.dataSource = self
@@ -233,12 +236,23 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     
     @IBAction func submitButton(_ sender: Any) {
         Analytics.logEvent("new_attraction_approved", parameters: nil)
-        //approvedAttractions.updateChildValues(["Token": "test"])
-        let newSuggestedAttraction = ApprovedSuggestiobsList(userToken: selectedAttraction.token!, expName: selectedAttraction.rideName!)
-
-        let newApprovalRef = self.approvedAttractions.child(selectedAttraction.userID)
+        var token = ""
+        var userID = ""
+        if selectedAttraction.token! == "" {token = "none"; userID = "NONE"}
+        else {token = selectedAttraction.token!; userID = selectedAttraction.userID!}
+        var attractionName = selectedAttraction.rideName!
+        
+        checkIfMultipleAttractions.observe(.value, with: { snapshot in
+            if snapshot.exists(){
+                 attractionName = "\(attractionName), \(snapshot.value as! String)"
+                }
+            else {print("approvedSuggestions/Attractions/\(self.id)/Name")}
+            })
+        
+        let newSuggestedAttraction = ApprovedSuggestiobsList(userToken: token, expName: attractionName)
+        let newApprovalRef = self.approvedAttractions.child(userID)
         newApprovalRef.setValue(newSuggestedAttraction.toAnyObject())
-  
+  /*
         let rideName = nameTextField.text
         let parkID = selectedAttraction.parkID!
         let yearOpen = openTextField.text!
@@ -263,14 +277,14 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         let changes = "NEW RIDE: \(rideName!) at \(parkNameLabel.text!) opened in \(yearOpen) and is type \(rideType)"
         let (urlPath3) = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadToDatabaseLog.php? username=\(selectedAttraction.userName!)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
        print (urlPath)
-         let dataModel = DataModel()
+*/         let dataModel = DataModel()
         dataModel.delegate = self
 
         let urlPath2 = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=UserSuggest&key=id&tempID=\(self.selectedAttraction.id!)" //deletes from suggested list
 
-        dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+  //      dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         dataModel.downloadData(urlPath: urlPath2, dataBase: "upload", returnPath: "upload")
-        dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
+    //    dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")
         self.performSegue(withIdentifier: "toApproveSuggestions", sender: self)
     }
     
