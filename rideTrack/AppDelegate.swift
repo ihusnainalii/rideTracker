@@ -18,47 +18,40 @@ import FirebaseMessaging
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
     
     var window: UIWindow?
-    
+    let gcmMessageIDKey = "gcm.message_id"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()        
         Database.database().isPersistenceEnabled = true
+        Messaging.messaging().delegate = self
 
             // For iOS 10 display notification (sent via APNS)
         UNUserNotificationCenter.current().delegate = self
             
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(
-            options: authOptions,
-            completionHandler: {_, _ in })
-       
-        application.registerForRemoteNotifications()
+//        UNUserNotificationCenter.current().requestAuthorization(
+//            options: authOptions,
+//            completionHandler: {_, _ in })
         
-        Messaging.messaging().delegate = self
-
-        return true
-    }
-    
-    func applicationReceivedRemoteMessage(_ remoteMessage: MessagingRemoteMessage) {
-        print(remoteMessage.appData)
-    }
- 
-    
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-        print("Firebase registration token: \(fcmToken)")
-    
-        let dataDict:[String: String] = ["token": fcmToken]
-        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
-        
+        //Solicit permission from the user to receive notifications
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { (_, error) in
+            guard error == nil else{
+                print(error!.localizedDescription)
+                return
+            }
+        }
+        //get application instance ID
         InstanceID.instanceID().instanceID { (result, error) in
             if let error = error {
                 print("Error fetching remote instance ID: \(error)")
             } else if let result = result {
                 print("Remote instance ID token: \(result.token)")
-                //self.instanceIDTokenMessage.text  = "Remote InstanceID token: \(result.token)"
             }
-        }        // Note: This callback is fired at each app startup and whenever a new token is generated.
+        }
+       
+        application.registerForRemoteNotifications()
+        return true
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
@@ -130,6 +123,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+        
+        // Print full message.
+        print(userInfo)
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Unable to register for remote notifications: \(error.localizedDescription)")
+    }
+    
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        print("Firebase registration token: \(fcmToken)")
+        
+        let dataDict:[String: String] = ["token": fcmToken]
+        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
+        // TODO: If necessary send token to application server.
+        // Note: This callback is fired at each app startup and whenever a new token is generated.
+    }
+    
+    func applicationReceivedRemoteMessage(_ remoteMessage: MessagingRemoteMessage) {
+        print(remoteMessage.appData)
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken// as Data
     }
     
 }

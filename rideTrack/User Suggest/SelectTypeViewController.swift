@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import Firebase
 
 class SelectTypeViewController: UIViewController {
+    
+    var approvedAttractions: DatabaseReference!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,6 +20,7 @@ class SelectTypeViewController: UIViewController {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         UINavigationBar.appearance().tintColor = UIColor.blue
+
         // Do any additional setup after loading the view.
     }
     @IBAction func unwindApproveType(sender: UIStoryboardSegue) {

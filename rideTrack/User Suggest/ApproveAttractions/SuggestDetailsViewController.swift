@@ -22,6 +22,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     var listOfAttractionsAtPark = [AttractionsModel]()
     let deleteColor = UIColor(red: 206/255.0, green: 59/255.0, blue: 63/255.0, alpha: 1.0)
     var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
+    var approvedAttractions: DatabaseReference!
 
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
@@ -59,6 +60,9 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         dataModel.delegate = self
         dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
         
+        approvedAttractions = Database.database().reference(withPath:"approvedSuggestions/Attractions") ///userName
+        approvedAttractions.removeValue()
+
         self.typeSwitcher.delegate = self
         self.typeSwitcher.dataSource = self
         nameTextField.delegate = self
@@ -229,6 +233,12 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     
     @IBAction func submitButton(_ sender: Any) {
         Analytics.logEvent("new_attraction_approved", parameters: nil)
+        //approvedAttractions.updateChildValues(["Token": "test"])
+        let newSuggestedAttraction = ApprovedSuggestiobsList(userToken: selectedAttraction.token!, expName: selectedAttraction.rideName!)
+
+        let newApprovalRef = self.approvedAttractions.child(selectedAttraction.userID)
+        newApprovalRef.setValue(newSuggestedAttraction.toAnyObject())
+  
         let rideName = nameTextField.text
         let parkID = selectedAttraction.parkID!
         let yearOpen = openTextField.text!
@@ -246,17 +256,18 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         
         let tempName = rideName!.replacingOccurrences(of: "&", with: "!A?")
         let tempMan = manufacturer.replacingOccurrences(of: "&", with: "!A?")
-        
+  
         let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadToAttractionDB.php?name=\(tempName)&ParkID=\(parkID)&type=\(rideType)&yearOpen=\(yearOpen)&YearClosed=\(yearClosed)&active=\(active)&seasonal=\(seasonal)&scoreCard=\(scoreCard)&manufacturer=\(tempMan)&formerNames=\(self.formerNameTextField.text!)&model=\(self.modelTextField.text!)&height=\(self.heightTextField.text!)&maxSpeed=\(self.speedTextField.text!)&length=\(self.lengthTextField.text!)&duration=\(self.durrationTextField.text!)&notes=\(selectedAttraction.notes!)&userID=\(selectedAttraction.userName!)" //uploads to main list
         
         
         let changes = "NEW RIDE: \(rideName!) at \(parkNameLabel.text!) opened in \(yearOpen) and is type \(rideType)"
         let (urlPath3) = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadToDatabaseLog.php? username=\(selectedAttraction.userName!)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
-        print (urlPath)
-        let dataModel = DataModel()
+       print (urlPath)
+         let dataModel = DataModel()
         dataModel.delegate = self
-        
+
         let urlPath2 = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=UserSuggest&key=id&tempID=\(self.selectedAttraction.id!)" //deletes from suggested list
+
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         dataModel.downloadData(urlPath: urlPath2, dataBase: "upload", returnPath: "upload")
         dataModel.downloadData(urlPath: urlPath3, dataBase: "upload", returnPath: "upload")

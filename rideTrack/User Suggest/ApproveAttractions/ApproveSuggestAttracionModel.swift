@@ -31,6 +31,8 @@ class ApproveSuggestAttracionModel: NSObject {
     var length: Double!
     var duration: Int!
     var userName: String!
+    var userID: String!
+    var token: String!
     var dateAdded: String!
     var key: Int!
 
@@ -38,7 +40,7 @@ override init() {
     
 }
 
-    init(parkID: Int, rideName: String, rideID: Int, YearOpen: Int, YearClose: Int, type: Int, parkName: String, active: Int, seasonal: Int, manufacturer: String, id: Int, notes: String, modify: Int, scoreCard: Int, formerNames: String, model: String, height: Double, speed: Double, length: Double, duration: Int, userEmail: String, dateAdded: String, key: Int) {
+    init(parkID: Int, rideName: String, rideID: Int, YearOpen: Int, YearClose: Int, type: Int, parkName: String, active: Int, seasonal: Int, manufacturer: String, id: Int, notes: String, modify: Int, scoreCard: Int, formerNames: String, model: String, height: Double, speed: Double, length: Double, duration: Int, userEmail: String, userID: String, token: String, dateAdded: String, key: Int) {
     
     self.parkID = parkID
     self.rideName = rideName
@@ -60,6 +62,8 @@ override init() {
     self.length = length
     self.duration = duration
     self.userName = userEmail
+    self.userID = userID
+    self.token = token
     self.dateAdded = dateAdded
     self.seasonal = seasonal
     self.key = key
