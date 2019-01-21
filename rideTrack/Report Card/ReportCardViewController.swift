@@ -9,82 +9,78 @@ import UIKit
 import Firebase
 
 class ReportCardViewController: UIViewController, ReportCardStatsCalculateDelegate {
-    
-    
 
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var tableview: UITableView!
     
     var userID: String!
-    var reportCardLogic = ReportCardLogic()
     var date = 0
+    var arrayOfStats = [Stat]()
+    var dayInParkRef: DatabaseReference!
+    
+    var handle: UInt!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //reportCardLogic.getTodaysStatsSorted(userID: userID)
-        
-        var calendar = NSCalendar.current
-        calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
-        let midnight = calendar.startOfDay(for: Date())
-        
+        dayInParkRef = Database.database().reference(withPath: "day-in-park/\(userID!)")
+        tableview.dataSource = self
+        tableview.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         let reportCardLogic = ReportCardLogic()
-        // print ("There are ", feedItems.count, " attactions in park ", parkID)
         reportCardLogic.delegate = self
-        
-        print(userID!)
-        
-        let dayInParkRef = Database.database().reference(withPath: "day-in-park/\(userID!)")
-        
-        dayInParkRef.observeSingleEvent(of: .value, with: { snapshot in
+
+        dayInParkRef.observe(.value, with: { snapshot in
             let value = snapshot.value as? NSDictionary
+            var dateArray = [Int]()
+            var date = Any?("")
             if value != nil{
                 for i in 0..<(value?.allKeys.count)!{
-                    let date = value?.allKeys[i]
-                    print(date!)
-                    let dateString = date as! String
-                    if self.date == 0{
-                        self.date = Int(dateString)!
-                        reportCardLogic.getTodaysStatsSorted(userID: self.userID, date: self.date)
-                    }
+                    date = value?.allKeys[i]
+                    dateArray.append(Int(date as! String)!)
                 }
-                //self.updateLabels()
+                if dateArray.count != 0{
+                    dateArray.sort()
+                    self.date = dateArray[dateArray.count-1]
+                    reportCardLogic.getTodaysStatsSorted(userID: self.userID, date: self.date)
+                }
             }
         })
-        
-        
     }
 
-    func displayData(stringToDisplay: String) {
+    func displayData(statsArray: [Stat]) {
+        print("DISPLAY DATA")
         let dayTimePeriodFormatter = DateFormatter()
         dayTimePeriodFormatter.dateFormat = "MMMM d, yyyy"
         dayTimePeriodFormatter.timeZone = NSTimeZone.local
         
         let dateString = dayTimePeriodFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(date)))
-        dateLabel.text = "\(dateString)\n"+stringToDisplay
+        dateLabel.text = "\(dateString)"
+        arrayOfStats = statsArray
+        tableview.reloadData()
     }
     
-    func updateLabels(){
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "MM-dd-yyyy"
-//        dateFormatter.timeZone = NSTimeZone(name: "UTC") as! TimeZone
-//        //let date: NSDate? = dateFormatter.date(from: "2016-02-29 12:24:26") as! NSDate
-//        let dateToFormat = Date.init(timeIntervalSince1970: TimeInterval(date))
-//
-        
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        dayInParkRef.removeObserver(withHandle: handle)
+    }
+ 
+}
 
-       
-        //print(date)
+extension ReportCardViewController: UITableViewDataSource, UITableViewDelegate{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return arrayOfStats.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reportCardCell", for: indexPath) as! ReportCardTableViewCell
+        cell.statLabel.text = String(arrayOfStats[indexPath.row].stat)
+        cell.rideNameLabel.text = arrayOfStats[indexPath.row].rideName
+        cell.categoryLabel.text = arrayOfStats[indexPath.row].category
+        return cell
     }
     
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

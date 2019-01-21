@@ -1256,7 +1256,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
 
                     let newDayInParkAttractionRef = self.dayInParkRef.child(String(rideID))
                     newDayInParkAttractionRef.setValue(newExperienceToday.toAnyObject())
-    
                 }) { (error) in
                     print(error.localizedDescription)
                 }

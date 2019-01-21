@@ -155,29 +155,6 @@ class StatsViewController: UIViewController, DataModelProtocol {
          parksAttractionList.sort { $0.rideID < $1.rideID }
         attractionListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(returnPath)")
 
-       
-//        attractionListRef.observeSingleEvent(of: .value, with: { snapshot in
-//            var newAttractions: [AttractionList] = []
-//            for child in snapshot.children {
-//                if let snapshot = child as? DataSnapshot,
-//                    let attractionItem = AttractionList(snapshot: snapshot) {
-//                   //print("ADDING NEW ATTRACTION \(attractionItem.rideID!)")
-//                    self.firstTime += 1
-//                    newAttractions.append(attractionItem)
-//                }
-//            }
-//
-//            self.usersAttractionsSorted += newAttractions
-//
-//            if newAttractions.count != 0{
-//                self.calculateParksStats(parksAttractionList: parksAttractionList, userAttractionList: newAttractions)
-//            } else{
-//                self.numberOfParksAnalized += 1
-//            }
-//
-//        })
-        
-
         attractionListRef.observe(.value, with: { snapshot in
             var newAttractions: [AttractionList] = []
             for child in snapshot.children {

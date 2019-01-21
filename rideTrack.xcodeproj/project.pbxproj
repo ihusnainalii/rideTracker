@@ -44,6 +44,8 @@
 		5FA990212172677E00F76025 /* SelectAttractionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA990202172677E00F76025 /* SelectAttractionTableViewCell.swift */; };
 		5FD613DD210A2B90008D4122 /* IgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DC210A2B90008D4122 /* IgnoreList.swift */; };
 		5FD613DF210A356F008D4122 /* ScoreCardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DE210A356F008D4122 /* ScoreCardList.swift */; };
+		5FDD507F21F52A410031590E /* Stat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDD507E21F52A410031590E /* Stat.swift */; };
+		5FDD508121F54D220031590E /* ReportCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDD508021F54D220031590E /* ReportCardTableViewCell.swift */; };
 		5FE9F81020DB45030012B98C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FE9F80F20DB45030012B98C /* Media.xcassets */; };
 		5FE9F81320DCA43C0012B98C /* ParksCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE9F81220DCA43C0012B98C /* ParksCoreData.swift */; };
 		5FE9F81520DDCEF20012B98C /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE9F81420DDCEF20012B98C /* FavoritesTableViewCell.swift */; };
@@ -163,6 +165,8 @@
 		5FA990202172677E00F76025 /* SelectAttractionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAttractionTableViewCell.swift; sourceTree = "<group>"; };
 		5FD613DC210A2B90008D4122 /* IgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreList.swift; sourceTree = "<group>"; };
 		5FD613DE210A356F008D4122 /* ScoreCardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardList.swift; sourceTree = "<group>"; };
+		5FDD507E21F52A410031590E /* Stat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stat.swift; sourceTree = "<group>"; };
+		5FDD508021F54D220031590E /* ReportCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCardTableViewCell.swift; sourceTree = "<group>"; };
 		5FE9F80F20DB45030012B98C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		5FE9F81220DCA43C0012B98C /* ParksCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksCoreData.swift; sourceTree = "<group>"; };
 		5FE9F81420DDCEF20012B98C /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
@@ -288,7 +292,6 @@
 				98AD7F6720A91A5A00540AB3 /* UserAttraction.swift */,
 				5F16C52820BCF3F700E525EF /* ParkListData.swift */,
 				5FF0BBBF20CF652700213DF8 /* ScoreCardModel.swift */,
-				5FFA2D5221EAD4C800CF3956 /* ReportCardStats.swift */,
 				5F636B6A213C60AD00D2B922 /* TopLists.swift */,
 			);
 			path = "Data Models";
@@ -365,6 +368,9 @@
 				98F80E2E21EEB76200E77769 /* ReportCardViewController.swift */,
 				5FFA2D5021EAC82000CF3956 /* ReportCardLogic.swift */,
 				5FFA2D4B21EAC63700CF3956 /* ReportCard.storyboard */,
+				5FFA2D5221EAD4C800CF3956 /* ReportCardStats.swift */,
+				5FDD507E21F52A410031590E /* Stat.swift */,
+				5FDD508021F54D220031590E /* ReportCardTableViewCell.swift */,
 			);
 			path = "Report Card";
 			sourceTree = "<group>";
@@ -811,6 +817,7 @@
 				98C000FD2177F10100B01F58 /* photoSuggListViewController.swift in Sources */,
 				5FF0BBBE20CF639100213DF8 /* ScoreCardTableViewCell.swift in Sources */,
 				5F6B9A8421E534DD00EAA478 /* DayInParkAttractionList.swift in Sources */,
+				5FDD508121F54D220031590E /* ReportCardTableViewCell.swift in Sources */,
 				5F202C5D20EB257700FFE408 /* ParkSettingsViewController.swift in Sources */,
 				98F80E2F21EEB76200E77769 /* ReportCardViewController.swift in Sources */,
 				982C41392179570C00B5C8A7 /* FullScreenViewController.swift in Sources */,
@@ -850,6 +857,7 @@
 				5F16C52520BCE89200E525EF /* SearchTableViewCell.swift in Sources */,
 				5F24DA0A2130A92800C2D2CC /* MapViewController.swift in Sources */,
 				98C28A9D20EBD90900C7229E /* ApproveSuggestAttracionModel.swift in Sources */,
+				5FDD507F21F52A410031590E /* Stat.swift in Sources */,
 				5F6B9A8221E514F100EAA478 /* DayInPark.swift in Sources */,
 				5FFCB7FF21055E400054D84D /* ParksList.swift in Sources */,
 			);

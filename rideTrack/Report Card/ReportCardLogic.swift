@@ -10,26 +10,29 @@ import Foundation
 import Firebase
 
 protocol ReportCardStatsCalculateDelegate: class{
-    func displayData(stringToDisplay: String)
+    func displayData(statsArray: [Stat])
 }
 
 class ReportCardLogic {
-    
     
     private var attractionList: [DayInParkAttractionList]!
     private var dayInParkStats: DayInPark!
     private var statsDownloaded = false
     private var attractionsDownloaded = false
     
+    var handleAttractions: UInt!
+    var handleStats: UInt!
+    
+    var dayInParkStatsRef: DatabaseReference!
+    var dayInParkAttractionsRef: DatabaseReference!
+    
     weak var delegate: ReportCardStatsCalculateDelegate?
     
     func getTodaysStatsSorted(userID: String, date: Int){
+        dayInParkStatsRef = Database.database().reference(withPath: "day-in-park/\(userID)/\(String(date))")
+        dayInParkAttractionsRef = Database.database().reference(withPath: "day-in-park/\(userID)/\(String(date))/todays-attractions")
         
-        let dayInParkStatsRef = Database.database().reference(withPath: "day-in-park/\(userID)/\(String(date))")
-        let dayInParkAttractionsRef = Database.database().reference(withPath: "day-in-park/\(userID)/\(String(date))/todays-attractions")
-        
-        
-        dayInParkStatsRef.observeSingleEvent(of: .value, with: { snapshot in
+        handleStats = dayInParkStatsRef.observe(.value, with: { snapshot in
             var dayInParkStatsArray: [DayInPark] = []
             for child in snapshot.children {
                 if let snapshot = child as? DataSnapshot,
@@ -47,7 +50,7 @@ class ReportCardLogic {
             }
         })
  
-        dayInParkAttractionsRef.observeSingleEvent(of: .value, with: { snapshot in
+        handleAttractions = dayInParkAttractionsRef.observe(.value, with: { snapshot in
             var dayInParkAttractionList: [DayInParkAttractionList] = []
             for child in snapshot.children {
                 if let snapshot = child as? DataSnapshot,
@@ -65,27 +68,23 @@ class ReportCardLogic {
     }
     
     func calculateStats(){
-        var reportCardCalculatedStats = ReportCardStats()
+        var calculatedStats = ReportCardStats()
         for attraction in attractionList{
-            if attraction.height > reportCardCalculatedStats.maxHeight{
-                reportCardCalculatedStats.maxHeight = attraction.height!
-                reportCardCalculatedStats.maxHeightName = attraction.rideName!
+            if Int(attraction.height) > calculatedStats.maxHeight.stat{
+                calculatedStats.maxHeight.setStat(stat: Int(attraction.height!), rideName: attraction.rideName!)
             }
-            if attraction.speed > reportCardCalculatedStats.maxSpeed{
-                reportCardCalculatedStats.maxSpeed = attraction.speed
-                reportCardCalculatedStats.maxSpeedName = attraction.rideName
+            if Int(attraction.speed) > calculatedStats.maxSpeed.stat{
+                calculatedStats.maxSpeed.setStat(stat: Int(attraction.speed!), rideName: attraction.rideName!)
             }
-            if attraction.numberOfTimesRiddenToday > reportCardCalculatedStats.attractionExperiencedMostCount{
-                reportCardCalculatedStats.attractionExperiencedMostCount = attraction.numberOfTimesRiddenToday
-                reportCardCalculatedStats.attractionExperiencedMostName = attraction.rideName
+            if attraction.numberOfTimesRiddenToday > calculatedStats.attractionExperiencedMost.stat{
+                calculatedStats.attractionExperiencedMost.setStat(stat: attraction.numberOfTimesRiddenToday, rideName: attraction.rideName)
             }
-            if attraction.yearOpen < reportCardCalculatedStats.oldestRideOpeningYear{
-                reportCardCalculatedStats.oldestRideOpeningYear = attraction.yearOpen
-                reportCardCalculatedStats.oldestRideName = attraction.rideName
+            if attraction.yearOpen < calculatedStats.oldestRide.stat{
+                calculatedStats.oldestRide.setStat(stat: attraction.yearOpen, rideName: attraction.rideName)
             }
             
             if attraction.numberOfTimesRiddenTotal == 1{
-                reportCardCalculatedStats.firstTimeExperiences.append(attraction.rideName)
+                calculatedStats.firstTimeExperiences.append(attraction.rideName)
             }
             /*
             if Int(attraction.scoreCardScore) > reportCardCalculatedStats.scoreCardHighest{
@@ -93,79 +92,59 @@ class ReportCardLogic {
                 reportCardCalculatedStats.scoreCardName = attraction.rideName
             }
  */
-            
-            reportCardCalculatedStats.totalTrackLength += Double(Int(attraction.length) * attraction.numberOfTimesRiddenToday)
-            reportCardCalculatedStats.numberOfAttractionsExperienced += 1
-            reportCardCalculatedStats.uniqueAttractionCount += attraction.numberOfTimesRiddenToday
-            reportCardCalculatedStats = sortAttractionIntoRideType(reportCardCalculatedStats: reportCardCalculatedStats, attraction: attraction)
+            calculatedStats.numberOfVisitsToThePark.stat = dayInParkStats.numberOfVisitsToThePark
+            calculatedStats.totalTrackLength.stat += Int(Int(attraction.length) * attraction.numberOfTimesRiddenToday)
+            calculatedStats.uniqueAttractionCount.stat += 1
+            calculatedStats.numberOfAttractionsExperienced.stat += attraction.numberOfTimesRiddenToday
+            calculatedStats = sortAttractionIntoRideType(reportCardCalculatedStats: calculatedStats, attraction: attraction)
         }
 
-        printTestData(reportCardCalculatedStats: reportCardCalculatedStats)
+        let arrayOfStats = calculatedStats.createArrayOfStat()
+        /*
+        for stat in arrayOfStats{
+            print("Score: \(stat.calculatedScore!)   Stat Name: \(stat.category!) \(stat.rideName!) \(stat.stat!)")
+        } */
+        print("display data")
+        dayInParkStatsRef.removeObserver(withHandle: handleStats)
+        dayInParkAttractionsRef.removeObserver(withHandle: handleAttractions)
+        delegate?.displayData(statsArray: arrayOfStats)
+
     }
     
     func sortAttractionIntoRideType(reportCardCalculatedStats: ReportCardStats, attraction: DayInParkAttractionList) -> ReportCardStats{
-        print(attraction.rideType!)
         switch attraction.rideType! {
         case -1:
             print("Unknown ride type")
         case 1:
-            print("New coaster")
-            reportCardCalculatedStats.numberOfRollerCoasters += 1
+            reportCardCalculatedStats.numberOfRollerCoasters.stat += 1
         case 2:
-            reportCardCalculatedStats.numberOfWaterRides += 1
+            reportCardCalculatedStats.numberOfWaterRides.stat += 1
         case 3:
-            reportCardCalculatedStats.numberOfChildrensRides += 1
+            reportCardCalculatedStats.numberOfChildrensRides.stat += 1
         case 4:
-            reportCardCalculatedStats.numberOfFlatRides += 1
+            reportCardCalculatedStats.numberOfFlatRides.stat += 1
         case 5:
-            reportCardCalculatedStats.numberOfTransportRides += 1
+            reportCardCalculatedStats.numberOfTransportRides.stat += 1
         case 6:
-            reportCardCalculatedStats.numberOfDarkRides += 1
+            reportCardCalculatedStats.numberOfDarkRides.stat += 1
         case 7:
-            reportCardCalculatedStats.numberOfExploreRides += 1
+            reportCardCalculatedStats.numberOfExploreRides.stat += 1
         case 8:
-            reportCardCalculatedStats.numberOfSpectaculars += 1
+            reportCardCalculatedStats.numberOfSpectaculars.stat += 1
         case 9:
-            reportCardCalculatedStats.numberOfShows += 1
+            reportCardCalculatedStats.numberOfShows.stat += 1
         case 10:
-            reportCardCalculatedStats.numberOfFilms += 1
+            reportCardCalculatedStats.numberOfFilms.stat += 1
         case 11:
-            reportCardCalculatedStats.numberOfParades += 1
+            reportCardCalculatedStats.numberOfParades.stat += 1
         case 12:
-            reportCardCalculatedStats.numberOfPlayAreas += 1
+            reportCardCalculatedStats.numberOfPlayAreas.stat += 1
         case 13:
-            reportCardCalculatedStats.numberOfUpcharges += 1
+            reportCardCalculatedStats.numberOfUpcharges.stat += 1
         default:
             print("Unknown stats")
         }
         return reportCardCalculatedStats
-    }
-    
-    func printTestData(reportCardCalculatedStats: ReportCardStats){
-        let stringToPrint = "Max height: \(reportCardCalculatedStats.maxHeightName!) \(reportCardCalculatedStats.maxHeight!)\n" + "Max Speed: \(reportCardCalculatedStats.maxSpeedName!) \(reportCardCalculatedStats.maxSpeed!)\n" + "Attraction experienced the most: \(reportCardCalculatedStats.attractionExperiencedMostName!) \(reportCardCalculatedStats.attractionExperiencedMostCount!)\n"+"Oldest attraction experienced: \(reportCardCalculatedStats.oldestRideName!) \(reportCardCalculatedStats.oldestRideOpeningYear!)\n"+"Total Track Length: \(reportCardCalculatedStats.totalTrackLength!)\n"+"Total numbers of attractions: \(reportCardCalculatedStats.numberOfAttractionsExperienced!)\n"+"Total unique attraction count: \(reportCardCalculatedStats.uniqueAttractionCount!)\n"+"Attraction experienced Most: \(reportCardCalculatedStats.attractionExperiencedMostName!) \(reportCardCalculatedStats.attractionExperiencedMostCount!)\n"+"Roller Coasters: \(reportCardCalculatedStats.numberOfRollerCoasters!)\n"+"Water rides: \(reportCardCalculatedStats.numberOfWaterRides!)\n"+"Flat ride: \(reportCardCalculatedStats.numberOfFlatRides!)"
-        
-        delegate?.displayData(stringToDisplay: stringToPrint)
-            
-        print("Max height: \(reportCardCalculatedStats.maxHeightName!) \(reportCardCalculatedStats.maxHeight!)")
-        print("Max Speed: \(reportCardCalculatedStats.maxSpeedName!) \(reportCardCalculatedStats.maxSpeed!)")
-        print("Attraction experienced the most: \(reportCardCalculatedStats.attractionExperiencedMostName!) \(reportCardCalculatedStats.attractionExperiencedMostCount!)")
-        print("Oldest attraction experienced: \(reportCardCalculatedStats.oldestRideName!) \(reportCardCalculatedStats.oldestRideOpeningYear!)")
-        print("Total Track Length: \(reportCardCalculatedStats.totalTrackLength!)")
-        print("Total numbers of attractions: \(reportCardCalculatedStats.numberOfAttractionsExperienced!)")
-        print("Total unique attraction count: \(reportCardCalculatedStats.uniqueAttractionCount!)")
-        print("Attraction experienced Most: \(reportCardCalculatedStats.attractionExperiencedMostName!) \(reportCardCalculatedStats.attractionExperiencedMostCount!)")
-        print("Roller Coasters: \(reportCardCalculatedStats.numberOfRollerCoasters!)")
-        print("Water rides: \(reportCardCalculatedStats.numberOfWaterRides!)")
-        print("ChildrensRides: \(reportCardCalculatedStats.numberOfChildrensRides!)")
-        print("Flat ride: \(reportCardCalculatedStats.numberOfFlatRides!)")
-        print("Transport ride: \(reportCardCalculatedStats.numberOfTransportRides!)")
-        print("First time experiences: ")
-        for i in 0..<reportCardCalculatedStats.firstTimeExperiences.count{
-            print(reportCardCalculatedStats.firstTimeExperiences[i])
-        }
-
-
-
     }
     
 
