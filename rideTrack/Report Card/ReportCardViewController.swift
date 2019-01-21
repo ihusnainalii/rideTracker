@@ -32,7 +32,7 @@ class ReportCardViewController: UIViewController, ReportCardStatsCalculateDelega
         let reportCardLogic = ReportCardLogic()
         reportCardLogic.delegate = self
 
-        dayInParkRef.observe(.value, with: { snapshot in
+        handle = dayInParkRef.observe(.value, with: { snapshot in
             let value = snapshot.value as? NSDictionary
             var dateArray = [Int]()
             var date = Any?("")
