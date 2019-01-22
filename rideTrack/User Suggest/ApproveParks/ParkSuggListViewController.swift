@@ -48,7 +48,7 @@ class ParkSuggListViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SuggestedParks", for: indexPath) as! suggestParkTableViewCell
         cell.parkNameLabel.text = listOfSuggestions[indexPath.row].name
-        var location = "\(listOfSuggestions[indexPath.row].city!), \(listOfSuggestions[indexPath.row].country!)"
+        let location = "\(listOfSuggestions[indexPath.row].city!), \(listOfSuggestions[indexPath.row].country!)"
         let tempDate = listOfSuggestions[indexPath.row].date
         let justDate = tempDate!.prefix(10)
         cell.locationLabel.text = location

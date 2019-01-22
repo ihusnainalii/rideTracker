@@ -45,9 +45,22 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
     var userName = ""
     var lat = 0.0
     var long = 0.0
+    var userIDNum = ""
+    var token = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        let userID = Auth.auth().currentUser
+        userIDNum = (userID?.uid)!
+        
+        InstanceID.instanceID().instanceID { (result, error) in
+            if let error = error {
+                print("Error fetching remote instance ID: \(error)")
+            } else if let result = result {
+                print("Remote instance ID token: \(result.token)")
+                self.token = result.token
+            }
+        }
+        
         scrollWidth.constant = screenSize.width
         parkTypeData = ["","Theme Park", "Amusement Park","Zoo", "Kiddie Park", "Family Entertainment Center", "Resort & Casino"]
         parkNameField.delegate = self
@@ -93,7 +106,7 @@ class SuggestParkViewController: UIViewController, UITextFieldDelegate, UIPicker
         let alertController = UIAlertController(title: "Suggest Park", message: "Are you sure you want suggest \(parkName)?", preferredStyle: .alert)
         
         let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
-            let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/suggestParkUploadtoApprove.php?name=\(self.parkName)&type=\(self.type)&city=\(self.cityState)&count=\(self.country)&lat=\(self.lat)&long=\(self.long)&open=\(open)&closed=\(closed)&defunct=\(self.defunct)&prevName=\(self.oldName)&seasonal=\(self.seasonal)&website=\(self.URLtext)&userName=\(self.userName)"
+            let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/suggestParkUploadtoApprove.php?name=\(self.parkName)&type=\(self.type)&city=\(self.cityState)&count=\(self.country)&lat=\(self.lat)&long=\(self.long)&open=\(open)&closed=\(closed)&defunct=\(self.defunct)&prevName=\(self.oldName)&seasonal=\(self.seasonal)&website=\(self.URLtext)&userName=\(self.userName)&userID=\(self.userIDNum)&token=\(self.token)"
             Analytics.logEvent("new_park_suggested", parameters: nil)
             print (urlPath)
             dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
