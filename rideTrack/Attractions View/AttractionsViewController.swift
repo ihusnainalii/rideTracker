@@ -113,6 +113,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     var dayInParkRef: DatabaseReference!
     var dayInParkStatsRef: DatabaseReference!
     
+    var handleAttractionList: UInt!
+    var handleIgnoreList: UInt!
+    
     var checkedIntoPark = false
     
     var user: User!
@@ -178,7 +181,6 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         clearButton.layer.cornerRadius = 7
         
         
-        
         if is3DTouchAvailable{
             popupGenerator = UIImpactFeedbackGenerator(style: .heavy)
             generator = UIImpactFeedbackGenerator(style: .light)
@@ -201,13 +203,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         self.attractionsTableView.delegate = self
         self.attractionsTableView.dataSource = self
-        parkID = parkData.parkID
-        print(parkID)
-        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/attractiondbservice.php?parkid=\(parkID)"
-       print(urlPath)
-        let dataModel = DataModel()
-        // print ("There are ", feedItems.count, " attactions in park ", parkID)
-        dataModel.delegate = self
+        
         
         
         //ignore = ignoreList.array(forKey: "SavedIgnoreListArray")  as? [Int] ?? [Int]()
@@ -263,36 +259,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             }
         })
         print("user name is \(userName)")
-        
-        
-        attractionListRef.observe(.value, with: { snapshot in
-            var newAttractions: [AttractionList] = []
-            for child in snapshot.children {
-                if let snapshot = child as? DataSnapshot,
-                    let attractionItem = AttractionList(snapshot: snapshot) {
-                    newAttractions.append(attractionItem)
-                }
-            }
-            self.userAttractionDatabase = newAttractions
-            if self.firstTimeDownload{
-                
-                dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
-                self.firstTimeDownload = false
-            }
-            //self.attractionsTableView.reloadData()
-        })
-        
-        ignoreListRef.observe(.value, with: { snapshot in
-            var newIgnores: [IgnoreList] = []
-            for child in snapshot.children {
-                if let snapshot = child as? DataSnapshot,
-                    let ignoreItem = IgnoreList(snapshot: snapshot) {
-                    newIgnores.append(ignoreItem)
-                }
-            }
-            print("new ignore at ride ID: \(self.ignore.count)")
-            self.ignore = newIgnores
-        })
+    
         
         if checkedIntoPark{
             //User has checked into this park today.
@@ -319,6 +286,53 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        parkID = parkData.parkID
+        print(parkID)
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/attractiondbservice.php?parkid=\(parkID)"
+        print(urlPath)
+        
+        let dataModel = DataModel()
+        dataModel.delegate = self
+        
+        handleAttractionList = attractionListRef.observe(.value, with: { snapshot in
+            var newAttractions: [AttractionList] = []
+            for child in snapshot.children {
+                if let snapshot = child as? DataSnapshot,
+                    let attractionItem = AttractionList(snapshot: snapshot) {
+                    newAttractions.append(attractionItem)
+                }
+            }
+            self.userAttractionDatabase = newAttractions
+            if self.firstTimeDownload{
+                
+                dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "attractions")
+                self.firstTimeDownload = false
+            }
+            //self.attractionsTableView.reloadData()
+        })
+        
+        handleIgnoreList = ignoreListRef.observe(.value, with: { snapshot in
+            var newIgnores: [IgnoreList] = []
+            for child in snapshot.children {
+                if let snapshot = child as? DataSnapshot,
+                    let ignoreItem = IgnoreList(snapshot: snapshot) {
+                    newIgnores.append(ignoreItem)
+                }
+            }
+            print("new ignore at ride ID: \(self.ignore.count)")
+            self.ignore = newIgnores
+        })
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        attractionListRef.removeObserver(withHandle: handleAttractionList)
+        ignoreListRef.removeObserver(withHandle: handleIgnoreList)
+    }
     
     func itemsDownloaded(items: NSArray, returnPath: String) {
         print("ITEMS DOWNLOAD")
@@ -1596,10 +1610,7 @@ extension AttractionsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-    }
+
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

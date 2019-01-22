@@ -82,18 +82,9 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
         doneButton.layer.cornerRadius = 6
         rideNameLabel.text = selectedRide.name
         
-//        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
-//        edgePan.edges = .left
-        
- //       view.addGestureRecognizer(edgePan)
-        // Do any additional setup after loading the view.
+
     }
-//    @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
-//        if recognizer.state == .recognized {
-//            print("Screen edge swiped!")
-//            self.performSegue(withIdentifier: "backtoDetails", sender: self)
-//        }
-//    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -195,6 +186,7 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
         highScoreDateLabel.text = dateFormatter(date: Date(timeIntervalSince1970: highDate))
         print("High score is right here... \(highScore)")
     }
+    
     func addShadowAndRoundRec(uiView: UIView){
         uiView.layer.cornerRadius = 7
         uiView.layer.shadowOpacity = 0.3
@@ -203,15 +195,5 @@ class ScoreCardViewController: UIViewController, UITableViewDelegate, UITableVie
         uiView.layer.backgroundColor = UIColor.white.cgColor
     }
 
-    
-    /*
-     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
