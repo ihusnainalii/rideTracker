@@ -101,6 +101,7 @@ struct Stats {
         self.paradesExperience = paradesExperience
     }
     
+    
     init?(snapshot: DataSnapshot) {
         guard
             let value = snapshot.value as? [String: AnyObject],

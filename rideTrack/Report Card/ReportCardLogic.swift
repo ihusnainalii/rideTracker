@@ -100,10 +100,7 @@ class ReportCardLogic {
         }
 
         let arrayOfStats = calculatedStats.createArrayOfStat()
-        /*
-        for stat in arrayOfStats{
-            print("Score: \(stat.calculatedScore!)   Stat Name: \(stat.category!) \(stat.rideName!) \(stat.stat!)")
-        } */
+
         print("display data")
         dayInParkStatsRef.removeObserver(withHandle: handleStats)
         dayInParkAttractionsRef.removeObserver(withHandle: handleAttractions)

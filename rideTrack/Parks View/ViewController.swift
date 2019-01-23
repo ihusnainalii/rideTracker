@@ -13,7 +13,7 @@ import CoreLocation
 import Firebase
 
 
-class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, DataModelProtocol, NSFetchedResultsControllerDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate{
+class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProtocol, NSFetchedResultsControllerDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate{
     
     let screenSize = UIScreen.main.bounds
     
@@ -109,6 +109,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var dayInParkRef: DatabaseReference!
     var user: User!
     
+    var handleUserName: UInt!
+    var handleParkList: UInt!
+    var handleStats: UInt!
+    
     
     override func viewDidLoad() {
         configureViewDidLoad()
@@ -121,13 +125,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         favoritesTableView.isUserInteractionEnabled = false
         favoritesTableView.delegate = self
         favoritesTableView.dataSource = self
-        
         allParksTableView.isUserInteractionEnabled = false
         allParksTableView.delegate = self
         allParksTableView.dataSource = self
-        
         searchParksTextField.delegate = self
-        
         settingsButton.isUserInteractionEnabled = false
         
   
@@ -135,11 +136,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-        //NotificationCenter.default.addObserver(self, selector: #selector(appMovedToForeground), name: NSNotification.Name.UIApplication.willEnterForegroundNotification, object: nil)
-
-
-        
-        
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
         self.allParksTableView.contentInset = insets
         
@@ -149,11 +145,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         let userID = Auth.auth().currentUser
         let id = userID?.uid
+        
         self.userNameRef = Database.database().reference(withPath:"users/details/\(id!)/userName") ///userName
         self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)")
         self.dayInParkRef = Database.database().reference(withPath: "day-in-park/\(id!)")
+        self.statsListRef = Database.database().reference(withPath: "stats-list/\(id!)")
+    
         
-        userNameRef.observe(.value, with: { snapshot in
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/parksdbservice.php"
+        let dataModel = DataModel()
+        dataModel.delegate = self
+        dataModel.downloadData(urlPath: urlPath, dataBase: "parks", returnPath: "allParks")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        segueWithTableViewSelect = true
+        super.viewWillAppear(animated)
+        handleUserName = userNameRef.observe(.value, with: { snapshot in
             if snapshot.exists(){ //hasChild("testJustin"){
                 self.userName = (snapshot.value as! String)
                 print("Has username")
@@ -162,8 +170,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 self.userName = ""
             }
         })
-        print("user name is \(userName)")
-        parksListRef.queryOrdered(byChild: "name").observe(.value, with: { snapshot in
+        
+       handleParkList = parksListRef.queryOrdered(byChild: "name").observe(.value, with: { snapshot in
             var newParks: [ParksList] = []
             for child in snapshot.children {
                 if let snapshot = child as? DataSnapshot,
@@ -181,10 +189,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             self.configureAllParksView()
             self.configureFavoritesView()
         })
-        
-        
-        self.statsListRef = Database.database().reference(withPath: "stats-list/\(id!)")
-        
         statsListRef.observeSingleEvent(of: .value, with: { snapshot in
             var newStat: [Stats] = []
             for child in snapshot.children {
@@ -203,30 +207,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 newStatsRef.setValue(newStatsModel.toAnyObject())
             }
         })
-    
-        
-        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/parksdbservice.php"
-        let dataModel = DataModel()
-        dataModel.delegate = self
-        dataModel.downloadData(urlPath: urlPath, dataBase: "parks", returnPath: "allParks")
-        
-        
     }
-    
-    func splitAllParksWithFavoriteList(allParksList: [ParksList]){
-        favoiteParkList = []
-        for i in 0..<allParksList.count{
-            if allParksList[i].favorite{
-                favoiteParkList.append(allParksList[i])
-            }
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        segueWithTableViewSelect = true
-        super.viewWillAppear(animated)
 
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -245,7 +227,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             for i in 0..<arrayOfAllRides.count{
                 if arrayOfAllRides[i].active == 1{
                     totalRideCount += 1
-                    
                 }
             }
             print(totalRideCount, "updating total ride count label...")
@@ -262,10 +243,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                     }
                 }
             }
-            
         }
-            
-            //Gets all the parks from the database, sets up the favoritesList and allMyParksList
+        //Gets all the parks from the database, sets up the favoritesList and allMyParksList
         else{
             arrayOfAllParks = items as! [ParksModel]
             itemsAlreadyDownloaded = true
@@ -280,6 +259,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             MigrateToFireBase().migrate(arrayOfAllParks: arrayOfAllParks)
         }
     }
+    
+    func splitAllParksWithFavoriteList(allParksList: [ParksList]){
+        favoiteParkList = []
+        for i in 0..<allParksList.count{
+            if allParksList[i].favorite{
+                favoiteParkList.append(allParksList[i])
+            }
+        }
+    }
+    
     func configureFavoritesView(){
         if favoritesViewIsVisible{
             var favoritesTableAlpha: CGFloat = 1.0
@@ -326,6 +315,585 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     
+    func addNewParkToList(newPark: ParksModel, newCheckin: Bool) {
+        if checkIfNewPark(newPark: newPark){
+            
+            //Adding defualt user saved data values
+            newPark.favorite = false
+            newPark.totalRides = 0
+            newPark.ridesRidden = 0
+            newPark.incrementorEnabled = false
+            
+            Analytics.logEvent("add_new_park", parameters: ["parkName": newPark.name])
+
+            //Animate in the all parks table veiw when adding the first park
+            if allParksList.count == 0{
+                UIView.animate(withDuration: 0.6, animations: {
+                    self.allParksTableView.alpha = 1.0
+                })
+            }
+            var checkins = 0
+            var dayVisited = 0.0
+            var checkInToday = false
+            if newCheckin{
+                checkins = 1
+                var calendar = NSCalendar.current
+                calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
+                let midnight = calendar.startOfDay(for: Date())
+                dayVisited = midnight.timeIntervalSince1970
+                checkInToday = true
+            }
+            let newParkModel = ParksList(parkID: newPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: newPark.name, location: newPark.city, showDefunct: false, parkDefunct: false, showSeasonal: false, numberOfCheckIns: checkins, lastDayVisited: dayVisited, checkedInToday: checkInToday)
+    
+            let newParkRef = self.parksListRef.child(String(newParkModel.parkID))
+            newParkRef.setValue(newParkModel.toAnyObject())
+        
+            //allParksList.insert(newPark, at: 0)
+            
+            let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
+            self.allParksTableView.contentInset = insets
+            self.allParksTableView.reloadData()
+            //self.parksCoreData.saveNewItemToParkList(parkID: newPark.parkID)
+            
+            //Get total number of rides, need to call database
+            let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/attractiondbservice.php?parkid=\(newPark.parkID!)"
+            let dataModel = DataModel()
+            dataModel.delegate = self
+            dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "countNumberOfRides")
+            print("new park saved: ", newPark.parkID!)
+            allParksList.append(newParkModel)
+        }
+        else{
+            print("Can not add a park twice")
+        }
+    }
+    
+    
+    func removeParkFromList(parkID: Int, indexPath: Int) {
+        //Deletes from both RideTrack and ParkList entities
+        //parksCoreData.deletePark(parkID: parkID)
+        print("Make sure the data from Attractions-List-Model gets deleted again ")
+        //Check if it is in user's favorites list, if so delete it
+        let parkItem = allParksList[indexPath]
+        parkItem.ref?.removeValue()
+        allParksList.remove(at: indexPath)
+        
+        let userID = Auth.auth().currentUser
+        let id = userID?.uid
+        let attractionsListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkID)")
+        attractionsListRef.removeValue()
+        
+        print("Animate delete")
+        
+        favoritesTableView.reloadData()
+        
+        //Animate away favorites view to dissappear if the last park is being removed from the list
+        var allParksViewTableAlpha: CGFloat = 1.0
+        var favoritesTableAlpha: CGFloat = 1.0
+        
+        if favoritesViewIsVisible{
+            if favoiteParkList.count == 0{
+                favoitesHeight = 70
+                favoritesViewHeightConstrant.constant = favoitesHeight
+                favoritesTableAlpha = 0.0
+            }
+        }
+        if allParksIsVisible{
+            if allParksList.count == 0{
+                allParksViewTableAlpha = 0.0
+            }
+        }
+        UIView.animate(withDuration: 0.6, animations: {
+            self.favoritesTableView.alpha = favoritesTableAlpha
+            self.allParksTableView.alpha = allParksViewTableAlpha
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toAttractionsAll" || segue.identifier == "toAttractionsFavorites"{
+            //Re write this to simplify calling RideTrack coreData only here, while going to Attractions view
+            let navVC = segue.destination as? UINavigationController
+            let attractionVC = navVC?.viewControllers.first as! AttractionsViewController
+            
+            print("SEGUE")
+            if segueWithTableViewSelect && segue.identifier == "toAttractionsAll"{
+                let selectedIndex = (allParksTableView.indexPathForSelectedRow?.row)!
+                selectedPark = allParksList[selectedIndex]
+                print ("going to attractions")
+            } else if segueWithTableViewSelect && segue.identifier == "toAttractionsFavorites"{
+                let selectedIndex = (favoritesTableView.indexPathForSelectedRow?.row)!
+                selectedPark = favoiteParkList[selectedIndex]
+            }
+            
+            let arrayOfAllParksIndex = getParkModelINdexFromAllParks(parkID: selectedPark.parkID)
+            
+            if firstCheckin{
+                firstCheckin = false
+                attractionVC.firstCheckin = true
+                attractionVC.numberOfCheckins = numberOfCheckinsToDisplay
+                attractionVC.lastVisit = lastVisit
+                //attractionVC.firstCheckin = firstCheckin
+            }
+            
+            print ("The park is ", selectedPark.name)
+            attractionVC.showExtinct = selectedPark.showDefunct
+            attractionVC.showSeasonal = selectedPark.showSeasonal
+            attractionVC.parksViewController = self
+            attractionVC.segueWithTableViewSelect = segueWithTableViewSelect
+            attractionVC.parkData = arrayOfAllParks[arrayOfAllParksIndex]
+            attractionVC.parkData.totalRides = selectedPark.totalRides
+            attractionVC.parkData.incrementorEnabled = selectedPark.incrementorEnabled
+            attractionVC.checkedIntoPark = checkedIntoPark
+            checkedIntoPark = false
+            
+            //If the name of the park has changed, update the name in Parks-list
+            if arrayOfAllParks[arrayOfAllParksIndex].name != selectedPark.name{
+                let parkItem = allParksList[findIndexInAllParksList(parkID: selectedPark.parkID)]
+                parkItem.ref?.updateChildValues([
+                    "name": arrayOfAllParks[arrayOfAllParksIndex].name
+                    ])
+            }
+            
+
+            UIView.animate(withDuration: 0.2, animations: {
+                self.darkenBackground.alpha =  0.20
+            })
+            if isSearchingMyParks{
+                searchMyParks.animateOutOfParkSearch(parksView: self)
+            }
+            //print("count: ", userAttractions.count)
+        }
+        
+        if segue.identifier == "toSearch"{
+            let searchVC = segue.destination as! ParkSearchViewController
+            searchVC.parkArray = arrayOfAllParks
+            searchVC.parksVC = self
+            searchVC.savedParks = allParksList
+            searchVC.userName = userName
+            UIView.animate(withDuration: 0.2, animations: {
+                self.darkenBackground.alpha =  0.20
+            })
+            
+        }
+        if segue.identifier == "toStats"{
+            let statsVC = segue.destination as! StatsViewController
+            //statsVC.simulateLocation = simulateLocation
+            statsVC.allParksList = allParksList
+            statsVC.arrayOfAllParks = arrayOfAllParks
+        }
+        if segue.identifier == "toSettings"{
+            let settingsVC = segue.destination as! SettingsViewController
+            settingsVC.simulateLocation = simulateLocation
+            settingsVC.userID = user.uid
+        }
+        if segue.identifier == "toLists"{
+            //let allListVC = segue.destination as! AllListsViewController
+            let navVC = segue.destination as? UINavigationController
+            let allListVC = navVC?.viewControllers.first as! AllListsViewController
+            allListVC.allParksList = arrayOfAllParks
+            allListVC.userName = userName
+        }
+    }
+    
+    
+    @IBAction func unwindToParkList(segue:UIStoryboardSegue) {
+        if segue.source is SettingsViewController{
+            print("back from settings")
+            let settingsVC = segue.source as! SettingsViewController
+            simulateLocation = settingsVC.simulateLocation
+            
+            searchRideButtonHeightConstraint.constant = 23
+            currentLocationViewBottomConstraint.constant = -61
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestLocation()
+            print("GETTING GPS DATA")
+        }
+        if segue.source is SuggestParkViewController{
+             self.darkenBackground.alpha =  0
+            print("Back from suggest park")
+        }
+        else if let sourceViewController = segue.source as? ParkSearchViewController, let newPark = sourceViewController.selectedPark{
+            addNewParkToList(newPark: newPark, newCheckin: false)
+            print("unwinding")
+            UIView.animate(withDuration: 0.2, animations: {
+                self.darkenBackground.alpha = 0.0
+            })
+            
+        }
+        else if segue.source is AttractionsViewController{
+            print("DO NOT USE THIS, IT WILL NOT UPDATE THE FRACTIONS. INSTEAD CALL THE UNWIND METHOD")
+        }
+    }
+    
+    func getParkModelINdexFromAllParks(parkID: Int) -> Int{
+        var i = 0
+        var foundID = 0
+        repeat {
+            if arrayOfAllParks[i].parkID == parkID{
+                foundID = i
+                break
+            }
+            i += 1
+        } while i < arrayOfAllParks.count
+        return foundID
+    }
+    
+    func checkIfNewPark(newPark: ParksModel) -> Bool {
+        var isNewPark = true
+        for i in 0..<allParksList.count{
+            if newPark.parkID == allParksList[i].parkID{
+                isNewPark = false
+            }
+        }
+        return isNewPark
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            var latitude = location.coordinate.latitude
+            var longitude = location.coordinate.longitude
+            var oneMileParks = [ParksModel]()
+
+            if simulateLocation == 1{
+                //latitude = 28.4161
+                //longitude = -81.5811
+                latitude = 28.0372
+                longitude = -82.4195
+            }
+            
+            let currentLocation = CLLocation(latitude: latitude, longitude: longitude)
+            for i in 0..<arrayOfAllParks.count{
+                
+                //distance is in meters, so if the distance is less than 1 mile, or 1609 meters, print that
+                if currentLocation.distance(from: arrayOfAllParks[i].getLocation()) < 1609 {
+                    print("User is within one mile of \(arrayOfAllParks[i].name!)")
+                    oneMileParks.append(arrayOfAllParks[i])
+                }
+            }
+            if oneMileParks.count != 0{
+                
+                //There is more than 1 park within a mile of the user. Find the closests park to present to user
+                var closestParkTemp = currentLocation.distance(from: oneMileParks[0].getLocation())
+                closestPark = oneMileParks[0]
+                for i in 0..<oneMileParks.count{
+                    if currentLocation.distance(from: oneMileParks[i].getLocation()) < closestParkTemp{
+                        closestParkTemp = currentLocation.distance(from: oneMileParks[i].getLocation())
+                        closestPark = oneMileParks[i]
+                    }
+                }
+                print("Closest park is \(closestPark.name!)")
+                print(allParksList.count)
+                
+                let allParkIndex = findIndexInAllParksList(parkID: closestPark.parkID)
+                if allParkIndex != -1{
+                    currentLocationPark = allParksList[allParkIndex]
+                    
+                    //Checking if the user has already checked in today
+                    var calendar = NSCalendar.current
+                    calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
+                    let midnight = calendar.startOfDay(for: Date())
+                    
+                    if midnight.timeIntervalSince1970 != currentLocationPark.lastDayVisited{
+                        print("User has not checked into this park today")
+                        currentLocationPark.checkedInToday = false
+                        let parkItem = allParksList[allParkIndex]
+                        parkItem.ref?.updateChildValues([
+                            "checkedInToday": false
+                            ])
+                        //dayInParkRef.removeValue()
+            
+                        
+                    }
+                    if currentLocationPark.checkedInToday{
+                        viewAttractionLocationButton.backgroundColor = settingsColor
+                        viewAttractionLocationButton.setTitle("View Attractions", for: .normal)
+                        viewAttractionLocationButton.setTitleColor(.black, for: .normal)
+                    } else {
+                        viewAttractionLocationButton.backgroundColor = checkInButtonColor
+                        viewAttractionLocationButton.setTitle("Check In", for: .normal)
+                        viewAttractionLocationButton.setTitleColor(.white, for: .normal)
+                    }
+                }
+            
+                self.currentLocationParkNameLabel.text = self.closestPark.name!
+                self.view.layoutIfNeeded()
+                //Begin animating the UI with the new current location park
+                
+                self.searchRideButtonHeightConstraint.constant = 50
+                self.currentLocationViewBottomConstraint.constant = -4
+                //If iPhone X, make the locationView heigher
+                if screenSize.height == 812 || UIScreen.main.bounds.height == 896.0{
+                    self.locationViewHeight.constant = 85
+                }
+                
+                allParksBottomInsetValue = 45
+                let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
+                self.allParksTableView.contentInset = insets
+                UIView.animate(withDuration: 0.6, animations: {
+                    self.view.layoutIfNeeded()
+                })
+            } else{
+                allParksBottomInsetValue = 20
+                let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
+                self.allParksTableView.contentInset = insets
+                //If iPhone X, make the locationView heigher
+                if screenSize.height == 812{
+                    self.locationViewHeight.constant = 59
+                }
+            }
+            
+        }
+    }
+    
+    @IBAction func showCurrentlLocationPark(_ sender: Any) {
+        var calendar = NSCalendar.current
+        calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
+        let midnight = calendar.startOfDay(for: Date())
+        
+        if checkIfNewPark(newPark: closestPark){
+            print("new park")
+            addNewParkToList(newPark: closestPark, newCheckin: true)
+            Analytics.logEvent("check_into_park", parameters: ["parkName": closestPark])
+            
+            let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, numberOfVisitsToThePark: 1, parkName: closestPark.name)
+            let startDayInParkRef = self.dayInParkRef.child(String("\(Int(midnight.timeIntervalSince1970))/todays-stats"))
+            startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
+        } else{
+            print("old")
+        }
+        
+        
+        checkedIntoPark = true
+        segueWithTableViewSelect = false
+        let selectedParkIndex = findIndexInAllParksList(parkID: closestPark.parkID)
+        
+        
+        selectedPark = allParksList[selectedParkIndex]
+        print("SELECTED PARK NAME AND INDEX")
+        print(selectedPark.checkedInToday)
+        print(selectedParkIndex)
+        if !selectedPark.checkedInToday{
+            
+            firstCheckin = true
+            numberOfCheckinsToDisplay = selectedPark.numberOfCheckIns + 1
+            lastVisit = selectedPark.lastDayVisited
+            
+            let parkItem = allParksList[selectedParkIndex]
+            parkItem.ref?.updateChildValues([
+                "lastDayVisited": midnight.timeIntervalSince1970,
+                "checkedInToday": true,
+                "numberOfCheckIns": selectedPark.numberOfCheckIns + 1
+                ])
+            print("Checking in for first time")
+            
+            let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, numberOfVisitsToThePark: selectedPark.numberOfCheckIns+1, parkName: selectedPark.name)
+            let startDayInParkRef = self.dayInParkRef.child(String("\(Int(midnight.timeIntervalSince1970))/todays-stats"))
+            startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
+        }
+        
+        
+        viewAttractionLocationButton.backgroundColor = settingsColor
+        viewAttractionLocationButton.setTitle("View Attractions", for: .normal)
+        viewAttractionLocationButton.setTitleColor(.black, for: .normal)
+        
+        performSegue(withIdentifier: "toAttractionsAll", sender: nil)
+    }
+    
+    
+    @IBAction func didTapSearchMyParks(_ sender: Any) {
+        print("searching my parks")
+        searchMyParks.animateIntoSearchView(parksView: self)
+    }
+    
+    
+    @IBAction func didTapDownSearchParks(_ sender: Any) {
+        print("Done searching my parks")
+        searchMyParks.animateOutOfParkSearch(parksView: self)
+    }
+    
+    @IBAction func didChangeMySearchText(_ sender: Any) {
+        searchMyParks.updateSearchResults(parksView: self)
+    }
+
+    
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Location error: \(error)")
+    }
+    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        
+        if gestureRecognizer.state != UIGestureRecognizer.State.ended {
+            searchRideButtonHeightConstraint.constant = 23
+            currentLocationViewBottomConstraint.constant = -61
+            //If iPhone X, make the locationView heigher
+            if screenSize.height == 812{
+                self.locationViewHeight.constant = 85
+            }
+            
+            allParksBottomInsetValue = 20
+            let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
+            self.allParksTableView.contentInset = insets
+            //If iPhone X, make the locationView heigher
+            if screenSize.height == 812{
+                self.locationViewHeight.constant = 59
+            }
+            UIView.animate(withDuration: 0.6, animations: {
+                self.view.layoutIfNeeded()
+            })
+            return
+        }
+    }
+    
+    func unwindFromAttractions(parkID: Int) {
+        segueWithTableViewSelect = true
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
+        self.allParksTableView.contentInset = insets
+        UIView.animate(withDuration: 0.2, animations: {
+            self.darkenBackground.alpha =  0
+        })
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    
+    @objc func adjustForKeyboard(notification: Notification) {
+        let userInfo = notification.userInfo!
+        
+        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            allParksTableView.contentInset = UIEdgeInsets.zero
+        } else {
+            allParksTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+        }
+        
+        allParksTableView.scrollIndicatorInsets = allParksTableView.contentInset
+    }
+    
+    func configureViewDidLoad(){
+        //If iPhone 5s
+        if screenSize.width == 320.0{
+            ConfigureSmallerLayout().configureParksView(parksView: self)
+        }
+
+        //Initialize current location UI
+        currentLocationView.layer.shadowOffset = CGSize.zero
+        currentLocationView.layer.shadowRadius = 5
+        currentLocationView.layer.shadowOpacity = 0.3
+        currentLocationView.layer.cornerRadius = 10
+        currentLocationViewBottomConstraint.constant = -61
+        
+        let dissmissLocationView = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        dissmissLocationView.minimumPressDuration = 1.0
+        dissmissLocationView.delaysTouchesBegan = true
+        dissmissLocationView.delegate = self
+        self.currentLocationView.addGestureRecognizer(dissmissLocationView)
+        
+        
+        viewAttractionLocationButton.layer.cornerRadius = 7
+        viewAttractionLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
+  
+        doneSearchButton.backgroundColor = settingsColor
+        doneSearchButton.layer.cornerRadius = 5
+        doneSearchButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        doneSearchButton.alpha = 0.0
+  
+        navigationBar.layer.shadowOpacity = 0.5
+        navigationBar.layer.shadowOffset = CGSize.zero
+        navigationBar.layer.shadowRadius = 12
+        
+        favoritesView.layer.cornerRadius = 7
+        favoritesTableView.layer.cornerRadius = 7
+        
+        allParksView.layer.cornerRadius = 7
+        allParksTableView.layer.cornerRadius = 7
+        
+        addParkButton.layer.shadowOpacity = 0.5
+        addParkButton.layer.shadowOffset = CGSize.zero
+        addParkButton.layer.shadowRadius = 12
+        
+        searchParkView.layer.cornerRadius = 7
+        searchMyParksButton.layer.cornerRadius = 7
+        searchMyParksButton.layer.borderWidth = 0.3
+        searchMyParksButton.layer.borderColor = UIColor.gray.cgColor
+        
+        searchParksTextField.alpha = 0.0
+        
+        let gradient = CAGradientLayer()
+        gradient.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
+        let lightGreen = UIColor(red: 63.0/255.0, green: 180.0/255.0, blue: 61.0/255.0, alpha: 1.0).cgColor
+        let darkGreen = UIColor(red: 32.0/255.0, green: 104.0/255.0, blue: 41.0/255.0, alpha: 1.0).cgColor
+        gradient.colors = [lightGreen, darkGreen]
+        gradient.startPoint = CGPoint(x: 1, y: 0)
+        gradient.endPoint = CGPoint(x: 0, y: 1)
+        
+        backgroundView.layer.addSublayer(gradient)
+        
+        darkenBackground=UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height))
+        darkenBackground.backgroundColor = UIColor.black
+        darkenBackground.alpha = 0.0
+        darkenBackground.isUserInteractionEnabled = true
+        self.view.addSubview(darkenBackground)
+        
+    }
+    
+    @IBAction func didTapExpandAllParks(_ sender: Any) {
+        print(allParksIsExpanded)
+        if !allParksIsExpanded{
+            print("Expanding")
+            expandParksView.expandOutAllParks(parksView: self)
+        } else{
+            print("Reseting")
+            expandParksView.resetToDefault(parksView: self)
+        }
+    }
+    
+    @IBAction func didTapExpandFavorites(_ sender: Any) {
+        if !favoritesIsExpanded{
+            print("Expanding")
+            expandParksView.expandFavoritesView(parksView: self)
+        } else{
+            print("reseting")
+            expandParksView.resetToDefault(parksView: self)
+        }
+    }
+    
+    
+    func findIndexInAllParksList(parkID:Int) -> Int{
+        var allParksIndex = -1
+        for i in 0..<allParksList.count{
+            if allParksList[i].parkID == parkID{
+                allParksIndex = i
+                break
+            }
+        }
+        return allParksIndex
+    }
+
+
+    @objc func appMovedToForeground(){
+        if itemsAlreadyDownloaded{
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestLocation()
+            print("Checking location")
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        parksListRef.removeObserver(withHandle: handleParkList)
+        userNameRef.removeObserver(withHandle: handleUserName)
+    }
+
+}
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rowCount = 0
         if tableView == self.favoritesTableView {
@@ -421,7 +989,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 parkItem.ref?.updateChildValues([
                     "favorite": false
                     ])
-        
+                
                 
                 self.favoiteParkList.remove(at: indexPath.row)
                 
@@ -530,14 +1098,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             let index = self.findIndexInAllParksList(parkID: self.favoiteParkList[indexPath.row].parkID)
             self.allParksList[index].favorite = false
             //self.parksCoreData.saveFavoritesChange(modifyedPark: self.allParksList[index], add: false)
-     
+            
             let parkItem = self.allParksList[index]
             parkItem.ref?.updateChildValues([
                 "favorite": false
                 ])
             self.favoiteParkList.remove(at: indexPath.row)
             
-
+            
             
             self.favoitesHeight = 70
             if self.allParksIsVisible{
@@ -578,593 +1146,4 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         
     }
-    
-    
-    func addNewParkToList(newPark: ParksModel, newCheckin: Bool) {
-        if checkIfNewPark(newPark: newPark){
-            
-            //Adding defualt user saved data values
-            newPark.favorite = false
-            newPark.totalRides = 0
-            newPark.ridesRidden = 0
-            newPark.incrementorEnabled = false
-            
-            Analytics.logEvent("add_new_park", parameters: ["parkName": newPark.name])
-
-            
-            //Animate in the all parks table veiw when adding the first park
-            if allParksList.count == 0{
-                UIView.animate(withDuration: 0.6, animations: {
-                    self.allParksTableView.alpha = 1.0
-                })
-            }
-            var checkins = 0
-            var dayVisited = 0.0
-            var checkInToday = false
-            if newCheckin{
-                checkins = 1
-                var calendar = NSCalendar.current
-                calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
-                let midnight = calendar.startOfDay(for: Date())
-                dayVisited = midnight.timeIntervalSince1970
-                checkInToday = true
-            }
-            let newParkModel = ParksList(parkID: newPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: newPark.name, location: newPark.city, showDefunct: false, parkDefunct: false, showSeasonal: false, numberOfCheckIns: checkins, lastDayVisited: dayVisited, checkedInToday: checkInToday)
-    
-            let newParkRef = self.parksListRef.child(String(newParkModel.parkID))
-            newParkRef.setValue(newParkModel.toAnyObject())
-            
-            
-           
-            
-            
-            //allParksList.insert(newPark, at: 0)
-            
-            let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
-            self.allParksTableView.contentInset = insets
-            self.allParksTableView.reloadData()
-            //self.parksCoreData.saveNewItemToParkList(parkID: newPark.parkID)
-            
-            //Get total number of rides, need to call database
-            let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/attractiondbservice.php?parkid=\(newPark.parkID!)"
-            let dataModel = DataModel()
-            dataModel.delegate = self
-            dataModel.downloadData(urlPath: urlPath, dataBase: "attractions", returnPath: "countNumberOfRides")
-            print("new park saved: ", newPark.parkID!)
-            allParksList.append(newParkModel)
-        }
-        else{
-            print("Can not add a park twice")
-        }
-    }
-    
-    
-    func removeParkFromList(parkID: Int, indexPath: Int) {
-        //Deletes from both RideTrack and ParkList entities
-        //parksCoreData.deletePark(parkID: parkID)
-        print("Make sure the data from Attractions-List-Model gets deleted again ")
-        //Check if it is in user's favorites list, if so delete it
-        let parkItem = allParksList[indexPath]
-        parkItem.ref?.removeValue()
-        allParksList.remove(at: indexPath)
-        
-        let userID = Auth.auth().currentUser
-        let id = userID?.uid
-        let attractionsListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkID)")
-        attractionsListRef.removeValue()
-        
-        print("Animate delete")
-        
-        favoritesTableView.reloadData()
-        
-        //Animate away favorites view to dissappear if the last park is being removed from the list
-        var allParksViewTableAlpha: CGFloat = 1.0
-        var favoritesTableAlpha: CGFloat = 1.0
-        
-        if favoritesViewIsVisible{
-            if favoiteParkList.count == 0{
-                favoitesHeight = 70
-                favoritesViewHeightConstrant.constant = favoitesHeight
-                favoritesTableAlpha = 0.0
-            }
-        }
-        if allParksIsVisible{
-            if allParksList.count == 0{
-                allParksViewTableAlpha = 0.0
-            }
-        }
-        UIView.animate(withDuration: 0.6, animations: {
-            self.favoritesTableView.alpha = favoritesTableAlpha
-            self.allParksTableView.alpha = allParksViewTableAlpha
-            self.view.layoutIfNeeded()
-        })
-        
-    }
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toAttractionsAll" || segue.identifier == "toAttractionsFavorites"{
-            //Re write this to simplify calling RideTrack coreData only here, while going to Attractions view
-            let navVC = segue.destination as? UINavigationController
-            let attractionVC = navVC?.viewControllers.first as! AttractionsViewController
-            
-            print("SEGUE")
-            if segueWithTableViewSelect && segue.identifier == "toAttractionsAll"{
-                let selectedIndex = (allParksTableView.indexPathForSelectedRow?.row)!
-                selectedPark = allParksList[selectedIndex]
-                print ("going to attractions")
-            } else if segueWithTableViewSelect && segue.identifier == "toAttractionsFavorites"{
-                let selectedIndex = (favoritesTableView.indexPathForSelectedRow?.row)!
-                selectedPark = favoiteParkList[selectedIndex]
-            }
-            
-            let arrayOfAllParksIndex = getParkModelINdexFromAllParks(parkID: selectedPark.parkID)
-            
-            if firstCheckin{
-                firstCheckin = false
-                attractionVC.firstCheckin = true
-                attractionVC.numberOfCheckins = numberOfCheckinsToDisplay
-                attractionVC.lastVisit = lastVisit
-                //attractionVC.firstCheckin = firstCheckin
-            }
-            
-            print ("The park is ", selectedPark.name)
-            attractionVC.showExtinct = selectedPark.showDefunct
-            attractionVC.showSeasonal = selectedPark.showSeasonal
-            attractionVC.parksViewController = self
-            attractionVC.segueWithTableViewSelect = segueWithTableViewSelect
-            attractionVC.parkData = arrayOfAllParks[arrayOfAllParksIndex]
-            attractionVC.parkData.totalRides = selectedPark.totalRides
-            attractionVC.parkData.incrementorEnabled = selectedPark.incrementorEnabled
-            attractionVC.checkedIntoPark = checkedIntoPark
-            checkedIntoPark = false
-            
-            //If the name of the park has changed, update the name in Parks-list
-            if arrayOfAllParks[arrayOfAllParksIndex].name != selectedPark.name{
-                let parkItem = allParksList[findIndexInAllParksList(parkID: selectedPark.parkID)]
-                parkItem.ref?.updateChildValues([
-                    "name": arrayOfAllParks[arrayOfAllParksIndex].name
-                    ])
-            }
-            
-
-            UIView.animate(withDuration: 0.2, animations: {
-                self.darkenBackground.alpha =  0.20
-            })
-            if isSearchingMyParks{
-                searchMyParks.animateOutOfParkSearch(parksView: self)
-            }
-            //print("count: ", userAttractions.count)
-        }
-        
-        if segue.identifier == "toSearch"{
-            let searchVC = segue.destination as! ParkSearchViewController
-            searchVC.parkArray = arrayOfAllParks
-            searchVC.parksVC = self
-            searchVC.savedParks = allParksList
-            searchVC.userName = userName
-            UIView.animate(withDuration: 0.2, animations: {
-                self.darkenBackground.alpha =  0.20
-            })
-            
-        }
-        if segue.identifier == "toStats"{
-            let statsVC = segue.destination as! StatsViewController
-            //statsVC.simulateLocation = simulateLocation
-            statsVC.allParksList = allParksList
-            statsVC.arrayOfAllParks = arrayOfAllParks
-        }
-        if segue.identifier == "toSettings"{
-            let settingsVC = segue.destination as! SettingsViewController
-            settingsVC.simulateLocation = simulateLocation
-            settingsVC.userID = user.uid
-        }
-        if segue.identifier == "toLists"{
-            //let allListVC = segue.destination as! AllListsViewController
-            let navVC = segue.destination as? UINavigationController
-            let allListVC = navVC?.viewControllers.first as! AllListsViewController
-            allListVC.allParksList = arrayOfAllParks
-            allListVC.userName = userName
-        }
-    }
-    
-    func getParkModelINdexFromAllParks(parkID: Int) -> Int{
-        var i = 0
-        var foundID = 0
-        repeat {
-            if arrayOfAllParks[i].parkID == parkID{
-                foundID = i
-                break
-            }
-            i += 1
-        } while i < arrayOfAllParks.count
-        return foundID
-    }
-    
-    
-    @IBAction func unwindToParkList(segue:UIStoryboardSegue) {
-        if segue.source is SettingsViewController{
-            print("back from settings")
-            let settingsVC = segue.source as! SettingsViewController
-            simulateLocation = settingsVC.simulateLocation
-            
-            searchRideButtonHeightConstraint.constant = 23
-            currentLocationViewBottomConstraint.constant = -61
-            locationManager.requestWhenInUseAuthorization()
-            locationManager.requestLocation()
-            print("GETTING GPS DATA")
-        }
-        if segue.source is SuggestParkViewController{
-             self.darkenBackground.alpha =  0
-            print("Back from suggest park")
-        }
-        else if let sourceViewController = segue.source as? ParkSearchViewController, let newPark = sourceViewController.selectedPark{
-            addNewParkToList(newPark: newPark, newCheckin: false)
-            print("unwinding")
-            UIView.animate(withDuration: 0.2, animations: {
-                self.darkenBackground.alpha = 0.0
-            })
-            
-        }
-        else if segue.source is AttractionsViewController{
-            print("DO NOT USE THIS, IT WILL NOT UPDATE THE FRACTIONS. INSTEAD CALL THE UNWIND METHOD")
-        }
-    }
-    
-    
-    func checkIfNewPark(newPark: ParksModel) -> Bool {
-        var isNewPark = true
-        for i in 0..<allParksList.count{
-            if newPark.parkID == allParksList[i].parkID{
-                isNewPark = false
-            }
-        }
-        return isNewPark
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            var latitude = location.coordinate.latitude
-            var longitude = location.coordinate.longitude
-            var oneMileParks = [ParksModel]()
-
-            if simulateLocation == 1{
-                //latitude = 28.4161
-                //longitude = -81.5811
-                latitude = 28.0372
-                longitude = -82.4195
-            }
-            
-            let currentLocation = CLLocation(latitude: latitude, longitude: longitude)
-            for i in 0..<arrayOfAllParks.count{
-                
-                //distance is in meters, so if the distance is less than 1 mile, or 1609 meters, print that
-                if currentLocation.distance(from: arrayOfAllParks[i].getLocation()) < 1609 {
-                    print("User is within one mile of \(arrayOfAllParks[i].name!)")
-                    oneMileParks.append(arrayOfAllParks[i])
-                }
-            }
-            if oneMileParks.count != 0{
-                
-                //There is more than 1 park within a mile of the user. Find the closests park to present to user
-                var closestParkTemp = currentLocation.distance(from: oneMileParks[0].getLocation())
-                closestPark = oneMileParks[0]
-                for i in 0..<oneMileParks.count{
-                    if currentLocation.distance(from: oneMileParks[i].getLocation()) < closestParkTemp{
-                        closestParkTemp = currentLocation.distance(from: oneMileParks[i].getLocation())
-                        closestPark = oneMileParks[i]
-                    }
-                }
-                print("Closest park is \(closestPark.name!)")
-                print(allParksList.count)
-                
-                let allParkIndex = findIndexInAllParksList(parkID: closestPark.parkID)
-                if allParkIndex != -1{
-                    currentLocationPark = allParksList[allParkIndex]
-                    
-                    //Checking if the user has already checked in today
-                    var calendar = NSCalendar.current
-                    calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
-                    let midnight = calendar.startOfDay(for: Date())
-                    
-                    if midnight.timeIntervalSince1970 != currentLocationPark.lastDayVisited{
-                        print("User has not checked into this park today")
-                        currentLocationPark.checkedInToday = false
-                        let parkItem = allParksList[allParkIndex]
-                        parkItem.ref?.updateChildValues([
-                            "checkedInToday": false
-                            ])
-                        //dayInParkRef.removeValue()
-            
-                        
-                    }
-                    if currentLocationPark.checkedInToday{
-                        viewAttractionLocationButton.backgroundColor = settingsColor
-                        viewAttractionLocationButton.setTitle("View Attractions", for: .normal)
-                        viewAttractionLocationButton.setTitleColor(.black, for: .normal)
-                    } else {
-                        viewAttractionLocationButton.backgroundColor = checkInButtonColor
-                        viewAttractionLocationButton.setTitle("Check In", for: .normal)
-                        viewAttractionLocationButton.setTitleColor(.white, for: .normal)
-                    }
-                }
-                
-                
-            
-               
-                
-                self.currentLocationParkNameLabel.text = self.closestPark.name!
-                self.view.layoutIfNeeded()
-                //Begin animating the UI with the new current location park
-                
-                self.searchRideButtonHeightConstraint.constant = 50
-                self.currentLocationViewBottomConstraint.constant = -4
-                //If iPhone X, make the locationView heigher
-                if screenSize.height == 812 || UIScreen.main.bounds.height == 896.0{
-                    self.locationViewHeight.constant = 85
-                }
-                
-                allParksBottomInsetValue = 45
-                let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
-                self.allParksTableView.contentInset = insets
-                UIView.animate(withDuration: 0.6, animations: {
-                    self.view.layoutIfNeeded()
-                })
-            } else{
-                allParksBottomInsetValue = 20
-                let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
-                self.allParksTableView.contentInset = insets
-                //If iPhone X, make the locationView heigher
-                if screenSize.height == 812{
-                    self.locationViewHeight.constant = 59
-                }
-            }
-            
-        }
-    }
-    
-    
-    @IBAction func didTapSearchMyParks(_ sender: Any) {
-        print("searching my parks")
-        searchMyParks.animateIntoSearchView(parksView: self)
-    }
-    
-    
-    @IBAction func didTapDownSearchParks(_ sender: Any) {
-        print("Done searching my parks")
-        searchMyParks.animateOutOfParkSearch(parksView: self)
-    }
-    
-    @IBAction func didChangeMySearchText(_ sender: Any) {
-        searchMyParks.updateSearchResults(parksView: self)
-    }
-    
-    
-    
-    @IBAction func showCurrentlLocationPark(_ sender: Any) {
-        var calendar = NSCalendar.current
-        calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
-        let midnight = calendar.startOfDay(for: Date())
-        
-        if checkIfNewPark(newPark: closestPark){
-            print("new park")
-            addNewParkToList(newPark: closestPark, newCheckin: true)
-            Analytics.logEvent("check_into_park", parameters: ["parkName": closestPark])
-            
-            let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, numberOfVisitsToThePark: 1, parkName: closestPark.name)
-             let startDayInParkRef = self.dayInParkRef.child(String("\(Int(midnight.timeIntervalSince1970))/todays-stats"))
-            startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
-        } else{
-            print("old")
-        }
-        
-        
-        checkedIntoPark = true
-        segueWithTableViewSelect = false
-        let selectedParkIndex = findIndexInAllParksList(parkID: closestPark.parkID)
-    
-        
-        selectedPark = allParksList[selectedParkIndex]
-        print("SELECTED PARK NAME AND INDEX")
-        print(selectedPark.checkedInToday)
-        print(selectedParkIndex)
-        if !selectedPark.checkedInToday{
-    
-            firstCheckin = true
-            numberOfCheckinsToDisplay = selectedPark.numberOfCheckIns + 1
-            lastVisit = selectedPark.lastDayVisited
-            
-            let parkItem = allParksList[selectedParkIndex]
-            parkItem.ref?.updateChildValues([
-                "lastDayVisited": midnight.timeIntervalSince1970,
-                "checkedInToday": true,
-                "numberOfCheckIns": selectedPark.numberOfCheckIns + 1
-                ])
-            print("Checking in for first time")
-            
-            let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, numberOfVisitsToThePark: selectedPark.numberOfCheckIns+1, parkName: selectedPark.name)
-            let startDayInParkRef = self.dayInParkRef.child(String("\(Int(midnight.timeIntervalSince1970))/todays-stats"))
-            startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
-        }
-        
-        
-        viewAttractionLocationButton.backgroundColor = settingsColor
-        viewAttractionLocationButton.setTitle("View Attractions", for: .normal)
-        viewAttractionLocationButton.setTitleColor(.black, for: .normal)
-        
-        performSegue(withIdentifier: "toAttractionsAll", sender: nil)
-    }
-    
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Location error: \(error)")
-    }
-    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
-        
-        if gestureRecognizer.state != UIGestureRecognizer.State.ended {
-            searchRideButtonHeightConstraint.constant = 23
-            currentLocationViewBottomConstraint.constant = -61
-            //If iPhone X, make the locationView heigher
-            if screenSize.height == 812{
-                self.locationViewHeight.constant = 85
-            }
-            
-            allParksBottomInsetValue = 20
-            let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
-            self.allParksTableView.contentInset = insets
-            //If iPhone X, make the locationView heigher
-            if screenSize.height == 812{
-                self.locationViewHeight.constant = 59
-            }
-            UIView.animate(withDuration: 0.6, animations: {
-                self.view.layoutIfNeeded()
-            })
-            return
-        }
-    }
-    
-    func unwindFromAttractions(parkID: Int) {
-        segueWithTableViewSelect = true
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: allParksBottomInsetValue, right: 0)
-        self.allParksTableView.contentInset = insets
-        UIView.animate(withDuration: 0.2, animations: {
-            self.darkenBackground.alpha =  0
-        })
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
-    }
-    
-    
-    @objc func adjustForKeyboard(notification: Notification) {
-        let userInfo = notification.userInfo!
-        
-        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
-        
-        if notification.name == UIResponder.keyboardWillHideNotification {
-            allParksTableView.contentInset = UIEdgeInsets.zero
-        } else {
-            allParksTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
-        }
-        
-        allParksTableView.scrollIndicatorInsets = allParksTableView.contentInset
-    }
-    
-    func configureViewDidLoad(){
-        //If iPhone 5s
-        if screenSize.width == 320.0{
-            ConfigureSmallerLayout().configureParksView(parksView: self)
-        }
-        
-        
-        //Initialize current location UI
-        currentLocationView.layer.shadowOffset = CGSize.zero
-        currentLocationView.layer.shadowRadius = 5
-        currentLocationView.layer.shadowOpacity = 0.3
-        currentLocationView.layer.cornerRadius = 10
-        currentLocationViewBottomConstraint.constant = -61
-        
-        let dissmissLocationView = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
-        dissmissLocationView.minimumPressDuration = 1.0
-        dissmissLocationView.delaysTouchesBegan = true
-        dissmissLocationView.delegate = self
-        self.currentLocationView.addGestureRecognizer(dissmissLocationView)
-        
-        
-        viewAttractionLocationButton.layer.cornerRadius = 7
-        viewAttractionLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        
-    
-        
-        doneSearchButton.backgroundColor = settingsColor
-        doneSearchButton.layer.cornerRadius = 5
-        doneSearchButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        doneSearchButton.alpha = 0.0
-        
-        
-        navigationBar.layer.shadowOpacity = 0.5
-        navigationBar.layer.shadowOffset = CGSize.zero
-        navigationBar.layer.shadowRadius = 12
-        
-        favoritesView.layer.cornerRadius = 7
-        favoritesTableView.layer.cornerRadius = 7
-        
-        allParksView.layer.cornerRadius = 7
-        allParksTableView.layer.cornerRadius = 7
-        
-        addParkButton.layer.shadowOpacity = 0.5
-        addParkButton.layer.shadowOffset = CGSize.zero
-        addParkButton.layer.shadowRadius = 12
-        
-        searchParkView.layer.cornerRadius = 7
-        searchMyParksButton.layer.cornerRadius = 7
-        searchMyParksButton.layer.borderWidth = 0.3
-        searchMyParksButton.layer.borderColor = UIColor.gray.cgColor
-        
-        searchParksTextField.alpha = 0.0
-        
-        let gradient = CAGradientLayer()
-        gradient.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
-        let lightGreen = UIColor(red: 63.0/255.0, green: 180.0/255.0, blue: 61.0/255.0, alpha: 1.0).cgColor
-        let darkGreen = UIColor(red: 32.0/255.0, green: 104.0/255.0, blue: 41.0/255.0, alpha: 1.0).cgColor
-        gradient.colors = [lightGreen, darkGreen]
-        gradient.startPoint = CGPoint(x: 1, y: 0)
-        gradient.endPoint = CGPoint(x: 0, y: 1)
-        
-        backgroundView.layer.addSublayer(gradient)
-        
-        darkenBackground=UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height))
-        darkenBackground.backgroundColor = UIColor.black
-        darkenBackground.alpha = 0.0
-        darkenBackground.isUserInteractionEnabled = true
-        self.view.addSubview(darkenBackground)
-        
-    }
-    
-    @IBAction func didTapExpandAllParks(_ sender: Any) {
-        print(allParksIsExpanded)
-        if !allParksIsExpanded{
-            print("Expanding")
-            expandParksView.expandOutAllParks(parksView: self)
-        } else{
-            print("Reseting")
-            expandParksView.resetToDefault(parksView: self)
-        }
-    }
-    
-    @IBAction func didTapExpandFavorites(_ sender: Any) {
-        if !favoritesIsExpanded{
-            print("Expanding")
-            expandParksView.expandFavoritesView(parksView: self)
-        } else{
-            print("reseting")
-            expandParksView.resetToDefault(parksView: self)
-        }
-    }
-    
-    
-    func findIndexInAllParksList(parkID:Int) -> Int{
-        var allParksIndex = -1
-        for i in 0..<allParksList.count{
-            if allParksList[i].parkID == parkID{
-                allParksIndex = i
-                break
-            }
-        }
-        return allParksIndex
-    }
-
-
-    @objc func appMovedToForeground(){
-        if itemsAlreadyDownloaded{
-            locationManager.requestWhenInUseAuthorization()
-            locationManager.requestLocation()
-            print("Checking location")
-        }
-    }
-
 }
-
