@@ -31,9 +31,13 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
     var selectedPark: ApproveSuggParksModel = ApproveSuggParksModel()
     var lat = 0.0
     var long = 0.0
-    
+    var approvedParks: DatabaseReference!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        approvedParks = Database.database().reference(withPath:"approvedSuggestions/Parks") ///userName
+
         scrollWidth.constant = screenSize.width
         nameField.delegate = self
         typeField.delegate = self
@@ -88,11 +92,21 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
         self.performSegue(withIdentifier: "toSuggestParksList", sender: self)
 
     }
-    @IBAction func approveParkPressed(_ sender: Any) {
+    @IBAction func submitPark(_ sender: Any) {
         Analytics.logEvent("new_park_approved", parameters: nil)
+        
+        var token = ""
+        var userID = ""
+        if selectedPark.token! == "" {token = "none"; userID = "NONE"}
+        else {token = selectedPark.token!; userID = selectedPark.userID!}
+        
+        let newSuggestedAttraction = ApprovedSuggestiobsList(userToken: token, expName: selectedPark.name)
+        let newApprovalRef = self.approvedParks.child(userID)
+        newApprovalRef.setValue(newSuggestedAttraction.toAnyObject())
+  
         let dataModel = DataModel()
         dataModel.delegate = self
-        let name = nameField.text
+  /*    let name = nameField.text
         let type = typeField.text
         let city = cityField.text
         let country = countryField.text
@@ -108,10 +122,12 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
         if seasonalSwitch.isOn {seasonal = 1}
         
         let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadNewPark.php?name=\(name!)&type=\(type!)&city=\(city!)&count=\(country!)&lat=\(lat!)&long=\(long!)&open=\(open!)&closed=\(closed!)&defunct=\(defunct)&prevName=\(prevName!)&seasonal=\(seasonal)&website=\(website!)&userName=\(self.selectedPark.userName!)"
+        
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         print(urlPath)
-        
+ */
         let urlPath2 = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=SuggestPark&key=idKey&tempID=\(selectedPark.tempID!)" //delete from list
+        
         dataModel.downloadData(urlPath: urlPath2, dataBase: "upload", returnPath: "upload")
         self.performSegue(withIdentifier: "toSuggestParksList", sender: self)
     }

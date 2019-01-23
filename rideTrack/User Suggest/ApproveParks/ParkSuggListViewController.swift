@@ -10,6 +10,7 @@ import UIKit
 
 class ParkSuggListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataModelProtocol {
 
+    @IBOutlet weak var sendNotificationButton: UIButton!
     @IBOutlet weak var suggestedParkTableView: UITableView!
     
     var listOfSuggestions = [ApproveSuggParksModel]()
@@ -59,6 +60,11 @@ class ParkSuggListViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    @IBAction func sendNotificationButtonPressed(_ sender: Any) {
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toApprovePark"{
             let selectedIndex = (suggestedParkTableView.indexPathForSelectedRow?.row)!

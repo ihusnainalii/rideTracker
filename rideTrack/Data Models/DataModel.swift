@@ -78,17 +78,17 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 let park = ParksModel()
                 //Redo these as Bools, like in attractions DB
                 park.parkID = Int(jsonElement["id"] as! String)!
-                park.name = jsonElement["Name"] as! String
-                park.city = jsonElement["City"] as! String
-                park.country = jsonElement["Country"] as! String
+                park.name = (jsonElement["Name"] as! String)
+                park.city = (jsonElement["City"] as! String)
+                park.country = (jsonElement["Country"] as! String)
                 park.active = Int(jsonElement["Active"] as! String)!
                 park.yearOpen = Int(jsonElement["YearOpen"] as! String)!
                 park.yearClosed = Int(jsonElement["YearClosed"] as! String)!
                 park.longitude = Double(jsonElement["Longitude"] as! String)!
                 park.latitude = Double(jsonElement["Latitude"] as! String)!
                 park.seasonal = Int(jsonElement["Active"] as! String)!
-                park.perviousNames = jsonElement["PreviousNames"] as! String
-                park.type = jsonElement["Type"] as! String
+                park.perviousNames = (jsonElement["PreviousNames"] as! String)
+                park.type = (jsonElement["Type"] as! String)
                 
                 dataBaseData.add(park)
                 
@@ -176,6 +176,8 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 suggPark.prevName = (jsonElement["prevName"] as! String)
                 suggPark.seasonal = Int(jsonElement["seasonal"] as! String)
                 suggPark.userName = (jsonElement["userName"] as! String)
+                suggPark.userID = (jsonElement["userID"] as! String)
+                suggPark.token = (jsonElement["token"] as! String)
                 suggPark.website = (jsonElement["website"] as! String)
                 suggPark.tempID = Int(jsonElement["idKey"] as! String)
                 suggPark.date = (jsonElement["DateTime_Created"] as! String)
@@ -189,7 +191,7 @@ class DataModel: NSObject, URLSessionDataDelegate {
                 suggPhoto.ParkName = (jsonElement["parkName"] as! String)
                 suggPhoto.parkID = Int(jsonElement["parkID"] as! String)
                 suggPhoto.tempID = Int(jsonElement["keyID"] as! String)
-                suggPhoto.date = jsonElement["DateTime_Created"] as! String
+                suggPhoto.date = (jsonElement["DateTime_Created"] as! String)
                 dataBaseData.add(suggPhoto)
             }
         }

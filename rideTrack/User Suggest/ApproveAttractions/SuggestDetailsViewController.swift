@@ -25,7 +25,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
     var id = ""
     var approvedAttractions: DatabaseReference!
     var checkIfMultipleAttractions: DatabaseReference!
-
+    var attractionName = ""
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     
@@ -109,6 +109,18 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         scrollWidth.constant = screenSize.width
         
         notesField.text = selectedAttraction.notes
+        attractionName = nameTextField.text!
+        
+        checkIfMultipleAttractions.observe(.value, with: { snapshot in
+            if snapshot.exists(){
+                if (snapshot.value as! String).count > 35 {
+                    self.attractionName = "\(snapshot.value as! String), and more"
+                }
+                else if !(snapshot.value as! String).contains(", and more"){
+                    self.attractionName = "\(self.attractionName), \(snapshot.value as! String)"
+                }
+                }
+        })
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -240,19 +252,11 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         var userID = ""
         if selectedAttraction.token! == "" {token = "none"; userID = "NONE"}
         else {token = selectedAttraction.token!; userID = selectedAttraction.userID!}
-        var attractionName = selectedAttraction.rideName!
-        
-        checkIfMultipleAttractions.observe(.value, with: { snapshot in
-            if snapshot.exists(){
-                 attractionName = "\(attractionName), \(snapshot.value as! String)"
-                }
-            else {print("approvedSuggestions/Attractions/\(self.id)/Name")}
-            })
         
         let newSuggestedAttraction = ApprovedSuggestiobsList(userToken: token, expName: attractionName)
         let newApprovalRef = self.approvedAttractions.child(userID)
         newApprovalRef.setValue(newSuggestedAttraction.toAnyObject())
-  
+
         let rideName = nameTextField.text
         let parkID = selectedAttraction.parkID!
         let yearOpen = openTextField.text!
@@ -277,7 +281,7 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         let changes = "NEW RIDE: \(rideName!) at \(parkNameLabel.text!) opened in \(yearOpen) and is type \(rideType)"
         let (urlPath3) = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadToDatabaseLog.php? username=\(selectedAttraction.userName!)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
        print (urlPath)
-         let dataModel = DataModel()
+        let dataModel = DataModel()
         dataModel.delegate = self
 
         let urlPath2 = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=UserSuggest&key=id&tempID=\(self.selectedAttraction.id!)" //deletes from suggested list

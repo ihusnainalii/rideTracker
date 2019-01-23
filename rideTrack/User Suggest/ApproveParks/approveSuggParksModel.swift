@@ -23,6 +23,8 @@ class ApproveSuggParksModel: NSObject {
     var seasonal: Int!
     var website: String!
     var userName: String!
+    var userID: String!
+    var token: String!
     var tempID: Int!
     var date: String!
     
@@ -30,7 +32,7 @@ class ApproveSuggParksModel: NSObject {
         
     }
     
-    init(name: String, type: String, city: String, country: String, latitude: Double, longitude: Double, open: Int, closed: Int, defunct: Int, prevName: String, seasonal: Int, website: String, userName: String, tempID: Int, date: String) {
+    init(name: String, type: String, city: String, country: String, latitude: Double, longitude: Double, open: Int, closed: Int, defunct: Int, prevName: String, seasonal: Int, website: String, userName: String, userID: String, token: String, tempID: Int, date: String) {
         
         self.name = name
         self.type = type
@@ -45,6 +47,8 @@ class ApproveSuggParksModel: NSObject {
         self.seasonal = seasonal
         self.website = website
         self.userName = userName
+        self.userID = userID
+        self.token = token
         self.tempID = tempID
         self.date = date
     }

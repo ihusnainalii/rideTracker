@@ -74,10 +74,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZMe-c2-fiO">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="573"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SuggestedParks" rowHeight="72" id="lvq-Zc-g5q" customClass="suggestParkTableViewCell" customModule="rideTrack" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SuggestedParks" rowHeight="72" id="lvq-Zc-g5q" customClass="suggestParkTableViewCell" customModule="rideTrack" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lvq-Zc-g5q" id="6XS-sm-dj1">
@@ -135,18 +135,28 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7NW-eH-mH1">
+                                <rect key="frame" x="124.5" y="637" width="126" height="30"/>
+                                <state key="normal" title="Send Notifications"/>
+                                <connections>
+                                    <action selector="sendNotificationButtonPressed:" destination="Bts-NK-uc1" eventType="touchUpInside" id="pqm-45-sCW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ZMe-c2-fiO" firstAttribute="top" secondItem="Nvh-w3-wOY" secondAttribute="top" id="cRE-sY-pln"/>
-                            <constraint firstItem="Nvh-w3-wOY" firstAttribute="bottom" secondItem="ZMe-c2-fiO" secondAttribute="bottom" id="d6l-RP-cCa"/>
+                            <constraint firstItem="Nvh-w3-wOY" firstAttribute="bottom" secondItem="ZMe-c2-fiO" secondAttribute="bottom" constant="30" id="d6l-RP-cCa"/>
                             <constraint firstItem="Nvh-w3-wOY" firstAttribute="trailing" secondItem="ZMe-c2-fiO" secondAttribute="trailing" id="r96-bz-Qyt"/>
+                            <constraint firstItem="7NW-eH-mH1" firstAttribute="centerX" secondItem="poP-IN-3Fd" secondAttribute="centerX" id="sLx-w9-xor"/>
                             <constraint firstItem="ZMe-c2-fiO" firstAttribute="leading" secondItem="Nvh-w3-wOY" secondAttribute="leading" id="xnb-mC-Dww"/>
+                            <constraint firstItem="7NW-eH-mH1" firstAttribute="top" secondItem="ZMe-c2-fiO" secondAttribute="bottom" id="ze8-gN-DY0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Nvh-w3-wOY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Suggested Parks" id="9aa-O1-Sgv"/>
                     <connections>
+                        <outlet property="sendNotificationButton" destination="7NW-eH-mH1" id="5HA-MS-DGA"/>
                         <outlet property="suggestedParkTableView" destination="ZMe-c2-fiO" id="npN-Rr-u9I"/>
                     </connections>
                 </viewController>
@@ -166,7 +176,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="submitedPhotos" rowHeight="75" id="nmk-vW-M1W" userLabel="submitedPhotos" customClass="suggPhotosTableViewCell" customModule="rideTrack" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="submitedPhotos" rowHeight="75" id="nmk-vW-M1W" userLabel="submitedPhotos" customClass="suggPhotosTableViewCell" customModule="rideTrack" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nmk-vW-M1W" id="67C-Qb-sbE">
@@ -914,7 +924,7 @@
                                 <rect key="frame" x="272" y="657" width="58" height="30"/>
                                 <state key="normal" title="Approve"/>
                                 <connections>
-                                    <action selector="approveParkPressed:" destination="B3b-nD-NVy" eventType="touchUpInside" id="6Ec-ER-6wz"/>
+                                    <action selector="submitPark:" destination="B3b-nD-NVy" eventType="touchUpInside" id="6Ec-ER-6wz"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -969,7 +979,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="573"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="suggestCell" rowHeight="75" id="QQq-f5-ga5" customClass="SuggestTableViewCell" customModule="rideTrack" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="suggestCell" rowHeight="75" id="QQq-f5-ga5" customClass="SuggestTableViewCell" customModule="rideTrack" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QQq-f5-ga5" id="QHs-jR-jWF">
