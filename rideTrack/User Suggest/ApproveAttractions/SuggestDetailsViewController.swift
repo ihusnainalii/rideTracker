@@ -113,11 +113,19 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         
         checkIfMultipleAttractions.observe(.value, with: { snapshot in
             if snapshot.exists(){
-                if (snapshot.value as! String).count > 35 {
-                    self.attractionName = "\(snapshot.value as! String), and more"
+                let currValue = (snapshot.value as! String)
+                if currValue.count > 35 && !currValue.contains(", and more") {
+                    self.attractionName = "\(currValue), and more"
+                    print("adding and more!")
+
                 }
-                else if !(snapshot.value as! String).contains(", and more"){
-                    self.attractionName = "\(self.attractionName), \(snapshot.value as! String)"
+                else if !(currValue.contains(", and more")){
+                    print("appending")
+                    self.attractionName = "\(self.attractionName), \(currValue)"
+                }
+                else {
+                    self.attractionName = currValue
+                    print("should get here!")
                 }
                 }
         })

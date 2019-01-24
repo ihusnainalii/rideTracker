@@ -32,11 +32,14 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
     var lat = 0.0
     var long = 0.0
     var approvedParks: DatabaseReference!
+    var checkIfMultipleAttractions: DatabaseReference!
+    var notificationParkName = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         approvedParks = Database.database().reference(withPath:"approvedSuggestions/Parks") ///userName
+        checkIfMultipleAttractions = Database.database().reference(withPath:"approvedSuggestions/Parks/\(selectedPark.userID!)/Name")
 
         scrollWidth.constant = screenSize.width
         nameField.delegate = self
@@ -74,6 +77,26 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
         else {seasonalSwitch.isOn = true}
         print("seasonal is \(selectedPark.seasonal!)")
 
+        notificationParkName = nameField.text!
+        checkIfMultipleAttractions.observe(.value, with: { snapshot in
+            if snapshot.exists(){
+                let currValue = (snapshot.value as! String)
+                if currValue.count > 35 && !currValue.contains(", and more") {
+                    self.notificationParkName = "\(currValue), and more"
+                    print("adding and more!")
+                    
+                }
+                else if !(currValue.contains(", and more")){
+                    print("appending")
+                    self.notificationParkName = "\(self.notificationParkName), \(currValue)"
+                }
+                else {
+                    self.notificationParkName = currValue
+                    print("should get here!")
+                }
+            }
+        })
+        
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //hide keyboard when tapping the anywhere else
 
         
@@ -100,13 +123,13 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
         if selectedPark.token! == "" {token = "none"; userID = "NONE"}
         else {token = selectedPark.token!; userID = selectedPark.userID!}
         
-        let newSuggestedAttraction = ApprovedSuggestiobsList(userToken: token, expName: selectedPark.name)
+        let newSuggestedAttraction = ApprovedSuggestiobsList(userToken: token, expName: notificationParkName)
         let newApprovalRef = self.approvedParks.child(userID)
         newApprovalRef.setValue(newSuggestedAttraction.toAnyObject())
   
         let dataModel = DataModel()
         dataModel.delegate = self
-  /*    let name = nameField.text
+        let name = nameField.text
         let type = typeField.text
         let city = cityField.text
         let country = countryField.text
@@ -125,7 +148,7 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
         
         dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
         print(urlPath)
- */
+ 
         let urlPath2 = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=SuggestPark&key=idKey&tempID=\(selectedPark.tempID!)" //delete from list
         
         dataModel.downloadData(urlPath: urlPath2, dataBase: "upload", returnPath: "upload")

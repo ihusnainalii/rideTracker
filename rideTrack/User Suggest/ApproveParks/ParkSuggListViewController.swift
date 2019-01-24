@@ -7,16 +7,21 @@
 //
 
 import UIKit
+import Firebase
 
 class ParkSuggListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataModelProtocol {
 
     @IBOutlet weak var sendNotificationButton: UIButton!
     @IBOutlet weak var suggestedParkTableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var listOfSuggestions = [ApproveSuggParksModel]()
     var selectedPark: ApproveSuggParksModel = ApproveSuggParksModel()
-
     
+    var approvedParks: DatabaseReference!
+    var pendingNotification: DatabaseReference!
+    var sendDBRef: DatabaseReference!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/UserSuggestDownloadService.php?listName=SuggestPark"
@@ -24,8 +29,19 @@ class ParkSuggListViewController: UIViewController, UITableViewDataSource, UITab
         dataModel.delegate = self
         dataModel.downloadData(urlPath: urlPath, dataBase: "ParkSuggest", returnPath: "allParks")
         
+        approvedParks = Database.database().reference(withPath:"approvedSuggestions")
+        pendingNotification = Database.database().reference(withPath:"approvedSuggestions/Parks")
+        sendDBRef = Database.database().reference(withPath:"approvedSuggestions/SendPark")
+
+        approvedParks.observe(.value, with: { snapshot in
+            if (snapshot.hasChild("Parks")){ self.sendNotificationButton.isEnabled = true }
+            else {self.sendNotificationButton.isEnabled = false}
+        })
         self.suggestedParkTableView.delegate = self
         self.suggestedParkTableView.dataSource = self
+        self.activityIndicator.isHidden = true
+
+        
         // Do any additional setup after loading the view.
     }
     
@@ -62,7 +78,16 @@ class ParkSuggListViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     @IBAction func sendNotificationButtonPressed(_ sender: Any) {
-        
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        approvedParks.updateChildValues(["SendPark": "TRUE"])
+        sendNotificationButton.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+            self.pendingNotification.removeValue()
+            self.activityIndicator.isHidden = true
+            self.sendDBRef.removeValue()
+            self.sendNotificationButton.isHidden = false
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

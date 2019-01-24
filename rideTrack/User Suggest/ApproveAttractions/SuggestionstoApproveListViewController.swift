@@ -15,6 +15,7 @@ class SuggestionstoApproveListViewController: UIViewController, UITableViewDataS
     var listOfSuggestions = [ApproveSuggestAttracionModel]()
     var approvedAttractions: DatabaseReference!
     var pendingNotification: DatabaseReference!
+    var sendDBRef: DatabaseReference!
 
     @IBOutlet weak var activityIndecator: UIActivityIndicatorView!
     var selectedAttraction: ApproveSuggestAttracionModel = ApproveSuggestAttracionModel()
@@ -26,10 +27,10 @@ class SuggestionstoApproveListViewController: UIViewController, UITableViewDataS
         super.viewDidLoad()
         activityIndecator.isHidden = true
         approvedAttractions = Database.database().reference(withPath:"approvedSuggestions")
-        pendingNotification = Database.database().reference(withPath:"approvedSuggestions/Attractions/Send") ///userName
-
+        pendingNotification = Database.database().reference(withPath:"approvedSuggestions/Attractions")
+        sendDBRef = Database.database().reference(withPath:"approvedSuggestions/Send")
         approvedAttractions.observe(.value, with: { snapshot in
-            if snapshot.exists(){ self.sendNotificationButton.isEnabled = true }
+            if (snapshot.hasChild("Attractions")){ self.sendNotificationButton.isEnabled = true }
             else {self.sendNotificationButton.isEnabled = false}
         })
             
@@ -176,7 +177,8 @@ func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRow
         approvedAttractions.updateChildValues(["Send": "TRUE"])
         sendNotificationButton.isHidden = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
-            self.approvedAttractions.removeValue()
+            self.pendingNotification.removeValue()
+            self.sendDBRef.removeValue()
             self.activityIndecator.isHidden = true
             self.sendNotificationButton.isHidden = false
         }
