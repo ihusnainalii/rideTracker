@@ -34,12 +34,18 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
     var approvedParks: DatabaseReference!
     var checkIfMultipleAttractions: DatabaseReference!
     var notificationParkName = ""
+    var listOfParks = [ParksModel]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         approvedParks = Database.database().reference(withPath:"approvedSuggestions/Parks") ///userName
         checkIfMultipleAttractions = Database.database().reference(withPath:"approvedSuggestions/Parks/\(selectedPark.userID!)/Name")
+        let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/parksdbservice.php"
+        let dataModel = DataModel()
+        dataModel.delegate = self
+        
+        dataModel.downloadData(urlPath: urlPath, dataBase: "parks", returnPath: "allParks")
 
         scrollWidth.constant = screenSize.width
         nameField.delegate = self
@@ -104,6 +110,33 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
+    
+    func itemsDownloaded(items: NSArray, returnPath: String) {
+        let arrayOfParks = items as! [ParksModel]
+        for i in 0..<arrayOfParks.count{
+            listOfParks.append(arrayOfParks[i])
+            
+            if arrayOfParks[i].name!.caseInsensitiveCompare(selectedPark.name!) == ComparisonResult.orderedSame {
+                let alert = UIAlertController(title: "Duplicate Park", message: "This park already exisits in the database! Are you sure you want a new park with the same name?", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+                    print ("cancel")
+                }))
+                alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
+                    print ("delete")
+                    let dataModel = DataModel()
+                    dataModel.delegate = self
+                    let urlPath = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=SuggestPark&key=idKey&tempID=\(self.selectedPark.tempID!)"
+                    print (urlPath)
+                    dataModel.downloadData(urlPath: urlPath, dataBase: "upload", returnPath: "upload")
+                    self.performSegue(withIdentifier: "toSuggestParksList", sender: self)
+                }))
+                self.present(alert, animated: true, completion: nil)
+                break
+
+            }
+        }
+    }
+
     
     @IBAction func deleteButtonPressed(_ sender: Any) {
         Analytics.logEvent("new_park_deleted", parameters: nil)
@@ -193,5 +226,5 @@ class ApproveParkViewController: UIViewController, UITextFieldDelegate, DataMode
             mapVC.long = long
         }
     }
-    func itemsDownloaded(items: NSArray, returnPath: String) {}
+    
 }
