@@ -615,6 +615,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
                         viewAttractionLocationButton.backgroundColor = settingsColor
                         viewAttractionLocationButton.setTitle("View Attractions", for: .normal)
                         viewAttractionLocationButton.setTitleColor(.black, for: .normal)
+                        checkedInParkID = currentLocationPark.parkID
                     } else {
                         viewAttractionLocationButton.backgroundColor = checkInButtonColor
                         viewAttractionLocationButton.setTitle("Check In", for: .normal)

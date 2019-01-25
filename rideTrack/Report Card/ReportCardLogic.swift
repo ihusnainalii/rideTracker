@@ -22,6 +22,7 @@ class ReportCardLogic {
     
     var handleAttractions: UInt!
     var handleStats: UInt!
+    var calculateOnce:Int = 0
     
     var dayInParkStatsRef: DatabaseReference!
     var dayInParkAttractionsRef: DatabaseReference!
@@ -46,7 +47,10 @@ class ReportCardLogic {
             self.statsDownloaded = true
             print("Stats Done")
             if self.attractionsDownloaded{
-                self.calculateStats()
+                if self.calculateOnce == 0{
+                    self.calculateStats()
+                    self.calculateOnce += 1
+                }
             }
         })
  
@@ -62,7 +66,10 @@ class ReportCardLogic {
             self.attractionsDownloaded = true
             print("Attractions Done")
             if self.statsDownloaded{
-                self.calculateStats()
+                if self.calculateOnce == 0{
+                    self.calculateStats()
+                    self.calculateOnce += 1
+                }
             }
         })
     }
@@ -92,7 +99,9 @@ class ReportCardLogic {
                 reportCardCalculatedStats.scoreCardName = attraction.rideName
             }
  */
-            calculatedStats.numberOfVisitsToThePark.stat = dayInParkStats.numberOfVisitsToThePark
+            if dayInParkStats.numberOfVisitsToThePark % 5 == 0{
+                calculatedStats.numberOfVisitsToThePark.stat = dayInParkStats.numberOfVisitsToThePark
+            }
             calculatedStats.totalTrackLength.stat += Int(Int(attraction.length) * attraction.numberOfTimesRiddenToday)
             calculatedStats.uniqueAttractionCount.stat += 1
             calculatedStats.numberOfAttractionsExperienced.stat += attraction.numberOfTimesRiddenToday
