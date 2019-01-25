@@ -44,6 +44,8 @@
 		5FA990212172677E00F76025 /* SelectAttractionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA990202172677E00F76025 /* SelectAttractionTableViewCell.swift */; };
 		5FD613DD210A2B90008D4122 /* IgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DC210A2B90008D4122 /* IgnoreList.swift */; };
 		5FD613DF210A356F008D4122 /* ScoreCardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DE210A356F008D4122 /* ScoreCardList.swift */; };
+		5FDB162A21FABDBD0085192E /* MyTripsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDB162921FABDBD0085192E /* MyTripsViewController.swift */; };
+		5FDB162C21FABFD40085192E /* MyTripsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDB162B21FABFD40085192E /* MyTripsTableViewCell.swift */; };
 		5FDD507F21F52A410031590E /* Stat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDD507E21F52A410031590E /* Stat.swift */; };
 		5FDD508121F54D220031590E /* ReportCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDD508021F54D220031590E /* ReportCardTableViewCell.swift */; };
 		5FE9F81020DB45030012B98C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FE9F80F20DB45030012B98C /* Media.xcassets */; };
@@ -166,6 +168,8 @@
 		5FA990202172677E00F76025 /* SelectAttractionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAttractionTableViewCell.swift; sourceTree = "<group>"; };
 		5FD613DC210A2B90008D4122 /* IgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreList.swift; sourceTree = "<group>"; };
 		5FD613DE210A356F008D4122 /* ScoreCardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardList.swift; sourceTree = "<group>"; };
+		5FDB162921FABDBD0085192E /* MyTripsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripsViewController.swift; sourceTree = "<group>"; };
+		5FDB162B21FABFD40085192E /* MyTripsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripsTableViewCell.swift; sourceTree = "<group>"; };
 		5FDD507E21F52A410031590E /* Stat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stat.swift; sourceTree = "<group>"; };
 		5FDD508021F54D220031590E /* ReportCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCardTableViewCell.swift; sourceTree = "<group>"; };
 		5FE9F80F20DB45030012B98C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -367,12 +371,14 @@
 		5FFA2D4D21EAC63F00CF3956 /* Report Card */ = {
 			isa = PBXGroup;
 			children = (
+				5FDB162921FABDBD0085192E /* MyTripsViewController.swift */,
 				98F80E2E21EEB76200E77769 /* ReportCardViewController.swift */,
 				5FFA2D5021EAC82000CF3956 /* ReportCardLogic.swift */,
 				5FFA2D4B21EAC63700CF3956 /* ReportCard.storyboard */,
 				5FFA2D5221EAD4C800CF3956 /* ReportCardStats.swift */,
 				5FDD507E21F52A410031590E /* Stat.swift */,
 				5FDD508021F54D220031590E /* ReportCardTableViewCell.swift */,
+				5FDB162B21FABFD40085192E /* MyTripsTableViewCell.swift */,
 			);
 			path = "Report Card";
 			sourceTree = "<group>";
@@ -816,6 +822,7 @@
 				5F964AE52171549200989DB4 /* AllListsViewController.swift in Sources */,
 				5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */,
 				5FF0BBBB20CF62C300213DF8 /* ScoreCardViewController.swift in Sources */,
+				5FDB162C21FABFD40085192E /* MyTripsTableViewCell.swift in Sources */,
 				5F636B5D2138B1A100D2B922 /* StatsContainerViewController.swift in Sources */,
 				98C000FD2177F10100B01F58 /* photoSuggListViewController.swift in Sources */,
 				5FF0BBBE20CF639100213DF8 /* ScoreCardTableViewCell.swift in Sources */,
@@ -864,6 +871,7 @@
 				5FDD507F21F52A410031590E /* Stat.swift in Sources */,
 				5F6B9A8221E514F100EAA478 /* DayInPark.swift in Sources */,
 				5FFCB7FF21055E400054D84D /* ParksList.swift in Sources */,
+				5FDB162A21FABDBD0085192E /* MyTripsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

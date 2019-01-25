@@ -16,38 +16,16 @@ class ReportCardViewController: UIViewController, ReportCardStatsCalculateDelega
     var userID: String!
     var date = 0
     var arrayOfStats = [Stat]()
-    var dayInParkRef: DatabaseReference!
     
-    var handle: UInt!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dayInParkRef = Database.database().reference(withPath: "day-in-park/\(userID!)")
         tableview.dataSource = self
         tableview.delegate = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        
         let reportCardLogic = ReportCardLogic()
         reportCardLogic.delegate = self
-
-        handle = dayInParkRef.observe(.value, with: { snapshot in
-            let value = snapshot.value as? NSDictionary
-            var dateArray = [Int]()
-            var date = Any?("")
-            if value != nil{
-                for i in 0..<(value?.allKeys.count)!{
-                    date = value?.allKeys[i]
-                    dateArray.append(Int(date as! String)!)
-                }
-                if dateArray.count != 0{
-                    dateArray.sort()
-                    self.date = dateArray[dateArray.count-1]
-                    reportCardLogic.getTodaysStatsSorted(userID: self.userID, date: self.date)
-                }
-            }
-        })
+        reportCardLogic.getTodaysStatsSorted(userID: userID, date: date)
     }
 
     func displayData(statsArray: [Stat]) {
@@ -60,11 +38,6 @@ class ReportCardViewController: UIViewController, ReportCardStatsCalculateDelega
         dateLabel.text = "\(dateString)"
         arrayOfStats = statsArray
         tableview.reloadData()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        dayInParkRef.removeObserver(withHandle: handle)
     }
  
 }

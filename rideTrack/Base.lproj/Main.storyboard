@@ -1507,7 +1507,7 @@
                                 <rect key="frame" x="145.5" y="384" width="84" height="30"/>
                                 <state key="normal" title="Report Card"/>
                                 <connections>
-                                    <segue destination="aEN-30-wEY" kind="show" identifier="toReportCard" id="Jpc-XX-d2c"/>
+                                    <segue destination="aEN-30-wEY" kind="presentation" identifier="toReportCard" modalPresentationStyle="overCurrentContext" id="Jpc-XX-d2c"/>
                                 </connections>
                             </button>
                         </subviews>

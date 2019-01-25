@@ -26,8 +26,9 @@ class SettingsViewController: UIViewController, UITextViewDelegate, SFSafariView
     @IBOutlet weak var emailLink: UITextView!
     @IBOutlet weak var reportCardButton: UIButton!
     var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
-    
+    let screenSize = UIScreen.main.bounds
     var userID: String!
+    var darkenBackground=UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +53,12 @@ class SettingsViewController: UIViewController, UITextViewDelegate, SFSafariView
             approveSuggestionsButton.isHidden = true
             reportCardButton.isHidden = true
         }
+        
+        darkenBackground=UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height))
+        darkenBackground.backgroundColor = UIColor.black
+        darkenBackground.alpha = 0.0
+        darkenBackground.isUserInteractionEnabled = true
+        self.view.addSubview(darkenBackground)
         // Do any additional setup after loading the view.
     }
     
@@ -108,29 +115,24 @@ class SettingsViewController: UIViewController, UITextViewDelegate, SFSafariView
     
     @IBAction func unwindToSettingsView(sender: UIStoryboardSegue) {
         print("Back to settings")
+        UIView.animate(withDuration: 0.2, animations: {
+            self.darkenBackground.alpha =  0.0
+        })
     }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toParkList"{
-            //I have moved all this to the unwindToParksList in ViewController
-//            print("back from settings")
-//            let listVC = segue.destination as! ViewController
-//            listVC.showExtinct = showExtinct
-//            listVC.simulateLocation = simulateLocation
-//
-//            listVC.searchRideButtonHeightConstraint.constant = 23
-//            listVC.currentLocationViewBottomConstraint.constant = -61
-//            listVC.locationManager.requestWhenInUseAuthorization()
-//            listVC.locationManager.requestLocation()
-//            print("GETTING GPS DATA")
+
         }
         if segue.identifier == "toReportCard"{
+            let navVC = segue.destination as? UINavigationController
+            let reportCardVC = navVC?.viewControllers.first as! MyTripsViewController
             print("toReportCard with uid \(userID!)")
-            //I have moved all this to the unwindToParksList in ViewController
-            //            print("back from settings")
-            let reportCardVC = segue.destination as! ReportCardViewController
             reportCardVC.userID = userID!
+            UIView.animate(withDuration: 0.2, animations: {
+                self.darkenBackground.alpha =  0.20
+            })
         }
     }
 }

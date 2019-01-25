@@ -83,6 +83,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
     var checkedIntoPark = false
     var numberOfCheckinsToDisplay = 0
     var lastVisit = 0.0
+    var checkedInParkID = -1
     
     var savedMyParksForSearch = [ParksList]()
     var isSearchingMyParks = false
@@ -447,6 +448,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
             attractionVC.parkData.incrementorEnabled = selectedPark.incrementorEnabled
             attractionVC.checkedIntoPark = checkedIntoPark
             checkedIntoPark = false
+            if checkedInParkID == selectedPark.parkID{
+                print("Currently in the park")
+                attractionVC.checkedIntoPark = true
+            }
             
             //If the name of the park has changed, update the name in Parks-list
             if arrayOfAllParks[arrayOfAllParksIndex].name != selectedPark.name{
@@ -603,7 +608,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
                             "checkedInToday": false
                             ])
                         //dayInParkRef.removeValue()
-            
+                        checkedInParkID = -1
                         
                     }
                     if currentLocationPark.checkedInToday{
@@ -614,6 +619,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
                         viewAttractionLocationButton.backgroundColor = checkInButtonColor
                         viewAttractionLocationButton.setTitle("Check In", for: .normal)
                         viewAttractionLocationButton.setTitleColor(.white, for: .normal)
+                        checkedInParkID = -1
                     }
                 }
             
@@ -656,7 +662,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
             print("new park")
             addNewParkToList(newPark: closestPark, newCheckin: true)
             Analytics.logEvent("check_into_park", parameters: ["parkName": closestPark])
-            
+            checkedInParkID = closestPark.parkID
             let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, numberOfVisitsToThePark: 1, parkName: closestPark.name)
             let startDayInParkRef = self.dayInParkRef.child(String("\(Int(midnight.timeIntervalSince1970))/todays-stats"))
             startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
@@ -687,7 +693,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
                 "numberOfCheckIns": selectedPark.numberOfCheckIns + 1
                 ])
             print("Checking in for first time")
-            
+            checkedInParkID = selectedPark.parkID
             let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, numberOfVisitsToThePark: selectedPark.numberOfCheckIns+1, parkName: selectedPark.name)
             let startDayInParkRef = self.dayInParkRef.child(String("\(Int(midnight.timeIntervalSince1970))/todays-stats"))
             startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
