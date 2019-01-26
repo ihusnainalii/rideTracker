@@ -14,7 +14,7 @@ class MyTripsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backgroundView: UIView!
     
-    var userID: String!
+    var userID = UserDefaults.standard.string(forKey: "userID")
     var dayInParkRef: DatabaseReference!
     let dayTimePeriodFormatter = DateFormatter()
     var myTripsArray = [MyTrips]()
@@ -60,7 +60,6 @@ class MyTripsViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toReportCard"{
             let reportCardVC = segue.destination as! ReportCardViewController
-            reportCardVC.userID = userID!
             let selectedIndex = (tableView.indexPathForSelectedRow?.row)!
             reportCardVC.date = myTripsArray[selectedIndex].date
 

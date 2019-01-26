@@ -12,6 +12,8 @@ import Foundation
 import CoreLocation
 import Firebase
 
+import UserNotifications
+
 
 class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProtocol, NSFetchedResultsControllerDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate{
     
@@ -146,6 +148,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
         }
         let userID = Auth.auth().currentUser
         let id = userID?.uid
+        UserDefaults.standard.set(id, forKey: "userID")
         
         self.userNameRef = Database.database().reference(withPath:"users/details/\(id!)/userName") ///userName
         self.parksListRef = Database.database().reference(withPath: "all-parks-list/\(id!)")
@@ -491,7 +494,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
         if segue.identifier == "toSettings"{
             let settingsVC = segue.destination as! SettingsViewController
             settingsVC.simulateLocation = simulateLocation
-            settingsVC.userID = user.uid
         }
         if segue.identifier == "toLists"{
             //let allListVC = segue.destination as! AllListsViewController
@@ -663,26 +665,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
             print("new park")
             addNewParkToList(newPark: closestPark, newCheckin: true)
             Analytics.logEvent("check_into_park", parameters: ["parkName": closestPark])
-            checkedInParkID = closestPark.parkID
-            let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, numberOfVisitsToThePark: 1, parkName: closestPark.name)
-            let startDayInParkRef = self.dayInParkRef.child(String("\(Int(midnight.timeIntervalSince1970))/todays-stats"))
-            startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
-        } else{
-            print("old")
+            configureDayInPark(closestPark: closestPark, numberOfVisits: 1, midnight: midnight)
         }
-        
         
         checkedIntoPark = true
         segueWithTableViewSelect = false
         let selectedParkIndex = findIndexInAllParksList(parkID: closestPark.parkID)
         
-        
         selectedPark = allParksList[selectedParkIndex]
-        print("SELECTED PARK NAME AND INDEX")
-        print(selectedPark.checkedInToday)
-        print(selectedParkIndex)
         if !selectedPark.checkedInToday{
-            
             firstCheckin = true
             numberOfCheckinsToDisplay = selectedPark.numberOfCheckIns + 1
             lastVisit = selectedPark.lastDayVisited
@@ -694,18 +685,34 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
                 "numberOfCheckIns": selectedPark.numberOfCheckIns + 1
                 ])
             print("Checking in for first time")
-            checkedInParkID = selectedPark.parkID
-            let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, numberOfVisitsToThePark: selectedPark.numberOfCheckIns+1, parkName: selectedPark.name)
-            let startDayInParkRef = self.dayInParkRef.child(String("\(Int(midnight.timeIntervalSince1970))/todays-stats"))
-            startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
-        }
         
+            configureDayInPark(closestPark: closestPark, numberOfVisits: selectedPark.numberOfCheckIns+1, midnight: midnight)
+        }
         
         viewAttractionLocationButton.backgroundColor = settingsColor
         viewAttractionLocationButton.setTitle("View Attractions", for: .normal)
         viewAttractionLocationButton.setTitleColor(.black, for: .normal)
         
         performSegue(withIdentifier: "toAttractionsAll", sender: nil)
+    }
+    
+    func configureDayInPark(closestPark: ParksModel, numberOfVisits: Int, midnight: Date){
+        
+        let content = UNMutableNotificationContent()
+        content.title = "How was your day at \(closestPark.name!)?"
+        content.body = "View today's Report Card to see an overview of your day at the park!"
+        content.sound = UNNotificationSound.default
+        var date = DateComponents()
+        date.hour = 21
+        date.minute = 00
+        let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: false)
+        let request = UNNotificationRequest(identifier: "dayInParkNotification", content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        
+        checkedInParkID = closestPark.parkID
+        let newDayInParkModel = DayInPark(checkInTime: midnight.timeIntervalSince1970, numberOfVisitsToThePark: numberOfVisits, parkName: closestPark.name)
+        let startDayInParkRef = self.dayInParkRef.child(String("\(Int(midnight.timeIntervalSince1970))/todays-stats"))
+        startDayInParkRef.setValue(newDayInParkModel.toAnyObject())
     }
     
     

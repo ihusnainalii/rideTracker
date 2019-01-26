@@ -12,10 +12,12 @@ class ReportCardViewController: UIViewController, ReportCardStatsCalculateDelega
 
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var tableview: UITableView!
+    @IBOutlet weak var doneButton: UIButton!
     
-    var userID: String!
+    var userID = UserDefaults.standard.string(forKey: "userID")
     var date = 0
     var arrayOfStats = [Stat]()
+    var doneButtonVisible = false
     
     
     override func viewDidLoad() {
@@ -25,7 +27,11 @@ class ReportCardViewController: UIViewController, ReportCardStatsCalculateDelega
         
         let reportCardLogic = ReportCardLogic()
         reportCardLogic.delegate = self
-        reportCardLogic.getTodaysStatsSorted(userID: userID, date: date)
+        reportCardLogic.getTodaysStatsSorted(userID: userID!, date: date)
+        doneButton.isHidden = true
+        if doneButtonVisible{
+            doneButton.isHidden = false
+        }
     }
 
     func displayData(statsArray: [Stat]) {
@@ -39,7 +45,12 @@ class ReportCardViewController: UIViewController, ReportCardStatsCalculateDelega
         arrayOfStats = statsArray
         tableview.reloadData()
     }
- 
+    @IBAction func didTapDone(_ sender: Any) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyBoard.instantiateViewController(withIdentifier: "parksVC") as! ViewController
+        self.present(viewController, animated: true, completion: nil)
+    }
+    
 }
 
 extension ReportCardViewController: UITableViewDataSource, UITableViewDelegate{

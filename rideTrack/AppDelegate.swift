@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Firebase
+import UserNotifications
 
 import UserNotifications
 import FirebaseInstanceID
@@ -52,6 +53,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
        
         application.registerForRemoteNotifications()
         return true
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        var calendar = NSCalendar.current
+        calendar.timeZone = NSTimeZone.local//OR NSTimeZone.localTimeZone()
+        let midnight = calendar.startOfDay(for: Date())
+        
+        if response.notification.request.identifier == "dayInParkNotification" {
+            let reportCardStoryboard : UIStoryboard = UIStoryboard(name: "ReportCard", bundle: nil)
+            let reportCardVC: ReportCardViewController = reportCardStoryboard.instantiateViewController(withIdentifier: "reportCard") as! ReportCardViewController
+            reportCardVC.date = Int(midnight.timeIntervalSince1970)
+            reportCardVC.doneButtonVisible = true
+            
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = reportCardVC
+            self.window?.makeKeyAndVisible()
+            
+        }
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

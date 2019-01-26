@@ -113,7 +113,7 @@
         <!--Report Card View Controller-->
         <scene sceneID="kNI-jK-LkF">
             <objects>
-                <viewController id="JlY-2q-ciE" customClass="ReportCardViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="reportCard" id="JlY-2q-ciE" customClass="ReportCardViewController" customModule="rideTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AwT-e7-d6M">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -179,23 +179,33 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9du-qa-nvo">
+                                <rect key="frame" x="330" y="70" width="37" height="30"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="didTapDone:" destination="JlY-2q-ciE" eventType="touchUpInside" id="Y1w-FU-sIJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="NXX-hn-9SB" firstAttribute="leading" secondItem="BD1-gm-QCo" secondAttribute="leading" constant="16" id="1Pf-Kr-YgL"/>
                             <constraint firstItem="BD1-gm-QCo" firstAttribute="trailing" secondItem="tgj-8J-sTH" secondAttribute="trailing" constant="15" id="8yd-78-2sn"/>
                             <constraint firstItem="NXX-hn-9SB" firstAttribute="top" secondItem="BD1-gm-QCo" secondAttribute="top" constant="6" id="Evm-0i-3sr"/>
+                            <constraint firstItem="9du-qa-nvo" firstAttribute="top" secondItem="BD1-gm-QCo" secondAttribute="top" constant="6" id="JBP-Pf-mu9"/>
                             <constraint firstItem="eNS-Ov-Shu" firstAttribute="bottom" secondItem="BD1-gm-QCo" secondAttribute="bottom" id="M40-qc-J8E"/>
                             <constraint firstItem="eNS-Ov-Shu" firstAttribute="trailing" secondItem="BD1-gm-QCo" secondAttribute="trailing" id="bpb-gb-CTW"/>
                             <constraint firstItem="eNS-Ov-Shu" firstAttribute="leading" secondItem="BD1-gm-QCo" secondAttribute="leading" id="cI5-rJ-pik"/>
                             <constraint firstItem="eNS-Ov-Shu" firstAttribute="top" secondItem="tgj-8J-sTH" secondAttribute="bottom" constant="22.5" id="ly2-Ox-wUE"/>
                             <constraint firstItem="tgj-8J-sTH" firstAttribute="top" secondItem="BD1-gm-QCo" secondAttribute="top" constant="27" id="olt-fj-SsI"/>
+                            <constraint firstItem="BD1-gm-QCo" firstAttribute="trailing" secondItem="9du-qa-nvo" secondAttribute="trailing" constant="8" id="qrM-kv-LpV"/>
                             <constraint firstItem="tgj-8J-sTH" firstAttribute="leading" secondItem="BD1-gm-QCo" secondAttribute="leading" constant="15" id="xlj-Jc-52K"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BD1-gm-QCo"/>
                     </view>
                     <connections>
                         <outlet property="dateLabel" destination="tgj-8J-sTH" id="TdV-Ox-Sdx"/>
+                        <outlet property="doneButton" destination="9du-qa-nvo" id="Ee0-4k-6GT"/>
                         <outlet property="tableview" destination="eNS-Ov-Shu" id="uNX-K0-fAf"/>
                     </connections>
                 </viewController>
