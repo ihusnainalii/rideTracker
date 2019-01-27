@@ -72,6 +72,21 @@ class ConfigureSmallerLayout{
     func parkInfoViewLayout(parkInfoView: ParkInfoViewController){
         
     }
+    func settingsViewLayout(settingsView: SettingsViewController){
+        settingsView.iconWidth.constant = 60
+        settingsView.iconHeight.constant = 60
+        settingsView.showCameraLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        settingsView.simulateLocationLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        settingsView.showCameraViewHeight.constant = 40
+        settingsView.simulateLocViewHieght.constant = 55
+        settingsView.logoutButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        settingsView.userNameLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        settingsView.FAQTopConst.constant = 4
+        settingsView.navBarTopConst.constant = 40
+        settingsView.doneButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        settingsView.doneButtonWidth.constant = 55
+        settingsView.doneButtonConstBottom.constant = 10
+    }
     
     func attractionCellLayout(attractionsCell: AttractionsTableViewCell){
         attractionsCell.rideName.font = UIFont.systemFont(ofSize: 17, weight: .medium)

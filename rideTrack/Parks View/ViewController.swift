@@ -344,7 +344,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
                 dayVisited = midnight.timeIntervalSince1970
                 checkInToday = true
             }
-            let newParkModel = ParksList(parkID: newPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: newPark.name, location: newPark.city, showDefunct: false, parkDefunct: false, showSeasonal: false, numberOfCheckIns: checkins, lastDayVisited: dayVisited, checkedInToday: checkInToday)
+            let newParkModel = ParksList(parkID: newPark.parkID, favorite: false, ridesRidden: 0, totalRides: 0, incrementorEnabled: false, name: newPark.name, location: newPark.city, showDefunct: true, parkDefunct: false, showSeasonal: false, numberOfCheckIns: checkins, lastDayVisited: dayVisited, checkedInToday: checkInToday)
     
             let newParkRef = self.parksListRef.child(String(newParkModel.parkID))
             newParkRef.setValue(newParkModel.toAnyObject())
@@ -492,6 +492,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
             let settingsVC = segue.destination as! SettingsViewController
             settingsVC.simulateLocation = simulateLocation
             settingsVC.userID = user.uid
+            settingsVC.userName = userName
+
         }
         if segue.identifier == "toLists"{
             //let allListVC = segue.destination as! AllListsViewController
