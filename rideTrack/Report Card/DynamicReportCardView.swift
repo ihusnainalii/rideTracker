@@ -12,17 +12,17 @@ class DynamicReportCardView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        createSubviews()
+        createviews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        createSubviews()
+        createviews()
     }
     
-    func createSubviews() {
+    func createviews() {
         
-        
+        /*
         backgroundColor = UIColor(white: 0.9, alpha: 1)
         
         let stackView = UIStackView()
@@ -40,19 +40,14 @@ class DynamicReportCardView: UIView {
         notice.text = "Your child has attempted to share the following photo from the camera:"
         stackView.addArrangedSubview(notice)
         
-        let imageView = UIImageView(image: UIImage(named: "Experiences"))
-        stackView.addArrangedSubview(imageView)
+        var DynamicView = UIView(frame: CGRect(x: 100, y: 200, width: 100, height: 100))
+        DynamicView.backgroundColor=UIColor.green
+        DynamicView.layer.cornerRadius=25
+        DynamicView.layer.borderWidth=2
+        self.addSubview(DynamicView)
+ */
         
-        let prompt = UILabel()
-        prompt.numberOfLines = 0
-        prompt.text = "What do you want to do?"
-        stackView.addArrangedSubview(prompt)
         
-        for option in ["Always Allow", "Allow Once", "Deny", "Manage Settings"] {
-            let button = UIButton(type: .system)
-            button.setTitle(option, for: .normal)
-            stackView.addArrangedSubview(button)
-        }
     }
 
 }

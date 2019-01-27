@@ -54,7 +54,7 @@ class ReportCardViewController: UIViewController, ReportCardStatsCalculateDelega
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDynamicUI"{
             let dynamixVC = segue.destination as! RCDynamicViewController
-            dynamixVC.arrayOfStats = arrayOfStats
+            //dynamixVC.arrayOfStats = arrayOfStats
         }
     }
     
