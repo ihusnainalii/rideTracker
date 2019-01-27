@@ -195,8 +195,7 @@ class SettingsViewController: UIViewController, UITextViewDelegate, SFSafariView
         if segue.identifier == "toReportCard"{
             let navVC = segue.destination as? UINavigationController
             let reportCardVC = navVC?.viewControllers.first as! MyTripsViewController
-            print("toReportCard with uid \(userID)")
-            reportCardVC.userID = userID
+
             UIView.animate(withDuration: 0.2, animations: {
                 self.darkenBackground.alpha =  0.20
             })

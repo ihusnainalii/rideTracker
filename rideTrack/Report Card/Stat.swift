@@ -18,14 +18,19 @@ class Stat: NSObject {
     var calculatedScore: Int!
     var incrementBy: Int!
     
+    var displayType: BoxType!
+    var preferedBoxSize: PreferedSize!
+    
     override init() {
     }
     
-    init(category: String, weight: Int, minStat: Int, incrementBy: Int) {
+    init(category: String, weight: Int, minStat: Int, incrementBy: Int, displayType: BoxType, preferedBoxSize: PreferedSize) {
         self.category = category
         self.weight = weight
         self.minStat = minStat
         self.incrementBy = incrementBy
+        self.displayType = displayType
+        self.preferedBoxSize = preferedBoxSize
         
         stat = 0
         calculatedScore = 0
@@ -42,4 +47,16 @@ class Stat: NSObject {
         self.rideName = rideName
     }
     
+}
+
+enum BoxType {
+    case statLabel
+    case topRideList
+    case statAttractionLabel
+}
+
+enum PreferedSize{
+    case quarter
+    case half
+    case threeQuarters
 }
