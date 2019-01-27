@@ -564,10 +564,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
             var oneMileParks = [ParksModel]()
 
             if simulateLocation == 1{
-                //latitude = 28.4161
-                //longitude = -81.5811
-                latitude = 28.0372
-                longitude = -82.4195
+                latitude = 28.4161
+                longitude = -81.5811
+                //latitude = 28.0372
+                //longitude = -82.4195
             }
             
             let currentLocation = CLLocation(latitude: latitude, longitude: longitude)
