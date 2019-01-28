@@ -48,7 +48,8 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
     let screenSize = UIScreen.main.bounds
     var segueWithTableViewSelect = false
     var insets = UIEdgeInsets(top: -4.5, left: 0, bottom: 5.5, right: 0)
-    
+    var showPhotoIcon = UserDefaults.standard.integer(forKey: "showPhotoIcon")
+
     var firstTimeDownload = true
     
     @IBOutlet weak var typesFiltered: UILabel!
@@ -582,9 +583,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
         let cell = tableView.dequeueReusableCell(withIdentifier: "rideCell", for: indexPath) as! AttractionsTableViewCell
         cell.delegate = self
         let item: AttractionsModel = CurrTableView[indexPath.row]
-    
 
-        
         if parkData.incrementorEnabled{
             if ((CurrTableView[indexPath.row]).isCheck){
                 cell.rideCountViewLeadingConstraint.constant = 3
@@ -611,6 +610,9 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
                 configureCellCheck(cell: cell, item: item)
             }
         }
+        if CurrTableView[indexPath.row].photoArtist != "" && showPhotoIcon == 1{ cell.cameraIcon.isHidden = false }
+        else {cell.cameraIcon.isHidden = true}
+        
         cell.rideName.text = CurrTableView[indexPath.row].name
         cell.rideTypeLabel.text = convertRideTypeID(rideTypeID: CurrTableView[indexPath.row].rideType)
         cell.backgroundColor = UIColor.clear

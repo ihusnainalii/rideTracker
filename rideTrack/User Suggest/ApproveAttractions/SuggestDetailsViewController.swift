@@ -114,8 +114,8 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         checkIfMultipleAttractions.observe(.value, with: { snapshot in
             if snapshot.exists(){
                 let currValue = (snapshot.value as! String)
-                if currValue.count > 35 && !currValue.contains(", and more") {
-                    self.attractionName = "\(currValue), and more"
+                if currValue.count > 35 && !currValue.contains(", and more are") {
+                    self.attractionName = "\(currValue), and more are"
                     print("adding and more!")
 
                 }
@@ -288,8 +288,8 @@ class SuggestDetailsViewController: UIViewController, UITextFieldDelegate, UITex
         
         let changes = "NEW RIDE: \(rideName!) at \(parkNameLabel.text!) opened in \(yearOpen) and is type \(rideType)"
         let (urlPath3) = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/uploadToDatabaseLog.php? username=\(selectedAttraction.userName!)&changes=\(changes)&status=\("Approved")" //uploads to suggestion log
-       print (urlPath)
-        let dataModel = DataModel()
+      print (urlPath)
+         let dataModel = DataModel()
         dataModel.delegate = self
 
         let urlPath2 = "http://www.beingpositioned.com/theparksman/LogRide/Version1.0.5/deleteFromList.php?list=UserSuggest&key=id&tempID=\(self.selectedAttraction.id!)" //deletes from suggested list

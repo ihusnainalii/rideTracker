@@ -16,6 +16,7 @@ class AttractionsTableViewCell: UITableViewCell {
     @IBOutlet weak var rideCellSquare: UIView!
     @IBOutlet weak var rideCountViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var extendedTappableCheckView: UIView!
+    @IBOutlet weak var cameraIcon: UIImageView!
     
     
     // @IBOutlet weak var addRideButton: UIImageView!
