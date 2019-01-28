@@ -12,21 +12,21 @@ class StatLabelView: UIView {
 
     @IBOutlet weak var statLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet var containerView: UIView!
-        
-    var width = 1.0
     
     
-    override open var intrinsicContentSize: CGSize {
-        return CGSize(width: width, height: 1.0)
-    }
     
-    /*
+    
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
         // Drawing code
+        self.layer.shadowOpacity = 0.2
+        self.layer.shadowOffset = CGSize.zero
+        self.layer.shadowRadius = 9
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.cornerRadius = 20
+
     }
-    */
+    
 
 }
