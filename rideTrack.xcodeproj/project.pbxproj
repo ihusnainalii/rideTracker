@@ -48,6 +48,8 @@
 		5FD613DF210A356F008D4122 /* ScoreCardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD613DE210A356F008D4122 /* ScoreCardList.swift */; };
 		5FDB162A21FABDBD0085192E /* MyTripsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDB162921FABDBD0085192E /* MyTripsViewController.swift */; };
 		5FDB162C21FABFD40085192E /* MyTripsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDB162B21FABFD40085192E /* MyTripsTableViewCell.swift */; };
+		5FDD36B721FE54B200B4611D /* StatLabelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD36B621FE54B200B4611D /* StatLabelView.xib */; };
+		5FDD36B921FE56D000B4611D /* StatLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDD36B821FE56D000B4611D /* StatLabelView.swift */; };
 		5FDD507F21F52A410031590E /* Stat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDD507E21F52A410031590E /* Stat.swift */; };
 		5FDD508121F54D220031590E /* ReportCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDD508021F54D220031590E /* ReportCardTableViewCell.swift */; };
 		5FE9F81020DB45030012B98C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FE9F80F20DB45030012B98C /* Media.xcassets */; };
@@ -174,6 +176,8 @@
 		5FD613DE210A356F008D4122 /* ScoreCardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardList.swift; sourceTree = "<group>"; };
 		5FDB162921FABDBD0085192E /* MyTripsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripsViewController.swift; sourceTree = "<group>"; };
 		5FDB162B21FABFD40085192E /* MyTripsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripsTableViewCell.swift; sourceTree = "<group>"; };
+		5FDD36B621FE54B200B4611D /* StatLabelView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatLabelView.xib; sourceTree = "<group>"; };
+		5FDD36B821FE56D000B4611D /* StatLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatLabelView.swift; sourceTree = "<group>"; };
 		5FDD507E21F52A410031590E /* Stat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stat.swift; sourceTree = "<group>"; };
 		5FDD508021F54D220031590E /* ReportCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCardTableViewCell.swift; sourceTree = "<group>"; };
 		5FE9F80F20DB45030012B98C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -385,6 +389,8 @@
 				5FDD507E21F52A410031590E /* Stat.swift */,
 				5FDD508021F54D220031590E /* ReportCardTableViewCell.swift */,
 				5FDB162B21FABFD40085192E /* MyTripsTableViewCell.swift */,
+				5FDD36B621FE54B200B4611D /* StatLabelView.xib */,
+				5FDD36B821FE56D000B4611D /* StatLabelView.swift */,
 			);
 			path = "Report Card";
 			sourceTree = "<group>";
@@ -682,6 +688,7 @@
 				5F964AE9217158CE00989DB4 /* UserCreatedLists.storyboard in Resources */,
 				9832E68F2182952600289677 /* ApproveSuggestions.storyboard in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
+				5FDD36B721FE54B200B4611D /* StatLabelView.xib in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
 				5FFA2D4821EA3C5500CF3956 /* GoogleService-Info.plist in Resources */,
 			);
@@ -878,6 +885,7 @@
 				98C28A9D20EBD90900C7229E /* ApproveSuggestAttracionModel.swift in Sources */,
 				5FDD507F21F52A410031590E /* Stat.swift in Sources */,
 				5F6B9A8221E514F100EAA478 /* DayInPark.swift in Sources */,
+				5FDD36B921FE56D000B4611D /* StatLabelView.swift in Sources */,
 				5FFCB7FF21055E400054D84D /* ParksList.swift in Sources */,
 				5FDB162A21FABDBD0085192E /* MyTripsViewController.swift in Sources */,
 			);
