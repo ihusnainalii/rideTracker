@@ -250,58 +250,9 @@
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="UPd-bn-DAj">
                                                 <rect key="frame" x="0.0" y="0.0" width="349" height="98"/>
-                                                <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sFL-f3-ced">
-                                                        <rect key="frame" x="0.0" y="0.0" width="60" height="98"/>
-                                                        <color key="backgroundColor" red="0.30588235289999999" green="0.64705882349999999" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="60" id="7n5-hB-Ynk"/>
-                                                        </constraints>
-                                                    </view>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Q4i-YL-x9p">
-                                                        <rect key="frame" x="65" y="0.0" width="144" height="98"/>
-                                                        <subviews>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YTI-0u-JKZ">
-                                                                <rect key="frame" x="0.0" y="0.0" width="144" height="46"/>
-                                                                <color key="backgroundColor" red="0.0012695598420000001" green="0.59057420490000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            </view>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TTu-Il-RYB">
-                                                                <rect key="frame" x="0.0" y="52" width="144" height="46"/>
-                                                                <color key="backgroundColor" red="0.99907737969999999" green="0.22950214150000001" blue="0.18888315559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            </view>
-                                                        </subviews>
-                                                    </stackView>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PTM-Jx-e2b">
-                                                        <rect key="frame" x="214" y="0.0" width="135" height="98"/>
-                                                        <color key="backgroundColor" red="0.99907737969999999" green="0.22950214150000001" blue="0.18888315559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="135" id="nNh-iU-uwX"/>
-                                                        </constraints>
-                                                    </view>
-                                                </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="voR-yH-T3Q">
                                                 <rect key="frame" x="0.0" y="103" width="349" height="98"/>
-                                                <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jxJ-hw-u0A">
-                                                        <rect key="frame" x="0.0" y="0.0" width="135" height="98"/>
-                                                        <color key="backgroundColor" red="0.31372549020000001" green="0.64313725489999995" blue="0.29803921570000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="135" id="nwQ-be-vlc"/>
-                                                        </constraints>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iLI-fh-Pek">
-                                                        <rect key="frame" x="0.0" y="0.0" width="349" height="98"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <color key="backgroundColor" red="0.87739191019999996" green="0.96299952040000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </view>
-                                                </subviews>
-                                                <variation key="default">
-                                                    <mask key="subviews">
-                                                        <exclude reference="jxJ-hw-u0A"/>
-                                                        <exclude reference="iLI-fh-Pek"/>
-                                                    </mask>
-                                                </variation>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="icN-ZG-1C5">
                                                 <rect key="frame" x="0.0" y="206" width="349" height="98"/>

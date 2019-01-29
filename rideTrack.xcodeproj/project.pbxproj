@@ -20,7 +20,11 @@
 		5F24DA0A2130A92800C2D2CC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F24DA092130A92800C2D2CC /* MapViewController.swift */; };
 		5F2EEC4D21050FFF0036B47A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */; };
 		5F2EEC4F210510150036B47A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2EEC4E210510150036B47A /* SignUpViewController.swift */; };
+		5F3597A921FFF90800CD1D1B /* StatLabelAttractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3597A821FFF90800CD1D1B /* StatLabelAttractionView.swift */; };
+		5F3597AB21FFFE6200CD1D1B /* TopRideTypeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F3597AA21FFFE6100CD1D1B /* TopRideTypeView.xib */; };
+		5F3597AD2200012000CD1D1B /* TopRideTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3597AC2200012000CD1D1B /* TopRideTypeView.swift */; };
 		5F44F7152132FB50006E6005 /* ParkInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F44F7142132FB50006E6005 /* ParkInfoViewController.swift */; };
+		5F4E2D1B21FFF66300890F5A /* StatLabelAttractionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F4E2D1A21FFF66300890F5A /* StatLabelAttractionView.xib */; };
 		5F636B5D2138B1A100D2B922 /* StatsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B5C2138B1A100D2B922 /* StatsContainerViewController.swift */; };
 		5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F636B5E2139C09500D2B922 /* StatsStoryboard.storyboard */; };
 		5F636B612139CD9B00D2B922 /* OverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F636B602139CD9B00D2B922 /* OverViewController.swift */; };
@@ -148,7 +152,11 @@
 		5F2EEC4C21050FFF0036B47A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5F2EEC4E210510150036B47A /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		5F2EEC53210512E70036B47A /* rideTrack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = rideTrack.entitlements; sourceTree = "<group>"; };
+		5F3597A821FFF90800CD1D1B /* StatLabelAttractionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatLabelAttractionView.swift; sourceTree = "<group>"; };
+		5F3597AA21FFFE6100CD1D1B /* TopRideTypeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopRideTypeView.xib; sourceTree = "<group>"; };
+		5F3597AC2200012000CD1D1B /* TopRideTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRideTypeView.swift; sourceTree = "<group>"; };
 		5F44F7142132FB50006E6005 /* ParkInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkInfoViewController.swift; sourceTree = "<group>"; };
+		5F4E2D1A21FFF66300890F5A /* StatLabelAttractionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatLabelAttractionView.xib; sourceTree = "<group>"; };
 		5F636B5C2138B1A100D2B922 /* StatsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsContainerViewController.swift; sourceTree = "<group>"; };
 		5F636B5E2139C09500D2B922 /* StatsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = StatsStoryboard.storyboard; sourceTree = "<group>"; };
 		5F636B602139CD9B00D2B922 /* OverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverViewController.swift; sourceTree = "<group>"; };
@@ -390,7 +398,11 @@
 				5FDD508021F54D220031590E /* ReportCardTableViewCell.swift */,
 				5FDB162B21FABFD40085192E /* MyTripsTableViewCell.swift */,
 				5FDD36B621FE54B200B4611D /* StatLabelView.xib */,
+				5F4E2D1A21FFF66300890F5A /* StatLabelAttractionView.xib */,
+				5F3597AA21FFFE6100CD1D1B /* TopRideTypeView.xib */,
 				5FDD36B821FE56D000B4611D /* StatLabelView.swift */,
+				5F3597A821FFF90800CD1D1B /* StatLabelAttractionView.swift */,
+				5F3597AC2200012000CD1D1B /* TopRideTypeView.swift */,
 			);
 			path = "Report Card";
 			sourceTree = "<group>";
@@ -688,8 +700,10 @@
 				5F964AE9217158CE00989DB4 /* UserCreatedLists.storyboard in Resources */,
 				9832E68F2182952600289677 /* ApproveSuggestions.storyboard in Resources */,
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
+				5F3597AB21FFFE6200CD1D1B /* TopRideTypeView.xib in Resources */,
 				5FDD36B721FE54B200B4611D /* StatLabelView.xib in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
+				5F4E2D1B21FFF66300890F5A /* StatLabelAttractionView.xib in Resources */,
 				5FFA2D4821EA3C5500CF3956 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -830,6 +844,7 @@
 				5FFCB804210579C80054D84D /* AttractionList.swift in Sources */,
 				5F08895F21237B3B0065BBF1 /* StatsViewController.swift in Sources */,
 				5F16C51D20BB92FC00E525EF /* AttractionsTableViewCell.swift in Sources */,
+				5F3597AD2200012000CD1D1B /* TopRideTypeView.swift in Sources */,
 				5FA9901521723EE600F76025 /* ListTableViewCell.swift in Sources */,
 				5FB6F17521FD030200DAA436 /* RCDynamicViewController.swift in Sources */,
 				5FFCB80121055E470054D84D /* User.swift in Sources */,
@@ -861,6 +876,7 @@
 				98AD7F7520A91A5C00540AB3 /* ViewController.swift in Sources */,
 				5FA990212172677E00F76025 /* SelectAttractionTableViewCell.swift in Sources */,
 				982E097820F6830E007F2D02 /* ModifyAttractionDetailsViewController.swift in Sources */,
+				5F3597A921FFF90800CD1D1B /* StatLabelAttractionView.swift in Sources */,
 				9882CAB221F3B100006C2D7A /* ApprovedSuggestionsList.swift in Sources */,
 				98AD7F7020A91A5C00540AB3 /* ParksModel.swift in Sources */,
 				988A1A392170EEDB004CF3A8 /* ParkSuggListViewController.swift in Sources */,
