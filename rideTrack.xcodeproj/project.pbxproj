@@ -62,7 +62,6 @@
 		5FF1ECAA20B526EB00BE1609 /* RideTrack.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */; };
 		5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF1ECAB20B5271800BE1609 /* Main.storyboard */; };
 		5FF1ECB020B5271800BE1609 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */; };
-		5FFA2D4821EA3C5500CF3956 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5FFA2D4721EA3C5500CF3956 /* GoogleService-Info.plist */; };
 		5FFA2D4C21EAC63700CF3956 /* ReportCard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FFA2D4B21EAC63700CF3956 /* ReportCard.storyboard */; };
 		5FFA2D5121EAC82000CF3956 /* ReportCardLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA2D5021EAC82000CF3956 /* ReportCardLogic.swift */; };
 		5FFA2D5321EAD4C800CF3956 /* ReportCardStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA2D5221EAD4C800CF3956 /* ReportCardStats.swift */; };
@@ -190,7 +189,6 @@
 		5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RideTrack.xcdatamodel; sourceTree = "<group>"; };
 		5FF1ECAC20B5271800BE1609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5FF1ECAE20B5271800BE1609 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		5FFA2D4721EA3C5500CF3956 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5FFA2D4B21EAC63700CF3956 /* ReportCard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReportCard.storyboard; sourceTree = "<group>"; };
 		5FFA2D5021EAC82000CF3956 /* ReportCardLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCardLogic.swift; sourceTree = "<group>"; };
 		5FFA2D5221EAD4C800CF3956 /* ReportCardStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCardStats.swift; sourceTree = "<group>"; };
@@ -488,7 +486,6 @@
 				5F7F8D8C20EC80A500C4D488 /* ConfigureSmallerLayout.swift */,
 				5FF1ECAD20B5271800BE1609 /* LaunchScreen.storyboard */,
 				5FF1ECAB20B5271800BE1609 /* Main.storyboard */,
-				5FFA2D4721EA3C5500CF3956 /* GoogleService-Info.plist */,
 				98AD7F6820A91A5A00540AB3 /* ParkSearchViewController.swift */,
 				5F16C52420BCE89200E525EF /* SearchTableViewCell.swift */,
 				5FF1ECA920B526EA00BE1609 /* RideTrack.xcdatamodel */,
@@ -690,7 +687,6 @@
 				5FF1ECAF20B5271800BE1609 /* Main.storyboard in Resources */,
 				5FDD36B721FE54B200B4611D /* StatLabelView.xib in Resources */,
 				5F636B5F2139C09500D2B922 /* StatsStoryboard.storyboard in Resources */,
-				5FFA2D4821EA3C5500CF3956 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

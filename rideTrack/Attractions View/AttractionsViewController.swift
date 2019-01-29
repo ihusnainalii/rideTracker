@@ -702,7 +702,7 @@ class AttractionsViewController: UIViewController, UITableViewDelegate, UITableV
             CurrtableView = extinctAttractionList
         }
         if tableView == self.attractionsTableView {
-            if (CurrtableView[indexPath.row]).active == 1 && CurrtableView[indexPath.row].isCheck == false {
+            if indexPath.section == 0 && CurrtableView[indexPath.row].isCheck == false {
                 let ignoreAction = UIContextualAction(style: .normal, title: "Ignore", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
                     print("ignore button tapped on ride")
                     let cell = self.attractionsTableView.cellForRow(at: indexPath) as! AttractionsTableViewCell
