@@ -320,6 +320,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
     
     
     func addNewParkToList(newPark: ParksModel, newCheckin: Bool) {
+        
+        if newPark.latitude != nil && newPark.longitude != nil {
+            let center = CLLocationCoordinate2D(latitude: newPark.latitude!, longitude: newPark.longitude!)
+            let region = CLCircularRegion(center: center, radius: 1500, identifier: "\(newPark.parkID!)")
+            region.notifyOnEntry = true
+            region.notifyOnExit = false
+            let trigger = UNLocationNotificationTrigger(region: region, repeats: true)
+        
+            let content = UNMutableNotificationContent()
+            content.title = "Check in with LogRide"
+            content.body = "Welcome back to \(newPark.name!)! Check-in to track the rides you go on today!"
+            content.badge = 1
+            content.sound = UNNotificationSound.default
+        
+            let request = UNNotificationRequest(identifier: "\(newPark.parkID!)", content: content, trigger: trigger)
+            UNUserNotificationCenter.current().add(request) { error in }
+        }
         if checkIfNewPark(newPark: newPark){
             
             //Adding defualt user saved data values
@@ -376,6 +393,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
     func removeParkFromList(parkID: Int, indexPath: Int) {
         //Deletes from both RideTrack and ParkList entities
         //parksCoreData.deletePark(parkID: parkID)
+
         print("Make sure the data from Attractions-List-Model gets deleted again ")
         //Check if it is in user's favorites list, if so delete it
         let parkItem = allParksList[indexPath]
@@ -387,8 +405,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, DataModelProt
         let attractionsListRef = Database.database().reference(withPath: "attractions-list/\(id!)/\(parkID)")
         attractionsListRef.removeValue()
         
-        print("Animate delete")
+        let center = UNUserNotificationCenter.current()
+        center.removeDeliveredNotifications(withIdentifiers: ["\(parkID)"])
+        //remove notification for that park
         
+        print("Animate delete")
         favoritesTableView.reloadData()
         
         //Animate away favorites view to dissappear if the last park is being removed from the list

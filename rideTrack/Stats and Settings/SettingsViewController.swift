@@ -11,6 +11,7 @@ import CoreData
 import Foundation
 import Firebase
 import SafariServices
+import UserNotifications
 
 class SettingsViewController: UIViewController, UITextViewDelegate, SFSafariViewControllerDelegate {
     var usersParkList: NSMutableArray = NSMutableArray()
@@ -45,11 +46,14 @@ class SettingsViewController: UIViewController, UITextViewDelegate, SFSafariView
     @IBOutlet weak var navBarTopConst: NSLayoutConstraint!
     @IBOutlet weak var doneButtonWidth: NSLayoutConstraint!
     @IBOutlet weak var doneButtonConstBottom: NSLayoutConstraint!
+    @IBOutlet weak var notifyInParkButton: UISwitch!
     
     
     
     var isAdmin = UserDefaults.standard.integer(forKey: "isAdmin")
     var showCameraICon = UserDefaults.standard.integer(forKey: "showPhotoIcon")
+    var notifyInPark = UserDefaults.standard.integer(forKey: "notifyInPark")
+
     let screenSize = UIScreen.main.bounds
     var userID = ""
     var darkenBackground=UIView()
@@ -66,6 +70,9 @@ class SettingsViewController: UIViewController, UITextViewDelegate, SFSafariView
         
         if showCameraICon == 0 {showCameraSwitch.isOn = false}
         else {showCameraSwitch.isOn = true}
+        
+        if notifyInPark == 2 {notifyInParkButton.isOn = false}
+        else {notifyInParkButton.isOn = true}
         
         if isAdmin == 1 {
             simulateView.isHidden = false
@@ -133,6 +140,20 @@ class SettingsViewController: UIViewController, UITextViewDelegate, SFSafariView
         else {
             self.showCameraICon = 0
             UserDefaults.standard.set(self.showCameraICon, forKey: "showPhotoIcon")
+        }
+    }
+    @IBAction func didTapNotifyInParkSwitch(_ sender: Any) {
+        if notifyInParkButton.isOn {
+            self.notifyInPark = 1
+            UserDefaults.standard.set(self.notifyInPark, forKey: "notifyInPark")
+
+        }
+        else {
+            let center = UNUserNotificationCenter.current()
+            center.removeAllPendingNotificationRequests()
+            self.notifyInPark = 2
+                UserDefaults.standard.set(self.notifyInPark, forKey: "notifyInPark")
+
         }
     }
     

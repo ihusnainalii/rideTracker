@@ -78,7 +78,7 @@ class ConfigureSmallerLayout{
         settingsView.showCameraLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         settingsView.simulateLocationLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         settingsView.showCameraViewHeight.constant = 40
-        settingsView.simulateLocViewHieght.constant = 55
+        settingsView.simulateLocViewHieght.constant = 40
         settingsView.logoutButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         settingsView.userNameLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         settingsView.FAQTopConst.constant = 4

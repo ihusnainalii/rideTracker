@@ -1455,10 +1455,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AaX-GP-WPC">
-                                <rect key="frame" x="10" y="90" width="355" height="105"/>
+                                <rect key="frame" x="10" y="90" width="355" height="135"/>
                                 <subviews>
                                     <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Jyz-Br-icn">
-                                        <rect key="frame" x="0.0" y="0.0" width="355" height="105"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="135"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7e1-jb-S89" userLabel="ShowCameraView">
                                                 <rect key="frame" x="0.0" y="0.0" width="355" height="45"/>
@@ -1485,17 +1485,41 @@
                                                     <constraint firstAttribute="height" constant="45" id="uMO-8S-DKC"/>
                                                 </constraints>
                                             </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sSf-de-y4K">
+                                                <rect key="frame" x="0.0" y="45" width="355" height="45"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notify When Entering Park" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RJJ-wZ-jhn">
+                                                        <rect key="frame" x="10" y="12.5" width="202" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JYb-be-VRT">
+                                                        <rect key="frame" x="296" y="7" width="51" height="31"/>
+                                                        <connections>
+                                                            <action selector="didTapNotifyInParkSwitch:" destination="yIe-5s-JbS" eventType="valueChanged" id="zUV-3k-JTM"/>
+                                                        </connections>
+                                                    </switch>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="JYb-be-VRT" secondAttribute="trailing" constant="10" id="6za-jX-kWQ"/>
+                                                    <constraint firstAttribute="height" constant="45" id="bqT-eY-yfT"/>
+                                                    <constraint firstItem="RJJ-wZ-jhn" firstAttribute="leading" secondItem="sSf-de-y4K" secondAttribute="leading" constant="10" id="cEH-iy-XCW"/>
+                                                    <constraint firstItem="JYb-be-VRT" firstAttribute="centerY" secondItem="sSf-de-y4K" secondAttribute="centerY" id="jMD-tV-XG3"/>
+                                                    <constraint firstItem="RJJ-wZ-jhn" firstAttribute="centerY" secondItem="sSf-de-y4K" secondAttribute="centerY" id="zI2-lt-cfc"/>
+                                                </constraints>
+                                            </view>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qkm-Ar-haA" userLabel="SimulateView">
-                                                <rect key="frame" x="0.0" y="45" width="355" height="60"/>
+                                                <rect key="frame" x="0.0" y="90" width="355" height="45"/>
                                                 <subviews>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IQU-RJ-HOO">
-                                                        <rect key="frame" x="296" y="14.5" width="51" height="31"/>
+                                                        <rect key="frame" x="296" y="7" width="51" height="31"/>
                                                         <connections>
                                                             <action selector="simulateLocation:" destination="yIe-5s-JbS" eventType="valueChanged" id="Cqn-xK-fMl"/>
                                                         </connections>
                                                     </switch>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simulate you are in the magic kingdom" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cju-sr-LTz">
-                                                        <rect key="frame" x="10" y="6" width="271" height="48"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simulate magic kingdom" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cju-sr-LTz">
+                                                        <rect key="frame" x="10" y="10.5" width="271" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -1508,7 +1532,7 @@
                                                     <constraint firstAttribute="trailing" secondItem="IQU-RJ-HOO" secondAttribute="trailing" constant="10" id="eNA-2v-7BS"/>
                                                     <constraint firstItem="cju-sr-LTz" firstAttribute="centerY" secondItem="Qkm-Ar-haA" secondAttribute="centerY" id="klH-Fh-XQw"/>
                                                     <constraint firstItem="IQU-RJ-HOO" firstAttribute="leading" secondItem="cju-sr-LTz" secondAttribute="trailing" constant="15" id="orl-Ta-1r1"/>
-                                                    <constraint firstAttribute="height" constant="60" id="sZk-ok-Cnw"/>
+                                                    <constraint firstAttribute="height" constant="45" id="sZk-ok-Cnw"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -1523,7 +1547,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="03g-Ln-wdM">
-                                <rect key="frame" x="10" y="215" width="355" height="446"/>
+                                <rect key="frame" x="10" y="245" width="355" height="446"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app icon" translatesAutoresizingMaskIntoConstraints="NO" id="t0g-vk-xWe">
                                         <rect key="frame" x="127.5" y="8" width="100" height="100"/>
@@ -1691,6 +1715,7 @@
                         <outlet property="logoutButton" destination="EE1-gy-E9F" id="r6u-NC-DLY"/>
                         <outlet property="navBar" destination="WA9-Vm-XIy" id="hUT-TT-TTc"/>
                         <outlet property="navBarTopConst" destination="RYo-qW-Thm" id="lZV-d4-y3l"/>
+                        <outlet property="notifyInParkButton" destination="JYb-be-VRT" id="vrf-LE-tTI"/>
                         <outlet property="reportCardButton" destination="Z0P-zT-nwW" id="uga-z1-rce"/>
                         <outlet property="showCameraLabel" destination="ZCd-Fs-nMC" id="Kb3-iO-CWq"/>
                         <outlet property="showCameraSwitch" destination="13F-aF-2fb" id="Ue6-0B-lHs"/>
