@@ -59,4 +59,5 @@ enum PreferedSize{
     case quarter
     case half
     case threeQuarters
+    case fill
 }

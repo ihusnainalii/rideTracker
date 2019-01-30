@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TopRideTypeView" customModule="rideTrack" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TopRideTypeView" customModule="rideTrack" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="135" height="98"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x7N-Df-oPW">
+                    <rect key="frame" x="0.0" y="0.0" width="135" height="98"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Unique Attraction" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="UGe-Sb-azC">
+                    <rect key="frame" x="3" y="27" width="129" height="68"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="cJ4-mq-kIP">
+                    <rect key="frame" x="2" y="2" width="131" height="25"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="43" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uQZ-ym-wV8">
+                            <rect key="frame" x="0.0" y="1" width="32" height="24"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                            <color key="textColor" red="0.31372549020000001" green="0.64313725489999995" blue="0.29803921570000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Water Rides" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sX5-GL-oLP">
+                            <rect key="frame" x="36" y="9" width="95" height="16"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                            <color key="textColor" red="0.31372549020000001" green="0.64313725489999995" blue="0.29803921570000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="x4E-gh-gpi"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="UGe-Sb-azC" firstAttribute="top" secondItem="cJ4-mq-kIP" secondAttribute="bottom" id="24u-VG-JPp"/>
+                <constraint firstAttribute="bottom" secondItem="x7N-Df-oPW" secondAttribute="bottom" id="5NF-m2-ohH"/>
+                <constraint firstItem="cJ4-mq-kIP" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="2" id="7sm-p9-ot5"/>
+                <constraint firstAttribute="trailing" secondItem="cJ4-mq-kIP" secondAttribute="trailing" constant="2" id="JPl-jT-iRk"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="UGe-Sb-azC" secondAttribute="trailing" constant="3" id="NFP-pI-L14"/>
+                <constraint firstItem="UGe-Sb-azC" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="3" id="PAr-wU-Gx4"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="UGe-Sb-azC" secondAttribute="bottom" constant="3" id="Qa4-Kh-elN"/>
+                <constraint firstItem="x7N-Df-oPW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="jnp-U5-W0d"/>
+                <constraint firstAttribute="trailing" secondItem="x7N-Df-oPW" secondAttribute="trailing" id="odY-34-QSW"/>
+                <constraint firstItem="cJ4-mq-kIP" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="2" id="qlK-7F-Pza"/>
+                <constraint firstItem="x7N-Df-oPW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ssk-hO-qci"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="backgroundView" destination="x7N-Df-oPW" id="zbg-g6-KR0"/>
+                <outlet property="rideNames" destination="UGe-Sb-azC" id="MjM-qA-92r"/>
+                <outlet property="rideTypeLabel" destination="sX5-GL-oLP" id="hf6-TE-wNg"/>
+                <outlet property="statLabel" destination="uQZ-ym-wV8" id="i0c-1f-wCl"/>
+            </connections>
+            <point key="canvasLocation" x="-0.80000000000000004" y="26.986506746626688"/>
+        </view>
+    </objects>
+</document>

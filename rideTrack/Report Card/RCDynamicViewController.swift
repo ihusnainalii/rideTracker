@@ -8,9 +8,9 @@
 
 import UIKit
 
-//3/4 width: 60
+//1/4 width: 60
 //1/2 width: 115
-//1/4: 144
+//3/4: 144
 
 //Image width: 135
 
@@ -20,47 +20,30 @@ class RCDynamicViewController: UIViewController {
     @IBOutlet weak var middleRowStack: UIStackView!
     @IBOutlet weak var bottomRowStack: UIStackView!
     
+    let reportCardViewCreator = DynamicReportCardView()
+    let logoGreen = UIColor(red: 81/255.0, green: 164/255.0, blue: 76/255.0, alpha: 1.0)
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        createStackViewTop(stackViewBig: topRowStack)
         createStackViewMiddle(stackViewBig: middleRowStack)
         createStackViewBottom(stackViewBig: bottomRowStack)
         
         
     }
     
-    func createStackViewMiddle(stackViewBig: UIStackView){
+    func createStackViewTop(stackViewBig: UIStackView){
         
         //image
-        let view1 = UIView()
-        view1.backgroundColor = UIColor.green
-        view1.widthAnchor.constraint(equalToConstant: 135.0).isActive = true
+        let imageView = UIView()
+        imageView.backgroundColor = logoGreen
+        imageView.widthAnchor.constraint(equalToConstant: 135.0).isActive = true
         
-        let view2 = UIView()
-        //view2.backgroundColor = UIColor.yellow
-        view2.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        
-        if let customView = Bundle.main.loadNibNamed("StatLabelView", owner: self, options: nil)!.first as? StatLabelView {
-            view2.addSubview(customView)
-            
-            customView.translatesAutoresizingMaskIntoConstraints = false
-            view2.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view":customView]))
-            view2.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view":customView]))
-        }
-        
-        
-        let view3 = UIView()
-        view3.backgroundColor = UIColor.purple
-        let view4 = UIView()
-        view4.backgroundColor = UIColor.blue
-        
-        if let customView = Bundle.main.loadNibNamed("StatLabelView", owner: self, options: nil)!.first as? StatLabelView {
-            view4.addSubview(customView)
-            
-            customView.translatesAutoresizingMaskIntoConstraints = false
-            view4.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view":customView]))
-            view4.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view":customView]))
-        }
+        let view2 = reportCardViewCreator.createviews(size: .fill, type: BoxType.statLabel)
+        let view3 = reportCardViewCreator.createviews(size: .threeQuarters, type: BoxType.statLabel)
+        let view4 = reportCardViewCreator.createviews(size: .fill, type: BoxType.statAttractionLabel)
         
         let stackView3 = UIStackView()
         stackView3.axis = .vertical
@@ -70,7 +53,35 @@ class RCDynamicViewController: UIViewController {
         
         stackView3.addArrangedSubview(view3)
         stackView3.addArrangedSubview(view4)
+    
         
+        stackViewBig.addArrangedSubview(stackView3)
+        stackViewBig.addArrangedSubview(view2)
+        stackViewBig.addArrangedSubview(imageView)
+
+        
+    }
+    
+    func createStackViewMiddle(stackViewBig: UIStackView){
+        
+        //image
+        let view1 = UIView()
+        view1.backgroundColor = logoGreen
+        view1.widthAnchor.constraint(equalToConstant: 135.0).isActive = true
+        
+        let view2 = reportCardViewCreator.createviews(size: .quarter, type: BoxType.statLabel)
+
+        let view3 = reportCardViewCreator.createviews(size: .fill, type: BoxType.topRideList)
+        let view4 = reportCardViewCreator.createviews(size: .fill, type: BoxType.statAttractionLabel)
+
+        let stackView3 = UIStackView()
+        stackView3.axis = .vertical
+        stackView3.alignment = .fill
+        stackView3.distribution = .fillEqually
+        stackView3.spacing = 6
+        
+        stackView3.addArrangedSubview(view3)
+        stackView3.addArrangedSubview(view4)
         
         stackViewBig.addArrangedSubview(view1)
         stackViewBig.addArrangedSubview(stackView3)
@@ -80,42 +91,30 @@ class RCDynamicViewController: UIViewController {
     
     func createStackViewBottom(stackViewBig: UIStackView){
     
+        let view1 = reportCardViewCreator.createviews(size: .half, type: .topRideList)
+        let view2 = reportCardViewCreator.createviews(size: .fill, type: .statLabel)
+        let view3 = reportCardViewCreator.createviews(size: .fill, type: .statAttractionLabel)
         
-        let view1 = UIView()
-        view1.widthAnchor.constraint(equalToConstant: 115.0).isActive = true
-        view1.backgroundColor = UIColor.blue
         
-        let view5 = UIView()
-        view5.backgroundColor = UIColor.white
-        view5.widthAnchor.constraint(equalToConstant: 135.0).isActive = true
-        
-        let view3 = UIView()
-        //view3.backgroundColor = UIColor.purple
+        //Blanck view for bottom right corner
         let view4 = UIView()
-        view4.backgroundColor = UIColor.blue
+        view4.backgroundColor = UIColor.clear
+        view4.widthAnchor.constraint(equalToConstant: 135.0).isActive = true
         
+ 
         let stackView3 = UIStackView()
         stackView3.axis = .vertical
         stackView3.alignment = .fill
         stackView3.distribution = .fillEqually
         stackView3.spacing = 6
         
+        stackView3.addArrangedSubview(view2)
         stackView3.addArrangedSubview(view3)
-        stackView3.addArrangedSubview(view4)
-        
-        if let customView = Bundle.main.loadNibNamed("StatLabelView", owner: self, options: nil)!.first as? StatLabelView {
-            view3.addSubview(customView)
-            
-            customView.translatesAutoresizingMaskIntoConstraints = false
-            view3.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view":customView]))
-            view3.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view":customView]))
-        }
-        
         
         
         stackViewBig.addArrangedSubview(view1)
         stackViewBig.addArrangedSubview(stackView3)
-        stackViewBig.addArrangedSubview(view5)
+        stackViewBig.addArrangedSubview(view4)
     }
     
 }

@@ -6,48 +6,70 @@
 //  Copyright © 2019 Justin Lawrence. All rights reserved.
 //
 
+//1/4 width: 60
+//1/2 width: 115
+//3/4: 144
+
 import UIKit
 
-class DynamicReportCardView: UIView {
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        createviews()
+class DynamicReportCardView: NSObject {
+    
+    
+    func createviews(size: PreferedSize, type: BoxType) -> UIView {
+        let createdView = UIView()
+        
+        switch size {
+        case .quarter:
+            createdView.widthAnchor.constraint(equalToConstant: 60.0).isActive = true
+        case .half:
+            createdView.widthAnchor.constraint(equalToConstant: 115.0).isActive = true
+        case .threeQuarters:
+            createdView.widthAnchor.constraint(equalToConstant: 144.0).isActive = true
+        case .fill:
+            print("No width, fill dynamically")
+        }
+        
+        switch type {
+        case .statLabel:
+            createStatLabelView(createdView: createdView)
+        case .statAttractionLabel:
+            createStatLavelAttractionView(createdView: createdView)
+        case .topRideList:
+            createTopRideTypeView(createdView: createdView)
+        }
+        return createdView
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        createviews()
+    private func createStatLabelView(createdView: UIView){
+        if let customView = Bundle.main.loadNibNamed("StatLabelView", owner: self, options: nil)!.first as? StatLabelView {
+            createdView.addSubview(customView)
+            customView.greenMode()
+            customView.translatesAutoresizingMaskIntoConstraints = false
+            createdView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view":customView]))
+            createdView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view":customView]))
+        }
     }
     
-    func createviews() {
-        
-        /*
-        backgroundColor = UIColor(white: 0.9, alpha: 1)
-        
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 10
-        self.addSubview(stackView)
-        
-        stackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        stackView.axis = .vertical
-        
-        let notice = UILabel()
-        notice.numberOfLines = 0
-        notice.text = "Your child has attempted to share the following photo from the camera:"
-        stackView.addArrangedSubview(notice)
-        
-        var DynamicView = UIView(frame: CGRect(x: 100, y: 200, width: 100, height: 100))
-        DynamicView.backgroundColor=UIColor.green
-        DynamicView.layer.cornerRadius=25
-        DynamicView.layer.borderWidth=2
-        self.addSubview(DynamicView)
- */
-        
-        
+    private func createStatLavelAttractionView(createdView: UIView){
+        if let customView = Bundle.main.loadNibNamed("StatLabelAttractionView", owner: self, options: nil)!.first as? StatLabelAttractionView {
+            createdView.addSubview(customView)
+            
+            
+            
+            customView.translatesAutoresizingMaskIntoConstraints = false
+            createdView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view":customView]))
+            createdView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view":customView]))
+        }
     }
-
+    
+    private func createTopRideTypeView(createdView: UIView){
+        if let customView = Bundle.main.loadNibNamed("TopRideTypeView", owner: self, options: nil)!.first as? TopRideTypeView {
+            createdView.addSubview(customView)
+            
+            customView.translatesAutoresizingMaskIntoConstraints = false
+            createdView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view":customView]))
+            createdView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view":customView]))
+        }
+    }
+    
 }
